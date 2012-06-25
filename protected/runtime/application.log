@@ -134,3 +134,7 @@ Stack trace:
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=site/logout
 HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=site/index
 ---
+2012/06/25 20:43:29 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'jacq_input.user' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `user`.
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/25 20:43:37 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'jacq_input.tbl_user' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `tbl_user`.
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
