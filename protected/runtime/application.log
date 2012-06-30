@@ -138,3 +138,191 @@ HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=site/index
 in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
 2012/06/25 20:43:37 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'jacq_input.tbl_user' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `tbl_user`.
 in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/26 16:07:25 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '0' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `tbl_garden_site` (`greenhouse`, `description`, `department`, `parent_garden_site_id`) VALUES (:yp0, :yp1, :yp2, :yp3).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php (72)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/26 16:07:25 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '0' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `tbl_garden_site` (`greenhouse`, `description`, `department`, `parent_garden_site_id`) VALUES (:yp0, :yp1, :yp2, :yp3)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1014): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(787): CActiveRecord->insert(NULL)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php(72): CActiveRecord->save()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): GardenSiteController->actionCreate()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('gardenSite/crea...')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+---
+2012/06/26 16:34:24 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`jacq_input`.`tbl_garden_site`, CONSTRAINT `fk_garden_site_id` FOREIGN KEY (`parent_garden_site_id`) REFERENCES `tbl_garden_site` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION). The SQL statement executed was: INSERT INTO `tbl_garden_site` (`greenhouse`, `description`, `department`, `parent_garden_site_id`) VALUES (:yp0, :yp1, :yp2, :yp3).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php (72)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/26 16:34:24 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`jacq_input`.`tbl_garden_site`, CONSTRAINT `fk_garden_site_id` FOREIGN KEY (`parent_garden_site_id`) REFERENCES `tbl_garden_site` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION). The SQL statement executed was: INSERT INTO `tbl_garden_site` (`greenhouse`, `description`, `department`, `parent_garden_site_id`) VALUES (:yp0, :yp1, :yp2, :yp3)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1014): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(787): CActiveRecord->insert(NULL)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php(72): CActiveRecord->save()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): GardenSiteController->actionCreate()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('gardenSite/crea...')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+---
+2012/06/26 16:36:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php:160
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php(54): GardenSiteController->loadModel('')
+#1 [internal function]: GardenSiteController->actionView('')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(GardenSiteController), Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(GardenSiteController), Object(ReflectionMethod), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('view')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('gardenSite/view')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/view&id=
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+---
+2012/06/26 16:43:16 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php:160
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php(54): GardenSiteController->loadModel('')
+#1 [internal function]: GardenSiteController->actionView('')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(GardenSiteController), Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(GardenSiteController), Object(ReflectionMethod), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('view')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('gardenSite/view')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/view&id=
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+---
+2012/06/26 16:43:59 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`jacq_input`.`tbl_garden_site`, CONSTRAINT `fk_garden_site_id` FOREIGN KEY (`parent_garden_site_id`) REFERENCES `tbl_garden_site` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION). The SQL statement executed was: INSERT INTO `tbl_garden_site` (`greenhouse`, `description`, `department`, `parent_garden_site_id`) VALUES (:yp0, :yp1, :yp2, :yp3).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php (72)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/26 16:43:59 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`jacq_input`.`tbl_garden_site`, CONSTRAINT `fk_garden_site_id` FOREIGN KEY (`parent_garden_site_id`) REFERENCES `tbl_garden_site` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION). The SQL statement executed was: INSERT INTO `tbl_garden_site` (`greenhouse`, `description`, `department`, `parent_garden_site_id`) VALUES (:yp0, :yp1, :yp2, :yp3)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1014): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(787): CActiveRecord->insert(NULL)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php(72): CActiveRecord->save()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): GardenSiteController->actionCreate()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('gardenSite/crea...')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+---
+2012/06/26 16:44:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php:160
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php(54): GardenSiteController->loadModel('')
+#1 [internal function]: GardenSiteController->actionView('')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(GardenSiteController), Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(GardenSiteController), Object(ReflectionMethod), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('view')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('gardenSite/view')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/view&id=
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+---
+2012/06/26 16:45:04 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`jacq_input`.`tbl_garden_site`, CONSTRAINT `fk_garden_site_id` FOREIGN KEY (`parent_garden_site_id`) REFERENCES `tbl_garden_site` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION). The SQL statement executed was: INSERT INTO `tbl_garden_site` (`greenhouse`, `description`, `department`, `parent_garden_site_id`) VALUES (:yp0, :yp1, :yp2, :yp3).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php (72)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/26 16:45:04 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`jacq_input`.`tbl_garden_site`, CONSTRAINT `fk_garden_site_id` FOREIGN KEY (`parent_garden_site_id`) REFERENCES `tbl_garden_site` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION). The SQL statement executed was: INSERT INTO `tbl_garden_site` (`greenhouse`, `description`, `department`, `parent_garden_site_id`) VALUES (:yp0, :yp1, :yp2, :yp3)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1014): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(787): CActiveRecord->insert(NULL)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php(72): CActiveRecord->save()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): GardenSiteController->actionCreate()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('gardenSite/crea...')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+---
+2012/06/26 16:49:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php:160
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/GardenSiteController.php(54): GardenSiteController->loadModel('')
+#1 [internal function]: GardenSiteController->actionView('')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(GardenSiteController), Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(GardenSiteController), Object(ReflectionMethod), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('view')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('gardenSite/view')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/view&id=
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=gardenSite/create
+---

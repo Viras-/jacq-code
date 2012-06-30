@@ -30,8 +30,9 @@
 	<div class="row">
 		<?php echo $form->labelEx($model,'parent_garden_site_id'); ?>
 		<?php
-                $garden_sites = GardenSite::model()->findAll();
-                echo $form->dropDownList($model,'parent_garden_site_id', CHtml::listData($garden_sites, 'id', 'description'));
+                $garden_sites = CHtml::listData(GardenSite::model()->findAll(), 'id', 'description');
+                $garden_sites = array( '' => 'None' ) + $garden_sites;
+                echo $form->dropDownList($model,'parent_garden_site_id', $garden_sites);
                 ?>
 		<?php echo $form->error($model,'parent_garden_site_id'); ?>
 	</div>
@@ -39,8 +40,7 @@
 	<div class="row">
 		<?php echo $form->labelEx($model,'gardener_id'); ?>
 		<?php
-                $users = User::model()->findAll();
-                echo $form->dropDownList($model,'gardener_id', CHtml::listData($users, 'id', 'username'));
+                echo $form->dropDownList($model,'gardener_id', CHtml::listData(User::model()->findAll(), 'id', 'username'));
                 ?>
 		<?php echo $form->error($model,'gardener_id'); ?>
 	</div>
