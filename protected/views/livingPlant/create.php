@@ -12,4 +12,13 @@ $this->menu=array(
 
 <h1>Create LivingPlant</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php
+echo $this->renderPartial('_form', 
+        array(
+            'model_acquisitionDate' => $model_acquisitionDate,
+            'model_acquisitionEvent' => $model_acquisitionEvent,
+            'model_livingPlant' => $model_livingPlant,
+            'model_botanicalObject' => $model_botanicalObject
+            )
+        );
+?>
