@@ -507,3 +507,31 @@ REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=2
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/update.php (4)
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (124)
 in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/27 02:17:20 [error] [php] Undefined variable: model (/var/www/html/NetBeans/NHM/jacq-yii/protected/views/site/login.php:24)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): SiteController->renderFile()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): SiteController->renderPartial()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/SiteController.php(32): SiteController->render()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): SiteController->actionIndex()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): SiteController->runAction()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): SiteController->runActionWithFilters()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): SiteController->run()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/site/login.php (24)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/SiteController.php (32)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/27 02:21:36 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "livingPlant".' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php:484
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(271): CController->missingAction('livingPlant')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('livingPlant')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('site/livingPlan...')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=site/livingPlant
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php
+---

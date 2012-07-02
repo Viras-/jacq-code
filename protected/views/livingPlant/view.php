@@ -26,4 +26,4 @@ $this->menu=array(
 		'tree_record_id',
 		'phyto_sanitary_product_number',
 	),
-)); ?>
+));

@@ -5,14 +5,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model_botanicalObject,'separation_id'); ?>
-		<?php echo $form->textField($model_botanicalObject,'separation_id'); ?>
-		<?php echo $form->error($model_botanicalObject,'separation_id'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model_botanicalObject,'phenology_id'); ?>
-		<?php echo $form->textField($model_botanicalObject,'phenology_id'); ?>
+		<?php echo $form->dropDownList($model_botanicalObject,'phenology_id', CHtml::listData(Phenology::model()->findAll(), 'id', 'phenology')); ?>
 		<?php echo $form->error($model_botanicalObject,'phenology_id'); ?>
 	</div>
 

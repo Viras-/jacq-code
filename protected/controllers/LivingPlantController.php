@@ -59,6 +59,7 @@ class LivingPlantController extends Controller {
     public function actionCreate() {
         $model_acquisitionDate = new AcquisitionDate;
         $model_acquisitionEvent = new AcquisitionEvent;
+        $model_separation = new Separation;
         $model_livingPlant = new LivingPlant;
         $model_botanicalObject = new BotanicalObject;
 
@@ -91,6 +92,7 @@ class LivingPlantController extends Controller {
         $this->render('create', array(
             'model_acquisitionDate' => $model_acquisitionDate,
             'model_acquisitionEvent' => $model_acquisitionEvent,
+            'model_separation' => $model_separation,
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject
         ));
@@ -104,6 +106,7 @@ class LivingPlantController extends Controller {
     public function actionUpdate($id) {
         $model_livingPlant = $this->loadModel($id);
         $model_botanicalObject = BotanicalObject::model()->findByPk($model_livingPlant->id);
+        $model_separation = Separation::model()->findByPk($model_botanicalObject->getAttribute('separation_id'));
         $model_acquisitionEvent = AcquisitionEvent::model()->findByPk($model_botanicalObject->getAttribute('acquisition_event_id'));
         $model_acquisitionDate = AcquisitionDate::model()->findByPk($model_acquisitionEvent->getAttribute('acquisition_date_id'));
 
@@ -119,6 +122,7 @@ class LivingPlantController extends Controller {
         $this->render('update', array(
             'model_acquisitionDate' => $model_acquisitionDate,
             'model_acquisitionEvent' => $model_acquisitionEvent,
+            'model_separation' => $model_separation,
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject
         ));

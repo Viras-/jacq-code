@@ -7,11 +7,12 @@
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
-	<?php echo $form->errorSummary($model_livingPlant,$model_botanicalObject); ?>
+	<?php echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject); ?>
         
         <?php
         require('form_acquisitionDate.php');
         require('form_acquisitionEvent.php');
+        require('form_separation.php');
         require('form_botanicalObject.php');
         require('form_livingPlant.php');
         ?>

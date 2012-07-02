@@ -1,23 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "tbl_user".
+ * This is the model class for table "tbl_separation".
  *
- * The followings are the available columns in table 'tbl_user':
+ * The followings are the available columns in table 'tbl_separation':
  * @property integer $id
- * @property string $username
- * @property string $password
- * @property string $salt
+ * @property integer $separation_type_id
+ * @property string $date
+ * @property string $annotation
  *
  * The followings are the available model relations:
- * @property GardenSite[] $gardenSites
+ * @property BotanicalObject[] $botanicalObjects
+ * @property SeparationType $separationType
  */
-class User extends CActiveRecord
+class Separation extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return Separation the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -29,7 +30,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_user';
+		return 'tbl_separation';
 	}
 
 	/**
@@ -40,13 +41,12 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, username, password, salt', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
-			array('username', 'length', 'max'=>128),
-			array('password, salt', 'length', 'max'=>64),
+			array('separation_type_id', 'required'),
+			array('separation_type_id', 'numerical', 'integerOnly'=>true),
+			array('date, annotation', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, password, salt', 'safe', 'on'=>'search'),
+			array('id, separation_type_id, date, annotation', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,7 +58,8 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'gardenSites' => array(self::HAS_MANY, 'GardenSite', 'gardener_id'),
+			'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'separation_id'),
+			'separationType' => array(self::BELONGS_TO, 'SeparationType', 'separation_type_id'),
 		);
 	}
 
@@ -69,9 +70,9 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'username' => 'Username',
-			'password' => 'Password',
-			'salt' => 'Salt',
+			'separation_type_id' => 'Separation Type',
+			'date' => 'Date',
+			'annotation' => 'Annotation',
 		);
 	}
 
@@ -87,9 +88,9 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('salt',$this->salt,true);
+		$criteria->compare('separation_type_id',$this->separation_type_id);
+		$criteria->compare('date',$this->date,true);
+		$criteria->compare('annotation',$this->annotation,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -1,23 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "tbl_user".
+ * This is the model class for table "tbl_separation_type".
  *
- * The followings are the available columns in table 'tbl_user':
+ * The followings are the available columns in table 'tbl_separation_type':
  * @property integer $id
- * @property string $username
- * @property string $password
- * @property string $salt
+ * @property string $type
  *
  * The followings are the available model relations:
- * @property GardenSite[] $gardenSites
+ * @property Separation[] $separations
  */
-class User extends CActiveRecord
+class SeparationType extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return SeparationType the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -29,7 +27,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_user';
+		return 'tbl_separation_type';
 	}
 
 	/**
@@ -40,13 +38,10 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, username, password, salt', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
-			array('username', 'length', 'max'=>128),
-			array('password, salt', 'length', 'max'=>64),
+			array('type', 'length', 'max'=>15),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, password, salt', 'safe', 'on'=>'search'),
+			array('id, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,7 +53,7 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'gardenSites' => array(self::HAS_MANY, 'GardenSite', 'gardener_id'),
+			'separations' => array(self::HAS_MANY, 'Separation', 'separation_type_id'),
 		);
 	}
 
@@ -69,9 +64,7 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'username' => 'Username',
-			'password' => 'Password',
-			'salt' => 'Salt',
+			'type' => 'Type',
 		);
 	}
 
@@ -87,9 +80,7 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('salt',$this->salt,true);
+		$criteria->compare('type',$this->type,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
