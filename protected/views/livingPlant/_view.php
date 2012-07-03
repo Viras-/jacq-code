@@ -8,10 +8,6 @@
 	<?php echo CHtml::encode($data->garden_site_id); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('accession_number')); ?>:</b>
-	<?php echo CHtml::encode($data->accession_number); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('ipen_number')); ?>:</b>
 	<?php echo CHtml::encode($data->ipen_number); ?>
 	<br />

@@ -16,11 +16,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'accession_number'); ?>
-		<?php echo $form->textField($model,'accession_number',array('size'=>20,'maxlength'=>20)); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'ipen_number'); ?>
 		<?php echo $form->textField($model,'ipen_number',array('size'=>20,'maxlength'=>20)); ?>
 	</div>

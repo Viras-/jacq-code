@@ -1,6 +1,6 @@
 <div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'taxon_id'); ?>
-    <input type="text" name="scientificName" id="scientificName" />
+    <input type="text" name="scientificName" id="scientificName" value="<?php echo $model_botanicalObject->getScientificName(); ?>"/>
     <?php echo $form->hiddenField($model_botanicalObject, 'taxon_id'); ?>
     <?php echo $form->error($model_botanicalObject, 'taxon_id'); ?>
 </div>

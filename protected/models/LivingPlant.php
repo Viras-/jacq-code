@@ -6,17 +6,18 @@
  * The followings are the available columns in table 'tbl_living_plant':
  * @property integer $id
  * @property integer $garden_site_id
- * @property string $accession_number
  * @property string $ipen_number
  * @property integer $phyto_control
  * @property integer $tree_record_id
  * @property string $phyto_sanitary_product_number
+ * @property integer $accession_number_id
  *
  * The followings are the available model relations:
  * @property CitesNumber[] $citesNumbers
  * @property BotanicalObject $id0
  * @property GardenSite $gardenSite
  * @property TreeRecord $treeRecord
+ * @property AccessionNumber $accessionNumber
  * @property Relevancy[] $relevancies
  */
 class LivingPlant extends CActiveRecord
@@ -35,8 +36,7 @@ class LivingPlant extends CActiveRecord
             parent::init();
             
             if( $this->isNewRecord ) {
-                $this->accession_number = date( "Y" ) . '-00000-001';
-                $this->ipen_number = "XX-X-WU-" . $this->accession_number;
+                $this->ipen_number = "XX-X-WU";
             }
         }
 
@@ -56,11 +56,12 @@ class LivingPlant extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('garden_site_id, phyto_control, tree_record_id', 'numerical', 'integerOnly'=>true),
-			array('accession_number, ipen_number, phyto_sanitary_product_number', 'length', 'max'=>20),
+			array('id, accession_number_id', 'required'),
+			array('id, garden_site_id, phyto_control, tree_record_id, accession_number_id', 'numerical', 'integerOnly'=>true),
+			array('ipen_number, phyto_sanitary_product_number', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, garden_site_id, accession_number, ipen_number, phyto_control, tree_record_id, phyto_sanitary_product_number', 'safe', 'on'=>'search'),
+			array('id, garden_site_id, ipen_number, phyto_control, tree_record_id, phyto_sanitary_product_number, accession_number_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,6 +77,7 @@ class LivingPlant extends CActiveRecord
 			'id0' => array(self::BELONGS_TO, 'BotanicalObject', 'id'),
 			'gardenSite' => array(self::BELONGS_TO, 'GardenSite', 'garden_site_id'),
 			'treeRecord' => array(self::BELONGS_TO, 'TreeRecord', 'tree_record_id'),
+			'accessionNumber' => array(self::BELONGS_TO, 'AccessionNumber', 'accession_number_id'),
 			'relevancies' => array(self::HAS_MANY, 'Relevancy', 'livingplant_id'),
 		);
 	}
@@ -88,11 +90,11 @@ class LivingPlant extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'garden_site_id' => 'Garden Site',
-			'accession_number' => 'Accession Number',
 			'ipen_number' => 'Ipen Number',
 			'phyto_control' => 'Phyto Control',
 			'tree_record_id' => 'Tree Record',
 			'phyto_sanitary_product_number' => 'Phyto Sanitary Product Number',
+			'accession_number_id' => 'Accession Number',
 		);
 	}
 
@@ -109,11 +111,11 @@ class LivingPlant extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('garden_site_id',$this->garden_site_id);
-		$criteria->compare('accession_number',$this->accession_number,true);
 		$criteria->compare('ipen_number',$this->ipen_number,true);
 		$criteria->compare('phyto_control',$this->phyto_control);
 		$criteria->compare('tree_record_id',$this->tree_record_id);
 		$criteria->compare('phyto_sanitary_product_number',$this->phyto_sanitary_product_number,true);
+		$criteria->compare('accession_number_id',$this->accession_number_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

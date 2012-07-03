@@ -20,7 +20,7 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'garden_site_id',
-		'accession_number',
+		'accession_number_id',
 		'ipen_number',
 		'phyto_control',
 		'tree_record_id',

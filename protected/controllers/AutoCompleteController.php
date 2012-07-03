@@ -17,6 +17,19 @@ class AutoCompleteController extends Controller {
     private function getDbHerbarView() {
         return Yii::app()->dbHerbarView;
     }
+    
+    /**
+     * Get the scientific name for a given taxon ID
+     * @param int $taxonID
+     * @return string 
+     */
+    public function getTaxonName( $taxonID ) {
+        $dbHerbarView = $this->getDbHerbarView();
+        $command = $dbHerbarView->createCommand("SELECT GetScientificName( " . $taxonID . ", 0 ) AS 'ScientificName'");
+        $scientificNames = $command->queryAll();
+        
+        return $scientificNames[0]['ScientificName'];
+    }
 
     /**
      * Search for fitting taxon names and return them 
@@ -56,17 +69,15 @@ class AutoCompleteController extends Controller {
         $rows = $command->queryAll();
         
         $results = array();
-        $dbHerbarView = $this->getDbHerbarView();
         foreach( $rows as $row ) {
             $taxonID = $row['taxonID'];
             
-            $command = $dbHerbarView->createCommand("SELECT GetScientificName( " . $taxonID . ", 0 ) AS 'ScientificName'");
-            $scientificNames = $command->queryAll();
+            $scientificName = $this->getTaxonName($taxonID);
             
-            if( count($scientificNames) > 0 && !empty($scientificNames[0]['ScientificName']) ) {
+            if( !empty($scientificName) ) {
                 $results[] = array(
-                    "label" => $scientificNames[0]['ScientificName'],
-                    "value" => $scientificNames[0]['ScientificName'],
+                    "label" => $scientificName,
+                    "value" => $scientificName,
                     "id" => $taxonID,
                     );
             }
@@ -75,6 +86,13 @@ class AutoCompleteController extends Controller {
         header( 'Content-type: application/json' );
         echo CJSON::encode($results);
         Yii::app()->end();
+    }
+    
+    /**
+     * Search for fitting location names (and query geonames if necessary) 
+     */
+    public function actionLocation() {
+        
     }
 
     /**
@@ -94,7 +112,7 @@ class AutoCompleteController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('taxon'),
+                'actions' => array('taxon', 'location'),
                 'users' => array('@'),
             ),
             array('deny', // deny all users by default

@@ -62,27 +62,38 @@ class LivingPlantController extends Controller {
         $model_separation = new Separation;
         $model_livingPlant = new LivingPlant;
         $model_botanicalObject = new BotanicalObject;
+        $model_accessionNumber = new AccessionNumber;
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'])) {
+        if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['AccessionNumber'])) {
             $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
             $model_livingPlant->attributes = $_POST['LivingPlant'];
             $model_botanicalObject->attributes = $_POST['BotanicalObject'];
+            $model_accessionNumber->attributes = $_POST['AccessionNumber'];
+            $model_separation->attributes = $_POST['Separation'];
 
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->setAttribute('acquisition_date_id', $model_acquisitionDate->id);
 
                 if ($model_acquisitionEvent->save()) {
                     $model_botanicalObject->setAttribute('acquisition_event_id', $model_acquisitionEvent->id);
+                    
+                    if( $model_separation->save() ) {
+                        $model_botanicalObject->separation_id = $model_separation->id;
+                        
+                        if ($model_botanicalObject->save()) {
+                            $model_livingPlant->setAttribute('id', $model_botanicalObject->id);
 
-                    if ($model_botanicalObject->save()) {
-                        $model_livingPlant->setAttribute('id', $model_botanicalObject->id);
+                            if( $model_accessionNumber->save() ) {
+                                $model_livingPlant->accession_number_id = $model_accessionNumber->id;
 
-                        if ($model_livingPlant->save()) {
-                            $this->redirect(array('view', 'id' => $model_livingPlant->id));
+                                if ($model_livingPlant->save()) {
+                                    $this->redirect(array('view', 'id' => $model_livingPlant->id));
+                                }
+                            }
                         }
                     }
                 }
@@ -94,7 +105,8 @@ class LivingPlantController extends Controller {
             'model_acquisitionEvent' => $model_acquisitionEvent,
             'model_separation' => $model_separation,
             'model_livingPlant' => $model_livingPlant,
-            'model_botanicalObject' => $model_botanicalObject
+            'model_botanicalObject' => $model_botanicalObject,
+            'model_accessionNumber' => $model_accessionNumber
         ));
     }
 
@@ -109,14 +121,42 @@ class LivingPlantController extends Controller {
         $model_separation = Separation::model()->findByPk($model_botanicalObject->getAttribute('separation_id'));
         $model_acquisitionEvent = AcquisitionEvent::model()->findByPk($model_botanicalObject->getAttribute('acquisition_event_id'));
         $model_acquisitionDate = AcquisitionDate::model()->findByPk($model_acquisitionEvent->getAttribute('acquisition_date_id'));
+        $model_accessionNumber = AccessionNumber::model()->findByPk($model_livingPlant->getAttribute('accession_number_id'));
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['LivingPlant'])) {
-            $model->attributes = $_POST['LivingPlant'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+        if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['AccessionNumber'])) {
+            $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
+            $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
+            $model_livingPlant->attributes = $_POST['LivingPlant'];
+            $model_botanicalObject->attributes = $_POST['BotanicalObject'];
+            $model_accessionNumber->attributes = $_POST['AccessionNumber'];
+            $model_separation->attributes = $_POST['Separation'];
+
+            if ($model_acquisitionDate->save()) {
+                $model_acquisitionEvent->setAttribute('acquisition_date_id', $model_acquisitionDate->id);
+
+                if ($model_acquisitionEvent->save()) {
+                    $model_botanicalObject->setAttribute('acquisition_event_id', $model_acquisitionEvent->id);
+                    
+                    if( $model_separation->save() ) {
+                        $model_botanicalObject->separation_id = $model_separation->id;
+                        
+                        if ($model_botanicalObject->save()) {
+                            $model_livingPlant->setAttribute('id', $model_botanicalObject->id);
+
+                            if( $model_accessionNumber->save() ) {
+                                $model_livingPlant->accession_number_id = $model_accessionNumber->id;
+
+                                if ($model_livingPlant->save()) {
+                                    $this->redirect(array('view', 'id' => $model_livingPlant->id));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         $this->render('update', array(
@@ -124,7 +164,8 @@ class LivingPlantController extends Controller {
             'model_acquisitionEvent' => $model_acquisitionEvent,
             'model_separation' => $model_separation,
             'model_livingPlant' => $model_livingPlant,
-            'model_botanicalObject' => $model_botanicalObject
+            'model_botanicalObject' => $model_botanicalObject,
+            'model_accessionNumber' => $model_accessionNumber
         ));
     }
 
