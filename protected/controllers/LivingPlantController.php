@@ -80,14 +80,16 @@ class LivingPlantController extends Controller {
 
                 if ($model_acquisitionEvent->save()) {
                     $model_botanicalObject->setAttribute('acquisition_event_id', $model_acquisitionEvent->id);
-                    
-                    if( $model_separation->save() ) {
+
+                    // Check if we have a separation selected
+                    if ($model_separation->save()) {
                         $model_botanicalObject->separation_id = $model_separation->id;
-                        
+
+                        // Save the botanical object base
                         if ($model_botanicalObject->save()) {
                             $model_livingPlant->setAttribute('id', $model_botanicalObject->id);
 
-                            if( $model_accessionNumber->save() ) {
+                            if ($model_accessionNumber->save()) {
                                 $model_livingPlant->accession_number_id = $model_accessionNumber->id;
 
                                 if ($model_livingPlant->save()) {
@@ -139,14 +141,16 @@ class LivingPlantController extends Controller {
 
                 if ($model_acquisitionEvent->save()) {
                     $model_botanicalObject->setAttribute('acquisition_event_id', $model_acquisitionEvent->id);
-                    
-                    if( $model_separation->save() ) {
+
+                    // Check if we have a separation selected
+                    if ($model_separation->save()) {
                         $model_botanicalObject->separation_id = $model_separation->id;
-                        
+
+                        // Save the botanical object base
                         if ($model_botanicalObject->save()) {
                             $model_livingPlant->setAttribute('id', $model_botanicalObject->id);
 
-                            if( $model_accessionNumber->save() ) {
+                            if ($model_accessionNumber->save()) {
                                 $model_livingPlant->accession_number_id = $model_accessionNumber->id;
 
                                 if ($model_livingPlant->save()) {

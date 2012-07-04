@@ -966,3 +966,159 @@ Stack trace:
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=2
 HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/view&id=2
 ---
+2012/06/27 12:41:19 [error] [exception.CException] exception 'CException' with message 'Alias "application.extensions.juidatepicker.EDatePicker" is invalid. Make sure it points to an existing PHP file.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/YiiBase.php:318
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWidgetFactory.php(147): YiiBase::import('application.ext...', true)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(147): CWidgetFactory->createWidget(Object(LivingPlantController), 'application.ext...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(173): CBaseController->createWidget('application.ext...', Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_acquisitionDate.php(14): CBaseController->widget('application.ext...', Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(15): require('/var/www/html/N...')
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/create.php(24): CController->renderPartial('_form', Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('create', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(110): CController->render('create', Array)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/cre...')
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#26 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#27 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+---
+2012/06/27 13:08:00 [error] [exception.CException] exception 'CException' with message 'Property "AcquisitionDate.date" is not defined.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:174
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(160): CComponent->__set('date', '2012-07-11456')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CModel.php(470): CActiveRecord->__set('date', '2012-07-11456')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(153): CModel->setAttributes(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(160): CComponent->__set('attributes', Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(71): CActiveRecord->__set('attributes', Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/cre...')
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#17 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#18 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/06/27 13:10:09 [error] [exception.CException] exception 'CException' with message 'Property "BotanicalObject.class" is not defined.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:174
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(160): CComponent->__set('class', 'errorSummary')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CModel.php(604): CActiveRecord->__set('class', 'errorSummary')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/helpers/CHtml.php(1608): CModel->offsetSet('class', 'errorSummary')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/widgets/CActiveForm.php(514): CHtml::errorSummary(Object(AcquisitionDate), Object(AcquisitionEvent), Object(LivingPlant), Object(BotanicalObject))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(10): CActiveForm->errorSummary(Object(AcquisitionDate), Object(AcquisitionEvent), Object(LivingPlant), Object(BotanicalObject))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/create.php(24): CController->renderPartial('_form', Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('create', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(112): CController->render('create', Array)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/cre...')
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#26 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#27 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/06/27 13:10:29 [error] [exception.CException] exception 'CException' with message 'Property "BotanicalObject.class" is not defined.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:174
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(160): CComponent->__set('class', 'errorSummary')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CModel.php(604): CActiveRecord->__set('class', 'errorSummary')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/helpers/CHtml.php(1608): CModel->offsetSet('class', 'errorSummary')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/widgets/CActiveForm.php(514): CHtml::errorSummary(Object(AcquisitionDate), Object(AcquisitionEvent), Object(LivingPlant), Object(BotanicalObject))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(10): CActiveForm->errorSummary(Object(AcquisitionDate), Object(AcquisitionEvent), Object(LivingPlant), Object(BotanicalObject))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/create.php(24): CController->renderPartial('_form', Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('create', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(112): CController->render('create', Array)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/cre...')
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#26 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#27 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/06/27 13:11:13 [error] [exception.CException] exception 'CException' with message 'Property "BotanicalObject.class" is not defined.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:174
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(160): CComponent->__set('class', 'errorSummary')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CModel.php(604): CActiveRecord->__set('class', 'errorSummary')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/helpers/CHtml.php(1608): CModel->offsetSet('class', 'errorSummary')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/widgets/CActiveForm.php(514): CHtml::errorSummary(Object(AcquisitionDate), Object(AcquisitionEvent), Object(LivingPlant), Object(BotanicalObject))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(10): CActiveForm->errorSummary(Object(AcquisitionDate), Object(AcquisitionEvent), Object(LivingPlant), Object(BotanicalObject))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/create.php(24): CController->renderPartial('_form', Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('create', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(112): CController->render('create', Array)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/cre...')
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#26 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#27 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
