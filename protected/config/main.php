@@ -52,6 +52,22 @@ return array(
             'password' => 'jacq_input',
             'charset' => 'utf8',
         ),
+        'dbHerbarInput' => array(
+            'connectionString' => 'mysql:host=localhost;dbname=herbarinput',
+            'emulatePrepare' => true,
+            'username' => 'herbarinput',
+            'password' => 'herbarinput',
+            'charset' => 'utf8',
+            'class' => 'CDbConnection'
+        ),
+        'dbHerbarView' => array(
+            'connectionString' => 'mysql:host=localhost;dbname=herbar_view',
+            'emulatePrepare' => true,
+            'username' => 'herbarinput',
+            'password' => 'herbarinput',
+            'charset' => 'utf8',
+            'class' => 'CDbConnection'
+        ),
         'errorHandler' => array(
             // use 'site/error' action to display errors
             'errorAction' => 'site/error',

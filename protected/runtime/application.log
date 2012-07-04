@@ -535,3 +535,231 @@ Stack trace:
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=site/livingPlant
 HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php
 ---
+2012/06/27 05:27:24 [error] [exception.CException] exception 'CException' with message 'CWebApplication and its behaviors do not have a method or closure named "dbHerbarInput".' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:266
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php(10): CComponent->__call('dbHerbarInput', Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php(10): CWebApplication->dbHerbarInput()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php(41): AutoCompleteController->getDbHerbarInput()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionTaxon()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('taxon')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('autoComplete/ta...')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=autoComplete/taxon&term=lala
+---
+2012/06/27 05:28:02 [error] [exception.CException] exception 'CException' with message 'Object configuration must be an array containing a "class" element.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/YiiBase.php:195
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CModule.php(387): YiiBase::createComponent(Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CModule.php(104): CModule->getComponent('dbHerbarInput')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php(10): CModule->__get('dbHerbarInput')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php(41): AutoCompleteController->getDbHerbarInput()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionTaxon()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('taxon')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('autoComplete/ta...')
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#16 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#17 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=autoComplete/taxon&term=lala
+---
+2012/06/27 05:28:47 [error] [php] Undefined offset: 0 (/var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:1416)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php(53): CDbCommand->where()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionTaxon()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): AutoCompleteController->runAction()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CAccessControlFilter->filter()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): AutoCompleteController->filterAccessControl()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): AutoCompleteController->runActionWithFilters()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): AutoCompleteController->run()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=autoComplete/taxon&term=lala
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php (53)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/27 05:49:55 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'Ano' in 'where clause'. The SQL statement executed was: SELECT `ts`.`taxonID`
+FROM `tbl_tax_species` `ts`
+LEFT JOIN `tbl_tax_epithets` `te0` ON te0.epithetID = ts.speciesID
+LEFT JOIN `tbl_tax_epithets` `te1` ON te1.epithetID = ts.subspeciesID
+LEFT JOIN `tbl_tax_epithets` `te2` ON te2.epithetID = ts.varietyID
+LEFT JOIN `tbl_tax_epithets` `te3` ON te3.epithetID = ts.subvarietyID
+LEFT JOIN `tbl_tax_epithets` `te4` ON te4.epithetID = ts.formaID
+LEFT JOIN `tbl_tax_epithets` `te5` ON te5.epithetID = ts.subformaID
+LEFT JOIN `tbl_tax_genera` `tg` ON tg.genID = ts.genID
+WHERE (ts.external IS NULL) AND (tg.genus LIKE Ano).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php (56)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/27 05:49:55 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'Ano' in 'where clause'. The SQL statement executed was: SELECT `ts`.`taxonID`
+FROM `tbl_tax_species` `ts`
+LEFT JOIN `tbl_tax_epithets` `te0` ON te0.epithetID = ts.speciesID
+LEFT JOIN `tbl_tax_epithets` `te1` ON te1.epithetID = ts.subspeciesID
+LEFT JOIN `tbl_tax_epithets` `te2` ON te2.epithetID = ts.varietyID
+LEFT JOIN `tbl_tax_epithets` `te3` ON te3.epithetID = ts.subvarietyID
+LEFT JOIN `tbl_tax_epithets` `te4` ON te4.epithetID = ts.formaID
+LEFT JOIN `tbl_tax_epithets` `te5` ON te5.epithetID = ts.subformaID
+LEFT JOIN `tbl_tax_genera` `tg` ON tg.genID = ts.genID
+WHERE (ts.external IS NULL) AND (tg.genus LIKE Ano)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php(56): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionTaxon()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('taxon')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('autoComplete/ta...')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#14 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=autoComplete/taxon&term=Ano
+---
+2012/06/27 05:50:12 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 10. The SQL statement executed was: SELECT `ts`.`taxonID`
+FROM `tbl_tax_species` `ts`
+LEFT JOIN `tbl_tax_epithets` `te0` ON te0.epithetID = ts.speciesID
+LEFT JOIN `tbl_tax_epithets` `te1` ON te1.epithetID = ts.subspeciesID
+LEFT JOIN `tbl_tax_epithets` `te2` ON te2.epithetID = ts.varietyID
+LEFT JOIN `tbl_tax_epithets` `te3` ON te3.epithetID = ts.subvarietyID
+LEFT JOIN `tbl_tax_epithets` `te4` ON te4.epithetID = ts.formaID
+LEFT JOIN `tbl_tax_epithets` `te5` ON te5.epithetID = ts.subformaID
+LEFT JOIN `tbl_tax_genera` `tg` ON tg.genID = ts.genID
+WHERE Array'.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php (56)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/27 05:50:12 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 10. The SQL statement executed was: SELECT `ts`.`taxonID`
+FROM `tbl_tax_species` `ts`
+LEFT JOIN `tbl_tax_epithets` `te0` ON te0.epithetID = ts.speciesID
+LEFT JOIN `tbl_tax_epithets` `te1` ON te1.epithetID = ts.subspeciesID
+LEFT JOIN `tbl_tax_epithets` `te2` ON te2.epithetID = ts.varietyID
+LEFT JOIN `tbl_tax_epithets` `te3` ON te3.epithetID = ts.subvarietyID
+LEFT JOIN `tbl_tax_epithets` `te4` ON te4.epithetID = ts.formaID
+LEFT JOIN `tbl_tax_epithets` `te5` ON te5.epithetID = ts.subformaID
+LEFT JOIN `tbl_tax_genera` `tg` ON tg.genID = ts.genID
+WHERE Array'' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php(56): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionTaxon()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('taxon')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('autoComplete/ta...')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#14 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=autoComplete/taxon&term=Ano
+---
+2012/06/27 05:51:52 [error] [exception.CDbException] exception 'CDbException' with message 'The DB query must contain the "from" portion.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:550
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(161): CDbCommand->buildQuery(Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(473): CDbCommand->getText()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php(65): CDbCommand->queryAll()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionTaxon()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('taxon')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('autoComplete/ta...')
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#16 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#17 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=autoComplete/taxon&term=Ano
+---
+2012/06/27 05:52:05 [error] [php] PDOStatement::execute() expects parameter 1 to be array, string given (/var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:336)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionTaxon()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): AutoCompleteController->runAction()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CAccessControlFilter->filter()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): AutoCompleteController->filterAccessControl()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): AutoCompleteController->runActionWithFilters()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): AutoCompleteController->run()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=autoComplete/taxon&term=Ano
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php (64)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/27 05:54:35 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'GetScientificName( '104', 0 ) AS 'ScientificName'' at line 1. The SQL statement executed was: GetScientificName( :taxonID, 0 ) AS 'ScientificName'.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php (64)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/27 05:54:35 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'GetScientificName( '104', 0 ) AS 'ScientificName'' at line 1. The SQL statement executed was: GetScientificName( :taxonID, 0 ) AS 'ScientificName'' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php(64): CDbCommand->execute(Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionTaxon()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('taxon')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('autoComplete/ta...')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=autoComplete/taxon&term=Ano
+---
+2012/06/27 05:56:54 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '104' at line 1. The SQL statement executed was: 104.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php (64)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/06/27 05:56:54 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '104' at line 1. The SQL statement executed was: 104' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php(64): CDbCommand->execute(Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionTaxon()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('taxon')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('autoComplete/ta...')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=autoComplete/taxon&term=Ano
+---

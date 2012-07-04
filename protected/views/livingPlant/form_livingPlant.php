@@ -6,13 +6,13 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model_livingPlant,'accession_number'); ?>
-		<?php echo $form->textField($model_livingPlant,'accession_number',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->textField($model_livingPlant,'accession_number',array( 'size'=>20,'maxlength'=>20)); ?>
 		<?php echo $form->error($model_livingPlant,'accession_number'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model_livingPlant,'ipen_number'); ?>
-		<?php echo $form->textField($model_livingPlant,'ipen_number',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->textField($model_livingPlant,'ipen_number',array( 'size'=>20,'maxlength'=>20)); ?>
 		<?php echo $form->error($model_livingPlant,'ipen_number'); ?>
 	</div>
 

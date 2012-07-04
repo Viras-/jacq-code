@@ -30,6 +30,15 @@ class LivingPlant extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public function init() {
+            parent::init();
+            
+            if( $this->isNewRecord ) {
+                $this->accession_number = date( "Y" ) . '-00000-001';
+                $this->ipen_number = "XX-X-WU-" . $this->accession_number;
+            }
+        }
 
 	/**
 	 * @return string the associated database table name

@@ -9,13 +9,26 @@
 
 	<?php echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject); ?>
         
+        <fieldset>
+            <legend>acquisition</legend>
         <?php
         require('form_acquisitionDate.php');
         require('form_acquisitionEvent.php');
+        ?>
+        </fieldset>
+        <fieldset>
+            <legend>separation</legend>
+        <?php
         require('form_separation.php');
+        ?>
+        </fieldset>
+        <fieldset>
+            <legend>living plant</legend>
+        <?php
         require('form_botanicalObject.php');
         require('form_livingPlant.php');
         ?>
+        </fieldset>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save'); ?>
