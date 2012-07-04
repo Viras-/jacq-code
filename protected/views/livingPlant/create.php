@@ -22,17 +22,3 @@ echo $this->renderPartial('_form', array(
     'model_accessionNumber' => $model_accessionNumber
         )
 );
-
-// Enable auto-completer for taxon field
-$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-    'name' => 'scientificName',
-    'sourceUrl' => 'index.php?r=autoComplete/taxon',
-    // additional javascript options for the autocomplete plugin
-    'options' => array(
-        'minLength' => '2',
-        'change' => "js:function( event, ui ) { $( '#BotanicalObject_taxon_id' ).val( ui.item.id ); }"
-    ),
-    'htmlOptions' => array(
-        'style' => 'height:20px;'
-    ),
-));
