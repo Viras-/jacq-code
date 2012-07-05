@@ -8,7 +8,11 @@
         // additional javascript options for the autocomplete plugin
         'options' => array(
             'minLength' => '2',
-            'change' => "js:function( event, ui ) { $( '#BotanicalObject_taxon_id' ).val( ui.item.id ); }"
+            'change' => 'js:function( event, ui ) {
+                    if( typeof ui.item !== "undefined" ) {
+                        $( "#BotanicalObject_taxon_id" ).val( ui.item.id );
+                    }
+                }',
         ),
         'value' => $model_botanicalObject->getScientificName()
         /*'htmlOptions' => array(

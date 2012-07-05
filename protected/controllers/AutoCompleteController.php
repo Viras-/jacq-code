@@ -23,12 +23,18 @@ class AutoCompleteController extends Controller {
      * @param int $taxonID
      * @return string 
      */
-    public function getTaxonName( $taxonID ) {
+    private function getTaxonName( $taxonID ) {
         $dbHerbarView = $this->getDbHerbarView();
         $command = $dbHerbarView->createCommand("SELECT GetScientificName( " . $taxonID . ", 0 ) AS 'ScientificName'");
         $scientificNames = $command->queryAll();
         
         return $scientificNames[0]['ScientificName'];
+    }
+    
+    private function serviceOutput( $output ) {
+        header( 'Content-type: application/json' );
+        echo CJSON::encode($output);
+        Yii::app()->end();
     }
 
     /**
@@ -82,10 +88,9 @@ class AutoCompleteController extends Controller {
                     );
             }
         }
-        
-        header( 'Content-type: application/json' );
-        echo CJSON::encode($results);
-        Yii::app()->end();
+
+        // Output results as service response
+        $this->serviceOutput($results);
     }
     
     /**
