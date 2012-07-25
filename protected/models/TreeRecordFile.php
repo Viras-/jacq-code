@@ -12,86 +12,88 @@
  * The followings are the available model relations:
  * @property TreeRecordFilePage[] $treeRecordFilePages
  */
-class TreeRecordFile extends CActiveRecord
-{
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return TreeRecordFile the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+class TreeRecordFile extends CActiveRecord {
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'tbl_tree_record_file';
-	}
+    /**
+     * Holds name of uploaded file
+     * @var string 
+     */
+    public $fileName;
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('year', 'length', 'max'=>4),
-			array('name', 'length', 'max'=>45),
-			array('document_number', 'length', 'max'=>20),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, year, name, document_number', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @param string $className active record class name.
+     * @return TreeRecordFile the static model class
+     */
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'treeRecordFilePages' => array(self::HAS_MANY, 'TreeRecordFilePage', 'tree_record_file_id'),
-		);
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return 'tbl_tree_record_file';
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'year' => 'Year',
-			'name' => 'Name',
-			'document_number' => 'Document Number',
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('year', 'length', 'max' => 4),
+            array('name', 'length', 'max' => 45),
+            array('fileName', 'file', 'types' => 'pdf'),
+            array('document_number', 'length', 'max' => 20),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('id, year, name, document_number', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * @return array relational rules.
+     */
+    public function relations() {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'treeRecordFilePages' => array(self::HAS_MANY, 'TreeRecordFilePage', 'tree_record_file_id'),
+        );
+    }
 
-		$criteria=new CDbCriteria;
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'id' => 'ID',
+            'year' => 'Year',
+            'name' => 'Name',
+            'document_number' => 'Document Number',
+        );
+    }
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('year',$this->year,true);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('document_number',$this->document_number,true);
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search() {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id', $this->id);
+        $criteria->compare('year', $this->year, true);
+        $criteria->compare('name', $this->name, true);
+        $criteria->compare('document_number', $this->document_number, true);
+
+        return new CActiveDataProvider($this, array(
+                    'criteria' => $criteria,
+                ));
+    }
+
 }
