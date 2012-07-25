@@ -59,9 +59,6 @@ class TreeRecordFileController extends Controller {
     public function actionCreate() {
         $model = new TreeRecordFile;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['TreeRecordFile'])) {
             $model->attributes = $_POST['TreeRecordFile'];
             $model->fileName = CUploadedFile::getInstance($model, 'fileName');
@@ -91,6 +88,12 @@ class TreeRecordFileController extends Controller {
                     // Now extract each page
                     for( $i = 1; $i <= $page_count; $i++ ) {
                         exec( $pdftk . ' ' . $model->fileName->getTempName() . ' cat ' . $i . ' output ' . $treeRecordFolder . $i . '.pdf');
+                        
+                        // Create new page record for extracted page
+                        $treeRecordFilePage = new TreeRecordFilePage();
+                        $treeRecordFilePage->tree_record_file_id = $model->id;
+                        $treeRecordFilePage->page = $i;
+                        $treeRecordFilePage->save();
                     }
                 }
                 

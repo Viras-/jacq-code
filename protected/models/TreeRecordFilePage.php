@@ -7,7 +7,6 @@
  * @property integer $id
  * @property integer $tree_record_file_id
  * @property integer $page
- * @property string $file
  *
  * The followings are the available model relations:
  * @property TreeRecord[] $treeRecords
@@ -41,11 +40,11 @@ class TreeRecordFilePage extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tree_record_file_id, file', 'required'),
+			array('tree_record_file_id', 'required'),
 			array('tree_record_file_id, page', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, tree_record_file_id, page, file', 'safe', 'on'=>'search'),
+			array('id, tree_record_file_id, page', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,7 +70,6 @@ class TreeRecordFilePage extends CActiveRecord
 			'id' => 'ID',
 			'tree_record_file_id' => 'Tree Record File',
 			'page' => 'Page',
-			'file' => 'File',
 		);
 	}
 
@@ -89,7 +87,6 @@ class TreeRecordFilePage extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('tree_record_file_id',$this->tree_record_file_id);
 		$criteria->compare('page',$this->page);
-		$criteria->compare('file',$this->file,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

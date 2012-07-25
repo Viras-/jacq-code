@@ -1242,3 +1242,28 @@ Stack trace:
 REQUEST_URI=/NetBeans/jacq-yii/index.php?r=treeRecordFile/create
 in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/TreeRecordFileController.php (89)
 in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php (13)
+2012/07/25 17:09:53 [error] [exception.CException] exception 'CException' with message 'Property "TreeRecordFilePage.file" is not defined.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('file')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CRequiredValidator.php(52): CActiveRecord->__get('file')
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CValidator.php(197): CRequiredValidator->validateAttribute(Object(TreeRecordFilePage), 'file')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CModel.php(158): CValidator->validate(Object(TreeRecordFilePage), NULL)
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(786): CModel->validate(NULL)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/TreeRecordFileController.php(98): CActiveRecord->save()
+#6 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): TreeRecordFileController->actionCreate()
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('treeRecordFile/...')
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=treeRecordFile/create
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=treeRecordFile/create
+---
