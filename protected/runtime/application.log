@@ -1154,3 +1154,40 @@ Stack trace:
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
 HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/admin
 ---
+2012/07/25 13:17:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "ajax_updateTreeRecordPages".' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php:484
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(271): CController->missingAction('ajax_updateTree...')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('ajax_updateTree...')
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/aja...')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/ajax_updateTreeRecordPages&_=1343215060996
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/create
+---
+2012/07/25 16:01:05 [error] [exception.CException] exception 'CException' with message 'LivingPlantController contains improperly nested widget tags in its view "/home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/_form.php". A CActiveForm widget does not have an endWidget() call.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php:102
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/home/wkoller/D...', Array, true)
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/create.php(24): CController->renderPartial('_form', Array)
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/home/wkoller/D...')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/home/wkoller/D...', Array, true)
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/home/wkoller/D...', Array, true)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('create', Array, true)
+#6 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php(112): CController->render('create', Array)
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/cre...')
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#19 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#20 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/create
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant
+---

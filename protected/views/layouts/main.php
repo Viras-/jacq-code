@@ -30,6 +30,7 @@
 			'items'=>array(
 				array('label'=>'Living Plant', 'url'=>array('/livingPlant'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Sites', 'url'=>array('/gardenSite'), 'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>'Tree Records', 'url'=>array('/treeRecordFile'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
