@@ -46,12 +46,20 @@
                                 <td>
                                     <?php
                                     // Create view button for each page
-                                    $gridViewAssetsUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('zii.widgets.assets'));
                                     echo CHtml::button(
                                             'view', array(
                                                 'type' => 'image',
-                                                'src' => $gridViewAssetsUrl . '/gridview/view.png',
+                                                'src' => 'images/page_green.png',
                                                 'onclick' => "$('#tree_record_view_dialog_iframe').attr( 'src', '" . $this->createUrl( 'livingPlant/treeRecordFilePageView', array( 'tree_record_file_page_id' => $model_treeRecordFilePage->id ) ) . "' ); $( '#tree_record_view_dialog' ).dialog( 'open' ); return false;"
+                                            )
+                                    );
+
+                                    // Create download button for each page
+                                    echo CHtml::button(
+                                            'view', array(
+                                                'type' => 'image',
+                                                'src' => 'images/page_save.png',
+                                                'onclick' => "$('#tree_record_download_iframe').attr( 'src', '" . $this->createUrl( 'livingPlant/treeRecordFilePageView', array( 'tree_record_file_page_id' => $model_treeRecordFilePage->id, 'download' => '1' ) ) . "' ); return false;"
                                             )
                                     );
                                     ?>

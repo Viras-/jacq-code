@@ -271,6 +271,7 @@ class LivingPlantController extends Controller {
      */
     public function actionTreeRecordFilePageView() {
         $tree_record_file_page_id = intval($_GET['tree_record_file_page_id']);
+        $content_disposition = (isset($_GET['download'])) ? 'attachment' : 'inline';
 
         $model_treeRecordFilePage = TreeRecordFilePage::model()->findByPk($tree_record_file_page_id);
         if ($model_treeRecordFilePage != null) {
@@ -281,7 +282,7 @@ class LivingPlantController extends Controller {
 
                 // Send correct HTTP headers
                 header('Content-type: application/pdf');
-                header('Content-Disposition: inline; filename="' . $model_treeRecordFile->name . '"');
+                header('Content-Disposition: ' . $content_disposition . '; filename="' . $model_treeRecordFile->name . '_' . $model_treeRecordFilePage->page . '.pdf"');
                 header('Content-Length: ' . filesize($filePath));
 
                 readfile($filePath);

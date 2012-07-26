@@ -62,7 +62,8 @@ class TreeRecordFileController extends Controller {
         if (isset($_POST['TreeRecordFile'])) {
             $model->attributes = $_POST['TreeRecordFile'];
             $model->fileName = CUploadedFile::getInstance($model, 'fileName');
-            $model->name = $model->fileName->getName();
+            $pathInfo = pathinfo($model->fileName->getName());
+            $model->name = $pathInfo['filename'];
             if ($model->save()) {
                 // Extract all pages
                 $pdftk = "/usr/bin/pdftk";

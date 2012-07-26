@@ -63,4 +63,5 @@
     <?php
     $this->endWidget('zii.widgets.jui.CJuiDialog');
     ?>
+    <iframe id="tree_record_download_iframe" scrolling="no" src="about:blank" style="display: none;">No iFrame support in your browser</iframe>
 </div><!-- form -->
