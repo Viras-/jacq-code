@@ -83,7 +83,7 @@ class TreeRecordFileController extends Controller {
                 if( $page_count > 0 ) {
                     // Create folder on file-system for individual pages
                     $treeRecordFolder = Yii::app()->basePath . '/uploads/treeRecords/' . $model->id . '/';
-                    mkdir($treeRecordFolder);
+                    if( !is_dir($treeRecordFolder) ) mkdir($treeRecordFolder);
                     
                     // Now extract each page
                     for( $i = 1; $i <= $page_count; $i++ ) {

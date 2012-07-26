@@ -29,7 +29,7 @@ class LivingPlantController extends Controller {
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
+                'actions' => array('create', 'update', 'treeRecordFilePages'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -63,9 +63,7 @@ class LivingPlantController extends Controller {
         $model_livingPlant = new LivingPlant;
         $model_botanicalObject = new BotanicalObject;
         $model_accessionNumber = new AccessionNumber;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+        $model_livingPlantTreeRecordFilePage = new LivingPlantTreeRecordFilePage;
 
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['AccessionNumber'])) {
             $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
@@ -91,8 +89,18 @@ class LivingPlantController extends Controller {
 
                             if ($model_accessionNumber->save()) {
                                 $model_livingPlant->accession_number_id = $model_accessionNumber->id;
-
+                                
                                 if ($model_livingPlant->save()) {
+                                    // Check if a tree record was selected and add it if necessary
+                                    $tree_record_file_page_id = intval($_POST['TreeRecord']['tree_record_file_page_id']);
+                                    if($tree_record_file_page_id > 0) {
+                                        $model_livingPlantTreeRecordFilePage->tree_record_file_page_id = $tree_record_file_page_id;
+                                        $model_livingPlantTreeRecordFilePage->living_plant_id = $model_livingPlant->id;
+                                        $model_livingPlantTreeRecordFilePage->result = $_POST['TreeRecord']['result'];
+                                        
+                                        $model_livingPlantTreeRecordFilePage->save();
+                                    }
+                                    
                                     $this->redirect(array('view', 'id' => $model_livingPlant->id));
                                 }
                             }
@@ -108,7 +116,7 @@ class LivingPlantController extends Controller {
             'model_separation' => $model_separation,
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject,
-            'model_accessionNumber' => $model_accessionNumber
+            'model_accessionNumber' => $model_accessionNumber,
         ));
     }
 
@@ -169,7 +177,7 @@ class LivingPlantController extends Controller {
             'model_separation' => $model_separation,
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject,
-            'model_accessionNumber' => $model_accessionNumber
+            'model_accessionNumber' => $model_accessionNumber,
         ));
     }
 
@@ -213,6 +221,18 @@ class LivingPlantController extends Controller {
         $this->render('admin', array(
             'model' => $model,
         ));
+    }
+
+    /**
+     * Update drop down list for available pages 
+     */
+    public function actionTreeRecordFilePages() {
+        $data = TreeRecordFilePage::model()->findAll('tree_record_file_id=:tree_record_file_id', array(':tree_record_file_id' => intval($_POST['TreeRecord']['tree_record_file_id'])));
+
+        $data = CHtml::listData($data, 'id', 'page');
+        foreach ($data as $value => $name) {
+            echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
+        }
     }
 
     /**

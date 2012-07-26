@@ -8,7 +8,6 @@
  * @property integer $garden_site_id
  * @property string $ipen_number
  * @property integer $phyto_control
- * @property integer $tree_record_id
  * @property string $phyto_sanitary_product_number
  * @property integer $accession_number_id
  *

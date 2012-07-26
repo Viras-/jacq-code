@@ -26,19 +26,7 @@
 </div>
 
 <div class="row">
-    <?php echo $form->labelEx($model_livingPlant, 'tree_record_id'); ?>
-    <?php
-    echo $form->dropDownList(
-            $model_livingPlant, 'tree_record_id', CHtml::listData(TreeRecordFile::model()->findAll(), 'id', 'name'), array('onchange' => "js:function(event, ui) {
-                    
-                }")
-    );
-    ?>
-    <?php echo $form->error($model_livingPlant, 'tree_record_id'); ?>
-</div>
-
-<div class="row">
-<?php echo $form->labelEx($model_livingPlant, 'phyto_sanitary_product_number'); ?>
-    <?php echo $form->textField($model_livingPlant, 'phyto_sanitary_product_number', array('size' => 20, 'maxlength' => 20)); ?>
-    <?php echo $form->error($model_livingPlant, 'phyto_sanitary_product_number'); ?>
+    <?php echo $form->labelEx($model_livingPlant, 'phyto_sanitary_product_number'); ?>
+<?php echo $form->textField($model_livingPlant, 'phyto_sanitary_product_number', array('size' => 20, 'maxlength' => 20)); ?>
+<?php echo $form->error($model_livingPlant, 'phyto_sanitary_product_number'); ?>
 </div>
