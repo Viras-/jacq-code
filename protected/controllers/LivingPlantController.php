@@ -97,7 +97,6 @@ class LivingPlantController extends Controller {
                                             $model_livingPlantTreeRecordFilePage = new LivingPlantTreeRecordFilePage;
                                             $model_livingPlantTreeRecordFilePage->tree_record_file_page_id = $tree_record_file_page_id;
                                             $model_livingPlantTreeRecordFilePage->living_plant_id = $model_livingPlant->id;
-                                            $model_livingPlantTreeRecordFilePage->result = $_POST['TreeRecord']['result'];
 
                                             $model_livingPlantTreeRecordFilePage->save();
                                         }
@@ -171,14 +170,30 @@ class LivingPlantController extends Controller {
 
                                         $model_livingPlantTreeRecordFilePage->tree_record_file_page_id = $tree_record_file_page_id;
                                         $model_livingPlantTreeRecordFilePage->living_plant_id = $model_livingPlant->id;
-                                        $model_livingPlantTreeRecordFilePage->result = $_POST['TreeRecord']['result'];
 
                                         $model_livingPlantTreeRecordFilePage->save();
                                     }
                                 }
+                                
+                                // Update any existing entries for tree records
+                                $LivingPlantTreeRecordFilePages = $_POST['LivingPlantTreeRecordFilePage'];
+                                foreach( $LivingPlantTreeRecordFilePages as $LivingPlantTreeRecordFilePage_id => $LivingPlantTreeRecordFilePage ) {
+                                    $LivingPlantTreeRecordFilePage_id = intval($LivingPlantTreeRecordFilePage_id);
+                                    
+                                    if( $LivingPlantTreeRecordFilePage_id > 0 ) {
+                                        $model_livingPlantTreeRecordFilePage = LivingPlantTreeRecordFilePage::model()->findByPk($LivingPlantTreeRecordFilePage_id);
+                                        
+                                        if( $model_livingPlantTreeRecordFilePage != null ) {
+                                            $model_livingPlantTreeRecordFilePage->corrections_done = isset($LivingPlantTreeRecordFilePage['corrections_done']) ? 1 : 0;
+                                            $model_livingPlantTreeRecordFilePage->corrections_date= $LivingPlantTreeRecordFilePage['corrections_date'];
+                                            
+                                            $model_livingPlantTreeRecordFilePage->save();
+                                        }
+                                    }
+                                }
 
                                 if ($model_livingPlant->save()) {
-                                    $this->redirect(array('view', 'id' => $model_livingPlant->id));
+                                    $this->redirect(array('update', 'id' => $model_livingPlant->id));
                                 }
                             }
                         }

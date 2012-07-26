@@ -7,7 +7,8 @@
  * @property integer $id
  * @property integer $living_plant_id
  * @property integer $tree_record_file_page_id
- * @property integer $result
+ * @property integer $corrections_done
+ * @property string $corrections_date
  *
  * The followings are the available model relations:
  * @property TreeRecordFilePage $treeRecordFilePage
@@ -42,10 +43,11 @@ class LivingPlantTreeRecordFilePage extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('living_plant_id, tree_record_file_page_id', 'required'),
-			array('living_plant_id, tree_record_file_page_id, result', 'numerical', 'integerOnly'=>true),
+			array('living_plant_id, tree_record_file_page_id, corrections_done', 'numerical', 'integerOnly'=>true),
+			array('corrections_date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, living_plant_id, tree_record_file_page_id, result', 'safe', 'on'=>'search'),
+			array('id, living_plant_id, tree_record_file_page_id, corrections_done, corrections_date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,7 +73,8 @@ class LivingPlantTreeRecordFilePage extends CActiveRecord
 			'id' => 'ID',
 			'living_plant_id' => 'Living Plant',
 			'tree_record_file_page_id' => 'Tree Record File Page',
-			'result' => 'Result',
+			'corrections_done' => 'Corrections Done',
+			'corrections_date' => 'Corrections Date',
 		);
 	}
 
@@ -89,7 +92,8 @@ class LivingPlantTreeRecordFilePage extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('living_plant_id',$this->living_plant_id);
 		$criteria->compare('tree_record_file_page_id',$this->tree_record_file_page_id);
-		$criteria->compare('result',$this->result);
+		$criteria->compare('corrections_done',$this->corrections_done);
+		$criteria->compare('corrections_date',$this->corrections_date,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

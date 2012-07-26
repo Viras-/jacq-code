@@ -44,7 +44,7 @@ class TreeRecordFile extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('year', 'length', 'max' => 4),
-            array('name', 'length', 'max' => 45),
+            array('name', 'length', 'max' => 255),
             array('fileName', 'file', 'types' => 'pdf'),
             array('document_number', 'length', 'max' => 20),
             // The following rule is used by search().

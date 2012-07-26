@@ -4,13 +4,13 @@
         if (!$model_livingPlant->isNewRecord) {
             ?>
             <tr>
-                <td colspan="3">
+                <td colspan="2">
                     <table style="width: auto;">
                         <tr>
                             <th>year</th>
                             <th>name</th>
                             <th>page</th>
-                            <th>result</th>
+                            <th>corrections done</th>
                             <th></th>
                         </tr>
                         <?php
@@ -24,7 +24,25 @@
                                 <td><?php echo $model_treeRecordFile->year ?></td>
                                 <td><?php echo $model_treeRecordFile->name ?></td>
                                 <td><?php echo $model_treeRecordFilePage->page ?></td>
-                                <td><?php echo $model_livingPlantTreeRecordFilePage->result ?></td>
+                                <td>
+                                    <?php echo CHtml::checkBox('LivingPlantTreeRecordFilePage[' . $model_livingPlantTreeRecordFilePage->id . '][corrections_done]', $model_livingPlantTreeRecordFilePage->corrections_done); ?>
+                                    <?php
+                                    $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                                        'name' => 'LivingPlantTreeRecordFilePage[' . $model_livingPlantTreeRecordFilePage->id . '][corrections_date]',
+                                        // additional javascript options for the date picker plugin
+                                        'options' => array(
+                                            'showAnim' => 'fold',
+                                            'dateFormat' => 'yy-mm-dd',
+                                            'changeMonth' => true,
+                                            'changeYear' => true
+                                        ),
+                                        'htmlOptions' => array(
+                                            'size' => 10
+                                        ),
+                                        'value' => $model_livingPlantTreeRecordFilePage->corrections_date,
+                                    ));
+                                    ?>
+                                </td>
                                 <td>
                                     <?php
                                     // Create view button for each page
@@ -74,10 +92,6 @@
             <td>
                 <?php echo $form->labelEx(TreeRecordFilePage::model(), 'page'); ?>
                 <?php echo CHtml::dropDownList('TreeRecord[tree_record_file_page_id]', '', array()); ?>
-            </td>
-            <td>
-                <?php echo $form->labelEx(LivingPlantTreeRecordFilePage::model(), 'result'); ?>
-                <?php echo CHtml::checkBox('TreeRecord[result]'); ?>
             </td>
         </tr>
     </table>
