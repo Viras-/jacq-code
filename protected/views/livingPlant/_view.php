@@ -16,10 +16,6 @@
 	<?php echo CHtml::encode($data->phyto_control); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('tree_record_id')); ?>:</b>
-	<?php echo CHtml::encode($data->tree_record_id); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('phyto_sanitary_product_number')); ?>:</b>
 	<?php echo CHtml::encode($data->phyto_sanitary_product_number); ?>
 	<br />

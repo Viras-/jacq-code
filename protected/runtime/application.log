@@ -1419,3 +1419,54 @@ Stack trace:
 REQUEST_URI=/NetBeans/jacq-yii/index.php?r=autoComplete/taxon&term=lal
 HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/create
 ---
+2012/07/26 10:43:22 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1305 FUNCTION herbar_view.GetScientificName does not exist. The SQL statement executed was: SELECT GetScientificName( 104, 0 ) AS 'ScientificName'.
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/AutoCompleteController.php (29)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/AutoCompleteController.php (81)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php (13)
+2012/07/26 10:43:22 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1305 FUNCTION herbar_view.GetScientificName does not exist. The SQL statement executed was: SELECT GetScientificName( 104, 0 ) AS 'ScientificName'' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/CDbCommand.php:528
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/AutoCompleteController.php(29): CDbCommand->queryAll()
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/AutoCompleteController.php(81): AutoCompleteController->getTaxonName('104')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionTaxon()
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('taxon')
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('autoComplete/ta...')
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=autoComplete/taxon&term=act
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/create
+---
+2012/07/26 10:46:44 [error] [exception.CException] exception 'CException' with message 'Property "LivingPlant.tree_record_id" is not defined.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('tree_record_id')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CNumberValidator.php(79): CActiveRecord->__get('tree_record_id')
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CValidator.php(197): CNumberValidator->validateAttribute(Object(LivingPlant), 'tree_record_id')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CModel.php(158): CValidator->validate(Object(LivingPlant), NULL)
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(786): CModel->validate(NULL)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php(93): CActiveRecord->save()
+#6 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/cre...')
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/create
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/create
+---

@@ -26,11 +26,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'tree_record_id'); ?>
-		<?php echo $form->textField($model,'tree_record_id'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'phyto_sanitary_product_number'); ?>
 		<?php echo $form->textField($model,'phyto_sanitary_product_number',array('size'=>20,'maxlength'=>20)); ?>
 	</div>

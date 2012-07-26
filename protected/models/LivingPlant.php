@@ -56,11 +56,11 @@ class LivingPlant extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('id, accession_number_id', 'required'),
-			array('id, garden_site_id, phyto_control, tree_record_id, accession_number_id', 'numerical', 'integerOnly'=>true),
+			array('id, garden_site_id, phyto_control, accession_number_id', 'numerical', 'integerOnly'=>true),
 			array('ipen_number, phyto_sanitary_product_number', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, garden_site_id, ipen_number, phyto_control, tree_record_id, phyto_sanitary_product_number, accession_number_id', 'safe', 'on'=>'search'),
+			array('id, garden_site_id, ipen_number, phyto_control, phyto_sanitary_product_number, accession_number_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -75,7 +75,6 @@ class LivingPlant extends CActiveRecord
 			'citesNumbers' => array(self::HAS_MANY, 'CitesNumber', 'livingplant_id'),
 			'id0' => array(self::BELONGS_TO, 'BotanicalObject', 'id'),
 			'gardenSite' => array(self::BELONGS_TO, 'GardenSite', 'garden_site_id'),
-			'treeRecord' => array(self::BELONGS_TO, 'TreeRecord', 'tree_record_id'),
 			'accessionNumber' => array(self::BELONGS_TO, 'AccessionNumber', 'accession_number_id'),
 			'relevancies' => array(self::HAS_MANY, 'Relevancy', 'livingplant_id'),
 		);
@@ -91,7 +90,6 @@ class LivingPlant extends CActiveRecord
 			'garden_site_id' => 'Garden Site',
 			'ipen_number' => 'Ipen Number',
 			'phyto_control' => 'Phyto Control',
-			'tree_record_id' => 'Tree Record',
 			'phyto_sanitary_product_number' => 'Phyto Sanitary Product Number',
 			'accession_number_id' => 'Accession Number',
 		);
@@ -112,7 +110,6 @@ class LivingPlant extends CActiveRecord
 		$criteria->compare('garden_site_id',$this->garden_site_id);
 		$criteria->compare('ipen_number',$this->ipen_number,true);
 		$criteria->compare('phyto_control',$this->phyto_control);
-		$criteria->compare('tree_record_id',$this->tree_record_id);
 		$criteria->compare('phyto_sanitary_product_number',$this->phyto_sanitary_product_number,true);
 		$criteria->compare('accession_number_id',$this->accession_number_id);
 

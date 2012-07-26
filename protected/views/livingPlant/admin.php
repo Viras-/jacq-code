@@ -50,7 +50,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'accession_number_id',
         'ipen_number',
         'phyto_control',
-        'tree_record_id',
         /*
           'phyto_sanitary_product_number',
          */
