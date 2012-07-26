@@ -29,7 +29,7 @@ class LivingPlantController extends Controller {
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'treeRecordFilePages'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -63,7 +63,6 @@ class LivingPlantController extends Controller {
         $model_livingPlant = new LivingPlant;
         $model_botanicalObject = new BotanicalObject;
         $model_accessionNumber = new AccessionNumber;
-        $model_livingPlantTreeRecordFilePage = new LivingPlantTreeRecordFilePage;
 
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['AccessionNumber'])) {
             $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
@@ -89,18 +88,21 @@ class LivingPlantController extends Controller {
 
                             if ($model_accessionNumber->save()) {
                                 $model_livingPlant->accession_number_id = $model_accessionNumber->id;
-                                
+
                                 if ($model_livingPlant->save()) {
                                     // Check if a tree record was selected and add it if necessary
-                                    $tree_record_file_page_id = intval($_POST['TreeRecord']['tree_record_file_page_id']);
-                                    if($tree_record_file_page_id > 0) {
-                                        $model_livingPlantTreeRecordFilePage->tree_record_file_page_id = $tree_record_file_page_id;
-                                        $model_livingPlantTreeRecordFilePage->living_plant_id = $model_livingPlant->id;
-                                        $model_livingPlantTreeRecordFilePage->result = $_POST['TreeRecord']['result'];
-                                        
-                                        $model_livingPlantTreeRecordFilePage->save();
+                                    if (isset($_POST['TreeRecord']['tree_record_file_page_id'])) {
+                                        $tree_record_file_page_id = intval($_POST['TreeRecord']['tree_record_file_page_id']);
+                                        if ($tree_record_file_page_id > 0) {
+                                            $model_livingPlantTreeRecordFilePage = new LivingPlantTreeRecordFilePage;
+                                            $model_livingPlantTreeRecordFilePage->tree_record_file_page_id = $tree_record_file_page_id;
+                                            $model_livingPlantTreeRecordFilePage->living_plant_id = $model_livingPlant->id;
+                                            $model_livingPlantTreeRecordFilePage->result = $_POST['TreeRecord']['result'];
+
+                                            $model_livingPlantTreeRecordFilePage->save();
+                                        }
                                     }
-                                    
+
                                     $this->redirect(array('view', 'id' => $model_livingPlant->id));
                                 }
                             }
@@ -160,6 +162,20 @@ class LivingPlantController extends Controller {
 
                             if ($model_accessionNumber->save()) {
                                 $model_livingPlant->accession_number_id = $model_accessionNumber->id;
+
+                                // Check if a tree record was selected and add it if necessary
+                                if (isset($_POST['TreeRecord']['tree_record_file_page_id'])) {
+                                    $tree_record_file_page_id = intval($_POST['TreeRecord']['tree_record_file_page_id']);
+                                    if ($tree_record_file_page_id > 0) {
+                                        $model_livingPlantTreeRecordFilePage = new LivingPlantTreeRecordFilePage;
+
+                                        $model_livingPlantTreeRecordFilePage->tree_record_file_page_id = $tree_record_file_page_id;
+                                        $model_livingPlantTreeRecordFilePage->living_plant_id = $model_livingPlant->id;
+                                        $model_livingPlantTreeRecordFilePage->result = $_POST['TreeRecord']['result'];
+
+                                        $model_livingPlantTreeRecordFilePage->save();
+                                    }
+                                }
 
                                 if ($model_livingPlant->save()) {
                                     $this->redirect(array('view', 'id' => $model_livingPlant->id));
@@ -232,6 +248,31 @@ class LivingPlantController extends Controller {
         $data = CHtml::listData($data, 'id', 'page');
         foreach ($data as $value => $name) {
             echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
+        }
+    }
+
+    /**
+     * Download & display a tree record file page 
+     */
+    public function actionTreeRecordFilePageView() {
+        $tree_record_file_page_id = intval($_GET['tree_record_file_page_id']);
+
+        $model_treeRecordFilePage = TreeRecordFilePage::model()->findByPk($tree_record_file_page_id);
+        if ($model_treeRecordFilePage != null) {
+            $model_treeRecordFile = TreeRecordFile::model()->findByPk($model_treeRecordFilePage->tree_record_file_id);
+
+            if ($model_treeRecordFile != null) {
+                $filePath = Yii::app()->basePath . '/uploads/treeRecords/' . $model_treeRecordFile->id . '/' . $model_treeRecordFilePage->page . '.pdf';
+
+                // Send correct HTTP headers
+                header('Content-type: application/pdf');
+                header('Content-Disposition: inline; filename="' . $model_treeRecordFile->name . '"');
+                header('Content-Length: ' . filesize($filePath));
+
+                readfile($filePath);
+
+                exit(0);
+            }
         }
     }
 

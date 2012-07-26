@@ -11,6 +11,7 @@
                             <th>name</th>
                             <th>page</th>
                             <th>result</th>
+                            <th></th>
                         </tr>
                         <?php
                         $models_livingPlantTreeRecordFilePage = LivingPlantTreeRecordFilePage::model()->findAll('living_plant_id=:living_plant_id', array(':living_plant_id' => $model_livingPlant->id));
@@ -24,6 +25,19 @@
                                 <td><?php echo $model_treeRecordFile->name ?></td>
                                 <td><?php echo $model_treeRecordFilePage->page ?></td>
                                 <td><?php echo $model_livingPlantTreeRecordFilePage->result ?></td>
+                                <td>
+                                    <?php
+                                    // Create view button for each page
+                                    $gridViewAssetsUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('zii.widgets.assets'));
+                                    echo CHtml::button(
+                                            'view', array(
+                                                'type' => 'image',
+                                                'src' => $gridViewAssetsUrl . '/gridview/view.png',
+                                                'onclick' => "$('#tree_record_view_dialog_iframe').attr( 'src', '" . $this->createUrl( 'livingPlant/treeRecordFilePageView', array( 'tree_record_file_page_id' => $model_treeRecordFilePage->id ) ) . "' ); $( '#tree_record_view_dialog' ).dialog( 'open' ); return false;"
+                                            )
+                                    );
+                                    ?>
+                                </td>
                             </tr>
                             <?php
                         }
@@ -36,6 +50,7 @@
         ?>
         <tr>
             <td>
+                <?php echo $form->labelEx(TreeRecordFile::model(), 'name'); ?>
                 <?php
                 // Find all available files
                 $treeRecordFiles = TreeRecordFile::model()->findAll(array('order' => 'year'));
@@ -57,9 +72,11 @@
                 ?>
             </td>
             <td>
+                <?php echo $form->labelEx(TreeRecordFilePage::model(), 'page'); ?>
                 <?php echo CHtml::dropDownList('TreeRecord[tree_record_file_page_id]', '', array()); ?>
             </td>
             <td>
+                <?php echo $form->labelEx(LivingPlantTreeRecordFilePage::model(), 'result'); ?>
                 <?php echo CHtml::checkBox('TreeRecord[result]'); ?>
             </td>
         </tr>

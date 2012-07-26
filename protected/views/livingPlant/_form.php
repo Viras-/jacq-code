@@ -9,7 +9,7 @@
 
     <p class="note">Fields with <span class="required">*</span> are required.</p>
 
-<?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);  ?>
+    <?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);  ?>
 
     <fieldset>
         <legend>acquisition</legend>
@@ -39,8 +39,28 @@
     </fieldset>
 
     <div class="row buttons">
-    <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
 
     <?php $this->endWidget(); ?>
+
+    <?php
+// Widget for opening & displaying the PDF pages
+    $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+        'id' => 'tree_record_view_dialog',
+        // additional javascript options for the dialog plugin
+        'options' => array(
+            'title' => 'Tree Record',
+            'autoOpen' => false,
+            'resizable' => false,
+            'width' => 630,
+        ),
+    ));
+    ?>
+    
+    <iframe id="tree_record_view_dialog_iframe" scrolling="no" src="about:blank" style="width: 600px; height: 500px;">No iFrame support in your browser</iframe>
+
+    <?php
+    $this->endWidget('zii.widgets.jui.CJuiDialog');
+    ?>
 </div><!-- form -->
