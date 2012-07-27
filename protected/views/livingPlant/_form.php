@@ -46,6 +46,12 @@
         require('form_relevancy.php');
         ?>
     </fieldset>
+    <fieldset>
+        <legend>sex</legend>
+        <?php
+        require('form_sex.php');
+        ?>
+    </fieldset>
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save'); ?>

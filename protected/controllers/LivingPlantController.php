@@ -112,6 +112,16 @@ class LivingPlantController extends Controller {
                                         }
                                     }
 
+                                    // Check if a sex was selected & add it
+                                    if (isset($_POST['Sex'])) {
+                                        foreach ($_POST['Sex'] as $sex_id) {
+                                            $model_botanicalObjectSex = new BotanicalObjectSex;
+                                            $model_botanicalObjectSex->botanical_object_id = $model_livingPlant->id;
+                                            $model_botanicalObjectSex->sex_id = $sex_id;
+                                            $model_botanicalObjectSex->save();
+                                        }
+                                    }
+
                                     // Redirect to update page directly
                                     $this->redirect(array('update', 'id' => $model_livingPlant->id));
                                 }
@@ -212,7 +222,6 @@ class LivingPlantController extends Controller {
                                     ':living_plant_id' => $model_livingPlant->id,
                                         )
                                 );
-
                                 // Check if a relevancy type was selected & add it
                                 if (isset($_POST['RelevancyType'])) {
                                     foreach ($_POST['RelevancyType'] as $relevancy_type_id) {
@@ -220,6 +229,22 @@ class LivingPlantController extends Controller {
                                         $model_relevancy->living_plant_id = $model_livingPlant->id;
                                         $model_relevancy->relevancy_type_id = $relevancy_type_id;
                                         $model_relevancy->save();
+                                    }
+                                }
+
+                                // Remove all previously added sexes
+                                BotanicalObjectSex::model()->deleteAll(
+                                        'botanical_object_id=:botanical_object_id', array(
+                                    ':botanical_object_id' => $model_livingPlant->id,
+                                        )
+                                );
+                                // Check if a sex was selected & add it
+                                if (isset($_POST['Sex'])) {
+                                    foreach ($_POST['Sex'] as $sex_id) {
+                                        $model_botanicalObjectSex = new BotanicalObjectSex;
+                                        $model_botanicalObjectSex->botanical_object_id = $model_livingPlant->id;
+                                        $model_botanicalObjectSex->sex_id = $sex_id;
+                                        $model_botanicalObjectSex->save();
                                     }
                                 }
 
