@@ -37,6 +37,12 @@
         require('form_treeRecord.php');
         ?>
     </fieldset>
+    <fieldset>
+        <legend>relevancy</legend>
+        <?php
+        require('form_relevancy.php');
+        ?>
+    </fieldset>
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save'); ?>
