@@ -1699,3 +1699,254 @@ Stack trace:
 REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=2
 HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=2
 ---
+2012/07/27 09:13:13 [error] [exception.CException] exception 'CException' with message 'Property "AcquisitionDate.date" is not defined.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('date')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/form_acquisitionDate.php(19): CActiveRecord->__get('date')
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/_form.php(17): require('/home/wkoller/D...')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/home/wkoller/D...')
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/home/wkoller/D...', Array, true)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/home/wkoller/D...', Array, true)
+#6 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/update.php(28): CController->renderPartial('_form', Array)
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/home/wkoller/D...')
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/home/wkoller/D...', Array, true)
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/home/wkoller/D...', Array, true)
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('update', Array, true)
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php(244): CController->render('update', Array)
+#12 [internal function]: LivingPlantController->actionUpdate('3')
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#19 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#20 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#21 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#22 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#24 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#25 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#26 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#27 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+---
+2012/07/27 09:13:21 [error] [exception.CException] exception 'CException' with message 'Property "AcquisitionDate.date" is not defined.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('date')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/form_acquisitionDate.php(19): CActiveRecord->__get('date')
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/_form.php(17): require('/home/wkoller/D...')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/home/wkoller/D...')
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/home/wkoller/D...', Array, true)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/home/wkoller/D...', Array, true)
+#6 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/update.php(28): CController->renderPartial('_form', Array)
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/home/wkoller/D...')
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/home/wkoller/D...', Array, true)
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/home/wkoller/D...', Array, true)
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('update', Array, true)
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php(244): CController->render('update', Array)
+#12 [internal function]: LivingPlantController->actionUpdate('3')
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#19 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#20 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#21 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#22 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#24 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#25 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#26 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#27 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+---
+2012/07/27 09:13:39 [warning] [application] Failed to set unsafe attribute "date_raw" of "AcquisitionDate".
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/models/AcquisitionDate.php (115)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php (153)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php (13)
+2012/07/27 09:13:39 [error] [exception.CException] exception 'CException' with message 'Property "AcquisitionDate.date" is not defined.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('date')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CTypeValidator.php(84): CActiveRecord->__get('date')
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CValidator.php(197): CTypeValidator->validateAttribute(Object(AcquisitionDate), 'date')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CModel.php(158): CValidator->validate(Object(AcquisitionDate), NULL)
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(786): CModel->validate(NULL)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php(160): CActiveRecord->save()
+#6 [internal function]: LivingPlantController->actionUpdate('3')
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#19 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#20 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+---
+2012/07/27 09:14:14 [warning] [application] Failed to set unsafe attribute "date_raw" of "AcquisitionDate".
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/models/AcquisitionDate.php (115)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php (153)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php (13)
+2012/07/27 09:14:14 [error] [exception.CException] exception 'CException' with message 'Property "AcquisitionDate.date" is not defined.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('date')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CTypeValidator.php(84): CActiveRecord->__get('date')
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CValidator.php(197): CTypeValidator->validateAttribute(Object(AcquisitionDate), 'date')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CModel.php(158): CValidator->validate(Object(AcquisitionDate), NULL)
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(786): CModel->validate(NULL)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php(160): CActiveRecord->save()
+#6 [internal function]: LivingPlantController->actionUpdate('3')
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#19 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#20 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+---
+2012/07/27 09:15:22 [warning] [application] Failed to set unsafe attribute "date_raw" of "AcquisitionDate".
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/models/AcquisitionDate.php (115)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php (153)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php (13)
+2012/07/27 09:15:22 [error] [exception.CException] exception 'CException' with message 'Property "AcquisitionDate.date" is not defined.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('date')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CTypeValidator.php(84): CActiveRecord->__get('date')
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CValidator.php(197): CTypeValidator->validateAttribute(Object(AcquisitionDate), 'date')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CModel.php(158): CValidator->validate(Object(AcquisitionDate), NULL)
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(787): CModel->validate(NULL)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php(160): CActiveRecord->save()
+#6 [internal function]: LivingPlantController->actionUpdate('3')
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#19 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#20 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+---
+2012/07/27 09:16:06 [warning] [application] Failed to set unsafe attribute "date_raw" of "AcquisitionDate".
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/models/AcquisitionDate.php (115)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php (153)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php (13)
+2012/07/27 09:16:06 [error] [exception.CException] exception 'CException' with message 'Property "AcquisitionDate.date" is not defined.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('date')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CTypeValidator.php(84): CActiveRecord->__get('date')
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CValidator.php(197): CTypeValidator->validateAttribute(Object(AcquisitionDate), 'date')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CModel.php(158): CValidator->validate(Object(AcquisitionDate), NULL)
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(787): CModel->validate(NULL)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php(160): CActiveRecord->save()
+#6 [internal function]: LivingPlantController->actionUpdate('3')
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#19 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#20 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+---
+2012/07/27 09:18:41 [warning] [application] Failed to set unsafe attribute "date_raw" of "AcquisitionDate".
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/models/AcquisitionDate.php (115)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php (155)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php (13)
+2012/07/27 09:18:41 [error] [exception.CException] exception 'CException' with message 'Property "AcquisitionDate.date" is not defined.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('date')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CTypeValidator.php(84): CActiveRecord->__get('date')
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CValidator.php(197): CTypeValidator->validateAttribute(Object(AcquisitionDate), 'date')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CModel.php(158): CValidator->validate(Object(AcquisitionDate), NULL)
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(786): CModel->validate(NULL)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php(162): CActiveRecord->save()
+#6 [internal function]: LivingPlantController->actionUpdate('3')
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#19 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#20 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+---
+2012/07/27 09:24:01 [warning] [application] Failed to set unsafe attribute "date_raw" of "AcquisitionDate".
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/models/AcquisitionDate.php (115)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php (155)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php (13)
+2012/07/27 09:24:01 [error] [exception.CException] exception 'CException' with message 'Property "AcquisitionDate.date" is not defined.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('date')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CTypeValidator.php(84): CActiveRecord->__get('date')
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/validators/CValidator.php(197): CTypeValidator->validateAttribute(Object(AcquisitionDate), 'date')
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CModel.php(158): CValidator->validate(Object(AcquisitionDate), NULL)
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(786): CModel->validate(NULL)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php(162): CActiveRecord->save()
+#6 [internal function]: LivingPlantController->actionUpdate('3')
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#19 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#20 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=3
+---

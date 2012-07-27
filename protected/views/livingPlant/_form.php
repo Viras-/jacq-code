@@ -15,6 +15,9 @@
         <legend>acquisition</legend>
         <?php
         require('form_acquisitionDate.php');
+        ?>
+        <hr/>
+        <?php
         require('form_acquisitionEvent.php');
         ?>
     </fieldset>
@@ -63,7 +66,7 @@
         ),
     ));
     ?>
-    
+
     <iframe id="tree_record_view_dialog_iframe" scrolling="no" src="about:blank" style="width: 600px; height: 500px;">No iFrame support in your browser</iframe>
 
     <?php

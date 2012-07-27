@@ -14,8 +14,23 @@
  * @property AcquisitionEvent[] $acquisitionEvents
  */
 class AcquisitionDate extends CActiveRecord {
-
-    public $date;
+    /**
+     * Getter function for virtual date attribute
+     * @return string formatted date
+     */
+    public function getDate() {
+        return sprintf('%04d-%02d-%02d', $this->year, $this->month, $this->day);
+    }
+    
+    /**
+     * Set the virtual date attribute (splits it up into its components
+     * @param string $value 
+     */
+    public function setDate($value) {
+            $this->year = substr($value, 0, 4);
+            $this->month = substr($value, 5, 2);
+            $this->day = substr($value, 8, 2);
+    }
 
     /**
      * Returns the static model of the specified AR class.
@@ -94,19 +109,4 @@ class AcquisitionDate extends CActiveRecord {
                     'criteria' => $criteria,
                 ));
     }
-
-    /**
-     * Custom set function for splitting up the virtual date attribute into its components
-     * @param string $name
-     * @param string $value 
-     */
-    public function __set($name, $value) {
-        if ($name == "date") {
-            $this->year = substr($value, 0, 4);
-            $this->month = substr($value, 5, 2);
-            $this->day = substr($value, 8, 2);
-        }
-        parent::__set($name, $value);
-    }
-
 }
