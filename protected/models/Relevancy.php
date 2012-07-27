@@ -6,11 +6,11 @@
  * The followings are the available columns in table 'tbl_relevancy':
  * @property integer $id
  * @property integer $relevancy_type_id
- * @property integer $livingplant_id
+ * @property integer $living_plant_id
  *
  * The followings are the available model relations:
- * @property LivingPlant $livingplant
  * @property RelevancyType $relevancyType
+ * @property LivingPlant $livingPlant
  */
 class Relevancy extends CActiveRecord
 {
@@ -40,11 +40,11 @@ class Relevancy extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('relevancy_type_id, livingplant_id', 'required'),
-			array('relevancy_type_id, livingplant_id', 'numerical', 'integerOnly'=>true),
+			array('relevancy_type_id, living_plant_id', 'required'),
+			array('relevancy_type_id, living_plant_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, relevancy_type_id, livingplant_id', 'safe', 'on'=>'search'),
+			array('id, relevancy_type_id, living_plant_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,8 +56,8 @@ class Relevancy extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'livingplant' => array(self::BELONGS_TO, 'LivingPlant', 'livingplant_id'),
 			'relevancyType' => array(self::BELONGS_TO, 'RelevancyType', 'relevancy_type_id'),
+			'livingPlant' => array(self::BELONGS_TO, 'LivingPlant', 'living_plant_id'),
 		);
 	}
 
@@ -69,7 +69,7 @@ class Relevancy extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'relevancy_type_id' => 'Relevancy Type',
-			'livingplant_id' => 'Livingplant',
+			'living_plant_id' => 'Living Plant',
 		);
 	}
 
@@ -86,7 +86,7 @@ class Relevancy extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('relevancy_type_id',$this->relevancy_type_id);
-		$criteria->compare('livingplant_id',$this->livingplant_id);
+		$criteria->compare('living_plant_id',$this->living_plant_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

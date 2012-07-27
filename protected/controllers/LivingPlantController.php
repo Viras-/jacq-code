@@ -106,7 +106,7 @@ class LivingPlantController extends Controller {
                                     if (isset($_POST['RelevancyType'])) {
                                         foreach ($_POST['RelevancyType'] as $relevancy_type_id) {
                                             $model_relevancy = new Relevancy;
-                                            $model_relevancy->livingplant_id = $model_livingPlant->id;
+                                            $model_relevancy->living_plant_id = $model_livingPlant->id;
                                             $model_relevancy->relevancy_type_id = $relevancy_type_id;
                                             $model_relevancy->save();
                                         }
@@ -208,8 +208,8 @@ class LivingPlantController extends Controller {
 
                                 // Remove all previously added relevancy types
                                 Relevancy::model()->deleteAll(
-                                        'livingplant_id=:livingplant_id', array(
-                                    ':livingplant_id' => $model_livingPlant->id,
+                                        'living_plant_id=:living_plant_id', array(
+                                    ':living_plant_id' => $model_livingPlant->id,
                                         )
                                 );
 
@@ -217,7 +217,7 @@ class LivingPlantController extends Controller {
                                 if (isset($_POST['RelevancyType'])) {
                                     foreach ($_POST['RelevancyType'] as $relevancy_type_id) {
                                         $model_relevancy = new Relevancy;
-                                        $model_relevancy->livingplant_id = $model_livingPlant->id;
+                                        $model_relevancy->living_plant_id = $model_livingPlant->id;
                                         $model_relevancy->relevancy_type_id = $relevancy_type_id;
                                         $model_relevancy->save();
                                     }

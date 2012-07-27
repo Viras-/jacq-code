@@ -7,7 +7,7 @@
                 // Find all checked relevancy types for this entry
                 $selected_relevancyTypes = array();
                 if (!$model_livingPlant->isNewRecord) {
-                    $models_relevancy = Relevancy::model()->findAll('livingplant_id=:livingplant_id', array(':livingplant_id' => $model_livingPlant->id));
+                    $models_relevancy = Relevancy::model()->findAll('living_plant_id=:living_plant_id', array(':living_plant_id' => $model_livingPlant->id));
 
                     // Add all selected relevancy types to array
                     foreach ($models_relevancy as $model_relevancy) {
