@@ -1976,3 +1976,49 @@ Stack trace:
 REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=1
 HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=1
 ---
+2012/07/27 10:52:02 [error] [php] Undefined variable: model_treeRecordFilePage (/home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/form_citesNumber.php:27)
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(96): LivingPlantController->renderInternal()
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(870): LivingPlantController->renderFile()
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/update.php(29): LivingPlantController->renderPartial()
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require()
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CBaseController.php(96): LivingPlantController->renderInternal()
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(870): LivingPlantController->renderFile()
+#6 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(783): LivingPlantController->renderPartial()
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/LivingPlantController.php(287): LivingPlantController->render()
+#8 unknown(0): LivingPlantController->actionUpdate()
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs()
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CInlineAction->runWithParamsInternal()
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams()
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): LivingPlantController->runAction()
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CAccessControlFilter->filter()
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): LivingPlantController->filterAccessControl()
+#16 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter()
+#17 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#18 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): LivingPlantController->runActionWithFilters()
+#19 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): LivingPlantController->run()
+#20 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#21 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#22 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=1
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/form_citesNumber.php (27)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/_form.php (58)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/views/livingPlant/update.php (29)
+2012/07/27 11:04:15 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/auth/CAccessControlFilter.php:157
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/auth/CAccessControlFilter.php(120): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#6 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('removeCitesNumb...')
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/rem...')
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/removeCitesNumber&id=1&_=1343379855254
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/update&id=1
+---

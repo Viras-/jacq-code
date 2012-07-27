@@ -29,7 +29,7 @@ class LivingPlantController extends Controller {
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'removeCitesNumber'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -63,6 +63,7 @@ class LivingPlantController extends Controller {
         $model_livingPlant = new LivingPlant;
         $model_botanicalObject = new BotanicalObject;
         $model_accessionNumber = new AccessionNumber;
+        $model_citesNumber = new CitesNumber;
 
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['AccessionNumber'])) {
             $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
@@ -71,6 +72,7 @@ class LivingPlantController extends Controller {
             $model_botanicalObject->attributes = $_POST['BotanicalObject'];
             $model_accessionNumber->attributes = $_POST['AccessionNumber'];
             $model_separation->attributes = $_POST['Separation'];
+            $model_citesNumber->attributes = $_POST['CitesNumber'];
 
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->setAttribute('acquisition_date_id', $model_acquisitionDate->id);
@@ -122,6 +124,12 @@ class LivingPlantController extends Controller {
                                         }
                                     }
 
+                                    // Check if a cites number was entered
+                                    if (!empty($model_citesNumber->cites_number)) {
+                                        $model_citesNumber->living_plant_id = $model_livingPlant->id;
+                                        $model_citesNumber->save();
+                                    }
+
                                     // Redirect to update page directly
                                     $this->redirect(array('update', 'id' => $model_livingPlant->id));
                                 }
@@ -140,6 +148,7 @@ class LivingPlantController extends Controller {
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject,
             'model_accessionNumber' => $model_accessionNumber,
+            'model_citesNumber' => $model_citesNumber,
         ));
     }
 
@@ -155,6 +164,7 @@ class LivingPlantController extends Controller {
         $model_acquisitionEvent = AcquisitionEvent::model()->findByPk($model_botanicalObject->getAttribute('acquisition_event_id'));
         $model_acquisitionDate = AcquisitionDate::model()->findByPk($model_acquisitionEvent->getAttribute('acquisition_date_id'));
         $model_accessionNumber = AccessionNumber::model()->findByPk($model_livingPlant->getAttribute('accession_number_id'));
+        $model_citesNumber = new CitesNumber;
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
@@ -166,6 +176,7 @@ class LivingPlantController extends Controller {
             $model_botanicalObject->attributes = $_POST['BotanicalObject'];
             $model_accessionNumber->attributes = $_POST['AccessionNumber'];
             $model_separation->attributes = $_POST['Separation'];
+            $model_citesNumber->attributes = $_POST['CitesNumber'];
 
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->setAttribute('acquisition_date_id', $model_acquisitionDate->id);
@@ -248,6 +259,12 @@ class LivingPlantController extends Controller {
                                     }
                                 }
 
+                                // Check if a cites number was entered
+                                if (!empty($model_citesNumber->cites_number)) {
+                                    $model_citesNumber->living_plant_id = $model_livingPlant->id;
+                                    $model_citesNumber->save();
+                                }
+
                                 if ($model_livingPlant->save()) {
                                     $this->redirect(array('update', 'id' => $model_livingPlant->id));
                                 }
@@ -266,7 +283,16 @@ class LivingPlantController extends Controller {
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject,
             'model_accessionNumber' => $model_accessionNumber,
+            'model_citesNumber' => $model_citesNumber,
         ));
+    }
+    
+    /**
+     * Remove a cites number from a living plant object
+     * @param type $id 
+     */
+    public function actionRemoveCitesNumber($id) {
+        CitesNumber::model()->deleteByPk($id);
     }
 
     /**
