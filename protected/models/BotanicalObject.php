@@ -50,6 +50,14 @@ class BotanicalObject extends CActiveRecord {
     }
 
     /**
+     * Return connection to herbarinput database
+     * @return CDbConnection 
+     */
+    private function getDbHerbarInput() {
+        return Yii::app()->dbHerbarInput;
+    }
+
+    /**
      * Fetch the scientific name for the given botanical object
      * @return string 
      */
@@ -140,4 +148,25 @@ class BotanicalObject extends CActiveRecord {
                 ));
     }
 
+    /**
+     * Return the name of the agent
+     * @return string Name of agent
+     */
+    public function getDeterminedByName() {
+        if( $this->determined_by_id <= 0 ) return NULL;
+        
+        // We fetch the agent name from a different database
+        $dbHerbarInput = $this->getDbHerbarInput();
+        $command = $dbHerbarInput->createCommand()
+                ->select("Sammler")
+                ->from("tbl_collector")
+                ->where('SammlerID = :SammlerID', array(':SammlerID' => $this->determined_by_id));
+        $rows = $command->queryAll();
+        
+        // Check if we found something
+        if( count($rows) <= 0 ) return NULL;
+        
+        // Return agent name
+        return $rows[0]['Sammler'];
+    }
 }

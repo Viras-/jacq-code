@@ -32,7 +32,27 @@
 
 <div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'determined_by_id'); ?>
-    <?php echo $form->textField($model_botanicalObject, 'determined_by_id'); ?>
+    <?php
+    // Enable auto-completer for taxon field
+    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+        'name' => 'determinedByName',
+        'sourceUrl' => 'index.php?r=autoComplete/person',
+        // additional javascript options for the autocomplete plugin
+        'options' => array(
+            'minLength' => '2',
+            'change' => 'js:function( event, ui ) {
+                    if( typeof ui.item !== "undefined" ) {
+                        $( "#BotanicalObject_determined_by_id" ).val( ui.item.id );
+                    }
+                }',
+        ),
+        'value' => $model_botanicalObject->getDeterminedByName()
+        /*'htmlOptions' => array(
+            'value' => $model_botanicalObject->getScientificName()
+        ),*/
+    ));
+    ?>
+    <?php echo $form->hiddenField($model_botanicalObject, 'determined_by_id'); ?>
     <?php echo $form->error($model_botanicalObject, 'determined_by_id'); ?>
 </div>
 

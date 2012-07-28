@@ -41,7 +41,27 @@
 
 <div class="row">
     <?php echo $form->labelEx($model_acquisitionEvent, 'agent_id'); ?>
-    <?php echo $form->textField($model_acquisitionEvent, 'agent_id'); ?>
+    <?php
+    // Enable auto-completer for taxon field
+    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+        'name' => 'agentName',
+        'sourceUrl' => 'index.php?r=autoComplete/person',
+        // additional javascript options for the autocomplete plugin
+        'options' => array(
+            'minLength' => '2',
+            'change' => 'js:function( event, ui ) {
+                    if( typeof ui.item !== "undefined" ) {
+                        $( "#AcquisitionEvent_agent_id" ).val( ui.item.id );
+                    }
+                }',
+        ),
+        'value' => $model_acquisitionEvent->getAgentName()
+        /*'htmlOptions' => array(
+            'value' => $model_botanicalObject->getScientificName()
+        ),*/
+    ));
+    ?>
+    <?php echo $form->hiddenField($model_acquisitionEvent, 'agent_id'); ?>
     <?php echo $form->error($model_acquisitionEvent, 'agent_id'); ?>
 </div>
 
