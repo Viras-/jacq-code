@@ -1,22 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "tbl_location".
+ * This is the model class for table "tbl_person".
  *
- * The followings are the available columns in table 'tbl_location':
+ * The followings are the available columns in table 'tbl_person':
  * @property integer $id
- * @property string $location
+ * @property string $name
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent[] $acquisitionEvents
- * @property LocationGeonames $locationGeonames
+ * @property BotanicalObject[] $botanicalObjects
  */
-class Location extends CActiveRecord {
+class Person extends CActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Location the static model class
+     * @return Person the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
@@ -26,7 +26,7 @@ class Location extends CActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'tbl_location';
+        return 'tbl_person';
     }
 
     /**
@@ -36,11 +36,11 @@ class Location extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('location', 'required'),
-            array('location', 'length', 'max' => 255),
+            array('name', 'required'),
+            array('name', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, location', 'safe', 'on' => 'search'),
+            array('id, name', 'safe', 'on' => 'search'),
         );
     }
 
@@ -51,8 +51,8 @@ class Location extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'acquisitionEvents' => array(self::HAS_MANY, 'AcquisitionEvent', 'location_id'),
-            'locationGeonames' => array(self::HAS_ONE, 'LocationGeonames', 'id'),
+            'acquisitionEvents' => array(self::HAS_MANY, 'AcquisitionEvent', 'agent_id'),
+            'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'determined_by_id'),
         );
     }
 
@@ -61,8 +61,8 @@ class Location extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => Yii::t('jacq', 'ID'),
-            'location' => Yii::t('jacq', 'Location'),
+            'id' => 'ID',
+            'name' => 'Name',
         );
     }
 
@@ -77,7 +77,7 @@ class Location extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('location', $this->location, true);
+        $criteria->compare('name', $this->name, true);
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
@@ -85,18 +85,21 @@ class Location extends CActiveRecord {
     }
 
     /**
-     * Return a location entry by name, automatically adds a new one if it does not find any
-     * @param string $name Name of location to look for
-     * @return \Location 
+     * Return a person entry by name, automatically adds a new one if it does not find any
+     * @param string $name Name to search for
+     * @return \Person 
      */
-    public static function getByName($name) {
-        $model_location = Location::model()->findByAttributes(array("location" => $name));
-        if ($model_location == NULL) {
-            $model_location = new Location;
-            $model_location->location = $name;
-            $model_location->save();
+    public static function getByName( $name ) {
+        // Find fitting entry
+        $model_person = Person::model()->findByAttributes(array("name" => $name));
+        // If none found, add a new one
+        if( $model_person == null ) {
+            $model_person = new Person;
+            $model_person->name = $name;
+            $model_person->save();
         }
         
-        return $model_location;
+        // Finally return the model
+        return $model_person;
     }
 }

@@ -179,10 +179,14 @@ class AutoCompleteController extends Controller {
         // Construct answer array with data from table
         $results = array();
         foreach ($rows as $row) {
+            // Get a fitting person entry
+            $model_person = Person::getByName($row['Sammler']);
+            
+            // Add resulting perosn model info to response
             $results[] = array(
-                "label" => $row['Sammler'],
-                "value" => $row['Sammler'],
-                "id" => $row['SammlerID'],
+                "label" => $model_person->name,
+                "value" => $model_person->name,
+                "id" => $model_person->id,
             );
         }
 

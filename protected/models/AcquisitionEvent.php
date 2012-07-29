@@ -5,16 +5,17 @@
  *
  * The followings are the available columns in table 'tbl_acquisition_event':
  * @property integer $id
- * @property integer $agent_id
  * @property integer $acquisition_date_id
  * @property integer $acquisition_type_id
- * @property string $number
+ * @property integer $agent_id
  * @property integer $location_id
+ * @property string $number
  *
  * The followings are the available model relations:
  * @property AcquisitionDate $acquisitionDate
  * @property AcquisitionType $acquisitionType
  * @property Location $location
+ * @property Person $agent
  * @property BotanicalObject[] $botanicalObjects
  */
 class AcquisitionEvent extends CActiveRecord {
@@ -68,6 +69,7 @@ class AcquisitionEvent extends CActiveRecord {
             'acquisitionDate' => array(self::BELONGS_TO, 'AcquisitionDate', 'acquisition_date_id'),
             'acquisitionType' => array(self::BELONGS_TO, 'AcquisitionType', 'acquisition_type_id'),
             'location' => array(self::BELONGS_TO, 'Location', 'location_id'),
+            'agent' => array(self::BELONGS_TO, 'Person', 'agent_id'),
             'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'acquisition_event_id'),
         );
     }
@@ -106,39 +108,5 @@ class AcquisitionEvent extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Return the name of the agent
-     * @return string Name of agent
-     */
-    public function getAgentName() {
-        if( $this->agent_id <= 0 ) return NULL;
-        
-        // We fetch the agent name from a different database
-        $dbHerbarInput = $this->getDbHerbarInput();
-        $command = $dbHerbarInput->createCommand()
-                ->select("Sammler")
-                ->from("tbl_collector")
-                ->where('SammlerID = :SammlerID', array(':SammlerID' => $this->agent_id));
-        $rows = $command->queryAll();
-        
-        // Check if we found something
-        if( count($rows) <= 0 ) return NULL;
-        
-        // Return agent name
-        return $rows[0]['Sammler'];
-    }
-    
-    /**
-     * Return the name of a previously entered location name
-     * @return Name of location
-     */
-    public function getLocationName() {
-        if( $this->location_id <= 0 ) return NULL;
-
-        // Find model entry & return the name
-        $model_location = Location::model()->findByPk($this->location_id);
-        return $model_location->location;
     }
 }

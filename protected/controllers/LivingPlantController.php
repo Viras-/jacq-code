@@ -75,31 +75,40 @@ class LivingPlantController extends Controller {
             $model_citesNumber->attributes = $_POST['CitesNumber'];
 
             if ($model_acquisitionDate->save()) {
-                $model_acquisitionEvent->setAttribute('acquisition_date_id', $model_acquisitionDate->id);
+                $model_acquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
                 $locationName = trim($_POST['locationName']);
-                
+                $agentName = trim($_POST['agentName']);
+
                 // Check if a new (unknown) location was entered
-                if( $model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0 ) {
-                    $model_location = Location::model()->findByAttributes(array( "location" => $locationName ));
-                    if( $model_location == NULL ) {
-                        $model_location = new Location;
-                        $model_location->location = $locationName;
-                        $model_location->save();
-                    }
-                    
+                if ($model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0) {
+                    $model_location = Location::getByName($locationName);
                     $model_acquisitionEvent->location_id = $model_location->id;
                 }
 
+                // Check if a new (unknown) agent was entered
+                if ($model_acquisitionEvent->agent_id <= 0 && strlen($agentName) > 0) {
+                    $model_agent = Person::getByName($agentName);
+                    $model_acquisitionEvent->agent_id = $model_agent->id;
+                }
+
+                // Save acquisition-event and procede
                 if ($model_acquisitionEvent->save()) {
-                    $model_botanicalObject->setAttribute('acquisition_event_id', $model_acquisitionEvent->id);
+                    $model_botanicalObject->acquisition_event_id = $model_acquisitionEvent->id;
 
                     // Check if we have a separation selected
                     if ($model_separation->save()) {
                         $model_botanicalObject->separation_id = $model_separation->id;
+                        $determinedByName = trim($_POST['determinedByName']);
+
+                        // Check if a new (unknown) determined by was entered
+                        if ($model_botanicalObject->determined_by_id <= 0 && strlen($determinedByName) > 0) {
+                            $model_determinedBy = Person::getByName($determinedByName);
+                            $model_botanicalObject->determined_by_id = $model_determinedBy->id;
+                        }
 
                         // Save the botanical object base
                         if ($model_botanicalObject->save()) {
-                            $model_livingPlant->setAttribute('id', $model_botanicalObject->id);
+                            $model_livingPlant->id = $model_botanicalObject->id;
 
                             if ($model_accessionNumber->save()) {
                                 $model_livingPlant->accession_number_id = $model_accessionNumber->id;
@@ -190,31 +199,39 @@ class LivingPlantController extends Controller {
             $model_citesNumber->attributes = $_POST['CitesNumber'];
 
             if ($model_acquisitionDate->save()) {
-                $model_acquisitionEvent->setAttribute('acquisition_date_id', $model_acquisitionDate->id);
+                $model_acquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
                 $locationName = trim($_POST['locationName']);
-                
+                $agentName = trim($_POST['agentName']);
+
                 // Check if a new (unknown) location was entered
-                if( $model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0 ) {
-                    $model_location = Location::model()->findByAttributes(array( "location" => $locationName ));
-                    if( $model_location == NULL ) {
-                        $model_location = new Location;
-                        $model_location->location = $locationName;
-                        $model_location->save();
-                    }
-                    
+                if ($model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0) {
+                    $model_location = Location::getByName($locationName);
                     $model_acquisitionEvent->location_id = $model_location->id;
                 }
 
+                // Check if a new (unknown) agent was entered
+                if ($model_acquisitionEvent->agent_id <= 0 && strlen($agentName) > 0) {
+                    $model_agent = Person::getByName($agentName);
+                    $model_acquisitionEvent->agent_id = $model_agent->id;
+                }
+
                 if ($model_acquisitionEvent->save()) {
-                    $model_botanicalObject->setAttribute('acquisition_event_id', $model_acquisitionEvent->id);
+                    $model_botanicalObject->acquisition_event_id = $model_acquisitionEvent->id;
 
                     // Check if we have a separation selected
                     if ($model_separation->save()) {
                         $model_botanicalObject->separation_id = $model_separation->id;
+                        $determinedByName = trim($_POST['determinedByName']);
+
+                        // Check if a new (unknown) determined by was entered
+                        if ($model_botanicalObject->determined_by_id <= 0 && strlen($determinedByName) > 0) {
+                            $model_determinedBy = Person::getByName($determinedByName);
+                            $model_botanicalObject->determined_by_id = $model_determinedBy->id;
+                        }
 
                         // Save the botanical object base
                         if ($model_botanicalObject->save()) {
-                            $model_livingPlant->setAttribute('id', $model_botanicalObject->id);
+                            $model_livingPlant->id = $model_botanicalObject->id;
 
                             if ($model_accessionNumber->save()) {
                                 $model_livingPlant->accession_number_id = $model_accessionNumber->id;
@@ -310,7 +327,7 @@ class LivingPlantController extends Controller {
             'model_citesNumber' => $model_citesNumber,
         ));
     }
-    
+
     /**
      * Remove a cites number from a living plant object
      * @param type $id 

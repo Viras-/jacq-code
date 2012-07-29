@@ -9,19 +9,20 @@
  * @property integer $separation_id
  * @property integer $phenology_id
  * @property integer $taxon_id
+ * @property integer $determined_by_id
  * @property string $habitat
  * @property string $habitus
- * @property integer $determined_by_id
  * @property string $annotation
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
  * @property Separation $separation
  * @property Phenology $phenology
+ * @property Person $determinedBy
+ * @property BotanicalObjectSex[] $botanicalObjectSexes
  * @property Diaspora $diaspora
  * @property Image[] $images
  * @property LivingPlant $livingPlant
- * @property ObjectSex[] $objectSexes
  */
 class BotanicalObject extends CActiveRecord {
 
@@ -99,10 +100,11 @@ class BotanicalObject extends CActiveRecord {
             'acquisitionEvent' => array(self::BELONGS_TO, 'AcquisitionEvent', 'acquisition_event_id'),
             'separation' => array(self::BELONGS_TO, 'Separation', 'separation_id'),
             'phenology' => array(self::BELONGS_TO, 'Phenology', 'phenology_id'),
+            'determinedBy' => array(self::BELONGS_TO, 'Person', 'determined_by_id'),
+            'botanicalObjectSexes' => array(self::HAS_MANY, 'BotanicalObjectSex', 'botanical_object_id'),
             'diaspora' => array(self::HAS_ONE, 'Diaspora', 'id'),
             'images' => array(self::HAS_MANY, 'Image', 'botanical_object_id'),
             'livingPlant' => array(self::HAS_ONE, 'LivingPlant', 'id'),
-            'objectSexes' => array(self::HAS_MANY, 'ObjectSex', 'object_id'),
         );
     }
 
@@ -146,27 +148,5 @@ class BotanicalObject extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Return the name of the agent
-     * @return string Name of agent
-     */
-    public function getDeterminedByName() {
-        if( $this->determined_by_id <= 0 ) return NULL;
-        
-        // We fetch the agent name from a different database
-        $dbHerbarInput = $this->getDbHerbarInput();
-        $command = $dbHerbarInput->createCommand()
-                ->select("Sammler")
-                ->from("tbl_collector")
-                ->where('SammlerID = :SammlerID', array(':SammlerID' => $this->determined_by_id));
-        $rows = $command->queryAll();
-        
-        // Check if we found something
-        if( count($rows) <= 0 ) return NULL;
-        
-        // Return agent name
-        return $rows[0]['Sammler'];
     }
 }

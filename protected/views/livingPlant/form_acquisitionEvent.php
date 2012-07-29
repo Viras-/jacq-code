@@ -33,7 +33,7 @@
                     return true;
                 }'*/
         ),
-        'value' => $model_acquisitionEvent->getLocationName(),
+        'value' => $model_acquisitionEvent->location->location,
         'htmlOptions' => array(
             'onkeypress' => '$( "#AcquisitionEvent_location_id" ).val("");'
         ),
@@ -53,16 +53,16 @@
         // additional javascript options for the autocomplete plugin
         'options' => array(
             'minLength' => '2',
-            'change' => 'js:function( event, ui ) {
+            'select' => 'js:function( event, ui ) {
                     if( typeof ui.item !== "undefined" ) {
                         $( "#AcquisitionEvent_agent_id" ).val( ui.item.id );
                     }
                 }',
         ),
-        'value' => $model_acquisitionEvent->getAgentName()
-        /*'htmlOptions' => array(
-            'value' => $model_botanicalObject->getScientificName()
-        ),*/
+        'value' => $model_acquisitionEvent->agent->name,
+        'htmlOptions' => array(
+            'onkeypress' => '$( "#AcquisitionEvent_agent_id" ).val("");'
+        ),
     ));
     ?>
     <?php echo $form->hiddenField($model_acquisitionEvent, 'agent_id'); ?>
