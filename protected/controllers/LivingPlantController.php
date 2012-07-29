@@ -358,10 +358,12 @@ class LivingPlantController extends Controller {
      * Lists all models.
      */
     public function actionIndex() {
-        $dataProvider = new CActiveDataProvider('LivingPlant');
+        $this->actionAdmin();
+        
+        /*$dataProvider = new CActiveDataProvider('LivingPlant');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
-        ));
+        ));*/
     }
 
     /**

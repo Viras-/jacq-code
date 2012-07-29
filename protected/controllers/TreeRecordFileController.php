@@ -1,5 +1,4 @@
 <?php
-
 class TreeRecordFileController extends Controller {
 
     /**
@@ -67,29 +66,30 @@ class TreeRecordFileController extends Controller {
             if ($model->save()) {
                 // Extract all pages
                 $pdftk = "/usr/bin/pdftk";
-                
+
                 // Find number of pages for this pdf
                 $pdf_infos = array();
                 $page_count = -1;
-                exec( $pdftk . ' ' . $model->fileName->getTempName() . ' dump_data', $pdf_infos );
-                foreach( $pdf_infos as $pdf_info ) {
+                exec($pdftk . ' ' . $model->fileName->getTempName() . ' dump_data', $pdf_infos);
+                foreach ($pdf_infos as $pdf_info) {
                     $pdf_info_parts = explode(':', $pdf_info);
-                    if( $pdf_info_parts[0] == 'NumberOfPages') {
+                    if ($pdf_info_parts[0] == 'NumberOfPages') {
                         $page_count = intval(trim($pdf_info_parts[1]));
                         break;
                     }
                 }
-                
+
                 // Check if we found some pages
-                if( $page_count > 0 ) {
+                if ($page_count > 0) {
                     // Create folder on file-system for individual pages
                     $treeRecordFolder = Yii::app()->basePath . '/uploads/treeRecords/' . $model->id . '/';
-                    if( !is_dir($treeRecordFolder) ) mkdir($treeRecordFolder);
-                    
+                    if (!is_dir($treeRecordFolder))
+                        mkdir($treeRecordFolder);
+
                     // Now extract each page
-                    for( $i = 1; $i <= $page_count; $i++ ) {
-                        exec( $pdftk . ' ' . $model->fileName->getTempName() . ' cat ' . $i . ' output ' . $treeRecordFolder . $i . '.pdf');
-                        
+                    for ($i = 1; $i <= $page_count; $i++) {
+                        exec($pdftk . ' ' . $model->fileName->getTempName() . ' cat ' . $i . ' output ' . $treeRecordFolder . $i . '.pdf');
+
                         // Create new page record for extracted page
                         $treeRecordFilePage = new TreeRecordFilePage();
                         $treeRecordFilePage->tree_record_file_id = $model->id;
@@ -97,7 +97,7 @@ class TreeRecordFileController extends Controller {
                         $treeRecordFilePage->save();
                     }
                 }
-                
+
                 $this->redirect(array('view', 'id' => $model->id));
             }
         }
@@ -151,10 +151,12 @@ class TreeRecordFileController extends Controller {
      * Lists all models.
      */
     public function actionIndex() {
-        $dataProvider = new CActiveDataProvider('TreeRecordFile');
+        $this->actionAdmin();
+        
+        /*$dataProvider = new CActiveDataProvider('TreeRecordFile');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
-        ));
+        ));*/
     }
 
     /**

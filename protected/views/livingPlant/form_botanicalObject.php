@@ -14,7 +14,7 @@
                     }
                 }',
         ),
-        'value' => $model_botanicalObject->getScientificName()
+        'value' => $model_botanicalObject->scientificName,
         /*'htmlOptions' => array(
             'value' => $model_botanicalObject->getScientificName()
         ),*/
@@ -46,7 +46,7 @@
                     }
                 }',
         ),
-        'value' => $model_botanicalObject->determinedBy->name,
+        'value' => ($model_botanicalObject->determinedBy != null) ? $model_botanicalObject->determinedBy->name : '',
         'htmlOptions' => array(
             'onkeypress' => '$( "#BotanicalObject_determined_by_id" ).val("");'
         ),

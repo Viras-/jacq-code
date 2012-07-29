@@ -1,12 +1,12 @@
 <?php
 $this->breadcrumbs=array(
-	'Tree Record Files'=>array('index'),
-	'Manage',
+	Yii::t('jacq', 'Tree Record Files')=>array('index'),
+	Yii::t('jacq', 'Manage'),
 );
 
 $this->menu=array(
-	array('label'=>'List TreeRecordFile', 'url'=>array('index')),
-	array('label'=>'Create TreeRecordFile', 'url'=>array('create')),
+//	array('label'=>'List TreeRecordFile', 'url'=>array('index')),
+	array('label'=>Yii::t('jacq', 'Create Tree Record File'), 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -23,7 +23,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Tree Record Files</h1>
+<h1><?php echo Yii::t('jacq', 'Manage Tree Record Files'); ?></h1>
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>

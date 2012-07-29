@@ -1,19 +1,19 @@
 <?php
 $this->breadcrumbs=array(
-	'Living Plants'=>array('index'),
+	Yii::t('jacq', 'Living Plants')=>array('index'),
 	$model_livingPlant->id=>array('view','id'=>$model_livingPlant->id),
-	'Update',
+	Yii::t('jacq', 'Update'),
 );
 
 $this->menu=array(
-	array('label'=>'List LivingPlant', 'url'=>array('index')),
-	array('label'=>'Create LivingPlant', 'url'=>array('create')),
-	array('label'=>'View LivingPlant', 'url'=>array('view', 'id'=>$model_livingPlant->id)),
-	array('label'=>'Manage LivingPlant', 'url'=>array('admin')),
+//	array('label'=>'List LivingPlant', 'url'=>array('index')),
+	array('label'=>Yii::t('jacq', 'Create Living Plant'), 'url'=>array('create')),
+//	array('label'=>'View LivingPlant', 'url'=>array('view', 'id'=>$model_livingPlant->id)),
+	array('label'=>Yii::t('jacq', 'Manage Living Plant'), 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update LivingPlant <?php echo $model_livingPlant->id; ?></h1>
+<h1><?php echo Yii::t('jacq', 'Update Living Plant'); ?> <?php echo $model_livingPlant->id; ?></h1>
 
 <?php
 echo $this->renderPartial('_form', 

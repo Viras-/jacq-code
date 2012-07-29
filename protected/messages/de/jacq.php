@@ -9,7 +9,7 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
@@ -19,6 +19,26 @@
  * @version $Id: $
  */
 return array (
+  'Create' => 'Erstellen',
+  'Create Garden Site' => 'Standort erstellen',
+  'Create Living Plant' => 'Lebendpflanze erstellen',
+  'Create Tree Record File' => 'Baumkontrollblatt erstellen',
+  'Garden Sites' => 'Standorte',
+  'Living Plants' => 'Lebendpflanzen',
+  'Login' => 'Login',
+  'Logout' => 'Logout',
+  'Manage' => 'Verwalten',
+  'Manage Garden Site' => 'Standort verwalten',
+  'Manage Garden Sites' => 'Standorte verwalten',
+  'Manage Living Plant' => 'Lebenpflanze verwalten',
+  'Manage Living Plants' => 'Lebendpflanzen verwalten',
+  'Manage Tree Record File' => 'Baumkontrollblatt verwalten',
+  'Manage Tree Record Files' => 'Baumkontrollblätter verwalten',
+  'Tree Record Files' => 'Baumkontrollblätter',
+  'Update' => 'Aktualisieren',
+  'Update Garden Site' => 'Standort aktualisieren',
+  'Update Living Plant' => 'Lebendpflanze aktualisieren',
+  'Update Tree Record File' => 'Baumkontrollblatt aktualisieren',
   'Accession Number' => 'Akzessionsnummer',
   'Acquisition Date' => 'Aufnahmedatum',
   'Acquisition Event' => 'Aufnahme Ereignis',
@@ -36,7 +56,6 @@ return array (
   'Description' => 'Beschreibung',
   'Determined By' => 'Bestimmt durch',
   'Document Number' => 'Aktennummer',
-  'Garden Site' => 'Standort',
   'Gardener' => 'Gärtner',
   'Geoname' => 'Geoname',
   'Greenhouse' => 'Gewächshaus',
@@ -45,7 +64,6 @@ return array (
   'ID' => 'ID',
   'Individual' => 'Individuum',
   'Ipen Number' => 'IPEN Nummer',
-  'Living Plant' => 'Lebendpflanze',
   'Location' => 'Ort',
   'Month' => 'Monat',
   'Name' => 'Name',
@@ -64,9 +82,11 @@ return array (
   'Service Data' => 'Service Daten',
   'Sex' => 'Geschlecht',
   'Taxon' => 'Taxon',
-  'Tree Record File' => 'Baumkontrollblatt',
   'Tree Record File Page' => 'Baumkontrollblatt - Seite',
   'Type' => 'Typ',
   'Username' => 'Benutzername',
   'Year' => 'Jahr',
+  'Garden Site' => 'Standort',
+  'Living Plant' => 'Lebendpflanze',
+  'Tree Record File' => 'Baumkontrollblatt',
 );

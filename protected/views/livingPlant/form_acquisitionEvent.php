@@ -33,7 +33,7 @@
                     return true;
                 }'*/
         ),
-        'value' => $model_acquisitionEvent->location->location,
+        'value' => ($model_acquisitionEvent->location != null) ? $model_acquisitionEvent->location->location : '',
         'htmlOptions' => array(
             'onkeypress' => '$( "#AcquisitionEvent_location_id" ).val("");'
         ),
@@ -59,7 +59,7 @@
                     }
                 }',
         ),
-        'value' => $model_acquisitionEvent->agent->name,
+        'value' => ($model_acquisitionEvent->agent != null) ? $model_acquisitionEvent->agent->name : '',
         'htmlOptions' => array(
             'onkeypress' => '$( "#AcquisitionEvent_agent_id" ).val("");'
         ),

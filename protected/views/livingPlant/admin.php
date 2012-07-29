@@ -1,12 +1,12 @@
 <?php
 $this->breadcrumbs = array(
-    'Living Plants' => array('index'),
-    'Manage',
+    Yii::t('jacq', 'Living Plants') => array('index'),
+    Yii::t('jacq', 'Manage'),
 );
 
 $this->menu = array(
-    array('label' => 'List LivingPlant', 'url' => array('index')),
-    array('label' => 'Create LivingPlant', 'url' => array('create')),
+//    array('label' => 'List LivingPlant', 'url' => array('index')),
+    array('label' => Yii::t('jacq', 'Create Living Plant'), 'url' => array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -23,7 +23,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Living Plants</h1>
+<h1><?php echo Yii::t('jacq', 'Manage Living Plants'); ?></h1>
 
 <p>
     You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -46,10 +46,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'filter' => $model,
     'columns' => array(
         'id',
-        'garden_site_id',
+        'id0.scientificName',
         'accession_number_id',
         'ipen_number',
-        'phyto_control',
+        'gardenSite.description',
         /*
           'phyto_sanitary_product_number',
          */

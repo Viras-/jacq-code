@@ -25,7 +25,6 @@
  * @property LivingPlant $livingPlant
  */
 class BotanicalObject extends CActiveRecord {
-
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -41,6 +40,20 @@ class BotanicalObject extends CActiveRecord {
     public function tableName() {
         return 'tbl_botanical_object';
     }
+    
+    /**
+     * Wrapper for getting the virtual scientificName attribute
+     * @param string $name Name of attribute to get
+     * @return mixed value of attribute 
+     */
+    public function __get($name) {
+        if( $name == "scientificName" ) {
+            return $this->getScientificName();
+        }
+        else {
+            return parent::__get($name);
+        }
+    }
 
     /**
      * Return connection to herbar_view database
@@ -51,18 +64,10 @@ class BotanicalObject extends CActiveRecord {
     }
 
     /**
-     * Return connection to herbarinput database
-     * @return CDbConnection 
-     */
-    private function getDbHerbarInput() {
-        return Yii::app()->dbHerbarInput;
-    }
-
-    /**
      * Fetch the scientific name for the given botanical object
      * @return string 
      */
-    public function getScientificName() {
+    private function getScientificName() {
         if ($this->taxon_id <= 0)
             return NULL;
 
