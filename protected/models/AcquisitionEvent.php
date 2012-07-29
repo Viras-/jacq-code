@@ -8,12 +8,13 @@
  * @property integer $agent_id
  * @property integer $acquisition_date_id
  * @property integer $acquisition_type_id
- * @property integer $location_id
  * @property string $number
+ * @property integer $location_id
  *
  * The followings are the available model relations:
  * @property AcquisitionDate $acquisitionDate
  * @property AcquisitionType $acquisitionType
+ * @property Location $location
  * @property BotanicalObject[] $botanicalObjects
  */
 class AcquisitionEvent extends CActiveRecord {
@@ -48,12 +49,12 @@ class AcquisitionEvent extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('acquisition_date_id, acquisition_type_id', 'required'),
+            array('acquisition_date_id, acquisition_type_id, location_id', 'required'),
             array('agent_id, acquisition_date_id, acquisition_type_id, location_id', 'numerical', 'integerOnly' => true),
             array('number', 'length', 'max' => 45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, agent_id, acquisition_date_id, acquisition_type_id, location_id, number', 'safe', 'on' => 'search'),
+            array('id, agent_id, acquisition_date_id, acquisition_type_id, number, location_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -66,6 +67,7 @@ class AcquisitionEvent extends CActiveRecord {
         return array(
             'acquisitionDate' => array(self::BELONGS_TO, 'AcquisitionDate', 'acquisition_date_id'),
             'acquisitionType' => array(self::BELONGS_TO, 'AcquisitionType', 'acquisition_type_id'),
+            'location' => array(self::BELONGS_TO, 'Location', 'location_id'),
             'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'acquisition_event_id'),
         );
     }
@@ -79,8 +81,8 @@ class AcquisitionEvent extends CActiveRecord {
             'agent_id' => 'Agent',
             'acquisition_date_id' => 'Acquisition Date',
             'acquisition_type_id' => 'Acquisition Type',
-            'location_id' => 'Location',
             'number' => 'Number',
+            'location_id' => 'Location',
         );
     }
 
@@ -98,8 +100,8 @@ class AcquisitionEvent extends CActiveRecord {
         $criteria->compare('agent_id', $this->agent_id);
         $criteria->compare('acquisition_date_id', $this->acquisition_date_id);
         $criteria->compare('acquisition_type_id', $this->acquisition_type_id);
-        $criteria->compare('location_id', $this->location_id);
         $criteria->compare('number', $this->number, true);
+        $criteria->compare('location_id', $this->location_id);
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,

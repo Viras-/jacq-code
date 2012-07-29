@@ -97,7 +97,31 @@ class AutoCompleteController extends Controller {
      * Search for fitting location names (and query geonames if necessary) 
      */
     public function actionLocation() {
+        $term = trim($_GET['term']);
         
+        // Construct service URL
+        $geonamesUrl = "http://api.geonames.org/searchJSON?formatted=true&maxRows=10&lang=de&username=demo&style=medium&name=" . urlencode($term);
+        // Fetch service response
+        $service_response = file_get_contents($geonamesUrl);
+        if( $service_response ) {
+            // Decode data
+            $service_data = json_decode($service_response, true);
+
+            // Construct answer array with data from table
+            $results = array();
+            foreach ($service_data['geonames'] as $geoname ) {
+                $display =$geoname['name'] . ' (' . $geoname['countryName'] . ')';
+                
+                $results[] = array(
+                    "label" => $display,
+                    "value" => $display,
+                    "id" => $geoname['geonameId'],
+                );
+            }
+
+            // Output results as service response
+            $this->serviceOutput($results);
+        }
     }
 
     /**
