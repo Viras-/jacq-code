@@ -28,11 +28,11 @@
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Living Plant', 'url'=>array('/livingPlant'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Sites', 'url'=>array('/gardenSite'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Tree Records', 'url'=>array('/treeRecordFile'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+				array('label'=>Yii::t('jacq', 'Living Plant'), 'url'=>array('/livingPlant'), 'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>Yii::t('jacq', 'Garden Site'), 'url'=>array('/gardenSite'), 'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>Yii::t('jacq', 'Tree Record File'), 'url'=>array('/treeRecordFile'), 'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>Yii::t('jacq', 'Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+				array('label'=>Yii::t('jacq', 'Logout') . ' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		)); ?>
 	</div><!-- mainmenu -->
