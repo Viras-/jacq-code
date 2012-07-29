@@ -76,6 +76,19 @@ class LivingPlantController extends Controller {
 
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->setAttribute('acquisition_date_id', $model_acquisitionDate->id);
+                $locationName = trim($_POST['locationName']);
+                
+                // Check if a new (unknown) location was entered
+                if( $model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0 ) {
+                    $model_location = Location::model()->findByAttributes(array( "location" => $locationName ));
+                    if( $model_location == NULL ) {
+                        $model_location = new Location;
+                        $model_location->location = $locationName;
+                        $model_location->save();
+                    }
+                    
+                    $model_acquisitionEvent->location_id = $model_location->id;
+                }
 
                 if ($model_acquisitionEvent->save()) {
                     $model_botanicalObject->setAttribute('acquisition_event_id', $model_acquisitionEvent->id);
@@ -166,9 +179,7 @@ class LivingPlantController extends Controller {
         $model_accessionNumber = AccessionNumber::model()->findByPk($model_livingPlant->getAttribute('accession_number_id'));
         $model_citesNumber = new CitesNumber;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
+        // Check if we have a correct submission
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['AccessionNumber'])) {
             $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
@@ -180,6 +191,19 @@ class LivingPlantController extends Controller {
 
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->setAttribute('acquisition_date_id', $model_acquisitionDate->id);
+                $locationName = trim($_POST['locationName']);
+                
+                // Check if a new (unknown) location was entered
+                if( $model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0 ) {
+                    $model_location = Location::model()->findByAttributes(array( "location" => $locationName ));
+                    if( $model_location == NULL ) {
+                        $model_location = new Location;
+                        $model_location->location = $locationName;
+                        $model_location->save();
+                    }
+                    
+                    $model_acquisitionEvent->location_id = $model_location->id;
+                }
 
                 if ($model_acquisitionEvent->save()) {
                     $model_botanicalObject->setAttribute('acquisition_event_id', $model_acquisitionEvent->id);

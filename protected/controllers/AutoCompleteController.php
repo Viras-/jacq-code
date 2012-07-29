@@ -142,13 +142,15 @@ class AutoCompleteController extends Controller {
         }
         else {
             // Find all fitting entries in location table
-            $models_location = Location::model()->find('location LIKE :location', array(':location' => $term . '%'));
-            foreach( $models_location as $model_location ) {
-                $results[] = array(
-                    "label" => $model_location->location,
-                    "value" => $model_location->location,
-                    "id" => $model_location->id,
-                );
+            $models_location = Location::model()->findAll('location LIKE :location', array(':location' => $term . '%'));
+            if( $models_location != NULL ) {
+                foreach( $models_location as $model_location ) {
+                    $results[] = array(
+                        "label" => $model_location->location,
+                        "value" => $model_location->location,
+                        "id" => $model_location->id,
+                    );
+                }
             }
         }
         

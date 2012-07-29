@@ -10,16 +10,16 @@
     // Enable auto-completer for taxon field
     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
         'name' => 'locationName',
-        'sourceUrl' => 'index.php?r=autoComplete/location',
+        'sourceUrl' => 'index.php?r=autoComplete/location&geonames=true',
         // additional javascript options for the autocomplete plugin
         'options' => array(
             'minLength' => '2',
-            'change' => 'js:function( event, ui ) {
+            'select' => 'js:function( event, ui ) {
                     if( typeof ui.item !== "undefined" ) {
                         $( "#AcquisitionEvent_location_id" ).val( ui.item.id );
                     }
                 }',
-            'open' => 'js:function(event, ui) {
+            /*'open' => 'js:function(event, ui) {
                     var liItem = $("<li class=\'ui-menu-item\' role=\'menuitem\'></li>")
                     var aItem = $( "<a class=\'ui-corner-all\'>More...</a>" );
                     aItem.hover( function() { $(this).addClass( "ui-state-hover" ); }, function() { $(this).removeClass( "ui-state-hover" ); } );
@@ -27,12 +27,16 @@
 
                     liItem.append( aItem );
                     $(this).autocomplete( "widget" ).append( liItem );
-                }'
+                }',*/
+            /*'search' => 'js:function(event, ui) {
+                    $( "#AcquisitionEvent_location_id" ).val("");
+                    return true;
+                }'*/
         ),
-        'value' => $model_acquisitionEvent->getLocationName()
-        /*'htmlOptions' => array(
-            'value' => $model_botanicalObject->getScientificName()
-        ),*/
+        'value' => $model_acquisitionEvent->getLocationName(),
+        'htmlOptions' => array(
+            'onkeypress' => '$( "#AcquisitionEvent_location_id" ).val("");'
+        ),
     ));
     ?>
     <?php echo $form->hiddenField($model_acquisitionEvent, 'location_id'); ?>

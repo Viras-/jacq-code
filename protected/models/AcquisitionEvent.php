@@ -49,7 +49,7 @@ class AcquisitionEvent extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('acquisition_date_id, acquisition_type_id, location_id', 'required'),
+            array('acquisition_date_id, acquisition_type_id', 'required'),
             array('agent_id, acquisition_date_id, acquisition_type_id, location_id', 'numerical', 'integerOnly' => true),
             array('number', 'length', 'max' => 45),
             // The following rule is used by search().
