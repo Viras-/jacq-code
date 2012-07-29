@@ -98,30 +98,62 @@ class AutoCompleteController extends Controller {
      */
     public function actionLocation() {
         $term = trim($_GET['term']);
+        $bGeonames = (isset($_GET['geonames'])) ? true : false;
+        $results = array();
         
-        // Construct service URL
-        $geonamesUrl = "http://api.geonames.org/searchJSON?formatted=true&maxRows=10&lang=de&username=demo&style=medium&name=" . urlencode($term);
-        // Fetch service response
-        $service_response = file_get_contents($geonamesUrl);
-        if( $service_response ) {
-            // Decode data
-            $service_data = json_decode($service_response, true);
+        if( $bGeonames ) {
+            // Construct service URL
+            $geonamesUrl = "http://api.geonames.org/searchJSON?formatted=true&maxRows=10&lang=de&username=demo&style=medium&name=" . urlencode($term);
+            // Fetch service response
+            $service_response = file_get_contents($geonamesUrl);
+            if( $service_response ) {
+                // Decode data
+                $service_data = json_decode($service_response, true);
 
-            // Construct answer array with data from table
-            $results = array();
-            foreach ($service_data['geonames'] as $geoname ) {
-                $display =$geoname['name'] . ' (' . $geoname['countryName'] . ')';
-                
+                // Save response data in location table
+                foreach ($service_data['geonames'] as $geoname ) {
+                    // Check if we already have any entry
+                    $model_location = null;
+                    $model_locationGeonames = LocationGeonames::model()->find('geonameId=:geonameId', array( ':geonameId' => $geoname['geonameId'] ));
+                    if( $model_locationGeonames != null ) {
+                        $model_location = Location::model()->findByPk($model_locationGeonames->id);
+                    }
+                    else {
+                        // Create location model & save it
+                        $model_location = new Location;
+                        $model_location->location = $geoname['name'] . ' (' . $geoname['countryName'] . ')';
+                        $model_location->save();
+                        // Create according geonames model & save it as well
+                        $model_locationGeonames = new LocationGeonames;
+                        $model_locationGeonames->id = $model_location->id;
+                        $model_locationGeonames->service_data = serialize($geoname);
+                        $model_locationGeonames->geonameId = $geoname['geonameId'];
+                        $model_locationGeonames->save();
+                    }
+                    
+                    // Add response to results
+                    $results[] = array(
+                        "label" => $model_location->location,
+                        "value" => $model_location->location,
+                        "id" => $model_location->id,
+                    );
+                }
+            }
+        }
+        else {
+            // Find all fitting entries in location table
+            $models_location = Location::model()->find('location LIKE :location', array(':location' => $term . '%'));
+            foreach( $models_location as $model_location ) {
                 $results[] = array(
-                    "label" => $display,
-                    "value" => $display,
-                    "id" => $geoname['geonameId'],
+                    "label" => $model_location->location,
+                    "value" => $model_location->location,
+                    "id" => $model_location->id,
                 );
             }
-
-            // Output results as service response
-            $this->serviceOutput($results);
         }
+        
+        // Output results as service response
+        $this->serviceOutput($results);
     }
 
     /**

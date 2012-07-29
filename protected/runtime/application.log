@@ -2120,3 +2120,53 @@ Stack trace:
 REQUEST_URI=/NetBeans/jacq-yii/index.php?r=livingPlant/create
 HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/create
 ---
+2012/07/29 11:00:38 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'Lon (Tschad)' for key 'location_UNIQUE'. The SQL statement executed was: INSERT INTO `tbl_location` (`location`) VALUES (:yp0).
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/AutoCompleteController.php (118)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php (13)
+2012/07/29 11:00:38 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'Lon (Tschad)' for key 'location_UNIQUE'. The SQL statement executed was: INSERT INTO `tbl_location` (`location`) VALUES (:yp0)' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1014): CDbCommand->execute()
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(787): CActiveRecord->insert(NULL)
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/AutoCompleteController.php(118): CActiveRecord->save()
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionLocation()
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('location')
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('autoComplete/lo...')
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=autoComplete/location&geonames=true&term=lon
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/create
+---
+2012/07/29 11:00:45 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'Lond (Pakistan)' for key 'location_UNIQUE'. The SQL statement executed was: INSERT INTO `tbl_location` (`location`) VALUES (:yp0).
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/AutoCompleteController.php (118)
+in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php (13)
+2012/07/29 11:00:45 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'Lond (Pakistan)' for key 'location_UNIQUE'. The SQL statement executed was: INSERT INTO `tbl_location` (`location`) VALUES (:yp0)' in /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1014): CDbCommand->execute()
+#1 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(787): CActiveRecord->insert(NULL)
+#2 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/protected/controllers/AutoCompleteController.php(118): CActiveRecord->save()
+#3 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): AutoCompleteController->actionLocation()
+#4 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('location')
+#13 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('autoComplete/lo...')
+#14 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /home/wkoller/Dokumente/Programming/NetBeans/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/jacq-yii/index.php?r=autoComplete/location&geonames=true&term=lond
+HTTP_REFERER=http://localhost/NetBeans/jacq-yii/index.php?r=livingPlant/create
+---

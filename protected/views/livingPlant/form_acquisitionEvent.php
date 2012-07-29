@@ -29,7 +29,7 @@
                     $(this).autocomplete( "widget" ).append( liItem );
                 }'
         ),
-        'value' => $model_acquisitionEvent->location_id
+        'value' => $model_acquisitionEvent->getLocationName()
         /*'htmlOptions' => array(
             'value' => $model_botanicalObject->getScientificName()
         ),*/

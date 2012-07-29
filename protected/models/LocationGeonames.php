@@ -1,22 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "tbl_location".
+ * This is the model class for table "tbl_location_geonames".
  *
- * The followings are the available columns in table 'tbl_location':
+ * The followings are the available columns in table 'tbl_location_geonames':
  * @property integer $id
- * @property string $location
+ * @property string $service_data
+ * @property integer $geonameId
  *
  * The followings are the available model relations:
- * @property AcquisitionEvent[] $acquisitionEvents
- * @property LocationGeonames $locationGeonames
+ * @property Location $id0
  */
-class Location extends CActiveRecord
+class LocationGeonames extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Location the static model class
+	 * @return LocationGeonames the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -28,7 +28,7 @@ class Location extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_location';
+		return 'tbl_location_geonames';
 	}
 
 	/**
@@ -39,11 +39,11 @@ class Location extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('location', 'required'),
-			array('location', 'length', 'max'=>255),
+			array('id, service_data, geonameId', 'required'),
+			array('id, geonameId', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, location', 'safe', 'on'=>'search'),
+			array('id, service_data, geonameId', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,8 +55,7 @@ class Location extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'acquisitionEvents' => array(self::HAS_MANY, 'AcquisitionEvent', 'location_id'),
-			'locationGeonames' => array(self::HAS_ONE, 'LocationGeonames', 'id'),
+			'id0' => array(self::BELONGS_TO, 'Location', 'id'),
 		);
 	}
 
@@ -67,7 +66,8 @@ class Location extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'location' => 'Location',
+			'service_data' => 'Service Data',
+			'geonameId' => 'Geoname',
 		);
 	}
 
@@ -83,7 +83,8 @@ class Location extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('location',$this->location,true);
+		$criteria->compare('service_data',$this->service_data,true);
+		$criteria->compare('geonameId',$this->geonameId);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

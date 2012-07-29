@@ -129,4 +129,16 @@ class AcquisitionEvent extends CActiveRecord {
         // Return agent name
         return $rows[0]['Sammler'];
     }
+    
+    /**
+     * Return the name of a previously entered location name
+     * @return Name of location
+     */
+    public function getLocationName() {
+        if( $this->location_id <= 0 ) return NULL;
+
+        // Find model entry & return the name
+        $model_location = Location::model()->findByPk($this->location_id);
+        return $model_location->location;
+    }
 }
