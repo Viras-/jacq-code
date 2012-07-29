@@ -111,15 +111,15 @@ class BotanicalObject extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => 'ID',
-            'acquisition_event_id' => 'Acquisition Event',
-            'separation_id' => 'Separation',
-            'phenology_id' => 'Phenology',
-            'taxon_id' => 'Taxon',
-            'habitat' => 'Habitat',
-            'habitus' => 'Habitus',
-            'determined_by_id' => 'Determined By',
-            'annotation' => 'Annotation',
+            'id' => Yii::t('jacq', 'ID'),
+            'acquisition_event_id' => Yii::t('jacq', 'Acquisition Event'),
+            'separation_id' => Yii::t('jacq', 'Separation'),
+            'phenology_id' => Yii::t('jacq', 'Phenology'),
+            'taxon_id' => Yii::t('jacq', 'Taxon'),
+            'habitat' => Yii::t('jacq', 'Habitat'),
+            'habitus' => Yii::t('jacq', 'Habitus'),
+            'determined_by_id' => Yii::t('jacq', 'Determined By'),
+            'annotation' => Yii::t('jacq', 'Annotation'),
         );
     }
 

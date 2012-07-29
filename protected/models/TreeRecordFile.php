@@ -69,10 +69,10 @@ class TreeRecordFile extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => 'ID',
-            'year' => 'Year',
-            'name' => 'Name',
-            'document_number' => 'Document Number',
+            'id' => Yii::t('jacq', 'ID'),
+            'year' => Yii::t('jacq', 'Year'),
+            'name' => Yii::t('jacq', 'Name'),
+            'document_number' => Yii::t('jacq', 'Document Number'),
         );
     }
 

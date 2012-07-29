@@ -81,11 +81,11 @@ class AcquisitionDate extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => 'ID',
-            'year' => 'Year',
-            'month' => 'Month',
-            'day' => 'Day',
-            'custom' => 'Custom',
+            'id' => Yii::t('jacq', 'ID'),
+            'year' => Yii::t('jacq', 'Year'),
+            'month' => Yii::t('jacq', 'Month'),
+            'day' => Yii::t('jacq', 'Day'),
+            'custom' => Yii::t('jacq', 'Custom'),
         );
     }
 

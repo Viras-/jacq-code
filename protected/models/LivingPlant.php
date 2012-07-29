@@ -85,12 +85,12 @@ class LivingPlant extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => 'ID',
-            'garden_site_id' => 'Garden Site',
-            'ipen_number' => 'Ipen Number',
-            'phyto_control' => 'Phyto Control',
-            'phyto_sanitary_product_number' => 'Phyto Sanitary Product Number',
-            'accession_number_id' => 'Accession Number',
+            'id' => Yii::t('jacq', 'ID'),
+            'garden_site_id' => Yii::t('jacq', 'Garden Site'),
+            'ipen_number' => Yii::t('jacq', 'Ipen Number'),
+            'phyto_control' => Yii::t('jacq', 'Phyto Control'),
+            'phyto_sanitary_product_number' => Yii::t('jacq', 'Phyto Sanitary Product Number'),
+            'accession_number_id' => Yii::t('jacq', 'Accession Number'),
         );
     }
 
