@@ -4,6 +4,9 @@
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'living-plant-form',
         'enableAjaxValidation' => false,
+        'htmlOptions' => array(
+            'data-plus-as-tab' => "true"
+        )
             ));
     ?>
 
@@ -60,7 +63,7 @@
     </fieldset>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save', array( 'data-plus-as-tab' => "false" ) ); ?>
     </div>
 
     <?php $this->endWidget(); ?>
