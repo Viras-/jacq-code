@@ -100,10 +100,11 @@ class AutoCompleteController extends Controller {
         $term = trim($_GET['term']);
         $bGeonames = (isset($_GET['geonames'])) ? true : false;
         $results = array();
+        $geonamesUrl = "http://api.geonames.org/searchJSON?maxRows=10&lang=de&username=demo&style=medium";
         
         if( $bGeonames ) {
             // Construct service URL
-            $geonamesUrl = "http://api.geonames.org/searchJSON?formatted=true&maxRows=10&lang=de&username=demo&style=medium&name=" . urlencode($term);
+            $geonamesUrl = $geonamesUrl . "&q=" . urlencode($term);
             // Fetch service response
             $service_response = file_get_contents($geonamesUrl);
             if( $service_response ) {
