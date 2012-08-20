@@ -52,26 +52,10 @@
     <?php
     // Add text-input for each collector
     foreach( $model_acquisitionEvent->tblPeople as $index => $model_person ) {
-        // Enable auto-completer for person field
-        $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-            'name' => 'AcquisitionEvent_personName_' . $index,
-            'sourceUrl' => 'index.php?r=autoComplete/person',
-            // additional javascript options for the autocomplete plugin
-            'options' => array(
-                'minLength' => '2',
-                'select' => 'js:function( event, ui ) {
-                        if( typeof ui.item !== "undefined" ) {
-                            $( "#AcquisitionEvent_tblPeople_' . $index . '" ).val( ui.item.id );
-                        }
-                    }',
-            ),
-            'value' => $model_person->name,
-            'htmlOptions' => array(
-                'onkeypress' => '$( "#AcquisitionEvent_tblPeople_' . $index . '" ).val("");'
-            ),
-        ));
-        
-        echo $form->hiddenField($model_person, 'id', array( 'id' => 'AcquisitionEvent_tblPeople_' .$index, 'name' => 'AcquisitionEvent[tblPeople][]' ) );
+        echo CHtml::textField('AcqusitionEvent_personName_' . $index, $model_person->name, array( 'readonly' => 'readonly' ) );
+        ?>
+        <br />
+        <?php
     }
     ?>
     <?php
@@ -82,19 +66,10 @@
         // additional javascript options for the autocomplete plugin
         'options' => array(
             'minLength' => '2',
-            'select' => 'js:function( event, ui ) {
-                    if( typeof ui.item !== "undefined" ) {
-                        $( "#AcqusitionEvent_person_id" ).val( ui.item.id );
-                    }
-                }',
         ),
         'value' => '',
-        'htmlOptions' => array(
-            'onkeypress' => '$( "#AcqusitionEvent_person_id" ).val("");'
-        ),
     ));
     ?>
-    <?php echo CHtml::hiddenField('AcqusitionEvent_person_id'); ?>
     <?php echo $form->error($model_acquisitionEvent, 'tblPeople'); ?>
 </div>
 

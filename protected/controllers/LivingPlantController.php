@@ -84,7 +84,7 @@ class LivingPlantController extends Controller {
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
                 $locationName = trim($_POST['locationName']);
-                $agentName = trim($_POST['agentName']);
+                $personName = trim($_POST['AcqusitionEvent_personName']);
 
                 // Check if a new (unknown) location was entered
                 if ($model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0) {
@@ -92,14 +92,17 @@ class LivingPlantController extends Controller {
                     $model_acquisitionEvent->location_id = $model_location->id;
                 }
 
-                // Check if a new (unknown) agent was entered
-                if ($model_acquisitionEvent->agent_id <= 0 && strlen($agentName) > 0) {
-                    $model_agent = Person::getByName($agentName);
-                    $model_acquisitionEvent->agent_id = $model_agent->id;
-                }
-
                 // Save acquisition-event and procede
                 if ($model_acquisitionEvent->save()) {
+                    // Check if a new (unknown) agent was entered and add it to acquisition event
+                    if (strlen($personName) > 0) {
+                        $model_person = Person::getByName($personName);
+                        $model_acquisitionEventPerson = new AcquisitionEventPerson;
+                        $model_acquisitionEventPerson->acquisition_event_id = $model_acquisitionEvent->id;
+                        $model_acquisitionEventPerson->person_id = $model_person->id;
+                        $model_acquisitionEventPerson->save();
+                    }
+
                     $model_botanicalObject->acquisition_event_id = $model_acquisitionEvent->id;
 
                     // Check if we have a separation selected
@@ -208,7 +211,7 @@ class LivingPlantController extends Controller {
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
                 $locationName = trim($_POST['locationName']);
-                $agentName = trim($_POST['agentName']);
+                $personName = trim($_POST['AcqusitionEvent_personName']);
 
                 // Check if a new (unknown) location was entered
                 if ($model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0) {
@@ -217,9 +220,12 @@ class LivingPlantController extends Controller {
                 }
 
                 // Check if a new (unknown) agent was entered
-                if ($model_acquisitionEvent->agent_id <= 0 && strlen($agentName) > 0) {
-                    $model_agent = Person::getByName($agentName);
-                    $model_acquisitionEvent->agent_id = $model_agent->id;
+                if (strlen($personName) > 0) {
+                    $model_person = Person::getByName($personName);
+                    $model_acquisitionEventPerson = new AcquisitionEventPerson;
+                    $model_acquisitionEventPerson->acquisition_event_id = $model_acquisitionEvent->id;
+                    $model_acquisitionEventPerson->person_id = $model_person->id;
+                    $model_acquisitionEventPerson->save();
                 }
 
                 if ($model_acquisitionEvent->save()) {

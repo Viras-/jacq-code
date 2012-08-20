@@ -87,7 +87,7 @@ class Person extends CActiveRecord {
     /**
      * Return a person entry by name, automatically adds a new one if it does not find any
      * @param string $name Name to search for
-     * @return \Person 
+     * @return Person 
      */
     public static function getByName( $name ) {
         // Find fitting entry
