@@ -20,18 +20,14 @@
  * @property Relevancy[] $relevancies
  */
 class LivingPlant extends CActiveRecord {
-
-    /**
-     * Setup default values during init 
-     */
     public function init() {
         parent::init();
-
-        if ($this->isNewRecord) {
-            $this->ipen_number = "WU";
+        
+        if( $this->isNewRecord ) {
+            $this->ipen_number = "XX-X-XX";
         }
     }
-
+    
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -58,6 +54,9 @@ class LivingPlant extends CActiveRecord {
             array('id, accession_number_id', 'required'),
             array('id, garden_site_id, phyto_control, accession_number_id', 'numerical', 'integerOnly' => true),
             array('ipen_number, phyto_sanitary_product_number', 'length', 'max' => 20),
+            array('ipenNumberCountryCode', 'length', 'max' => 2),
+            array('ipenNumberState', 'length', 'max' => 1),
+            array('ipenNumberInstitutionCode', 'length', 'max' => 15),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, garden_site_id, ipen_number, phyto_control, phyto_sanitary_product_number, accession_number_id', 'safe', 'on' => 'search'),
@@ -115,4 +114,68 @@ class LivingPlant extends CActiveRecord {
                     'criteria' => $criteria,
                 ));
     }
+    
+    public function setIpenNumberCountryCode($value) {
+        error_log( 'setIpenNumberCountryCode: ' . $value );
+        
+        $this->ipen_number = $value . substr( $this->ipen_number, 2 );
+    }
+
+    public function getIpenNumberCountryCode() {
+        return substr($this->ipen_number, 0, 2);
+    }
+    
+    public function setIpenNumberState($value) {
+        $this->ipen_number = substr( $this->ipen_number, 0, 3 ) . $value . substr( $this->ipen_number, 4 );
+    }
+
+    public function getIpenNumberState() {
+        return substr($this->ipen_number, 3, 1);
+    }
+    
+    public function setIpenNumberInstitutionCode($value) {
+        $this->ipen_number = substr( $this->ipen_number, 0, 5 ) . $value;
+    }
+
+    public function getIpenNumberInstitutionCode() {
+        return substr($this->ipen_number, 5);
+    }
+    
+/*
+    public function __set($name, $value) {
+        error_log('__set: ' . $name . ' / ' . $value);
+        
+        switch($name) {
+            case 'ipen_number_countryCode':
+                $this->ipen_number = $value . substr( $this->ipen_number, 2 );
+                break;
+            case 'ipen_number_state':
+                $this->ipen_number = substr( $this->ipen_number, 0, 3 ) . $value . substr( $this->ipen_number, 4 );
+                break;
+            case 'ipen_number_institutionCode':
+                $this->ipen_number = substr( $this->ipen_number, 0, 5 ) . $value;
+                break;
+            default:
+                parent::__set($name, $value);
+        }
+        
+        error_log('ipen_number: ' . $this->ipen_number);
+    }
+    
+    public function __get($name) {
+        switch( $name ) {
+            case 'ipen_number_countryCode':
+                return substr($this->ipen_number, 0, 2);
+                break;
+            case 'ipen_number_state':
+                return substr($this->ipen_number, 3, 1);
+                break;
+            case 'ipen_number_institutionCode':
+                return substr($this->ipen_number, 5);
+                break;
+            default:
+                return parent::__get($name);
+                break;
+        }
+    }*/
 }

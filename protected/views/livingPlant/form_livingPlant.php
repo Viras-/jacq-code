@@ -12,11 +12,11 @@
             </td>
             <td>
                 <?php echo $form->labelEx($model_livingPlant, 'ipen_number'); ?>
-                <?php echo CHtml::textField('ipen_number_countryCode', 'XX', array('size' => 2, 'maxlength' => 2, 'readonly' => 'readonly')); ?>
+                <?php echo $form->textField($model_livingPlant,'ipenNumberCountryCode', array('size' => 2, 'maxlength' => 2, 'readonly' => 'readonly')); ?>
                 -
-                <?php echo CHtml::dropDownList('ipen_number_state', 'X', array( 'X' => 'X', '0' => '0', '1' => '1' ) ); ?>
+                <?php echo $form->dropDownList($model_livingPlant, 'ipenNumberState', array( 'X' => 'X', '0' => '0', '1' => '1' ) ); ?>
                 -
-                <?php echo CHtml::textField('ipen_number_institutionCode', 'WU', array('size' => 2, 'maxlength' => 2, 'readonly' => 'readonly')); ?>
+                <?php echo $form->textField($model_livingPlant, 'ipenNumberInstitutionCode', array('size' => 2, 'maxlength' => 2, 'readonly' => 'readonly')); ?>
                 <?php echo $form->error($model_livingPlant, 'ipen_number'); ?>
             </td>
         </tr>
@@ -38,7 +38,7 @@
      * Called when the institution dropdown is changed
      */
     function source_id_change(event, ui) {
-        $( "#ipen_number_institutionCode" ).val( source_codes[$("#BotanicalObject_source_id").val()] );
+        $( "#LivingPlant_ipenNumberInstitutionCode" ).val( source_codes[$("#BotanicalObject_source_id").val()] );
     }
     
     // Bind to change event of institution select

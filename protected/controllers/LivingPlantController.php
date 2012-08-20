@@ -80,7 +80,7 @@ class LivingPlantController extends Controller {
             $model_accessionNumber->attributes = $_POST['AccessionNumber'];
             $model_separation->attributes = $_POST['Separation'];
             $model_citesNumber->attributes = $_POST['CitesNumber'];
-
+            
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
                 $locationName = trim($_POST['locationName']);
@@ -120,9 +120,6 @@ class LivingPlantController extends Controller {
                             if ($model_accessionNumber->save()) {
                                 $model_livingPlant->accession_number_id = $model_accessionNumber->id;
                                 
-                                // Construct the IPEN number out of its components
-                                $model_livingPlant->ipen_number = $_POST['ipen_number_countryCode'] . '-' . $_POST['ipen_number_state'] . '-' . $_POST['ipen_number_institutionCode'];
-
                                 if ($model_livingPlant->save()) {
                                     // Check if a tree record was selected and add it if necessary
                                     if (isset($_POST['TreeRecord']['tree_record_file_page_id'])) {
