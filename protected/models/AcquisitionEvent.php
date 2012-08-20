@@ -7,7 +7,6 @@
  * @property integer $id
  * @property integer $acquisition_date_id
  * @property integer $acquisition_type_id
- * @property integer $agent_id
  * @property integer $location_id
  * @property string $number
  *
@@ -15,17 +14,10 @@
  * @property AcquisitionDate $acquisitionDate
  * @property AcquisitionType $acquisitionType
  * @property Location $location
- * @property Person $agent
+ * @property Person[] $tblPeople
  * @property BotanicalObject[] $botanicalObjects
  */
 class AcquisitionEvent extends CActiveRecord {
-    /**
-     * Return connection to herbarinput database
-     * @return CDbConnection 
-     */
-    private function getDbHerbarInput() {
-        return Yii::app()->dbHerbarInput;
-    }
 
     /**
      * Returns the static model of the specified AR class.
@@ -51,11 +43,11 @@ class AcquisitionEvent extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('acquisition_date_id, acquisition_type_id', 'required'),
-            array('agent_id, acquisition_date_id, acquisition_type_id, location_id', 'numerical', 'integerOnly' => true),
+            array('acquisition_date_id, acquisition_type_id, location_id', 'numerical', 'integerOnly' => true),
             array('number', 'length', 'max' => 45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, agent_id, acquisition_date_id, acquisition_type_id, number, location_id', 'safe', 'on' => 'search'),
+            array('id, acquisition_date_id, acquisition_type_id, location_id, number', 'safe', 'on' => 'search'),
         );
     }
 
@@ -69,7 +61,7 @@ class AcquisitionEvent extends CActiveRecord {
             'acquisitionDate' => array(self::BELONGS_TO, 'AcquisitionDate', 'acquisition_date_id'),
             'acquisitionType' => array(self::BELONGS_TO, 'AcquisitionType', 'acquisition_type_id'),
             'location' => array(self::BELONGS_TO, 'Location', 'location_id'),
-            'agent' => array(self::BELONGS_TO, 'Person', 'agent_id'),
+            'tblPeople' => array(self::MANY_MANY, 'Person', 'tbl_acquisition_event_person(acquisition_event_id, person_id)'),
             'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'acquisition_event_id'),
         );
     }
@@ -80,11 +72,10 @@ class AcquisitionEvent extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => Yii::t('jacq', 'ID'),
-            'agent_id' => Yii::t('jacq', 'Agent'),
             'acquisition_date_id' => Yii::t('jacq', 'Acquisition Date'),
             'acquisition_type_id' => Yii::t('jacq', 'Acquisition Type'),
-            'number' => Yii::t('jacq', 'Number'),
             'location_id' => Yii::t('jacq', 'Location'),
+            'number' => Yii::t('jacq', 'Number'),
         );
     }
 
@@ -99,14 +90,14 @@ class AcquisitionEvent extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('agent_id', $this->agent_id);
         $criteria->compare('acquisition_date_id', $this->acquisition_date_id);
         $criteria->compare('acquisition_type_id', $this->acquisition_type_id);
-        $criteria->compare('number', $this->number, true);
         $criteria->compare('location_id', $this->location_id);
+        $criteria->compare('number', $this->number, true);
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
     }
+
 }

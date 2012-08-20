@@ -50,27 +50,52 @@
 <div class="row">
     <?php echo $form->labelEx($model_acquisitionEvent, 'agent_id'); ?>
     <?php
-    // Enable auto-completer for taxon field
+    // Add text-input for each collector
+    foreach( $model_acquisitionEvent->tblPeople as $index => $model_person ) {
+        // Enable auto-completer for person field
+        $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+            'name' => 'AcquisitionEvent_personName_' . $index,
+            'sourceUrl' => 'index.php?r=autoComplete/person',
+            // additional javascript options for the autocomplete plugin
+            'options' => array(
+                'minLength' => '2',
+                'select' => 'js:function( event, ui ) {
+                        if( typeof ui.item !== "undefined" ) {
+                            $( "#AcquisitionEvent_tblPeople_' . $index . '" ).val( ui.item.id );
+                        }
+                    }',
+            ),
+            'value' => $model_person->name,
+            'htmlOptions' => array(
+                'onkeypress' => '$( "#AcquisitionEvent_tblPeople_' . $index . '" ).val("");'
+            ),
+        ));
+        
+        echo $form->hiddenField($model_person, 'id', array( 'id' => 'AcquisitionEvent_tblPeople_' .$index, 'name' => 'AcquisitionEvent[tblPeople][]' ) );
+    }
+    ?>
+    <?php
+    // Add addition field for new collector
     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-        'name' => 'agentName',
+        'name' => 'AcqusitionEvent_personName',
         'sourceUrl' => 'index.php?r=autoComplete/person',
         // additional javascript options for the autocomplete plugin
         'options' => array(
             'minLength' => '2',
             'select' => 'js:function( event, ui ) {
                     if( typeof ui.item !== "undefined" ) {
-                        $( "#AcquisitionEvent_agent_id" ).val( ui.item.id );
+                        $( "#AcqusitionEvent_person_id" ).val( ui.item.id );
                     }
                 }',
         ),
-        'value' => ($model_acquisitionEvent->agent != null) ? $model_acquisitionEvent->agent->name : '',
+        'value' => '',
         'htmlOptions' => array(
-            'onkeypress' => '$( "#AcquisitionEvent_agent_id" ).val("");'
+            'onkeypress' => '$( "#AcqusitionEvent_person_id" ).val("");'
         ),
     ));
     ?>
-    <?php echo $form->hiddenField($model_acquisitionEvent, 'agent_id'); ?>
-    <?php echo $form->error($model_acquisitionEvent, 'agent_id'); ?>
+    <?php echo CHtml::hiddenField('AcqusitionEvent_person_id'); ?>
+    <?php echo $form->error($model_acquisitionEvent, 'tblPeople'); ?>
 </div>
 
 <div class="row">
