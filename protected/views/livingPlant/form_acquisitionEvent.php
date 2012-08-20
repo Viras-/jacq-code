@@ -17,6 +17,10 @@
             'select' => 'js:function( event, ui ) {
                     if( typeof ui.item !== "undefined" ) {
                         $( "#AcquisitionEvent_location_id" ).val( ui.item.id );
+                        
+                        if( typeof ui.item.countryCode !== "undefined" ) {
+                            $( "#ipen_number_countryCode" ).val( ui.item.countryCode );
+                        }
                     }
                 }',
             /*'open' => 'js:function(event, ui) {

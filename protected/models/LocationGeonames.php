@@ -7,6 +7,7 @@
  * @property integer $id
  * @property string $service_data
  * @property integer $geonameId
+ * @property string $countryCode
  *
  * The followings are the available model relations:
  * @property Location $id0
@@ -63,6 +64,7 @@ class LocationGeonames extends CActiveRecord {
             'id' => Yii::t('jacq', 'ID'),
             'service_data' => Yii::t('jacq', 'Service Data'),
             'geonameId' => Yii::t('jacq', 'Geoname'),
+            'countryCode' => Yii::t('jacq','Country Code')
         );
     }
 

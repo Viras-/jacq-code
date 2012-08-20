@@ -1,4 +1,10 @@
 <div class="row">
+    <?php echo $form->labelEx($model_botanicalObject, 'source_id'); ?>
+    <?php echo $form->dropDownList($model_botanicalObject, 'source_id', CHtml::listData(Meta::model()->findAll(array('order' => 'source_name')), 'source_id', 'source_name')); ?>
+    <?php echo $form->error($model_botanicalObject, 'source_id'); ?>
+</div>
+
+<div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'taxon_id'); ?>
     <?php
     // Enable auto-completer for taxon field
@@ -15,9 +21,9 @@
                 }',
         ),
         'value' => $model_botanicalObject->scientificName,
-        /*'htmlOptions' => array(
-            'value' => $model_botanicalObject->getScientificName()
-        ),*/
+            /* 'htmlOptions' => array(
+              'value' => $model_botanicalObject->getScientificName()
+              ), */
     ));
     ?>
     <?php echo $form->hiddenField($model_botanicalObject, 'taxon_id'); ?>

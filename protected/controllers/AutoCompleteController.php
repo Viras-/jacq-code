@@ -104,7 +104,7 @@ class AutoCompleteController extends Controller {
         $term = trim($_GET['term']);
         $bGeonames = (isset($_GET['geonames'])) ? true : false;
         $results = array();
-        $geonamesUrl = "http://api.geonames.org/searchJSON?maxRows=10&lang=de&username=demo&style=medium";
+        $geonamesUrl = "http://api.geonames.org/searchJSON?maxRows=10&lang=de&username=wkoller&style=medium";
 
         if ($bGeonames) {
             // Construct service URL
@@ -132,6 +132,7 @@ class AutoCompleteController extends Controller {
                         $model_locationGeonames->id = $model_location->id;
                         $model_locationGeonames->service_data = serialize($geoname);
                         $model_locationGeonames->geonameId = $geoname['geonameId'];
+                        $model_locationGeonames->countryCode = $geoname['countryCode'];
                         $model_locationGeonames->save();
                     }
 
@@ -140,6 +141,7 @@ class AutoCompleteController extends Controller {
                         "label" => $model_location->location,
                         "value" => $model_location->location,
                         "id" => $model_location->id,
+                        "countryCode" => $model_locationGeonames->countryCode
                     );
                 }
             }

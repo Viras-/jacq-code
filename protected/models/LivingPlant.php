@@ -28,7 +28,7 @@ class LivingPlant extends CActiveRecord {
         parent::init();
 
         if ($this->isNewRecord) {
-            $this->ipen_number = "XX-X-WU";
+            $this->ipen_number = "WU";
         }
     }
 
@@ -115,5 +115,4 @@ class LivingPlant extends CActiveRecord {
                     'criteria' => $criteria,
                 ));
     }
-
 }
