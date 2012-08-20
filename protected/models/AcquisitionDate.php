@@ -86,6 +86,7 @@ class AcquisitionDate extends CActiveRecord {
             'month' => Yii::t('jacq', 'Month'),
             'day' => Yii::t('jacq', 'Day'),
             'custom' => Yii::t('jacq', 'Custom'),
+            'acquisition_date' => Yii::t('jacq', 'Acquisition Date')
         );
     }
 

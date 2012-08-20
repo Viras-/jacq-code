@@ -13,6 +13,7 @@
  * @property string $habitat
  * @property string $habitus
  * @property string $annotation
+ * @property string $recording_date
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
@@ -32,6 +33,12 @@ class BotanicalObject extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+    
+    public function init() {
+        $this->recording_date = date('Y-m-d');
+        
+        parent::init();
     }
 
     /**
@@ -85,7 +92,7 @@ class BotanicalObject extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('acquisition_event_id, taxon_id', 'required'),
+            array('acquisition_event_id, taxon_id, recording_date', 'required'),
             array('acquisition_event_id, separation_id, phenology_id, taxon_id, determined_by_id', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
             array('annotation', 'safe'),
@@ -127,6 +134,7 @@ class BotanicalObject extends CActiveRecord {
             'habitus' => Yii::t('jacq', 'Habitus'),
             'determined_by_id' => Yii::t('jacq', 'Determined By'),
             'annotation' => Yii::t('jacq', 'Annotation'),
+            'recording_date' => Yii::t('jacq', 'Recording Date')
         );
     }
 

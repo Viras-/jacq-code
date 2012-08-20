@@ -2,7 +2,7 @@
     <table style="width: auto;">
         <tr>
             <td>
-                <?php echo $form->labelEx($model_acquisitionDate, 'date'); ?>
+                <?php echo $form->labelEx($model_acquisitionDate, 'acquisition_date'); ?>
                 <?php
                 $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                     'name' => 'AcquisitionDate[date]',

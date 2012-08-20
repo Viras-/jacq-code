@@ -15,7 +15,29 @@
     <?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);  ?>
 
     <fieldset>
-        <legend>acquisition</legend>
+        <legend><?php echo Yii::t('jacq', 'Recording'); ?></legend>
+        <div class="row">
+            <?php echo $form->labelEx($model_botanicalObject, 'recording_date'); ?>
+                <?php
+                $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                    'name' => 'BotanicalObject[recording_date]',
+                    // additional javascript options for the date picker plugin
+                    'options' => array(
+                        'showAnim' => 'fold',
+                        'dateFormat' => 'yy-mm-dd',
+                        'changeMonth' => true,
+                        'changeYear' => true,
+                    ),
+                    'htmlOptions' => array(
+                    ),
+                    'value' => $model_botanicalObject->recording_date,
+                ));
+                ?>
+            <?php echo $form->error($model_botanicalObject, 'recording_date'); ?>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend><?php echo Yii::t('jacq', 'Acquisition'); ?></legend>
         <?php
         require('form_acquisitionDate.php');
         ?>
@@ -63,7 +85,7 @@
     </fieldset>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save', array( 'data-plus-as-tab' => "false" ) ); ?>
+        <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save', array('data-plus-as-tab' => "false")); ?>
     </div>
 
     <?php $this->endWidget(); ?>
