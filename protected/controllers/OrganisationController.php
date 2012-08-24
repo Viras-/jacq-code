@@ -1,5 +1,5 @@
 <?php
-class GardenSiteController extends Controller {
+class OrganisationController extends Controller {
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -56,7 +56,7 @@ class GardenSiteController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
-        $model = new GardenSite;
+        $model = new Organisation;
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
@@ -128,10 +128,10 @@ class GardenSiteController extends Controller {
      * Manages all models.
      */
     public function actionAdmin() {
-        $model = new GardenSite('search');
+        $model = new Organisation('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['GardenSite']))
-            $model->attributes = $_GET['GardenSite'];
+        if (isset($_GET['Organisation']))
+            $model->attributes = $_GET['Organisation'];
 
         $this->render('admin', array(
             'model' => $model,
@@ -144,7 +144,7 @@ class GardenSiteController extends Controller {
      * @param integer the ID of the model to be loaded
      */
     public function loadModel($id) {
-        $model = GardenSite::model()->findByPk($id);
+        $model = Organisation::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
@@ -155,7 +155,7 @@ class GardenSiteController extends Controller {
      * @param CModel the model to be validated
      */
     protected function performAjaxValidation($model) {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'garden-site-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'organisation-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }

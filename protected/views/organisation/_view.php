@@ -16,8 +16,8 @@
 	<?php echo CHtml::encode($data->greenhouse); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('parent_garden_site_id')); ?>:</b>
-	<?php echo CHtml::encode($data->parent_garden_site_id); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('parent_organisation_id')); ?>:</b>
+	<?php echo CHtml::encode($data->parent_organisation_id); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('gardener_id')); ?>:</b>

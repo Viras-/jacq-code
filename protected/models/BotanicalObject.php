@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This is the model class for table "tbl_botanical_object".
  *
@@ -14,7 +13,7 @@
  * @property string $habitus
  * @property string $annotation
  * @property string $recording_date
- * @property integer $garden_site_id
+ * @property integer $organisation_id
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
@@ -25,7 +24,7 @@
  * @property Diaspora $diaspora
  * @property Image[] $images
  * @property LivingPlant $livingPlant
- * @property GardenSite $gardenSite
+ * @property Organisation $organisation
  */
 class BotanicalObject extends CActiveRecord {
     /**

@@ -11,11 +11,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'garden_site_id'); ?>
-		<?php echo $form->textField($model,'garden_site_id'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'ipen_number'); ?>
 		<?php echo $form->textField($model,'ipen_number',array('size'=>20,'maxlength'=>20)); ?>
 	</div>

@@ -4,8 +4,8 @@
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('garden_site_id')); ?>:</b>
-	<?php echo CHtml::encode($data->garden_site_id); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('organisation_id')); ?>:</b>
+	<?php echo CHtml::encode($data->organisation_id); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('ipen_number')); ?>:</b>

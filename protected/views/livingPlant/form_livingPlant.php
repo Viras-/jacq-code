@@ -1,7 +1,7 @@
 <div class="row">
-    <?php echo $form->labelEx($model_botanicalObject, 'garden_site_id'); ?>
-    <?php echo $form->dropDownList($model_botanicalObject, 'garden_site_id', CHtml::listData(GardenSite::model()->findAll(), 'id', 'description')); ?>
-    <?php echo $form->error($model_botanicalObject, 'garden_site_id'); ?>
+    <?php echo $form->labelEx($model_botanicalObject, 'organisation_id'); ?>
+    <?php echo $form->dropDownList($model_botanicalObject, 'organisation_id', CHtml::listData(Organisation::model()->findAll(), 'id', 'description')); ?>
+    <?php echo $form->error($model_botanicalObject, 'organisation_id'); ?>
 </div>
 
 <div class="row">
@@ -32,7 +32,7 @@
 <script type="text/javascript">
     var ipen_codes = {
         <?php
-        $ipen_code_models = GardenSite::model()->findAll();
+        $ipen_code_models = Organisation::model()->findAll();
         foreach( $ipen_code_models as $ipen_code_model ) {
             echo "'" . $ipen_code_model->id . "': '" . $ipen_code_model->getIpenCode() . "',\n";
         }
@@ -44,12 +44,12 @@
      * Called when the institution dropdown is changed
      */
     function source_id_change(event, ui) {
-        $( "#LivingPlant_ipenNumberInstitutionCode" ).val( ipen_codes[$("#BotanicalObject_garden_site_id").val()] );
+        $( "#LivingPlant_ipenNumberInstitutionCode" ).val( ipen_codes[$("#BotanicalObject_organisation_id").val()] );
     }
     
     // Bind to change event of institution select
     $(document).ready(function(){
-        $('#BotanicalObject_garden_site_id').bind('change', source_id_change);
+        $('#BotanicalObject_organisation_id').bind('change', source_id_change);
         
         // Update intital selection
         source_id_change();

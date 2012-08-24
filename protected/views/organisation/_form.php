@@ -28,13 +28,9 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'parent_garden_site_id'); ?>
-		<?php
-                $garden_sites = CHtml::listData(GardenSite::model()->findAll(), 'id', 'description');
-                $garden_sites = array( '' => 'None' ) + $garden_sites;
-                echo $form->dropDownList($model,'parent_garden_site_id', $garden_sites);
-                ?>
-		<?php echo $form->error($model,'parent_garden_site_id'); ?>
+		<?php echo $form->labelEx($model,'parent_organisation_id'); ?>
+		<?php echo $form->dropDownList($model,'parent_organisation_id', CHtml::listData(Organisation::model()->findAll(), 'id', 'description')); ?>
+		<?php echo $form->error($model,'parent_organisation_id'); ?>
 	</div>
 
 	<div class="row">

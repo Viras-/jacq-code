@@ -46,7 +46,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'description',
 		'department',
 		'greenhouse',
-		'parent_garden_site_id',
+		'parent_organisation_id',
 		'gardener_id',
 		array(
 			'class'=>'CButtonColumn',

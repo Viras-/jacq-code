@@ -22,7 +22,7 @@ $this->menu=array(
 		'description',
 		'department',
 		'greenhouse',
-		'parent_garden_site_id',
+		'parent_organisation_id',
 		'gardener_id',
 	),
 ));

@@ -19,7 +19,7 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'garden_site_id',
+		'organisation_id',
 		'accession_number_id',
 		'ipen_number',
 		'phyto_control',

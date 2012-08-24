@@ -26,8 +26,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'parent_garden_site_id'); ?>
-		<?php echo $form->textField($model,'parent_garden_site_id'); ?>
+		<?php echo $form->label($model,'parent_organisation_id'); ?>
+		<?php echo $form->textField($model,'parent_organisation_id'); ?>
 	</div>
 
 	<div class="row">
