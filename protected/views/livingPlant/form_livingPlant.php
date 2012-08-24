@@ -5,6 +5,12 @@
 </div>
 
 <div class="row">
+    <?php echo $form->labelEx($model_livingPlant, 'place_number'); ?>
+    <?php echo $form->textField($model_livingPlant, 'place_number'); ?>
+    <?php echo $form->error($model_livingPlant, 'place_number'); ?>
+</div>
+
+<div class="row">
     <table style="width: auto;">
         <tr>
             <td>

@@ -75,6 +75,7 @@ return array (
   'Phenology' => 'Phänologie',
   'Phyto Control' => 'Phyto-Kontrolle',
   'Phyto Sanitary Product Number' => 'Phytosanitärerzeugnisse Nr.',
+  'Place Number' => 'Platznummer',
   'Recording' => 'Aufnahme',
   'Recording Date' => 'Aufnahmedatum',
   'Relevancy Type' => 'Relevanz',

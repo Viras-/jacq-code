@@ -10,6 +10,7 @@
  * @property integer $phyto_control
  * @property string $phyto_sanitary_product_number
  * @property integer $accession_number_id
+ * @property string $place_number
  *
  * The followings are the available model relations:
  * @property CitesNumber[] $citesNumbers
@@ -53,7 +54,7 @@ class LivingPlant extends CActiveRecord {
         return array(
             array('id, accession_number_id', 'required'),
             array('id, garden_site_id, phyto_control, accession_number_id', 'numerical', 'integerOnly' => true),
-            array('ipen_number, phyto_sanitary_product_number', 'length', 'max' => 20),
+            array('ipen_number, phyto_sanitary_product_number, place_number', 'length', 'max' => 20),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
@@ -90,6 +91,7 @@ class LivingPlant extends CActiveRecord {
             'phyto_control' => Yii::t('jacq', 'Phyto Control'),
             'phyto_sanitary_product_number' => Yii::t('jacq', 'Phyto Sanitary Product Number'),
             'accession_number_id' => Yii::t('jacq', 'Accession Number'),
+            'place_number' => Yii::t('jacq', 'Place Number')
         );
     }
 
