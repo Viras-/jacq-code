@@ -1,7 +1,7 @@
 <div class="row">
-    <?php echo $form->labelEx($model_livingPlant, 'garden_site_id'); ?>
-    <?php echo $form->dropDownList($model_livingPlant, 'garden_site_id', CHtml::listData(GardenSite::model()->findAll(), 'id', 'description')); ?>
-    <?php echo $form->error($model_livingPlant, 'garden_site_id'); ?>
+    <?php echo $form->labelEx($model_botanicalObject, 'garden_site_id'); ?>
+    <?php echo $form->dropDownList($model_botanicalObject, 'garden_site_id', CHtml::listData(GardenSite::model()->findAll(), 'id', 'description')); ?>
+    <?php echo $form->error($model_botanicalObject, 'garden_site_id'); ?>
 </div>
 
 <div class="row">
@@ -30,11 +30,11 @@
 </div>
 <!-- List of source-codes for institutions to auto-fill the IPEN number -->
 <script type="text/javascript">
-    var source_codes = {
+    var ipen_codes = {
         <?php
-        $meta_models = Meta::model()->findAll();
-        foreach( $meta_models as $meta_model ) {
-            echo "'" . $meta_model->source_id . "': '" . $meta_model->source_code . "',\n";
+        $ipen_code_models = GardenSite::model()->findAll();
+        foreach( $ipen_code_models as $ipen_code_model ) {
+            echo "'" . $ipen_code_model->id . "': '" . $ipen_code_model->getIpenCode() . "',\n";
         }
         ?>
         '0': ''
@@ -44,12 +44,12 @@
      * Called when the institution dropdown is changed
      */
     function source_id_change(event, ui) {
-        $( "#LivingPlant_ipenNumberInstitutionCode" ).val( source_codes[$("#BotanicalObject_source_id").val()] );
+        $( "#LivingPlant_ipenNumberInstitutionCode" ).val( ipen_codes[$("#BotanicalObject_garden_site_id").val()] );
     }
     
     // Bind to change event of institution select
     $(document).ready(function(){
-        $('#BotanicalObject_source_id').bind('change', source_id_change);
+        $('#BotanicalObject_garden_site_id').bind('change', source_id_change);
         
         // Update intital selection
         source_id_change();

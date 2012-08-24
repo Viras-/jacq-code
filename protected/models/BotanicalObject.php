@@ -14,7 +14,7 @@
  * @property string $habitus
  * @property string $annotation
  * @property string $recording_date
- * @property int $source_id
+ * @property integer $garden_site_id
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
@@ -25,7 +25,7 @@
  * @property Diaspora $diaspora
  * @property Image[] $images
  * @property LivingPlant $livingPlant
- * @property Meta $meta
+ * @property GardenSite $gardenSite
  */
 class BotanicalObject extends CActiveRecord {
     /**
@@ -96,8 +96,8 @@ class BotanicalObject extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('acquisition_event_id, taxon_id, recording_date, source_id', 'required'),
-            array('acquisition_event_id, separation_id, phenology_id, taxon_id, determined_by_id', 'numerical', 'integerOnly' => true),
+            array('acquisition_event_id, taxon_id, recording_date', 'required'),
+            array('acquisition_event_id, separation_id, phenology_id, taxon_id, determined_by_id, garden_site_id', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
             array('annotation', 'safe'),
             // The following rule is used by search().
@@ -121,7 +121,7 @@ class BotanicalObject extends CActiveRecord {
             'diaspora' => array(self::HAS_ONE, 'Diaspora', 'id'),
             'images' => array(self::HAS_MANY, 'Image', 'botanical_object_id'),
             'livingPlant' => array(self::HAS_ONE, 'LivingPlant', 'id'),
-            'meta' => array(self::BELONGS_TO, 'Meta', 'source_id'),
+            'gardenSite' => array(self::BELONGS_TO, 'GardenSite', 'garden_site_id'),
         );
     }
 
@@ -140,7 +140,7 @@ class BotanicalObject extends CActiveRecord {
             'determined_by_id' => Yii::t('jacq', 'Determined By'),
             'annotation' => Yii::t('jacq', 'Annotation'),
             'recording_date' => Yii::t('jacq', 'Recording Date'),
-            'source_id' => Yii::t('jacq','Institution')
+            'garden_site_id' => Yii::t('jacq', 'Garden Site'),
         );
     }
 

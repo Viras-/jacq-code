@@ -10,6 +10,7 @@
  * @property integer $greenhouse
  * @property integer $parent_garden_site_id
  * @property integer $gardener_id
+ * @property string $ipen_code
  *
  * The followings are the available model relations:
  * @property GardenSite $parentGardenSite
@@ -99,5 +100,24 @@ class GardenSite extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
+    }
+    
+    /**
+     * Return the IPEN code for this garden site (recursive parent search)
+     * @return string IPEN code
+     */
+    public function getIpenCode() {
+        // check if we have an individual ipen code
+        if( $this->ipen_code != NULL ) {
+            return $this->ipen_code;
+        }
+        // check if we have a parent to look for
+        else if( $this->parentGardenSite != NULL) {
+            return $this->parentGardenSite->getIpenCode();
+        }
+        // give up and return 'XX' (which is the default)
+        else {
+            return 'XX';
+        }
     }
 }
