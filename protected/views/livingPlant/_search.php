@@ -20,11 +20,6 @@
 		<?php echo $form->textField($model,'phyto_control'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->label($model,'phyto_sanitary_product_number'); ?>
-		<?php echo $form->textField($model,'phyto_sanitary_product_number',array('size'=>20,'maxlength'=>20)); ?>
-	</div>
-
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

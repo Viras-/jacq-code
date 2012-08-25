@@ -7,13 +7,11 @@
  * @property integer $id
  * @property string $ipen_number
  * @property integer $phyto_control
- * @property string $phyto_sanitary_product_number
  * @property integer $accession_number_id
  * @property string $place_number
  *
  * The followings are the available model relations:
  * @property Certificate[] $certificates
- * @property CitesNumber[] $citesNumbers
  * @property BotanicalObject $id0
  * @property AccessionNumber $accessionNumber
  * @property LivingPlantTreeRecordFilePage[] $livingPlantTreeRecordFilePages
@@ -53,13 +51,13 @@ class LivingPlant extends CActiveRecord {
         return array(
             array('id, accession_number_id', 'required'),
             array('id, phyto_control, accession_number_id', 'numerical', 'integerOnly' => true),
-            array('ipen_number, phyto_sanitary_product_number, place_number', 'length', 'max' => 20),
+            array('ipen_number, place_number', 'length', 'max' => 20),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, ipen_number, phyto_control, phyto_sanitary_product_number, accession_number_id', 'safe', 'on' => 'search'),
+            array('id, ipen_number, phyto_control, accession_number_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -71,7 +69,6 @@ class LivingPlant extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'certificates' => array(self::HAS_MANY, 'Certificate', 'living_plant_id'),
-            'citesNumbers' => array(self::HAS_MANY, 'CitesNumber', 'living_plant_id'),
             'id0' => array(self::BELONGS_TO, 'BotanicalObject', 'id'),
             'accessionNumber' => array(self::BELONGS_TO, 'AccessionNumber', 'accession_number_id'),
             'livingPlantTreeRecordFilePages' => array(self::HAS_MANY, 'LivingPlantTreeRecordFilePage', 'living_plant_id'),
@@ -87,7 +84,6 @@ class LivingPlant extends CActiveRecord {
             'id' => Yii::t('jacq', 'ID'),
             'ipen_number' => Yii::t('jacq', 'Ipen Number'),
             'phyto_control' => Yii::t('jacq', 'Phyto Control'),
-            'phyto_sanitary_product_number' => Yii::t('jacq', 'Phyto Sanitary Product Number'),
             'accession_number_id' => Yii::t('jacq', 'Accession Number'),
             'place_number' => Yii::t('jacq', 'Place Number')
         );
@@ -106,7 +102,6 @@ class LivingPlant extends CActiveRecord {
         $criteria->compare('id', $this->id);
         $criteria->compare('ipen_number', $this->ipen_number, true);
         $criteria->compare('phyto_control', $this->phyto_control);
-        $criteria->compare('phyto_sanitary_product_number', $this->phyto_sanitary_product_number, true);
         $criteria->compare('accession_number_id', $this->accession_number_id);
 
         return new CActiveDataProvider($this, array(
@@ -114,6 +109,10 @@ class LivingPlant extends CActiveRecord {
                 ));
     }
     
+    /**
+     * Set the country code for the IPEN number
+     * @param string $value ISO-2 code for the country
+     */
     public function setIpenNumberCountryCode($value) {
         error_log( 'setIpenNumberCountryCode: ' . $value );
         
@@ -139,42 +138,4 @@ class LivingPlant extends CActiveRecord {
     public function getIpenNumberInstitutionCode() {
         return substr($this->ipen_number, 5);
     }
-    
-/*
-    public function __set($name, $value) {
-        error_log('__set: ' . $name . ' / ' . $value);
-        
-        switch($name) {
-            case 'ipen_number_countryCode':
-                $this->ipen_number = $value . substr( $this->ipen_number, 2 );
-                break;
-            case 'ipen_number_state':
-                $this->ipen_number = substr( $this->ipen_number, 0, 3 ) . $value . substr( $this->ipen_number, 4 );
-                break;
-            case 'ipen_number_institutionCode':
-                $this->ipen_number = substr( $this->ipen_number, 0, 5 ) . $value;
-                break;
-            default:
-                parent::__set($name, $value);
-        }
-        
-        error_log('ipen_number: ' . $this->ipen_number);
-    }
-    
-    public function __get($name) {
-        switch( $name ) {
-            case 'ipen_number_countryCode':
-                return substr($this->ipen_number, 0, 2);
-                break;
-            case 'ipen_number_state':
-                return substr($this->ipen_number, 3, 1);
-                break;
-            case 'ipen_number_institutionCode':
-                return substr($this->ipen_number, 5);
-                break;
-            default:
-                return parent::__get($name);
-                break;
-        }
-    }*/
 }

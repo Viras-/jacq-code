@@ -20,6 +20,16 @@ foreach( $model_livingPlant->certificates as $i => $model_certificate ) {
             </td>
             <td>
             <?php
+            echo $form->labelEx($model_certificate, 'number');
+            echo $form->textField(
+                    $model_certificate,
+                    "[$i]number"
+            );
+            echo $form->error($model_certificate, 'number');
+            ?>
+            </td>
+            <td>
+            <?php
             echo $form->labelEx($model_certificate, 'annotation');
             echo $form->textField(
                     $model_certificate,
@@ -46,6 +56,14 @@ foreach( $model_livingPlant->certificates as $i => $model_certificate ) {
                     "Certificate[9999][certificate_type_id]",
                     "",
                     $certificate_types
+            );
+            ?>
+            </td>
+            <td>
+            <?php
+            echo CHtml::label(Yii::t('jacq', 'number'), 'Certificate_number');
+            echo CHtml::textField(
+                    "Certificate[9999][number]"
             );
             ?>
             </td>

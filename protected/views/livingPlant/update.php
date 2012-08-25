@@ -24,6 +24,5 @@ echo $this->renderPartial('_form',
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject,
             'model_accessionNumber' => $model_accessionNumber,
-            'model_citesNumber' => $model_citesNumber,
             )
         );

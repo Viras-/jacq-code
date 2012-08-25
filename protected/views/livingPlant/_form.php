@@ -83,12 +83,6 @@
         require('form_sex.php');
         ?>
     </fieldset>
-    <fieldset>
-        <legend>cites number(s)</legend>
-        <?php
-        require('form_citesNumber.php');
-        ?>
-    </fieldset>
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save', array('data-plus-as-tab' => "false")); ?>

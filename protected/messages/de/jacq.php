@@ -47,7 +47,6 @@ return array (
   'Agent' => 'Sammler',
   'Annotation' => 'Bemerkung',
   'Botanical Object' => 'Botanisches Objekt',
-  'Cites Number' => 'CITES Nummer',
   'Corrections Date' => 'Massnahmen Datum',
   'Corrections Done' => 'Massnahmen erledigt',
   'Custom' => 'Frei',
