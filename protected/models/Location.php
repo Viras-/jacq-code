@@ -37,7 +37,6 @@ class Location extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('location', 'required'),
-            array('location', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, location', 'safe', 'on' => 'search'),
@@ -96,7 +95,7 @@ class Location extends CActiveRecord {
             $model_location->location = $name;
             $model_location->save();
         }
-        
+
         return $model_location;
     }
 }

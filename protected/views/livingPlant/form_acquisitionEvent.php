@@ -5,6 +5,38 @@
 </div>
 
 <div class="row">
+    <?php echo $form->labelEx($model_acquisitionEvent, 'agent_id'); ?>
+    <?php
+    // Add text-input for each collector
+    foreach( $model_acquisitionEvent->tblPeople as $index => $model_person ) {
+        echo CHtml::textField('AcqusitionEvent_personName_' . $index, $model_person->name, array( 'readonly' => 'readonly' ) );
+        ?>
+        <br />
+        <?php
+    }
+    ?>
+    <?php
+    // Add addition field for new collector
+    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+        'name' => 'AcqusitionEvent_personName',
+        'sourceUrl' => 'index.php?r=autoComplete/person',
+        // additional javascript options for the autocomplete plugin
+        'options' => array(
+            'minLength' => '2',
+        ),
+        'value' => '',
+    ));
+    ?>
+    <?php echo $form->error($model_acquisitionEvent, 'tblPeople'); ?>
+</div>
+
+<div class="row">
+    <?php echo $form->labelEx($model_acquisitionEvent, 'number'); ?>
+    <?php echo $form->textField($model_acquisitionEvent, 'number'); ?>
+    <?php echo $form->error($model_acquisitionEvent, 'number'); ?>
+</div>
+<hr />
+<div class="row">
     <?php echo $form->labelEx($model_acquisitionEvent, 'location_id'); ?>
     <?php
     // Enable auto-completer for taxon field
@@ -48,33 +80,9 @@
 </div>
 
 <div class="row">
-    <?php echo $form->labelEx($model_acquisitionEvent, 'agent_id'); ?>
-    <?php
-    // Add text-input for each collector
-    foreach( $model_acquisitionEvent->tblPeople as $index => $model_person ) {
-        echo CHtml::textField('AcqusitionEvent_personName_' . $index, $model_person->name, array( 'readonly' => 'readonly' ) );
-        ?>
-        <br />
-        <?php
-    }
-    ?>
-    <?php
-    // Add addition field for new collector
-    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-        'name' => 'AcqusitionEvent_personName',
-        'sourceUrl' => 'index.php?r=autoComplete/person',
-        // additional javascript options for the autocomplete plugin
-        'options' => array(
-            'minLength' => '2',
-        ),
-        'value' => '',
-    ));
-    ?>
-    <?php echo $form->error($model_acquisitionEvent, 'tblPeople'); ?>
-</div>
-
-<div class="row">
-    <?php echo $form->labelEx($model_acquisitionEvent, 'number'); ?>
-    <?php echo $form->textField($model_acquisitionEvent, 'number'); ?>
-    <?php echo $form->error($model_acquisitionEvent, 'number'); ?>
+    <?php echo $form->labelEx($model_acquisitionEvent, 'altitude'); ?>
+    <?php echo $form->textField($model_acquisitionEvent, 'altitude_min', array( 'size' => 5 ) ); ?>
+    -
+    <?php echo $form->textField($model_acquisitionEvent, 'altitude_max', array( 'size' => 5 )); ?>
+    <?php echo $form->error($model_acquisitionEvent, 'altitude'); ?>
 </div>

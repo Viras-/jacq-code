@@ -9,6 +9,11 @@
  * @property integer $acquisition_type_id
  * @property integer $location_id
  * @property string $number
+ * @property integer $altitude_min
+ * @property integer $altitude_max
+ * @property integer $exactness
+ * @property double $latitude
+ * @property double $longitude
  *
  * The followings are the available model relations:
  * @property AcquisitionDate $acquisitionDate
@@ -43,11 +48,12 @@ class AcquisitionEvent extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('acquisition_date_id, acquisition_type_id', 'required'),
-            array('acquisition_date_id, acquisition_type_id, location_id', 'numerical', 'integerOnly' => true),
-            array('number', 'length', 'max' => 45),
+            array('acquisition_date_id, acquisition_type_id, location_id, altitude_min, altitude_max, exactness', 'numerical', 'integerOnly' => true),
+            array('latitude, longitude', 'numerical'),
+            array('number', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, acquisition_date_id, acquisition_type_id, location_id, number', 'safe', 'on' => 'search'),
+            array('id, acquisition_date_id, acquisition_type_id, location_id, number, altitude_min, altitude_max, exactness, latitude, longitude', 'safe', 'on' => 'search'),
         );
     }
 
@@ -76,7 +82,11 @@ class AcquisitionEvent extends CActiveRecord {
             'acquisition_type_id' => Yii::t('jacq', 'Acquisition Type'),
             'location_id' => Yii::t('jacq', 'Location'),
             'number' => Yii::t('jacq', 'Number'),
-            'agent_id' => Yii::t('jacq', 'Agent')
+            'altitude_min' => Yii::t('jacq', 'Altitude Min'),
+            'altitude_max' => Yii::t('jacq', 'Altitude Max'),
+            'exactness' => Yii::t('jacq', 'Exactness'),
+            'latitude' => Yii::t('jacq', 'Latitude'),
+            'longitude' => Yii::t('jacq', 'Longitude'),
         );
     }
 
@@ -95,6 +105,11 @@ class AcquisitionEvent extends CActiveRecord {
         $criteria->compare('acquisition_type_id', $this->acquisition_type_id);
         $criteria->compare('location_id', $this->location_id);
         $criteria->compare('number', $this->number, true);
+        $criteria->compare('altitude_min', $this->altitude_min);
+        $criteria->compare('altitude_max', $this->altitude_max);
+        $criteria->compare('exactness', $this->exactness);
+        $criteria->compare('latitude', $this->latitude);
+        $criteria->compare('longitude', $this->longitude);
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,

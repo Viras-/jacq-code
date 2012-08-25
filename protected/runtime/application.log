@@ -2701,3 +2701,60 @@ Stack trace:
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
 HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=2
 ---
+2012/08/27 15:37:50 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php:457
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(201): LivingPlantController->loadModel('1')
+#1 [internal function]: LivingPlantController->actionUpdate('1')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/08/27 15:39:21 [error] [exception.CException] exception 'CException' with message 'Eigenschaft "AcquisitionEvent.altitude_min ist nicht definiert.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('altitude_min')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/helpers/CHtml.php(2044): CActiveRecord->__get('altitude_min')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/helpers/CHtml.php(1774): CHtml::resolveValue(Object(AcquisitionEvent), 'altitude_min')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/helpers/CHtml.php(1205): CHtml::activeInputField('text', Object(AcquisitionEvent), 'altitude_min', Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/widgets/CActiveForm.php(575): CHtml::activeTextField(Object(AcquisitionEvent), 'altitude_min', Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_acquisitionEvent.php(84): CActiveForm->textField(Object(AcquisitionEvent), 'altitude_min')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(46): require('/var/www/html/N...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/create.php(24): CController->renderPartial('_form', Array)
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('create', Array, true)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(192): CController->render('create', Array)
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#26 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/cre...')
+#27 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#28 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#29 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+---
