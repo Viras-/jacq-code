@@ -156,6 +156,23 @@ class LivingPlantController extends Controller {
                                         }
                                     }
 
+                                    // check for certificate entries and update/add them
+                                    if( isset($_POST['Certificate']) ) {
+                                        // cycle through all posted certificate entries
+                                        foreach($_POST['Certificate'] as $i => $certificate) {
+                                            // only handle certificate entry if it has a type set
+                                            if( empty($certificate['certificate_type_id']) ) continue;
+
+                                            // check if this is an update and load the model
+                                            $certificate_model = new Certificate;
+
+                                            // set the attributes & save the certificate entry
+                                            $certificate_model->attributes = $certificate;
+                                            $certificate_model->living_plant_id = $model_livingPlant->id;
+                                            $certificate_model->save();
+                                        }
+                                    }
+
                                     // Check if a cites number was entered
                                     if (!empty($model_citesNumber->cites_number)) {
                                         $model_citesNumber->living_plant_id = $model_livingPlant->id;
@@ -312,7 +329,31 @@ class LivingPlantController extends Controller {
                                         $model_botanicalObjectSex->save();
                                     }
                                 }
-
+                                
+                                // check for certificate entries and update/add them
+                                if( isset($_POST['Certificate']) ) {
+                                    // cycle through all posted certificate entries
+                                    foreach($_POST['Certificate'] as $i => $certificate) {
+                                        // only handle certificate entry if it has a type set
+                                        if( empty($certificate['certificate_type_id']) ) continue;
+                                        
+                                        // check if this is an update and load the model
+                                        $certificate_model = null;
+                                        if( isset($certificate['id']) ) {
+                                            $certificate_model = Certificate::model()->findByPk($certificate['id']);
+                                        }
+                                        // .. else create a new certificate entry
+                                        else {
+                                            $certificate_model = new Certificate;
+                                        }
+                                        
+                                        // set the attributes & save the certificate entry
+                                        $certificate_model->attributes = $certificate;
+                                        $certificate_model->living_plant_id = $model_livingPlant->id;
+                                        $certificate_model->save();
+                                    }
+                                }
+                                
                                 // Check if a cites number was entered
                                 if (!empty($model_citesNumber->cites_number)) {
                                     $model_citesNumber->living_plant_id = $model_livingPlant->id;

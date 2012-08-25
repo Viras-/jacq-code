@@ -96,7 +96,7 @@ class BotanicalObject extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('acquisition_event_id, taxon_id, recording_date', 'required'),
-            array('acquisition_event_id, separation_id, phenology_id, taxon_id, determined_by_id, garden_site_id', 'numerical', 'integerOnly' => true),
+            array('acquisition_event_id, separation_id, phenology_id, taxon_id, determined_by_id, organisation_id', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
             array('annotation', 'safe'),
             // The following rule is used by search().
@@ -120,7 +120,7 @@ class BotanicalObject extends CActiveRecord {
             'diaspora' => array(self::HAS_ONE, 'Diaspora', 'id'),
             'images' => array(self::HAS_MANY, 'Image', 'botanical_object_id'),
             'livingPlant' => array(self::HAS_ONE, 'LivingPlant', 'id'),
-            'gardenSite' => array(self::BELONGS_TO, 'GardenSite', 'garden_site_id'),
+            'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
         );
     }
 
@@ -139,7 +139,7 @@ class BotanicalObject extends CActiveRecord {
             'determined_by_id' => Yii::t('jacq', 'Determined By'),
             'annotation' => Yii::t('jacq', 'Annotation'),
             'recording_date' => Yii::t('jacq', 'Recording Date'),
-            'garden_site_id' => Yii::t('jacq', 'Garden Site'),
+            'organisation_id' => Yii::t('jacq', 'Garden Site'),
         );
     }
 

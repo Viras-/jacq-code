@@ -12,6 +12,7 @@
  * @property string $place_number
  *
  * The followings are the available model relations:
+ * @property Certificate[] $certificates
  * @property CitesNumber[] $citesNumbers
  * @property BotanicalObject $id0
  * @property AccessionNumber $accessionNumber
@@ -69,6 +70,7 @@ class LivingPlant extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'certificates' => array(self::HAS_MANY, 'Certificate', 'living_plant_id'),
             'citesNumbers' => array(self::HAS_MANY, 'CitesNumber', 'living_plant_id'),
             'id0' => array(self::BELONGS_TO, 'BotanicalObject', 'id'),
             'accessionNumber' => array(self::BELONGS_TO, 'AccessionNumber', 'accession_number_id'),

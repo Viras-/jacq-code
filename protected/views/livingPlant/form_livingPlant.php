@@ -65,6 +65,6 @@
 
 <div class="row">
     <?php echo $form->labelEx($model_livingPlant, 'phyto_sanitary_product_number'); ?>
-<?php echo $form->textField($model_livingPlant, 'phyto_sanitary_product_number', array('size' => 20, 'maxlength' => 20)); ?>
-<?php echo $form->error($model_livingPlant, 'phyto_sanitary_product_number'); ?>
+    <?php echo $form->textField($model_livingPlant, 'phyto_sanitary_product_number', array('size' => 20, 'maxlength' => 20)); ?>
+    <?php echo $form->error($model_livingPlant, 'phyto_sanitary_product_number'); ?>
 </div>

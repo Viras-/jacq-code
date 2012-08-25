@@ -60,6 +60,12 @@
         ?>
     </fieldset>
     <fieldset>
+        <legend>certificates</legend>
+        <?php
+        require('form_certificates.php');
+        ?>
+    </fieldset>
+    <fieldset>
         <legend>tree record</legend>
         <?php
         require('form_treeRecord.php');
