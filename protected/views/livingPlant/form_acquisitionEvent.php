@@ -86,3 +86,28 @@
     <?php echo $form->textField($model_acquisitionEvent, 'altitude_max', array( 'size' => 5 )); ?>
     <?php echo $form->error($model_acquisitionEvent, 'altitude'); ?>
 </div>
+
+<div class="row">
+    <table>
+        <tr>
+            <td>
+            <?php echo $form->labelEx($model_acquisitionEvent, 'latitude'); ?>
+            <?php echo $form->textField($model_acquisitionEvent, 'latitude_degrees', array( 'size' => 3 ) ); ?>
+            <?php echo $form->textField($model_acquisitionEvent, 'latitude_minutes', array( 'size' => 2 ) ); ?>
+            <?php echo $form->textField($model_acquisitionEvent, 'latitude_seconds', array( 'size' => 2 ) ); ?>
+            <?php echo $form->dropDownList($model_acquisitionEvent, 'latitude_half', array( 'N' => 'N', 'S' => 'S' ) ); ?>
+            <?php echo $form->error($model_acquisitionEvent, 'latitude'); ?>
+            </td>
+            <td>
+            <?php echo $form->labelEx($model_acquisitionEvent, 'longitude'); ?>
+            <?php echo $form->textField($model_acquisitionEvent, 'longitude', array( 'size' => 5 )); ?>
+            <?php echo $form->error($model_acquisitionEvent, 'longitude'); ?>
+            </td>
+            <td>
+            <?php echo $form->labelEx($model_acquisitionEvent, 'exactness'); ?>
+            <?php echo $form->textField($model_acquisitionEvent, 'exactness', array( 'size' => 5 )); ?>
+            <?php echo $form->error($model_acquisitionEvent, 'exactness'); ?>
+            </td>
+        </tr>
+    </table>
+</div>

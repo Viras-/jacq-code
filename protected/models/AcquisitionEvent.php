@@ -115,5 +115,58 @@ class AcquisitionEvent extends CActiveRecord {
                     'criteria' => $criteria,
                 ));
     }
+    
+    public function getLongitude() {
+        return $this->longitude;
+    }
 
+    public function setLongitude($longitude) {
+        $this->longitude = $longitude;
+    }
+
+        
+    public function save($runValidation = true, $attributes = null) {
+        $this->latitude = ($this->latitude_degrees + $this->latitude_minutes / 60.0 + $this->latitude_seconds / 3600.0) * (($this->latitude_half == 'N') ? 1.0 : -1.0);
+        $this->longitude = ($this->latitude_degrees + $this->latitude_minutes / 60.0 + $this->latitude_seconds / 3600.0) * (($this->latitude_half == 'N') ? 1.0 : -1.0);
+        
+        parent::save($runValidation, $attributes);
+    }
+    
+    public $latitude_degrees;
+    public $latitude_minutes;
+    public $latitude_seconds;
+    public $latitude_half;
+    
+    public function getLatitude_degrees() {
+        return $this->latitude_degrees;
+    }
+
+    public function setLatitude_degrees($latitude_degrees) {
+        $this->latitude_degrees = $latitude_degrees;
+    }
+
+    public function getLatitude_minutes() {
+        return $this->latitude_minutes;
+    }
+
+    public function setLatitude_minutes($latitude_minutes) {
+        $this->latitude_minutes = $latitude_minutes;
+    }
+
+    public function getLatitude_seconds() {
+        return $this->latitude_seconds;
+    }
+
+    public function setLatitude_seconds($latitude_seconds) {
+        $this->latitude_seconds = $latitude_seconds;
+    }
+
+    public function getLatitude_half() {
+        return $this->latitude_half;
+    }
+
+    public function setLatitude_half($latitude_half) {
+        $this->latitude_half = $latitude_half;
+    }
+    
 }
