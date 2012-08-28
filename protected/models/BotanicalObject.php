@@ -1,11 +1,11 @@
 <?php
+
 /**
  * This is the model class for table "tbl_botanical_object".
  *
  * The followings are the available columns in table 'tbl_botanical_object':
  * @property integer $id
  * @property integer $acquisition_event_id
- * @property integer $separation_id
  * @property integer $phenology_id
  * @property integer $taxon_id
  * @property integer $determined_by_id
@@ -17,16 +17,17 @@
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
- * @property Separation $separation
  * @property Phenology $phenology
  * @property Person $determinedBy
+ * @property Organisation $organisation
  * @property BotanicalObjectSex[] $botanicalObjectSexes
  * @property Diaspora $diaspora
  * @property Image[] $images
  * @property LivingPlant $livingPlant
- * @property Organisation $organisation
+ * @property Separation[] $separations
  */
 class BotanicalObject extends CActiveRecord {
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -35,11 +36,11 @@ class BotanicalObject extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
+
     public function init() {
         parent::init();
 
-        if( $this->isNewRecord ) {
+        if ($this->isNewRecord) {
             $this->recording_date = date('Y-m-d');
         }
     }
@@ -50,14 +51,14 @@ class BotanicalObject extends CActiveRecord {
     public function tableName() {
         return 'tbl_botanical_object';
     }
-    
+
     /**
      * Wrapper for getting the virtual scientificName attribute
      * @param string $name Name of attribute to get
      * @return mixed value of attribute 
      */
     public function __get($name) {
-        if( $name == "scientificName" ) {
+        if ($name == "scientificName") {
             return $this->getScientificName();
         }
         else {
@@ -72,7 +73,7 @@ class BotanicalObject extends CActiveRecord {
     private function getDbHerbarView() {
         return Yii::app()->dbHerbarView;
     }
-    
+
     /**
      * Fetch the scientific name for the given botanical object
      * @return string 
@@ -87,7 +88,7 @@ class BotanicalObject extends CActiveRecord {
 
         return $scientificNames[0]['ScientificName'];
     }
-    
+
     /**
      * @return array validation rules for model attributes.
      */
@@ -96,12 +97,12 @@ class BotanicalObject extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('acquisition_event_id, taxon_id, recording_date', 'required'),
-            array('acquisition_event_id, separation_id, phenology_id, taxon_id, determined_by_id, organisation_id', 'numerical', 'integerOnly' => true),
+            array('acquisition_event_id, phenology_id, taxon_id, determined_by_id, organisation_id', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
             array('annotation', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, acquisition_event_id, separation_id, phenology_id, taxon_id, habitat, habitus, determined_by_id, annotation', 'safe', 'on' => 'search'),
+            array('id, acquisition_event_id, phenology_id, taxon_id, habitat, habitus, determined_by_id, annotation', 'safe', 'on' => 'search'),
         );
     }
 
@@ -113,7 +114,6 @@ class BotanicalObject extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'acquisitionEvent' => array(self::BELONGS_TO, 'AcquisitionEvent', 'acquisition_event_id'),
-            'separation' => array(self::BELONGS_TO, 'Separation', 'separation_id'),
             'phenology' => array(self::BELONGS_TO, 'Phenology', 'phenology_id'),
             'determinedBy' => array(self::BELONGS_TO, 'Person', 'determined_by_id'),
             'botanicalObjectSexes' => array(self::HAS_MANY, 'BotanicalObjectSex', 'botanical_object_id'),
@@ -121,6 +121,7 @@ class BotanicalObject extends CActiveRecord {
             'images' => array(self::HAS_MANY, 'Image', 'botanical_object_id'),
             'livingPlant' => array(self::HAS_ONE, 'LivingPlant', 'id'),
             'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
+            'separations' => array(self::HAS_MANY, 'Separation', 'botanical_object_id'),
         );
     }
 
@@ -131,7 +132,6 @@ class BotanicalObject extends CActiveRecord {
         return array(
             'id' => Yii::t('jacq', 'ID'),
             'acquisition_event_id' => Yii::t('jacq', 'Acquisition Event'),
-            'separation_id' => Yii::t('jacq', 'Separation'),
             'phenology_id' => Yii::t('jacq', 'Phenology'),
             'taxon_id' => Yii::t('jacq', 'Taxon'),
             'habitat' => Yii::t('jacq', 'Habitat'),
@@ -155,7 +155,6 @@ class BotanicalObject extends CActiveRecord {
 
         $criteria->compare('id', $this->id);
         $criteria->compare('acquisition_event_id', $this->acquisition_event_id);
-        $criteria->compare('separation_id', $this->separation_id);
         $criteria->compare('phenology_id', $this->phenology_id);
         $criteria->compare('taxon_id', $this->taxon_id);
         $criteria->compare('habitat', $this->habitat, true);

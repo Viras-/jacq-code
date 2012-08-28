@@ -2758,3 +2758,351 @@ Stack trace:
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
 HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
 ---
+2012/08/29 09:48:09 [error] [php] Trying to get property of non-object (/var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_separation.php:13)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): LivingPlantController->renderInternal()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): LivingPlantController->renderFile()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/create.php(23): LivingPlantController->renderPartial()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): LivingPlantController->renderInternal()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): LivingPlantController->renderFile()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): LivingPlantController->renderPartial()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(186): LivingPlantController->render()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): LivingPlantController->runAction()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CAccessControlFilter->filter()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): LivingPlantController->filterAccessControl()
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): LivingPlantController->runActionWithFilters()
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): LivingPlantController->run()
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_separation.php (13)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php (52)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/create.php (23)
+2012/08/29 10:04:44 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:04:44 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:04:44 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:04:44 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:05:00 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:05:00 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:05:00 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:05:00 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:07:13 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:07:13 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:07:13 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:07:13 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:07:28 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:07:28 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:07:28 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:07:28 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:08:51 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:08:51 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:08:51 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:08:51 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:10:02 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:10:02 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:10:02 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:10:02 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:10:55 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:10:55 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:10:55 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:10:55 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:11:13 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:11:13 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:11:13 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:11:13 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:11:41 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:11:41 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:11:41 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:11:41 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:12:51 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:12:51 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:12:51 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:12:51 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:14:01 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:14:01 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:14:01 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:14:01 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:14:42 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:14:42 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:14:42 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:14:42 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:17:20 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:17:20 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:17:20 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:17:20 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:20:02 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:20:02 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:20:02 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:20:02 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:21:51 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (77)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:21:51 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (77)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:21:51 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (77)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:21:51 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (77)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:22:45 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:22:45 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:22:45 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:22:45 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:22:58 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:22:58 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:22:58 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:22:58 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:23:17 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:23:17 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:23:17 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:23:17 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:24:31 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:24:31 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:24:31 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:24:31 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:24:49 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:24:49 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:24:49 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:24:49 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:24:49 [warning] [application] Ungesichertes Attribut "recording_date" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (371)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:25:06 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:25:06 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:25:06 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:25:06 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:25:06 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (347)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:25:06 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (371)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:25:06 [warning] [application] Ungesichertes Attribut "recording_date" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (371)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:20 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:20 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:20 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:20 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:20 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (347)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:20 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (371)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:38 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:38 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:38 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:38 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:38 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (347)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:26:38 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (371)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:27:14 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:27:14 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:27:14 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:27:14 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:27:14 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (347)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:27:14 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (371)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/08/29 10:27:14 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (371)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)

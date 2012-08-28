@@ -1,21 +1,32 @@
 <div class="row">
     <table>
-<?php
-$i = 0;
-foreach( $model_livingPlant->certificates as $i => $model_certificate ) {
-?>
+    <?php
+    $model_certificates = $model_livingPlant->certificates;
+    $model_certificates[] = new Certificate;    // Add one new entry for adding
+
+    foreach( $model_certificates as $i => $model_certificate ) {
+    ?>
         <tr>
             <td width="20%">
             <?php
-            echo $form->hiddenField($model_certificate, "[$i]id");
+            // Fetch list of certificate types
+            $certificate_types = CHtml::listData(CertificateType::model()->findAll(), 'id', 'type');
+            
+            // check if we have a valid id already, if not skip the hidden field
+            if( $model_certificate->id > 0 ) {
+                echo $form->hiddenField($model_certificate, "[$i]id");
+            }
+            else {
+                $certificate_types = array( '' => 'None' ) + $certificate_types;
+            }
 
             echo $form->labelEx($model_certificate, 'certificate_type_id');
             echo $form->dropDownList(
                     $model_certificate,
                     "[$i]certificate_type_id",
-                    CHtml::listData(CertificateType::model()->findAll(), 'id', 'type')
+                    $certificate_types
             );
-            echo $form->error($model_certificate, 'certificate_type_id');
+            echo $form->error($model_certificate, "certificate_type_id");
             ?>
             </td>
             <td>
@@ -25,7 +36,7 @@ foreach( $model_livingPlant->certificates as $i => $model_certificate ) {
                     $model_certificate,
                     "[$i]number"
             );
-            echo $form->error($model_certificate, 'number');
+            echo $form->error($model_certificate, "number");
             ?>
             </td>
             <td>
@@ -35,46 +46,12 @@ foreach( $model_livingPlant->certificates as $i => $model_certificate ) {
                     $model_certificate,
                     "[$i]annotation"
             );
-            echo $form->error($model_certificate, 'annotation');
+            echo $form->error($model_certificate, "annotation");
             ?>
             </td>
         </tr>
-<?php
-}
-?>
-    </table>
-</div>
-<hr />
-<div class="row">
-    <table>
-        <tr>
-            <td width="20%">
-            <?php
-            echo CHtml::label(Yii::t('jacq', 'certificate_type_id'), 'Certificate_certificate_type_id');
-            $certificate_types = array('' => 'none') + CHtml::listData(CertificateType::model()->findAll(), 'id', 'type');
-            echo CHtml::dropDownList(
-                    "Certificate[9999][certificate_type_id]",
-                    "",
-                    $certificate_types
-            );
-            ?>
-            </td>
-            <td>
-            <?php
-            echo CHtml::label(Yii::t('jacq', 'number'), 'Certificate_number');
-            echo CHtml::textField(
-                    "Certificate[9999][number]"
-            );
-            ?>
-            </td>
-            <td>
-            <?php
-            echo CHtml::label(Yii::t('jacq', 'annotation'), 'Certificate_annotation');
-            echo CHtml::textField(
-                    "Certificate[9999][annotation]"
-            );
-            ?>
-            </td>
-        </tr>
+    <?php
+    }
+    ?>
     </table>
 </div>

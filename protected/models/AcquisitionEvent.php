@@ -116,22 +116,6 @@ class AcquisitionEvent extends CActiveRecord {
                 ));
     }
     
-    public function getLongitude() {
-        return $this->longitude;
-    }
-
-    public function setLongitude($longitude) {
-        $this->longitude = $longitude;
-    }
-
-        
-    public function save($runValidation = true, $attributes = null) {
-        $this->latitude = ($this->latitude_degrees + $this->latitude_minutes / 60.0 + $this->latitude_seconds / 3600.0) * (($this->latitude_half == 'N') ? 1.0 : -1.0);
-        $this->longitude = ($this->latitude_degrees + $this->latitude_minutes / 60.0 + $this->latitude_seconds / 3600.0) * (($this->latitude_half == 'N') ? 1.0 : -1.0);
-        
-        parent::save($runValidation, $attributes);
-    }
-    
     public $latitude_degrees;
     public $latitude_minutes;
     public $latitude_seconds;

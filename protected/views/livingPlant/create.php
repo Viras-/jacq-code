@@ -16,7 +16,6 @@ $this->menu = array(
 echo $this->renderPartial('_form', array(
     'model_acquisitionDate' => $model_acquisitionDate,
     'model_acquisitionEvent' => $model_acquisitionEvent,
-    'model_separation' => $model_separation,
     'model_livingPlant' => $model_livingPlant,
     'model_botanicalObject' => $model_botanicalObject,
     'model_accessionNumber' => $model_accessionNumber,

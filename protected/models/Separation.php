@@ -5,13 +5,14 @@
  *
  * The followings are the available columns in table 'tbl_separation':
  * @property integer $id
+ * @property integer $botanical_object_id
  * @property integer $separation_type_id
  * @property string $date
  * @property string $annotation
  *
  * The followings are the available model relations:
- * @property BotanicalObject[] $botanicalObjects
  * @property SeparationType $separationType
+ * @property BotanicalObject $botanicalObject
  */
 class Separation extends CActiveRecord {
 
@@ -38,12 +39,12 @@ class Separation extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('separation_type_id', 'required'),
-            array('separation_type_id', 'numerical', 'integerOnly' => true),
+            array('botanical_object_id, separation_type_id', 'required'),
+            array('botanical_object_id, separation_type_id', 'numerical', 'integerOnly' => true),
             array('date, annotation', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, separation_type_id, date, annotation', 'safe', 'on' => 'search'),
+            array('id, botanical_object_id, separation_type_id, date, annotation', 'safe', 'on' => 'search'),
         );
     }
 
@@ -54,8 +55,8 @@ class Separation extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'separation_id'),
             'separationType' => array(self::BELONGS_TO, 'SeparationType', 'separation_type_id'),
+            'botanicalObject' => array(self::BELONGS_TO, 'BotanicalObject', 'botanical_object_id'),
         );
     }
 
@@ -65,6 +66,7 @@ class Separation extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => Yii::t('jacq', 'ID'),
+            'botanical_object_id' => Yii::t('jacq', 'Botanical Object'),
             'separation_type_id' => Yii::t('jacq', 'Separation Type'),
             'date' => Yii::t('jacq', 'Date'),
             'annotation' => Yii::t('jacq', 'Annotation'),
@@ -82,6 +84,7 @@ class Separation extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
+        $criteria->compare('botanical_object_id', $this->botanical_object_id);
         $criteria->compare('separation_type_id', $this->separation_type_id);
         $criteria->compare('date', $this->date, true);
         $criteria->compare('annotation', $this->annotation, true);
