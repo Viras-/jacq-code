@@ -12,8 +12,14 @@
  * @property integer $altitude_min
  * @property integer $altitude_max
  * @property integer $exactness
- * @property double $latitude
- * @property double $longitude
+ * @property integer $latitude_degrees
+ * @property integer $latitude_minutes
+ * @property integer $latitude_seconds
+ * @property string $latitude_half
+ * @property integer $longitude_degrees
+ * @property integer $longitude_minutes
+ * @property integer $longitude_seconds
+ * @property string $longitude_half
  *
  * The followings are the available model relations:
  * @property AcquisitionDate $acquisitionDate
@@ -48,12 +54,12 @@ class AcquisitionEvent extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('acquisition_date_id, acquisition_type_id', 'required'),
-            array('acquisition_date_id, acquisition_type_id, location_id, altitude_min, altitude_max, exactness', 'numerical', 'integerOnly' => true),
-            array('latitude, longitude', 'numerical'),
+            array('acquisition_date_id, acquisition_type_id, location_id, altitude_min, altitude_max, exactness, latitude_degrees, latitude_minutes, latitude_seconds, longitude_degrees, longitude_minutes, longitude_seconds', 'numerical', 'integerOnly' => true),
+            array('latitude_half, longitude_half', 'length', 'max'=>1),
             array('number', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, acquisition_date_id, acquisition_type_id, location_id, number, altitude_min, altitude_max, exactness, latitude, longitude', 'safe', 'on' => 'search'),
+            array('id, acquisition_date_id, acquisition_type_id, location_id, number, altitude_min, altitude_max, exactness', 'safe', 'on' => 'search'),
         );
     }
 
@@ -85,8 +91,8 @@ class AcquisitionEvent extends CActiveRecord {
             'altitude_min' => Yii::t('jacq', 'Altitude Min'),
             'altitude_max' => Yii::t('jacq', 'Altitude Max'),
             'exactness' => Yii::t('jacq', 'Exactness'),
-            'latitude' => Yii::t('jacq', 'Latitude'),
-            'longitude' => Yii::t('jacq', 'Longitude'),
+            'latitude_degree' => Yii::t('jacq', 'Latitude'),
+            'longitude_degree' => Yii::t('jacq', 'Longitude'),
         );
     }
 
@@ -108,49 +114,9 @@ class AcquisitionEvent extends CActiveRecord {
         $criteria->compare('altitude_min', $this->altitude_min);
         $criteria->compare('altitude_max', $this->altitude_max);
         $criteria->compare('exactness', $this->exactness);
-        $criteria->compare('latitude', $this->latitude);
-        $criteria->compare('longitude', $this->longitude);
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
     }
-    
-    public $latitude_degrees;
-    public $latitude_minutes;
-    public $latitude_seconds;
-    public $latitude_half;
-    
-    public function getLatitude_degrees() {
-        return $this->latitude_degrees;
-    }
-
-    public function setLatitude_degrees($latitude_degrees) {
-        $this->latitude_degrees = $latitude_degrees;
-    }
-
-    public function getLatitude_minutes() {
-        return $this->latitude_minutes;
-    }
-
-    public function setLatitude_minutes($latitude_minutes) {
-        $this->latitude_minutes = $latitude_minutes;
-    }
-
-    public function getLatitude_seconds() {
-        return $this->latitude_seconds;
-    }
-
-    public function setLatitude_seconds($latitude_seconds) {
-        $this->latitude_seconds = $latitude_seconds;
-    }
-
-    public function getLatitude_half() {
-        return $this->latitude_half;
-    }
-
-    public function setLatitude_half($latitude_half) {
-        $this->latitude_half = $latitude_half;
-    }
-    
 }

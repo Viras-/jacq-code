@@ -49,7 +49,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'id0.scientificName',
         'accession_number_id',
         'ipen_number',
-        'gardenSite.description',
         /*
           'phyto_sanitary_product_number',
          */

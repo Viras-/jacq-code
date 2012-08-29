@@ -3106,3 +3106,192 @@ in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
 2012/08/29 10:27:14 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (371)
 in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 12:51:12 [error] [exception.CException] exception 'CException' with message 'Eigenschaft "LivingPlant.gardenSite ist nicht definiert.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('gardenSite')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/helpers/CHtml.php(1696): CActiveRecord->__get('gardenSite')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/zii/widgets/grid/CDataColumn.php(141): CHtml::value(Object(LivingPlant), 'gardenSite.desc...')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/zii/widgets/grid/CGridColumn.php(138): CDataColumn->renderDataCellContent(0, Object(LivingPlant))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/zii/widgets/grid/CGridView.php(517): CGridColumn->renderDataCell(0)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/zii/widgets/grid/CGridView.php(490): CGridView->renderTableRow(0)
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/zii/widgets/grid/CGridView.php(400): CGridView->renderTableBody()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/zii/widgets/CBaseListView.php(158): CGridView->renderItems()
+#8 [internal function]: CBaseListView->renderSection(Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/zii/widgets/CBaseListView.php(141): preg_replace_callback('/{(\w+)}/', Array, '{summary}?{item...')
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/zii/widgets/CBaseListView.php(126): CBaseListView->renderContent()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(174): CBaseListView->run()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/admin.php(60): CBaseController->widget('zii.widgets.gri...', Array)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('admin', Array, true)
+#17 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(437): CController->render('admin', Array)
+#18 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(418): LivingPlantController->actionAdmin()
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionIndex()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#26 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#27 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#28 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('')
+#29 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant')
+#30 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#31 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#32 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/
+---
+2012/09/13 12:55:27 [error] [exception.CException] exception 'CException' with message 'Eigenschaft "AcquisitionEvent.longitude_degrees ist nicht definiert.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('longitude_degre...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/helpers/CHtml.php(2044): CActiveRecord->__get('longitude_degre...')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/helpers/CHtml.php(1774): CHtml::resolveValue(Object(AcquisitionEvent), 'longitude_degre...')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/helpers/CHtml.php(1205): CHtml::activeInputField('text', Object(AcquisitionEvent), 'longitude_degre...', Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/widgets/CActiveForm.php(575): CHtml::activeTextField(Object(AcquisitionEvent), 'longitude_degre...', Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_acquisitionEvent.php(103): CActiveForm->textField(Object(AcquisitionEvent), 'longitude_degre...', Array)
+#6 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(46): require('/var/www/html/N...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/create.php(23): CController->renderPartial('_form', Array)
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('create', Array, true)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(203): CController->render('create', Array)
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#26 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/cre...')
+#27 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#28 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#29 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+---
+2012/09/13 13:13:11 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:13:11 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:13:11 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:13:11 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:13:11 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (347)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:13:11 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (371)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:13:11 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (371)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:18:34 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:18:34 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:18:34 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:18:34 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:18:34 [error] [exception.CException] exception 'CException' with message 'Eigenschaft "AcquisitionEvent.latitude ist nicht definiert.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('latitude')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/validators/CNumberValidator.php(79): CActiveRecord->__get('latitude')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/validators/CValidator.php(197): CNumberValidator->validateAttribute(Object(AcquisitionEvent), 'latitude')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CModel.php(158): CValidator->validate(Object(AcquisitionEvent), NULL)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(786): CModel->validate(NULL)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(92): CActiveRecord->save()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/cre...')
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#18 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/13 13:19:34 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:19:34 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:19:34 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:19:34 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:19:45 [warning] [application] Ungesichertes Attribut "latitude_degrees" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:19:45 [warning] [application] Ungesichertes Attribut "latitude_minutes" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:19:45 [warning] [application] Ungesichertes Attribut "latitude_seconds" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:19:45 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:19:46 [error] [exception.CException] exception 'CException' with message 'Eigenschaft "AcquisitionEvent.latitude ist nicht definiert.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:131
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(144): CComponent->__get('latitude')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/validators/CNumberValidator.php(79): CActiveRecord->__get('latitude')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/validators/CValidator.php(197): CNumberValidator->validateAttribute(Object(AcquisitionEvent), 'latitude')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CModel.php(158): CValidator->validate(Object(AcquisitionEvent), NULL)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(786): CModel->validate(NULL)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(92): CActiveRecord->save()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): LivingPlantController->actionCreate()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('create')
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/cre...')
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#18 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/13 13:22:08 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (75)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:22:57 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/13 13:23:04 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
