@@ -2,7 +2,6 @@
     <table style="width: auto;">
         <tr>
             <td>
-                <?php echo $form->labelEx(Sex::model(), 'sex_id'); ?>
                 <?php
                 // Find all checked sex for this entry
                 $selected_sex = array();

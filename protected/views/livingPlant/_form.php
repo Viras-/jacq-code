@@ -47,38 +47,38 @@
         ?>
     </fieldset>
     <fieldset>
-        <legend>separation</legend>
+        <legend><?php echo Yii::t('jacq', 'Separation'); ?></legend>
         <?php
         require('form_separation.php');
         ?>
     </fieldset>
     <fieldset>
-        <legend>living plant</legend>
+        <legend><?php echo Yii::t('jacq', 'Living Plant'); ?></legend>
         <?php
         require('form_botanicalObject.php');
         require('form_livingPlant.php');
         ?>
     </fieldset>
     <fieldset>
-        <legend>certificates</legend>
+        <legend><?php echo Yii::t('jacq', 'Certificates'); ?></legend>
         <?php
         require('form_certificates.php');
         ?>
     </fieldset>
     <fieldset>
-        <legend>tree record</legend>
+        <legend><?php echo Yii::t('jacq', 'Tree Record File'); ?></legend>
         <?php
         require('form_treeRecord.php');
         ?>
     </fieldset>
     <fieldset>
-        <legend>relevancy</legend>
+        <legend><?php echo Yii::t('jacq', 'Relevancy Type'); ?></legend>
         <?php
         require('form_relevancy.php');
         ?>
     </fieldset>
     <fieldset>
-        <legend>sex</legend>
+        <legend><?php echo Yii::t('jacq', 'Sex'); ?></legend>
         <?php
         require('form_sex.php');
         ?>

@@ -5,7 +5,7 @@
 </div>
 
 <div class="row">
-    <?php echo $form->labelEx($model_acquisitionEvent, 'agent_id'); ?>
+    <?php echo $form->labelEx($model_acquisitionEvent, 'person_name'); ?>
     <?php
     // Add text-input for each collector
     foreach( $model_acquisitionEvent->tblPeople as $index => $model_person ) {
@@ -91,7 +91,7 @@
     <table>
         <tr>
             <td>
-            <?php echo $form->labelEx($model_acquisitionEvent, 'latitude_degrees'); ?>
+            <?php echo $form->labelEx($model_acquisitionEvent, 'latitude'); ?>
             <?php echo $form->textField($model_acquisitionEvent, 'latitude_degrees', array( 'size' => 3 ) ); ?>
             <?php echo $form->textField($model_acquisitionEvent, 'latitude_minutes', array( 'size' => 2 ) ); ?>
             <?php echo $form->textField($model_acquisitionEvent, 'latitude_seconds', array( 'size' => 2 ) ); ?>
@@ -99,7 +99,7 @@
             <?php echo $form->error($model_acquisitionEvent, 'latitude_degrees'); ?>
             </td>
             <td>
-            <?php echo $form->labelEx($model_acquisitionEvent, 'longitude_degrees'); ?>
+            <?php echo $form->labelEx($model_acquisitionEvent, 'longitude'); ?>
             <?php echo $form->textField($model_acquisitionEvent, 'longitude_degrees', array( 'size' => 3 ) ); ?>
             <?php echo $form->textField($model_acquisitionEvent, 'longitude_minutes', array( 'size' => 2 ) ); ?>
             <?php echo $form->textField($model_acquisitionEvent, 'longitude_seconds', array( 'size' => 2 ) ); ?>

@@ -2,7 +2,6 @@
     <table style="width: auto;">
         <tr>
             <td>
-                <?php echo $form->labelEx(Relevancy::model(), 'relevancy_type_id'); ?>
                 <?php
                 // Find all checked relevancy types for this entry
                 $selected_relevancyTypes = array();

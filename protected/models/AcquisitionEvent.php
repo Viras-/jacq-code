@@ -88,11 +88,11 @@ class AcquisitionEvent extends CActiveRecord {
             'acquisition_type_id' => Yii::t('jacq', 'Acquisition Type'),
             'location_id' => Yii::t('jacq', 'Location'),
             'number' => Yii::t('jacq', 'Number'),
-            'altitude_min' => Yii::t('jacq', 'Altitude Min'),
-            'altitude_max' => Yii::t('jacq', 'Altitude Max'),
+            'altitude' => Yii::t('jacq', 'Altitude'),
             'exactness' => Yii::t('jacq', 'Exactness'),
-            'latitude_degree' => Yii::t('jacq', 'Latitude'),
-            'longitude_degree' => Yii::t('jacq', 'Longitude'),
+            'person_name' => Yii::t('jacq', 'Acquisition Person'),
+            'latitude' => Yii::t('jacq', 'Latitude'),
+            'longitude' => Yii::t('jacq', 'Longitude'),
         );
     }
 
