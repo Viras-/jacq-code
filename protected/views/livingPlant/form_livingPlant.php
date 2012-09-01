@@ -2,6 +2,7 @@
     <?php echo $form->labelEx($model_botanicalObject, 'organisation_id'); ?>
     <?php echo $form->dropDownList($model_botanicalObject, 'organisation_id', CHtml::listData(Organisation::model()->findAll(), 'id', 'description')); ?>
     <?php echo $form->error($model_botanicalObject, 'organisation_id'); ?>
+    <div id="organisation_tree" style="width: 300px; height: 300px;"></div>
 </div>
 
 <div class="row">
@@ -53,7 +54,26 @@
         
         // Update intital selection
         source_id_change();
+        
+        // initialize jsTree for organisation
+        $('#organisation_tree').jstree({
+            "json_data": {
+                "ajax": {
+                    "url": "index.php?r=jSONOrganisation/japi&action=getChildren",
+                    "data": function(n) {
+                        var link = (n.children) ? n.children('a').first() : n;
+                        var organisation_id = (link.attr) ? link.attr("data-organisation-id") : 0;
+                        
+                        return {
+                            "organisation_id": organisation_id
+                        };
+                    }
+                }
+            },
+            "plugins": ["json_data", "themes"]
+        });
     });
+    
 </script>
 
 

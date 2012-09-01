@@ -23,6 +23,8 @@
                  key: 13
              });
          </script>
+         <!-- jsTree -->
+         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.jstree/jquery.jstree.js" ></script>
     </head>
 
     <body>

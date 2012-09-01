@@ -3295,3 +3295,111 @@ in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
 2012/09/13 13:23:04 [warning] [application] Ungesichertes Attribut "latitude_half" konnte nicht gesetzt werden.
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (221)
 in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/14 08:54:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Konnte den Request "jSONOrganisation/japi" nicht auflösen.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php:280
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONOrganisatio...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONOrganisation/japi&action=getChildren&id=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/14 08:55:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Konnte den Request "jSONOrganisation/japi" nicht auflösen.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php:280
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONOrganisatio...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONOrganisation/japi&action=getChildren&organisation_id=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/14 09:15:51 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONOrganisatio...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONOrganisation/japi&action=getChildren
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/14 09:15:54 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONOrganisatio...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONOrganisation/japi&action=getChildren
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/14 09:15:55 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONOrganisatio...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONOrganisation/japi&action=getChildren
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/14 09:16:18 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONOrganisatio...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONOrganisation/japi&action=getChildren
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/14 09:17:50 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONOrganisatio...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONOrganisation/japi&action=getChildren
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/14 09:22:04 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONOrganisatio...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONOrganisation/japi&action=getChildren
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
