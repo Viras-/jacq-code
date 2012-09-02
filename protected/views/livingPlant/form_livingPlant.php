@@ -1,8 +1,8 @@
 <div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'organisation_id'); ?>
-    <?php echo $form->dropDownList($model_botanicalObject, 'organisation_id', CHtml::listData(Organisation::model()->findAll(), 'id', 'description')); ?>
-    <?php echo $form->error($model_botanicalObject, 'organisation_id'); ?>
-    <div id="organisation_tree" style="width: 300px; height: 300px;"></div>
+    <?php echo CHtml::textField('BotanicalObject_organisation_name', $model_botanicalObject->organisation->description, array('readonly' => 'readonly')); ?>
+    <?php echo $form->hiddenField($model_botanicalObject, 'organisation_id'); ?>
+    <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;">Change</a>
 </div>
 
 <div class="row">
@@ -41,20 +41,8 @@
         '0': ''
     };
     
-    /**
-     * Called when the institution dropdown is changed
-     */
-    function source_id_change(event, ui) {
-        $( "#LivingPlant_ipenNumberInstitutionCode" ).val( ipen_codes[$("#BotanicalObject_organisation_id").val()] );
-    }
-    
     // Bind to change event of institution select
     $(document).ready(function(){
-        $('#BotanicalObject_organisation_id').bind('change', source_id_change);
-        
-        // Update intital selection
-        source_id_change();
-        
         // initialize jsTree for organisation
         $('#organisation_tree').jstree({
             "json_data": {
@@ -71,6 +59,18 @@
                 }
             },
             "plugins": ["json_data", "themes"]
+        });
+        
+        // bind to click events onto tree items
+        $('#organisation_tree a').live('click', function() {
+            // update references to organisation
+            $('#BotanicalObject_organisation_id').val( $(this).attr('data-organisation-id') );
+            $('#BotanicalObject_organisation_name').val( $(this).text() );
+            $('#organisation_select_dialog').dialog('close');
+            
+            // update IPEN code
+            $( "#LivingPlant_ipenNumberInstitutionCode" ).val( ipen_codes[$("#BotanicalObject_organisation_id").val()] );
+            return false;
         });
     });
     

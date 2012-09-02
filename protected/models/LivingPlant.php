@@ -114,8 +114,6 @@ class LivingPlant extends CActiveRecord {
      * @param string $value ISO-2 code for the country
      */
     public function setIpenNumberCountryCode($value) {
-        error_log( 'setIpenNumberCountryCode: ' . $value );
-        
         $this->ipen_number = $value . substr( $this->ipen_number, 2 );
     }
 

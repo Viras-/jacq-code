@@ -91,7 +91,7 @@
     <?php $this->endWidget(); ?>
 
     <?php
-// Widget for opening & displaying the PDF pages
+    // Widget for opening & displaying the PDF pages
     $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
         'id' => 'tree_record_view_dialog',
         // additional javascript options for the dialog plugin
@@ -103,11 +103,27 @@
         ),
     ));
     ?>
-
     <iframe id="tree_record_view_dialog_iframe" scrolling="no" src="about:blank" style="width: 600px; height: 500px;">No iFrame support in your browser</iframe>
-
     <?php
     $this->endWidget('zii.widgets.jui.CJuiDialog');
     ?>
     <iframe id="tree_record_download_iframe" scrolling="no" src="about:blank" style="display: none;">No iFrame support in your browser</iframe>
+    
+    <?php
+    // widget for chosing the organisation
+    $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+        'id' => 'organisation_select_dialog',
+        // additional javascript options for the dialog plugin
+        'options' => array(
+            'title' => 'Organisation',
+            'autoOpen' => false,
+            'resizable' => false,
+            'width' => 630,
+        ),
+    ));
+    ?>
+    <div id="organisation_tree" style="height: 400px;"></div>
+    <?php
+    $this->endWidget('zii.widgets.jui.CJuiDialog');
+    ?>
 </div><!-- form -->
