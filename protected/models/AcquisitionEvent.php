@@ -55,7 +55,7 @@ class AcquisitionEvent extends CActiveRecord {
         return array(
             array('acquisition_date_id, acquisition_type_id', 'required'),
             array('acquisition_date_id, acquisition_type_id, location_id, altitude_min, altitude_max, exactness, latitude_degrees, latitude_minutes, latitude_seconds, longitude_degrees, longitude_minutes, longitude_seconds', 'numerical', 'integerOnly' => true),
-            array('latitude_half, longitude_half', 'length', 'max'=>1),
+            array('latitude_half, longitude_half', 'length', 'max' => 1),
             array('number', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
@@ -118,5 +118,14 @@ class AcquisitionEvent extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
+    }
+
+    /**
+     * Required for automatic logging of changes
+     */
+    public function behaviors() {
+        return array(
+            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
+        );
     }
 }

@@ -69,6 +69,14 @@ return array(
             'charset' => 'utf8',
             'class' => 'CDbConnection'
         ),
+        'dbLog' => array(
+            'connectionString' => 'mysql:host=localhost;dbname=jacq_log',
+            'emulatePrepare' => true,
+            'username' => 'jacq_log',
+            'password' => 'jacq_log',
+            'charset' => 'utf8',
+            'class' => 'CDbConnection'
+        ),
         'errorHandler' => array(
             // use 'site/error' action to display errors
             'errorAction' => 'site/error',

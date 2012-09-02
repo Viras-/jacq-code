@@ -98,4 +98,13 @@ class Location extends CActiveRecord {
 
         return $model_location;
     }
+
+    /**
+     * Required for automatic logging of changes
+     */
+    public function behaviors() {
+        return array(
+            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
+        );
+    }
 }

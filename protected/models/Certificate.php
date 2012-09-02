@@ -94,4 +94,13 @@ class Certificate extends CActiveRecord {
                 ));
     }
 
+
+    /**
+     * Required for automatic logging of changes
+     */
+    public function behaviors() {
+        return array(
+            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
+        );
+    }
 }

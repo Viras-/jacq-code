@@ -3450,3 +3450,770 @@ Stack trace:
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=autoComplete/location&geonames=true&term=wien
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/AutoCompleteController.php (113)
 in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/14 11:22:27 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection konnte keine DB-Verbindung herstellen: SQLSTATE[28000] [1045] Access denied for user 'jacq_log'@'localhost' (using password: YES)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbConnection.php:382
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbConnection.php(331): CDbConnection->open()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbConnection.php(309): CDbConnection->setActive(true)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CModule.php(388): CDbConnection->init()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CModule.php(104): CModule->getComponent('dbLog')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(10): CModule->__get('dbLog')
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(18): ActiveRecordLogableBehavior->getDbLog()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecord(Array)
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1422): CActiveRecord->query(Object(CDbCriteria))
+#12 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(484): CActiveRecord->findByPk('1')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(212): LivingPlantController->loadModel('1')
+#14 [internal function]: LivingPlantController->actionUpdate('1')
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#26 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#27 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#28 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#29 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/14 11:23:55 [error] [exception.CException] exception 'CException' with message 'Weder CMysqlSchema noch zugehörige Behavior haben einen Scope "tableNames".' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:266
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(19): CComponent->__call('tableNames', Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(19): CMysqlSchema->tableNames()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecord(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1422): CActiveRecord->query(Object(CDbCriteria))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(484): CActiveRecord->findByPk('1')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(212): LivingPlantController->loadModel('1')
+#10 [internal function]: LivingPlantController->actionUpdate('1')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#24 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#25 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/14 11:24:20 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1103 Incorrect table name ''. Der SQL-Ausdruck war: CREATE TABLE ``tbl_living_plant`_log` (
+	``id`` int(11),
+	``ipen_number`` varchar(20),
+	``phyto_control`` tinyint(1),
+	``accession_number_id`` int(11),
+	``place_number`` varchar(20),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('insert', 'update', 'delete') DEFAULT NULL
+).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (42)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (484)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (212)
+2012/09/14 11:24:20 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1103 Incorrect table name ''. The SQL statement executed was: CREATE TABLE ``tbl_living_plant`_log` (
+	``id`` int(11),
+	``ipen_number`` varchar(20),
+	``phyto_control`` tinyint(1),
+	``accession_number_id`` int(11),
+	``place_number`` varchar(20),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('insert', 'update', 'delete') DEFAULT NULL
+)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(1251): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(42): CDbCommand->createTable('`tbl_living_pla...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecord(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1422): CActiveRecord->query(Object(CDbCriteria))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(484): CActiveRecord->findByPk('1')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(212): LivingPlantController->loadModel('1')
+#10 [internal function]: LivingPlantController->actionUpdate('1')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#24 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#25 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/09/14 11:36:19 [error] [php] Undefined index: log_action (/var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php:20)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(905): LivingPlant->onAfterSave()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1063): LivingPlant->afterSave()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(787): LivingPlant->update()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(377): LivingPlant->save()
+#4 unknown(0): LivingPlantController->actionUpdate()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CInlineAction->runWithParamsInternal()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): LivingPlantController->runAction()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CAccessControlFilter->filter()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): LivingPlantController->filterAccessControl()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): LivingPlantController->runActionWithFilters()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): LivingPlantController->run()
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#18 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=2
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (20)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (377)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/09/14 11:38:07 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1067 Invalid default value for 'log_id'. Der SQL-Ausdruck war: CREATE TABLE `tbl_living_plant_log` (
+	`id` int(11),
+	`ipen_number` varchar(20),
+	`phyto_control` tinyint(1),
+	`accession_number_id` int(11),
+	`place_number` varchar(20),
+	`log_id` INT NOT NULL DEFAULT 0 AUTO_INCREMENT,
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('insert', 'update', 'delete') DEFAULT NULL
+).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (80)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (484)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (212)
+2012/09/14 11:38:07 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1067 Invalid default value for 'log_id'. The SQL statement executed was: CREATE TABLE `tbl_living_plant_log` (
+	`id` int(11),
+	`ipen_number` varchar(20),
+	`phyto_control` tinyint(1),
+	`accession_number_id` int(11),
+	`place_number` varchar(20),
+	`log_id` INT NOT NULL DEFAULT 0 AUTO_INCREMENT,
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('insert', 'update', 'delete') DEFAULT NULL
+)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(1251): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(80): CDbCommand->createTable('tbl_living_plan...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecord(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1422): CActiveRecord->query(Object(CDbCriteria))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(484): CActiveRecord->findByPk('2')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(212): LivingPlantController->loadModel('2')
+#10 [internal function]: LivingPlantController->actionUpdate('2')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#24 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#25 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=2
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=2
+---
+2012/09/14 11:38:31 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1075 Incorrect table definition; there can be only one auto column and it must be defined as a key. Der SQL-Ausdruck war: CREATE TABLE `tbl_living_plant_log` (
+	`id` int(11),
+	`ipen_number` varchar(20),
+	`phyto_control` tinyint(1),
+	`accession_number_id` int(11),
+	`place_number` varchar(20),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('insert', 'update', 'delete') DEFAULT NULL
+).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (80)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (484)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (212)
+2012/09/14 11:38:31 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1075 Incorrect table definition; there can be only one auto column and it must be defined as a key. The SQL statement executed was: CREATE TABLE `tbl_living_plant_log` (
+	`id` int(11),
+	`ipen_number` varchar(20),
+	`phyto_control` tinyint(1),
+	`accession_number_id` int(11),
+	`place_number` varchar(20),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('insert', 'update', 'delete') DEFAULT NULL
+)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(1251): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(80): CDbCommand->createTable('tbl_living_plan...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecord(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1422): CActiveRecord->query(Object(CDbCriteria))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(484): CActiveRecord->findByPk('2')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(212): LivingPlantController->loadModel('2')
+#10 [internal function]: LivingPlantController->actionUpdate('2')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#24 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#25 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=2
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=2
+---
+2012/09/14 11:38:43 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1067 Invalid default value for 'log_id'. Der SQL-Ausdruck war: CREATE TABLE `tbl_living_plant_log` (
+	`id` int(11),
+	`ipen_number` varchar(20),
+	`phyto_control` tinyint(1),
+	`accession_number_id` int(11),
+	`place_number` varchar(20),
+	`log_id` INT NOT NULL DEFAULT 0 AUTO_INCREMENT,
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('insert', 'update', 'delete') DEFAULT NULL
+).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (80)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (484)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (212)
+2012/09/14 11:38:43 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1067 Invalid default value for 'log_id'. The SQL statement executed was: CREATE TABLE `tbl_living_plant_log` (
+	`id` int(11),
+	`ipen_number` varchar(20),
+	`phyto_control` tinyint(1),
+	`accession_number_id` int(11),
+	`place_number` varchar(20),
+	`log_id` INT NOT NULL DEFAULT 0 AUTO_INCREMENT,
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('insert', 'update', 'delete') DEFAULT NULL
+)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(1251): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(80): CDbCommand->createTable('tbl_living_plan...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecord(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1422): CActiveRecord->query(Object(CDbCriteria))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(484): CActiveRecord->findByPk('2')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(212): LivingPlantController->loadModel('2')
+#10 [internal function]: LivingPlantController->actionUpdate('2')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#24 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#25 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=2
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=2
+---
+2012/09/14 11:50:58 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_acquisition_type_log' already exists. Der SQL-Ausdruck war: CREATE TABLE `tbl_acquisition_type_log` (
+	`id` int(11),
+	`type` varchar(45),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (106)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_acquisitionEvent.php (3)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php (46)
+2012/09/14 11:50:58 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_acquisition_type_log' already exists. The SQL statement executed was: CREATE TABLE `tbl_acquisition_type_log` (
+	`id` int(11),
+	`type` varchar(45),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(1251): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(106): CDbCommand->createTable('tbl_acquisition...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1820): CActiveRecord->populateRecord(Array, true)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecords(Array, true, NULL)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1406): CActiveRecord->query(Object(CDbCriteria), true)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_acquisitionEvent.php(3): CActiveRecord->findAll()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(46): require('/var/www/html/N...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/update.php(27): CController->renderPartial('_form', Array)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('update', Array, true)
+#19 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(393): CController->render('update', Array)
+#20 [internal function]: LivingPlantController->actionUpdate('1')
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#26 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#27 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#28 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#29 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#30 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#31 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#32 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#33 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#34 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#35 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/index
+---
+2012/09/14 11:51:29 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_separation_type_log' already exists. Der SQL-Ausdruck war: CREATE TABLE `tbl_separation_type_log` (
+	`id` int(11),
+	`type` varchar(15),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (106)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_separation.php (12)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php (52)
+2012/09/14 11:51:29 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_separation_type_log' already exists. The SQL statement executed was: CREATE TABLE `tbl_separation_type_log` (
+	`id` int(11),
+	`type` varchar(15),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(1251): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(106): CDbCommand->createTable('tbl_separation_...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1820): CActiveRecord->populateRecord(Array, true)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecords(Array, true, NULL)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1406): CActiveRecord->query(Object(CDbCriteria), true)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_separation.php(12): CActiveRecord->findAll()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(52): require('/var/www/html/N...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/update.php(27): CController->renderPartial('_form', Array)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('update', Array, true)
+#19 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(393): CController->render('update', Array)
+#20 [internal function]: LivingPlantController->actionUpdate('1')
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#26 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#27 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#28 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#29 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#30 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#31 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#32 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#33 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#34 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#35 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+---
+2012/09/14 11:51:32 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_phenology_log' already exists. Der SQL-Ausdruck war: CREATE TABLE `tbl_phenology_log` (
+	`id` int(11),
+	`phenology` varchar(45),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (106)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_botanicalObject.php (29)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php (58)
+2012/09/14 11:51:32 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_phenology_log' already exists. The SQL statement executed was: CREATE TABLE `tbl_phenology_log` (
+	`id` int(11),
+	`phenology` varchar(45),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(1251): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(106): CDbCommand->createTable('tbl_phenology_l...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1820): CActiveRecord->populateRecord(Array, true)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecords(Array, true, NULL)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1406): CActiveRecord->query(Object(CDbCriteria), true)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_botanicalObject.php(29): CActiveRecord->findAll()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(58): require('/var/www/html/N...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/update.php(27): CController->renderPartial('_form', Array)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('update', Array, true)
+#19 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(393): CController->render('update', Array)
+#20 [internal function]: LivingPlantController->actionUpdate('1')
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#26 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#27 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#28 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#29 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#30 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#31 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#32 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#33 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#34 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#35 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+---
+2012/09/14 11:51:35 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_organisation_log' already exists. Der SQL-Ausdruck war: CREATE TABLE `tbl_organisation_log` (
+	`id` int(11),
+	`description` varchar(255),
+	`department` varchar(255),
+	`greenhouse` tinyint(1),
+	`parent_organisation_id` int(11),
+	`gardener_id` int(11),
+	`ipen_code` varchar(5),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (106)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_livingPlant.php (36)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php (59)
+2012/09/14 11:51:35 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_organisation_log' already exists. The SQL statement executed was: CREATE TABLE `tbl_organisation_log` (
+	`id` int(11),
+	`description` varchar(255),
+	`department` varchar(255),
+	`greenhouse` tinyint(1),
+	`parent_organisation_id` int(11),
+	`gardener_id` int(11),
+	`ipen_code` varchar(5),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(1251): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(106): CDbCommand->createTable('tbl_organisatio...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1820): CActiveRecord->populateRecord(Array, true)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecords(Array, true, NULL)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1406): CActiveRecord->query(Object(CDbCriteria), true)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_livingPlant.php(36): CActiveRecord->findAll()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(59): require('/var/www/html/N...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/update.php(27): CController->renderPartial('_form', Array)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('update', Array, true)
+#19 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(393): CController->render('update', Array)
+#20 [internal function]: LivingPlantController->actionUpdate('1')
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#26 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#27 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#28 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#29 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#30 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#31 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#32 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#33 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#34 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#35 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+---
+2012/09/14 11:51:37 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_certificate_type_log' already exists. Der SQL-Ausdruck war: CREATE TABLE `tbl_certificate_type_log` (
+	`id` int(11),
+	`type` varchar(15),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (106)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_certificates.php (13)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php (65)
+2012/09/14 11:51:37 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_certificate_type_log' already exists. The SQL statement executed was: CREATE TABLE `tbl_certificate_type_log` (
+	`id` int(11),
+	`type` varchar(15),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(1251): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(106): CDbCommand->createTable('tbl_certificate...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1820): CActiveRecord->populateRecord(Array, true)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecords(Array, true, NULL)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1406): CActiveRecord->query(Object(CDbCriteria), true)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_certificates.php(13): CActiveRecord->findAll()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(65): require('/var/www/html/N...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/update.php(27): CController->renderPartial('_form', Array)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('update', Array, true)
+#19 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(393): CController->render('update', Array)
+#20 [internal function]: LivingPlantController->actionUpdate('1')
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#26 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#27 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#28 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#29 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#30 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#31 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#32 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#33 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#34 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#35 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+---
+2012/09/14 11:51:41 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_relevancy_type_log' already exists. Der SQL-Ausdruck war: CREATE TABLE `tbl_relevancy_type_log` (
+	`id` int(11),
+	`type` varchar(20),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (106)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_relevancy.php (18)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php (77)
+2012/09/14 11:51:41 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_relevancy_type_log' already exists. The SQL statement executed was: CREATE TABLE `tbl_relevancy_type_log` (
+	`id` int(11),
+	`type` varchar(20),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(1251): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(106): CDbCommand->createTable('tbl_relevancy_t...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1820): CActiveRecord->populateRecord(Array, true)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecords(Array, true, NULL)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1406): CActiveRecord->query(Object(CDbCriteria), true)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_relevancy.php(18): CActiveRecord->findAll()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(77): require('/var/www/html/N...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/update.php(27): CController->renderPartial('_form', Array)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('update', Array, true)
+#19 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(393): CController->render('update', Array)
+#20 [internal function]: LivingPlantController->actionUpdate('1')
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#26 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#27 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#28 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#29 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#30 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#31 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#32 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#33 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#34 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#35 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+---
+2012/09/14 11:51:43 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_sex_log' already exists. Der SQL-Ausdruck war: CREATE TABLE `tbl_sex_log` (
+	`id` int(11),
+	`sex` varchar(30),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (106)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_sex.php (18)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php (83)
+2012/09/14 11:51:43 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'tbl_sex_log' already exists. The SQL statement executed was: CREATE TABLE `tbl_sex_log` (
+	`id` int(11),
+	`sex` varchar(30),
+	`log_id` INT NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (log_id),
+	`log_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`log_user` INT NOT NULL DEFAULT 0,
+	`log_action` ENUM('update', 'delete') DEFAULT NULL
+)' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(1251): CDbCommand->execute()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(106): CDbCommand->createTable('tbl_sex_log', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(872): CComponent->raiseEvent('onAfterFind', Object(CEvent))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): CActiveRecord->onAfterFind(Object(CEvent))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): CActiveRecord->afterFind()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1820): CActiveRecord->populateRecord(Array, true)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): CActiveRecord->populateRecords(Array, true, NULL)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1406): CActiveRecord->query(Object(CDbCriteria), true)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/form_sex.php(18): CActiveRecord->findAll()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/_form.php(83): require('/var/www/html/N...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#14 /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/update.php(27): CController->renderPartial('_form', Array)
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(127): require('/var/www/html/N...')
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/html/N...', Array, true)
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(870): CBaseController->renderFile('/var/www/html/N...', Array, true)
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(783): CController->renderPartial('update', Array, true)
+#19 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(393): CController->render('update', Array)
+#20 [internal function]: LivingPlantController->actionUpdate('1')
+#21 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(LivingPlantController), Array)
+#22 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(LivingPlantController), Object(ReflectionMethod), Array)
+#23 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#24 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#25 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#26 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#27 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#28 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#29 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#30 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#31 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('update')
+#32 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('livingPlant/upd...')
+#33 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#34 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#35 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+---
+2012/09/14 11:52:35 [error] [php] Trying to get property of non-object (/var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php:81)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(971): LivingPlant->onAfterFind()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1799): LivingPlant->afterFind()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1287): LivingPlant->populateRecord()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/ar/CActiveRecord.php(1422): LivingPlant->query()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(484): LivingPlant->findByPk()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(212): LivingPlantController->loadModel()
+#6 unknown(0): LivingPlantController->actionUpdate()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(107): ReflectionMethod->invokeArgs()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(48): CInlineAction->runWithParamsInternal()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(134): LivingPlantController->runAction()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilter.php(41): CFilterChain->run()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(1146): CAccessControlFilter->filter()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CInlineFilter.php(59): LivingPlantController->filterAccessControl()
+#14 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/filters/CFilterChain.php(131): CInlineFilter->filter()
+#15 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(292): CFilterChain->run()
+#16 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): LivingPlantController->runActionWithFilters()
+#17 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): LivingPlantController->run()
+#18 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#19 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (81)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (484)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (212)

@@ -110,6 +110,15 @@ class LivingPlant extends CActiveRecord {
     }
     
     /**
+     * Required for automatic logging of changes
+     */
+    public function behaviors() {
+        return array(
+            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
+        );
+    }
+    
+    /**
      * Set the country code for the IPEN number
      * @param string $value ISO-2 code for the country
      */

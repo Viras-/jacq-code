@@ -166,4 +166,13 @@ class BotanicalObject extends CActiveRecord {
                     'criteria' => $criteria,
                 ));
     }
+
+    /**
+     * Required for automatic logging of changes
+     */
+    public function behaviors() {
+        return array(
+            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
+        );
+    }
 }

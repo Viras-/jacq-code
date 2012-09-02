@@ -102,4 +102,13 @@ class Person extends CActiveRecord {
         // Finally return the model
         return $model_person;
     }
+
+    /**
+     * Required for automatic logging of changes
+     */
+    public function behaviors() {
+        return array(
+            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
+        );
+    }
 }

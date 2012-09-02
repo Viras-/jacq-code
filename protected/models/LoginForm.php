@@ -66,4 +66,13 @@ class LoginForm extends CFormModel {
         else
             return false;
     }
+
+    /**
+     * Required for automatic logging of changes
+     */
+    public function behaviors() {
+        return array(
+            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
+        );
+    }
 }

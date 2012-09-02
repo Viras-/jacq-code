@@ -122,4 +122,13 @@ class Organisation extends CActiveRecord {
             return 'XX';
         }
     }
+
+    /**
+     * Required for automatic logging of changes
+     */
+    public function behaviors() {
+        return array(
+            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
+        );
+    }
 }
