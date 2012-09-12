@@ -20,6 +20,7 @@
  * @property integer $longitude_minutes
  * @property integer $longitude_seconds
  * @property string $longitude_half
+ * @property string $annotation
  *
  * The followings are the available model relations:
  * @property AcquisitionDate $acquisitionDate
@@ -56,10 +57,10 @@ class AcquisitionEvent extends CActiveRecord {
             array('acquisition_date_id, acquisition_type_id', 'required'),
             array('acquisition_date_id, acquisition_type_id, location_id, altitude_min, altitude_max, exactness, latitude_degrees, latitude_minutes, latitude_seconds, longitude_degrees, longitude_minutes, longitude_seconds', 'numerical', 'integerOnly' => true),
             array('latitude_half, longitude_half', 'length', 'max' => 1),
-            array('number', 'safe'),
+            array('number, annotation', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, acquisition_date_id, acquisition_type_id, location_id, number, altitude_min, altitude_max, exactness', 'safe', 'on' => 'search'),
+            array('id, acquisition_date_id, acquisition_type_id, location_id, number, altitude_min, altitude_max, exactness, annotation', 'safe', 'on' => 'search'),
         );
     }
 
@@ -93,6 +94,7 @@ class AcquisitionEvent extends CActiveRecord {
             'person_name' => Yii::t('jacq', 'Acquisition Person'),
             'latitude' => Yii::t('jacq', 'Latitude'),
             'longitude' => Yii::t('jacq', 'Longitude'),
+            'annotation' => Yii::t('jacq', 'Annotation'),
         );
     }
 

@@ -114,3 +114,8 @@
         </tr>
     </table>
 </div>
+
+<div class="row">
+    <?php echo $form->labelEx($model_acquisitionEvent, 'annotation'); ?>
+    <?php echo $form->textArea($model_acquisitionEvent, 'annotation', array( 'style' => 'width: 100%;' ) ); ?>
+</div>
