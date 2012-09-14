@@ -36,7 +36,7 @@ class LivingPlantController extends Controller {
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxCertificateDelete', 'ajaxCertificateStore'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -150,34 +150,17 @@ class LivingPlantController extends Controller {
                                     }
                                 }
 
-                                // check for certificate entries and update/add them
-                                if( isset($_POST['Certificate']) ) {
-                                    // cycle through all posted certificate entries
-                                    foreach($_POST['Certificate'] as $i => $certificate) {
-                                        // only handle certificate entry if it has a type set
-                                        if( empty($certificate['certificate_type_id']) ) continue;
-
-                                        // check if this is an update and load the model
-                                        $certificate_model = new Certificate;
-
-                                        // set the attributes & save the certificate entry
-                                        $certificate_model->attributes = $certificate;
-                                        $certificate_model->living_plant_id = $model_livingPlant->id;
-                                        $certificate_model->save();
-                                    }
-                                }
-
-                                // check for certificate entries and update/add them
+                                // check for separation entries and update/add them
                                 if( isset($_POST['Separation']) ) {
-                                    // cycle through all posted certificate entries
+                                    // cycle through all posted separation entries
                                     foreach($_POST['Separation'] as $i => $separation) {
-                                        // only handle certificate entry if it has a type set
+                                        // only handle separation entry if it has a type set
                                         if( empty($separation['separation_type_id']) ) continue;
 
                                         // check if this is an update and load the model
                                         $separation_model = new Separation;
 
-                                        // set the attributes & save the certificate entry
+                                        // set the attributes & save the separation entry
                                         $separation_model->attributes = $separation;
                                         $separation_model->botanical_object_id = $model_botanicalObject->id;
                                         $separation_model->save();
@@ -326,35 +309,11 @@ class LivingPlantController extends Controller {
                                 }
                             }
 
-                            if( isset($_POST['Certificate']) ) {
-                                
-                                // cycle through all posted certificate entries
-                                foreach($_POST['Certificate'] as $i => $certificate) {
-                                    // only handle certificate entry if it has a type set
-                                    if( empty($certificate['certificate_type_id']) ) continue;
-
-                                    // check if this is an update and load the model
-                                    $certificate_model = null;
-                                    if( isset($certificate['id']) ) {
-                                        $certificate_model = Certificate::model()->findByPk($certificate['id']);
-                                    }
-                                    // .. else create a new certificate entry
-                                    else {
-                                        $certificate_model = new Certificate;
-                                    }
-
-                                    // set the attributes & save the certificate entry
-                                    $certificate_model->attributes = $certificate;
-                                    $certificate_model->living_plant_id = $model_livingPlant->id;
-                                    $certificate_model->save();
-                                }
-                            }
-
-                            // check for certificate entries and update/add them
+                            // check for separation entries and update/add them
                             if( isset($_POST['Separation']) ) {
-                                // cycle through all posted certificate entries
+                                // cycle through all posted separation entries
                                 foreach($_POST['Separation'] as $i => $separation) {
-                                    // only handle certificate entry if it has a type set
+                                    // only handle separation entry if it has a type set
                                     if( empty($separation['separation_type_id']) ) continue;
 
                                     // check if this is an update and load the model
@@ -362,12 +321,12 @@ class LivingPlantController extends Controller {
                                     if( isset($separation['id']) ) {
                                         $separation_model = Separation::model()->findByPk($separation['id']);
                                     }
-                                    // .. else create a new certificate entry
+                                    // .. else create a new separation entry
                                     else {
                                         $separation_model = new Separation;
                                     }
 
-                                    // set the attributes & save the certificate entry
+                                    // set the attributes & save the separation entry
                                     $separation_model->attributes = $separation;
                                     $separation_model->botanical_object_id = $model_botanicalObject->id;
                                     $separation_model->save();
@@ -416,11 +375,6 @@ class LivingPlantController extends Controller {
      */
     public function actionIndex() {
         $this->actionAdmin();
-        
-        /*$dataProvider = new CActiveDataProvider('LivingPlant');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-        ));*/
     }
 
     /**
@@ -471,6 +425,50 @@ class LivingPlantController extends Controller {
                 readfile($filePath);
 
                 exit(0);
+            }
+        }
+    }
+    
+    /**
+     * renders form for entering a new certificate 
+     */
+    public function actionAjaxCertificate() {
+        $model_certificate = new Certificate;
+        
+        $this->renderPartial('form_certificate', array(
+            'model_certificate' => $model_certificate,
+        ));
+    }
+    
+    /**
+     * add / update a certificate 
+     */
+    public function actionAjaxCertificateStore() {
+        $id = (isset($_POST['id'])) ? intval($_POST['id']) : 0;
+        unset($_POST['id']);
+
+        // load or create certificate entry
+        $model_certificate = ($id > 0) ? Certificate::model()->findByPk($id) : new Certificate;
+        // save updated certificate information
+        $model_certificate->attributes = $_POST;
+        $model_certificate->save();
+        
+        // echo id of model certificate
+        echo $model_certificate->id;
+    }
+    
+    /**
+     * remove a certificate 
+     */
+    public function actionAjaxCertificateDelete($id) {
+        $id = intval($id);
+        
+        // check for valid id
+        if( $id > 0 ) {
+            // find model entry & delete it
+            $model_certificate = Certificate::model()->findByPk($id);
+            if( $model_certificate != null ) {
+                $model_certificate->delete();
             }
         }
     }

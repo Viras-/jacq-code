@@ -8,6 +8,8 @@
             'data-plus-as-tab' => "true"
         )
             ));
+    
+    echo $form->hiddenField($model_botanicalObject, 'id');
     ?>
 
     <p class="note">Fields with <span class="required">*</span> are required.</p>
@@ -60,12 +62,6 @@
         ?>
     </fieldset>
     <fieldset>
-        <legend><?php echo Yii::t('jacq', 'Certificates'); ?></legend>
-        <?php
-        require('form_certificates.php');
-        ?>
-    </fieldset>
-    <fieldset>
         <legend><?php echo Yii::t('jacq', 'Tree Record File'); ?></legend>
         <?php
         require('form_treeRecord.php');
@@ -87,9 +83,9 @@
     <div class="row buttons">
         <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save', array('data-plus-as-tab' => "false")); ?>
     </div>
-
     <?php $this->endWidget(); ?>
 
+    <!-- jdialog widgets -->
     <?php
     // Widget for opening & displaying the PDF pages
     $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
@@ -107,6 +103,7 @@
     <?php
     $this->endWidget('zii.widgets.jui.CJuiDialog');
     ?>
+    <!-- iframe for downloading tree records -->
     <iframe id="tree_record_download_iframe" scrolling="no" src="about:blank" style="display: none;">No iFrame support in your browser</iframe>
     
     <?php
@@ -124,6 +121,27 @@
     ?>
     <div id="organisation_tree" style="height: 400px;"></div>
     <?php
+    $this->endWidget('zii.widgets.jui.CJuiDialog');
+    ?>
+
+    <?php
+    // widget for chosing the organisation
+    $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+        'id' => 'certificates_dialog',
+        // additional javascript options for the dialog plugin
+        'options' => array(
+            'title' => Yii::t('jacq', 'Certificates'),
+            'autoOpen' => false,
+            'resizable' => false,
+            'width' => 700,
+            'height' => 400,
+            'modal' => true,
+        ),
+    ));
+    
+    // render certificates form
+    require('form_certificates.php');
+
     $this->endWidget('zii.widgets.jui.CJuiDialog');
     ?>
 </div><!-- form -->

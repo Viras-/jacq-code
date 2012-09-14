@@ -76,9 +76,12 @@
     
 </script>
 
-
 <div class="row">
     <?php echo $form->labelEx($model_livingPlant, 'phyto_control'); ?>
     <?php echo $form->checkbox($model_livingPlant, 'phyto_control'); ?>
     <?php echo $form->error($model_livingPlant, 'phyto_control'); ?>
+</div>
+
+<div class="row">
+    <a href="#" onclick="$('#certificates_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq', 'Certificates'); ?></a>
 </div>
