@@ -4217,3 +4217,789 @@ REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/update&id=1
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php (81)
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (484)
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (212)
+2012/09/17 10:10:57 [error] [exception.CException] exception 'CException' with message 'Ereignis "LoginForm.onBeforeSave ist nicht definiert.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:476
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(514): CComponent->getEventHandlers('onBeforeSave')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CBehavior.php(50): CComponent->attachEventHandler('onBeforeSave', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(329): CBehavior->attach(Object(LoginForm))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(298): CComponent->attachBehavior('ActiveRecordLog...', 'application.beh...')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CFormModel.php(41): CComponent->attachBehaviors(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/SiteController.php(68): CFormModel->__construct()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/SiteController.php(28): SiteController->actionLogin()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): SiteController->actionIndex()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(CInlineAction))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#14 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/
+---
+2012/09/17 10:10:59 [error] [exception.CException] exception 'CException' with message 'Ereignis "LoginForm.onBeforeSave ist nicht definiert.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php:476
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(514): CComponent->getEventHandlers('onBeforeSave')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CBehavior.php(50): CComponent->attachEventHandler('onBeforeSave', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(329): CBehavior->attach(Object(LoginForm))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CComponent.php(298): CComponent->attachBehavior('ActiveRecordLog...', 'application.beh...')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CFormModel.php(41): CComponent->attachBehaviors(Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/SiteController.php(68): CFormModel->__construct()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/SiteController.php(28): SiteController->actionLogin()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CInlineAction.php(50): SiteController->actionIndex()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CInlineAction->runWithParams(Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(CInlineAction))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('')
+#13 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#14 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/
+---
+2012/09/17 12:29:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Das System konnte die angeforderte Action "index" nicht finden.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php:484
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(271): CController->missingAction('')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification
+---
+2012/09/17 12:29:29 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Das System konnte die angeforderte Action "index" nicht finden.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php:484
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(271): CController->missingAction('')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification&method=japi
+---
+2012/09/17 12:29:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Das System konnte die angeforderte Action "index" nicht finden.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php:484
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(271): CController->missingAction('')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification&action=japi
+---
+2012/09/17 12:29:58 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren
+---
+2012/09/17 12:30:26 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&reference_type=citation&referenceID=10400
+---
+2012/09/17 12:30:35 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=GetChildren&reference_type=citation&referenceID=10400
+---
+2012/09/17 12:30:51 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&reference_type=citation&referenceID=10400
+---
+2012/09/17 12:31:23 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&reference_type=citation&referenceID=10400&taxon=0
+---
+2012/09/17 12:32:03 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&reference_type=citation&referenceID=10400&taxon=0
+---
+2012/09/17 12:32:05 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&reference_type=citation&referenceID=10400&taxon=0
+---
+2012/09/17 12:32:23 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONOrganisatio...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONOrganisation/japi&action=getChildren&reference_type=citation&referenceID=10400&taxon=0
+---
+2012/09/17 12:32:35 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONOrganisatio...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONOrganisation/japi&action=getChildren&reference_type=10
+---
+2012/09/17 12:33:22 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONOrganisatio...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONOrganisation/japi&action=getChildren&reference_type=10
+---
+2012/09/17 12:33:54 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&organisation_id=2&refID=10400
+---
+2012/09/17 12:34:12 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&organisation_id=2&refID=10400&taxon=10
+---
+2012/09/17 12:34:38 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&organisation_id=2&refID=10400
+---
+2012/09/17 12:34:58 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&organisation_id=2
+---
+2012/09/17 12:35:03 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&organisation_id=2&param=1
+---
+2012/09/17 12:35:07 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&organisation_id=2&param=1&param=2
+---
+2012/09/17 12:35:14 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&param=2&param=1&param=2
+---
+2012/09/17 12:36:24 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&p_referenceType=2&p_referenceID=1
+---
+2012/09/17 12:49:07 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax' at line 1. Der SQL-Ausdruck war: SELECT herbar_view.GetScientificName( ts.taxonID, 0 ) AS ScientificName, *
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+WHERE (ts.source_citationID = :source_citationID) AND (tc.parent_taxonID IS NULL)
+GROUP BY `ts`.`taxonID`.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (69)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/09/17 12:49:07 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax' at line 1. The SQL statement executed was: SELECT herbar_view.GetScientificName( ts.taxonID, 0 ) AS ScientificName, *
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+WHERE (ts.source_citationID = :source_citationID) AND (tc.parent_taxonID IS NULL)
+GROUP BY `ts`.`taxonID`' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(69): CDbCommand->queryAll()
+#2 [internal function]: JSONClassificationController->japiGetChildren('2', '10400', 0)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONClassificationController), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#13 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&referenceType=2&referenceID=10400
+---
+2012/09/17 12:49:32 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax' at line 1. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName( ts.taxonID, 0 ) AS ScientificName, *
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+WHERE (ts.source_citationID = :source_citationID) AND (tc.parent_taxonID IS NULL)
+GROUP BY `ts`.`taxonID`.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (69)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/09/17 12:49:32 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax' at line 1. The SQL statement executed was: SELECT `herbar_view`.GetScientificName( ts.taxonID, 0 ) AS ScientificName, *
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+WHERE (ts.source_citationID = :source_citationID) AND (tc.parent_taxonID IS NULL)
+GROUP BY `ts`.`taxonID`' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(69): CDbCommand->queryAll()
+#2 [internal function]: JSONClassificationController->japiGetChildren('2', '10400', 0)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONClassificationController), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#13 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&referenceType=2&referenceID=10400
+---
+2012/09/17 12:49:59 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax' at line 1. Der SQL-Ausdruck war: SELECT herbar_view.GetScientificName( ts.taxonID, 0 ) AS `ScientificName`, *
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+WHERE (ts.source_citationID = :source_citationID) AND (tc.parent_taxonID IS NULL)
+GROUP BY `ts`.`taxonID`.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (69)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/09/17 12:50:00 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax' at line 1. The SQL statement executed was: SELECT herbar_view.GetScientificName( ts.taxonID, 0 ) AS `ScientificName`, *
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+WHERE (ts.source_citationID = :source_citationID) AND (tc.parent_taxonID IS NULL)
+GROUP BY `ts`.`taxonID`' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(69): CDbCommand->queryAll()
+#2 [internal function]: JSONClassificationController->japiGetChildren('2', '10400', 0)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONClassificationController), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#13 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&referenceType=2&referenceID=10400
+---
+2012/09/17 13:06:59 [error] [php] Undefined variable: db (/var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php:52)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): JApi->runWithParams()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): JSONClassificationController->runAction()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): JSONClassificationController->runActionWithFilters()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): JSONClassificationController->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&referenceType=2&referenceID=10400
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (52)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/09/17 13:07:08 [error] [php] Undefined variable: db (/var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php:52)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): JApi->runWithParams()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): JSONClassificationController->runAction()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): JSONClassificationController->runActionWithFilters()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): JSONClassificationController->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&referenceType=2&referenceID=10400
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (52)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/09/18 08:01:30 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Konnte den Request "jSONCLassification" nicht auflösen.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php:280
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONCLassificat...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONCLassification&referenceType=citation&referenceID=10400
+---
+2012/09/18 08:01:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Action not found: japiIndex' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:83
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#8 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&referenceType=citation&referenceID=10400
+---
+2012/09/18 08:24:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Konnte den Request "jSONjsTreeController/japi" nicht auflösen.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php:280
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONjsTreeContr...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTreeController/japi&action=classificationBrowser&referenceType=citation&referenceID=10400
+---
+2012/09/18 08:25:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Konnte den Request "jSONjsTreeController/japi" nicht auflösen.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php:280
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONjsTreeContr...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTreeController/japi&action=classificationBrowser&referenceType=citation&referenceID=10400
+---
+2012/09/18 08:26:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Konnte den Request "jSONJSTreeController/japi" nicht auflösen.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php:280
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONJSTreeContr...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONJSTreeController/japi&action=classificationBrowser&referenceType=citation&referenceID=10400
+---
+2012/09/18 08:26:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Konnte den Request "jSONJSTreeController" nicht auflösen.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php:280
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONJSTreeContr...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONJSTreeController&action=classificationBrowser&referenceType=citation&referenceID=10400
+---
+2012/09/18 08:27:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Konnte den Request "jSONJSTreeController" nicht auflösen.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php:280
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONJSTreeContr...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONJSTreeController&action=classificationBrowser&referenceType=citation&referenceID=10400
+---
+2012/09/18 08:27:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Konnte den Request "jSONJSTreeController" nicht auflösen.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php:280
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONJSTreeContr...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONJSTreeController&action=classificationBrowser&referenceType=citation&referenceID=10400
+---
+2012/09/18 08:28:22 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Das System konnte die angeforderte Action "index" nicht finden.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php:484
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(271): CController->missingAction('')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONTree')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONTree&action=classificationBrowser&referenceType=citation&referenceID=10400
+---
+2012/09/18 08:28:39 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Das System konnte die angeforderte Action "index" nicht finden.' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php:484
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(271): CController->missingAction('')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('')
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONjsTree')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree&action=classificationBrowser&referenceType=citation&referenceID=10400
+---
+2012/09/18 08:28:44 [error] [php] include(JSONClassificationController.php): failed to open stream: No such file or directory (/var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/YiiBase.php:418)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(11): spl_autoload_call()
+#1 unknown(0): JSONjsTreeController->japiClassificationBrowser()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): JApi->runWithParams()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): JSONjsTreeController->runAction()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): JSONjsTreeController->run()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (11)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/09/18 08:31:37 [error] [php] include(JSONClassificationController.php): failed to open stream: No such file or directory (/var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/YiiBase.php:418)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(13): spl_autoload_call()
+#1 unknown(0): JSONjsTreeController->japiClassificationBrowser()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): JApi->runWithParams()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): JSONjsTreeController->runAction()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): JSONjsTreeController->run()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (13)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/09/18 08:32:47 [error] [php] include(JSONClassificationController.php): failed to open stream: No such file or directory (/var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/YiiBase.php:418)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(13): spl_autoload_call()
+#1 unknown(0): JSONjsTreeController->japiClassificationBrowser()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): JApi->runWithParams()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): JSONjsTreeController->runAction()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): JSONjsTreeController->run()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (13)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/09/18 08:32:48 [error] [php] include(JSONClassificationController.php): failed to open stream: No such file or directory (/var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/YiiBase.php:418)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(13): spl_autoload_call()
+#1 unknown(0): JSONjsTreeController->japiClassificationBrowser()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): JApi->runWithParams()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): JSONjsTreeController->runAction()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): JSONjsTreeController->run()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (13)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/09/19 12:33:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Action not found: japiGetchildren' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:83
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#8 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&referenceType=citation&referenceID=10400
+---
+2012/09/19 12:34:08 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=references&referenceType=citation
+---
+2012/09/19 12:34:23 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'l.title' in 'field list'. Der SQL-Ausdruck war: SELECT `l`.`title` AS `referenceName`, `l`.`citationID` AS `referenceID`
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_lit` `l` ON ts.source_citationID = l.citationID
+GROUP BY `ts`.`source_citationID`.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (42)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/09/19 12:34:23 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'l.title' in 'field list'. The SQL statement executed was: SELECT `l`.`title` AS `referenceName`, `l`.`citationID` AS `referenceID`
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_lit` `l` ON ts.source_citationID = l.citationID
+GROUP BY `ts`.`source_citationID`' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(42): CDbCommand->queryAll()
+#2 [internal function]: JSONClassificationController::japiReferences('citation')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONClassificationController), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#13 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=references&referenceType=citation
+---
+2012/09/19 12:46:26 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=references
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
+2012/09/19 12:47:14 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=references
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
+2012/09/19 12:47:16 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Request Invalid' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:126
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#9 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=references
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
+2012/09/19 12:50:57 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[70100]: <<Unknown error>>: 1317 Query execution was interrupted. Der SQL-Ausdruck war: SELECT `l`.`titel` AS `referenceName`, `l`.`citationID` AS `referenceID`
+FROM `tbl_lit` `l`
+LEFT JOIN `tbl_tax_synonymy` `ts` ON ts.source_citationID = l.citationID
+WHERE ts.tax_syn_ID IS NOT NULL
+GROUP BY `ts`.`source_citationID`
+ORDER BY `referenceName`.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (44)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/09/19 12:50:57 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[70100]: <<Unknown error>>: 1317 Query execution was interrupted. The SQL statement executed was: SELECT `l`.`titel` AS `referenceName`, `l`.`citationID` AS `referenceID`
+FROM `tbl_lit` `l`
+LEFT JOIN `tbl_tax_synonymy` `ts` ON ts.source_citationID = l.citationID
+WHERE ts.tax_syn_ID IS NOT NULL
+GROUP BY `ts`.`source_citationID`
+ORDER BY `referenceName`' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(44): CDbCommand->queryAll()
+#2 [internal function]: JSONClassificationController::japiReferences('citation')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONClassificationController), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#13 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=references&referenceType=citation
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
+2012/09/19 12:50:58 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[70100]: <<Unknown error>>: 1317 Query execution was interrupted. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, ts.taxonID, has_children.classification_id IS NOT NULL AS hasChildren
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+LEFT JOIN `tbl_tax_classification` `has_children` ON has_children.parent_taxonID = ts.taxonID
+WHERE (ts.source_citationID = :source_citationID) AND (tc.parent_taxonID IS NULL) AND (has_children.classification_id IS NOT NULL)
+GROUP BY `ts`.`taxonID`
+ORDER BY `scientificName`.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (95)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (19)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/09/19 12:50:58 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[70100]: <<Unknown error>>: 1317 Query execution was interrupted. The SQL statement executed was: SELECT `herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, ts.taxonID, has_children.classification_id IS NOT NULL AS hasChildren
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+LEFT JOIN `tbl_tax_classification` `has_children` ON has_children.parent_taxonID = ts.taxonID
+WHERE (ts.source_citationID = :source_citationID) AND (tc.parent_taxonID IS NULL) AND (has_children.classification_id IS NOT NULL)
+GROUP BY `ts`.`taxonID`
+ORDER BY `scientificName`' in /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(95): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(19): JSONClassificationController::japiChildren('citation', 10400, 0)
+#3 [internal function]: JSONjsTreeController->japiClassificationBrowser('citation', '10400', '0')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONjsTreeController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONjsTree/japi')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
