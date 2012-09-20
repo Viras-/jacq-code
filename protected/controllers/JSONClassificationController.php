@@ -81,7 +81,8 @@ class JSONClassificationController extends Controller {
         $dbCommand->select( "`herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, ts.taxonID, has_children.classification_id IS NOT NULL AS hasChildren" )
                 ->from('tbl_tax_synonymy ts')
                 ->leftJoin('tbl_tax_classification tc', 'ts.tax_syn_ID = tc.tax_syn_ID')
-                ->leftJoin('tbl_tax_classification has_children', 'has_children.parent_taxonID = ts.taxonID');
+                ->leftJoin('tbl_tax_classification has_children', 'has_children.parent_taxonID = ts.taxonID')
+                ->group('ts.taxonID');
         
         // check if we search for children of a specific taxon
         if( $taxonID > 0 ) {
@@ -92,7 +93,6 @@ class JSONClassificationController extends Controller {
         else {
             $where_cond[] = 'tc.parent_taxonID IS NULL';
             $where_cond[] = 'has_children.classification_id IS NOT NULL';
-            $dbCommand->group('ts.taxonID');
         }
         // apply where conditions and return all rows
         $dbRows = $dbCommand->where($where_cond,$where_cond_values)
