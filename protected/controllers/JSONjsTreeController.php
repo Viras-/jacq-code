@@ -22,7 +22,11 @@ class JSONjsTreeController extends Controller {
             $entry = array(
                 "data" => array(
                     "title" => $child["scientificName"],
-                    "attr" => array( "data-taxon-id" => $child["taxonID"] )
+                    "attr" => array(
+                        "data-taxon-id" => $child["taxonID"],
+                        "data-reference-id" => $referenceID,
+                        "data-reference-type" => $referenceType
+                    )
                 ),
             );
             
