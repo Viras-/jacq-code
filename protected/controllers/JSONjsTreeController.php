@@ -21,14 +21,25 @@ class JSONjsTreeController extends Controller {
         foreach( $children as $child ) {
             $entry = array(
                 "data" => array(
-                    "title" => $child["scientificName"],
+                    "title" => $child["referenceName"],
                     "attr" => array(
                         "data-taxon-id" => $child["taxonID"],
-                        "data-reference-id" => $referenceID,
-                        "data-reference-type" => $referenceType
+                        "data-reference-id" => $child["referenceId"],
+                        "data-reference-type" => $child["referenceType"],
                     )
                 ),
             );
+            
+            // change node icon based on various aspects
+            switch($child["referenceType"]) {
+                case 'citation':
+                    $entry["icon"] = "images/book_open.png";
+                    break;
+                default:
+                    break;
+            }
+            // if a taxonID is set, always use no icon
+            if( $child["taxonID"] ) $entry["icon"] = "images/spacer.gif";
             
             // check if we have further children
             if( $child['hasChildren'] ) $entry['state'] = 'closed';
