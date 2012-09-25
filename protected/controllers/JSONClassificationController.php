@@ -90,7 +90,7 @@ class JSONClassificationController extends Controller {
         switch( $referenceType ) {
             case 'periodical':
                 // get all citations which belong to the given periodical
-                $dbRows = $dbCommand->select('l.titel AS referenceName, l.citationID AS referenceID')
+                $dbRows = $dbCommand->select('`herbar_view`.GetProtolog(l.citationID) AS referenceName, l.citationID AS referenceID')
                     ->from('tbl_lit l')
                     ->leftJoin('tbl_tax_synonymy ts', 'ts.source_citationID = l.citationID')
                     ->leftJoin('tbl_tax_classification tc', 'tc.tax_syn_ID = ts.tax_syn_ID')
