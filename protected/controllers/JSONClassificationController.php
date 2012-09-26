@@ -122,7 +122,7 @@ class JSONClassificationController extends Controller {
                 $where_cond_values = array( ':source_citationID' => $referenceID );
 
                 // basic query
-                $dbCommand->select( "`herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, ts.taxonID, has_children.classification_id IS NOT NULL AS hasChildren" )
+                $dbCommand->select( "`herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, tc.number, tc.order, ts.taxonID, has_children.classification_id IS NOT NULL AS hasChildren" )
                         ->from('tbl_tax_synonymy ts')
                         ->leftJoin('tbl_tax_classification tc', 'ts.tax_syn_ID = tc.tax_syn_ID')
                         ->leftJoin('tbl_tax_classification has_children', 'has_children.parent_taxonID = ts.taxonID')
@@ -140,7 +140,7 @@ class JSONClassificationController extends Controller {
                 }
                 // apply where conditions and return all rows
                 $dbRows = $dbCommand->where($where_cond,$where_cond_values)
-                        ->order('scientificName')
+                        ->order('order, scientificName')
                         ->queryAll();
 
                 // process all results and create JSON-response from it
@@ -151,6 +151,10 @@ class JSONClassificationController extends Controller {
                         "referenceName" => $dbRow['scientificName'],
                         "referenceType" => "citation",
                         "hasChildren" => ($dbRow['hasChildren'] > 0),
+                        "referenceInfo" => array(
+                            "number" => $dbRow['number'],
+                            "order" => $dbRow['order']
+                        )
                     );
                 }
                 break;

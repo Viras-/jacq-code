@@ -5302,3 +5302,16 @@ REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classifica
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (89)
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (19)
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/09/26 13:49:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Action not found: japiGetchildren' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:83
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/actions/CAction.php(75): JApi->run()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(309): CAction->runWithParams(Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(287): CController->runAction(Object(JApi))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(276): CController->run('japi')
+#5 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/web/CWebApplication.php(135): CWebApplication->runController('jSONClassificat...')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/yii-1.1.10/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#8 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONClassification/japi&action=getChildren&referenceType=citation&referenceID=10400
+---
