@@ -25,6 +25,9 @@
          </script>
          <!-- jsTree -->
          <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.jstree/jquery.jstree.js" ></script>
+         
+         <!-- custom styles -->
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/custom.css" />
     </head>
 
     <body>
