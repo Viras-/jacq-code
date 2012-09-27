@@ -122,10 +122,11 @@ class JSONClassificationController extends Controller {
                 $where_cond_values = array( ':source_citationID' => $referenceID );
 
                 // basic query
-                $dbCommand->select( "`herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, tc.number, tc.order, ts.taxonID, has_children.classification_id IS NOT NULL AS hasChildren" )
+                $dbCommand->select( "`herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, tc.number, tc.order, ts.taxonID, has_children.classification_id IS NOT NULL AS hasChildren, has_synonyms.tax_syn_ID IS NOT NULL AS hasSynonyms" )
                         ->from('tbl_tax_synonymy ts')
                         ->leftJoin('tbl_tax_classification tc', 'ts.tax_syn_ID = tc.tax_syn_ID')
                         ->leftJoin('tbl_tax_classification has_children', 'has_children.parent_taxonID = ts.taxonID')
+                        ->leftJoin('tbl_tax_synonymy has_synonyms', 'has_synonyms.acc_taxon_ID = ts.taxonID')
                         ->group('ts.taxonID');
 
                 // check if we search for children of a specific taxon
@@ -150,7 +151,7 @@ class JSONClassificationController extends Controller {
                         "referenceId" => $referenceID,
                         "referenceName" => $dbRow['scientificName'],
                         "referenceType" => "citation",
-                        "hasChildren" => ($dbRow['hasChildren'] > 0),
+                        "hasChildren" => ($dbRow['hasChildren'] > 0 || $dbRow['hasSynonyms'] > 0),
                         "referenceInfo" => array(
                             "number" => $dbRow['number'],
                             "order" => $dbRow['order']
@@ -161,6 +162,48 @@ class JSONClassificationController extends Controller {
         }
         
         // return results
+        return $results;
+    }
+    
+    /**
+     * fetch synonyms for a given taxonID, according to a given reference
+     * @param string $referenceType type of reference
+     * @param int $referenceID ID of reference
+     * @param int $taxonID ID of taxon name
+     * @return array List of synonyms including extra information
+     */
+    public static function japiSynonyms($referenceType, $referenceID, $taxonID) {
+        $results = array();
+        
+        // make sure we have correct parameters
+        $referenceID = intval($referenceID);
+        $taxonID = intval($taxonID);
+        
+        // setup db query
+        $db = JSONClassificationController::getDbHerbarInput();
+        $dbCommand = $db->createCommand();
+
+        switch( $referenceType ) {
+            case 'citation':
+                $dbRows = $dbCommand->select("`herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, ts.taxonID")
+                    ->from("tbl_tax_synonymy ts")
+                    ->where(
+                            "ts.acc_taxon_ID = :acc_taxon_ID AND source_citationID = :referenceID",
+                            array( ':acc_taxon_ID' => $taxonID, ':referenceID' => $referenceID )
+                    )
+                    ->queryAll();
+                
+                foreach( $dbRows as $dbRow ) {
+                    $results[] = array(
+                        "taxonID" => $dbRow['taxonID'],
+                        "referenceName" => $dbRow['scientificName'],
+                        "referenceId" => $referenceID,
+                        "referenceType" => $referenceType
+                    );
+                }
+                break;
+        }
+        
         return $results;
     }
     

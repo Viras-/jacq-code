@@ -48,6 +48,24 @@ class JSONjsTreeController extends Controller {
             $return[] = $entry;
         }
         
+        // check for synonyms
+        $synonyms = JSONClassificationController::japiSynonyms($referenceType, $referenceID, $taxonID);
+        if( count($synonyms) > 0 ) {
+            foreach( $synonyms as $synonym ) {
+                $return[] = array(
+                    "data" => array(
+                        "title" => "-> " . $synonym["referenceName"] . "<" . $synonym["taxonID"] . ">",
+                        "attr" => array(
+                            "data-taxon-id" => $synonym["taxonID"],
+                            "data-reference-id" => $synonym["referenceId"],
+                            "data-reference-type" => $synonym["referenceType"]
+                        )
+                    ),
+                    "icon" => "images/spacer.gif"
+                );
+            }
+        }
+
         return $return;
     }
     
