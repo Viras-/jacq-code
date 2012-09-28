@@ -118,15 +118,39 @@ class JSONClassificationController extends Controller {
                 break;
             case 'citation':
             default:
-                $where_cond = array('AND', 'ts.source_citationID = :source_citationID');
+                $where_cond = array('AND', 'ts.source_citationID = :source_citationID', 'ts.acc_taxon_ID IS NULL');
                 $where_cond_values = array( ':source_citationID' => $referenceID );
 
                 // basic query
-                $dbCommand->select( "`herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, tc.number, tc.order, ts.taxonID, has_children.classification_id IS NOT NULL AS hasChildren, has_synonyms.tax_syn_ID IS NOT NULL AS hasSynonyms" )
+                $dbCommand->select(
+                                array(
+                                    "`herbar_view`.GetScientificName( ts.`taxonID`, 0 ) AS `scientificName`",
+                                    "tc.number",
+                                    "tc.order",
+                                    "ts.taxonID",
+                                    "(`has_children`.`tax_syn_ID` IS NOT NULL) AS `hasChildren`",
+                                    "(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`"
+                                )
+                        )
                         ->from('tbl_tax_synonymy ts')
                         ->leftJoin('tbl_tax_classification tc', 'ts.tax_syn_ID = tc.tax_syn_ID')
-                        ->leftJoin('tbl_tax_classification has_children', 'has_children.parent_taxonID = ts.taxonID')
-                        ->leftJoin('tbl_tax_synonymy has_synonyms', 'has_synonyms.acc_taxon_ID = ts.taxonID')
+                        ->leftJoin(
+                                'tbl_tax_synonymy has_synonyms',
+                                array(
+                                    'AND',
+                                    'has_synonyms.acc_taxon_ID = ts.taxonID',
+                                    'has_synonyms.source_citationID = ts.source_citationID'
+                                )
+                        )
+                        ->leftJoin('tbl_tax_classification has_children_clas', 'has_children_clas.parent_taxonID = ts.taxonID')
+                        ->leftJoin(
+                                'tbl_tax_synonymy has_children',
+                                array(
+                                    'AND',
+                                    'has_children.tax_syn_ID = has_children_clas.tax_syn_ID',
+                                    'has_children.source_citationID = ts.source_citationID'
+                                )
+                        )
                         ->group('ts.taxonID');
 
                 // check if we search for children of a specific taxon
@@ -137,7 +161,7 @@ class JSONClassificationController extends Controller {
                 // .. if not make sure we only return entries which have at least one child
                 else {
                     $where_cond[] = 'tc.parent_taxonID IS NULL';
-                    $where_cond[] = 'has_children.classification_id IS NOT NULL';
+                    $where_cond[] = 'has_children.tax_syn_ID IS NOT NULL';
                 }
                 // apply where conditions and return all rows
                 $dbRows = $dbCommand->where($where_cond,$where_cond_values)

@@ -54,7 +54,7 @@ class JSONjsTreeController extends Controller {
             foreach( $synonyms as $synonym ) {
                 $return[] = array(
                     "data" => array(
-                        "title" => "-> " . $synonym["referenceName"] . "<" . $synonym["taxonID"] . ">",
+                        "title" => "-> " . $synonym["referenceName"],
                         "attr" => array(
                             "data-taxon-id" => $synonym["taxonID"],
                             "data-reference-id" => $synonym["referenceId"],
