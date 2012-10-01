@@ -128,8 +128,8 @@ class JSONClassificationController extends Controller {
                                     "tc.number",
                                     "tc.order",
                                     "ts.taxonID",
-                                    "(`has_children`.`tax_syn_ID` IS NOT NULL) AS `hasChildren`",
-                                    "(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`"
+                                    "max(`has_children`.`tax_syn_ID` IS NOT NULL) AS `hasChildren`",
+                                    "max(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`"
                                 )
                         )
                         ->from('tbl_tax_synonymy ts')
@@ -206,7 +206,30 @@ class JSONClassificationController extends Controller {
         // setup db query
         $db = JSONClassificationController::getDbHerbarInput();
         $dbCommand = $db->createCommand();
-
+        
+        // check if we have a basionym
+        $dbRows = $dbCommand->select(
+                    array(
+                        "`herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`",
+                        "ts.basID"
+                    )
+                )
+                ->from('tbl_tax_species ts')
+                ->where(array('AND','ts.taxonID = :taxonID','ts.basID IS NOT NULL'), array(':taxonID' => $taxonID))
+                ->queryAll();
+        // check number of returned rows
+        if( count($dbRows) > 0 ) {
+            $results[] = array(
+                "taxonID" => $dbRows[0]['basID'],
+                "referenceName" => $dbRows[0]['scientificName'],
+                "referenceId" => $referenceID,
+                "referenceType" => $referenceType,
+                "type" => "basionym"
+            );
+        }
+        
+        // new command for actual synonyms
+        $dbCommand = $db->createCommand();
         switch( $referenceType ) {
             case 'citation':
                 $dbRows = $dbCommand->select("`herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, ts.taxonID")
@@ -222,7 +245,8 @@ class JSONClassificationController extends Controller {
                         "taxonID" => $dbRow['taxonID'],
                         "referenceName" => $dbRow['scientificName'],
                         "referenceId" => $referenceID,
-                        "referenceType" => $referenceType
+                        "referenceType" => $referenceType,
+                        "type" => "synonym"
                     );
                 }
                 break;

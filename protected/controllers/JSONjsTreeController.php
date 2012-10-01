@@ -39,7 +39,13 @@ class JSONjsTreeController extends Controller {
                     break;
             }
             // if a taxonID is set, always use no icon
-            if( $child["taxonID"] ) $entry["icon"] = "images/spacer.gif";
+            if( $child["taxonID"] ) {
+                $entry["icon"] = "images/spacer.gif";
+                // taxon entries do have some additional info
+                if( !empty($child['referenceInfo']['number']) ) {
+                    $entry['data']['title'] = '<i><b>' . $child['referenceInfo']['number'] . '</b></i>&nbsp;'. $entry['data']['title'];
+                }
+            }
             
             // check if we have further children
             if( $child['hasChildren'] ) $entry['state'] = 'closed';
@@ -54,14 +60,14 @@ class JSONjsTreeController extends Controller {
             foreach( $synonyms as $synonym ) {
                 $return[] = array(
                     "data" => array(
-                        "title" => "-> " . $synonym["referenceName"],
+                        "title" => $synonym["referenceName"],
                         "attr" => array(
                             "data-taxon-id" => $synonym["taxonID"],
                             "data-reference-id" => $synonym["referenceId"],
                             "data-reference-type" => $synonym["referenceType"]
                         )
                     ),
-                    "icon" => "images/spacer.gif"
+                    "icon" => ($synonym['type'] == 'basionym') ? "images/identical_to.png" : "images/equal_to.png"
                 );
             }
         }

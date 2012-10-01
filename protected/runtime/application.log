@@ -5781,3 +5781,267 @@ Stack trace:
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=235452
 HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
 ---
+2012/10/01 14:23:32 [error] [php] Undefined index: referenceInfo (/var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php:24)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): JApi->runWithParams()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): JSONjsTreeController->runAction()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): JSONjsTreeController->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=periodical&referenceID=2111&taxonID=0
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (24)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/10/01 14:23:53 [error] [php] Undefined index: referenceInfo (/var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php:24)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): JApi->runWithParams()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): JSONjsTreeController->runAction()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): JSONjsTreeController->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=periodical&referenceID=2111&taxonID=0
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (24)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/10/01 14:56:26 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ts.basID' in 'field list'. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.`basID`
+FROM `tbl_tax_species`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (214)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (58)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/10/01 14:56:26 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ts.basID' in 'field list'. The SQL statement executed was: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.`basID`
+FROM `tbl_tax_species`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL)' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(214): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(58): JSONClassificationController::japiSynonyms('periodical', 2111, 0)
+#3 [internal function]: JSONjsTreeController->japiClassificationBrowser('periodical', '2111', '0')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONjsTreeController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=periodical&referenceID=2111&taxonID=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
+2012/10/01 14:56:38 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ts.basID' in 'field list'. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.`basID`
+FROM `tbl_tax_species`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (214)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (58)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/10/01 14:56:38 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ts.basID' in 'field list'. The SQL statement executed was: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.`basID`
+FROM `tbl_tax_species`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL)' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(214): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(58): JSONClassificationController::japiSynonyms('periodical', 70, 0)
+#3 [internal function]: JSONjsTreeController->japiClassificationBrowser('periodical', '70', '0')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONjsTreeController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=periodical&referenceID=70&taxonID=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
+2012/10/01 14:56:42 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ts.basID' in 'field list'. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.`basID`
+FROM `tbl_tax_species`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (214)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (58)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/10/01 14:56:42 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ts.basID' in 'field list'. The SQL statement executed was: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.`basID`
+FROM `tbl_tax_species`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL)' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(214): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(58): JSONClassificationController::japiSynonyms('periodical', 2111, 0)
+#3 [internal function]: JSONjsTreeController->japiClassificationBrowser('periodical', '2111', '0')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONjsTreeController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=periodical&referenceID=2111&taxonID=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
+2012/10/01 14:57:07 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.`basID`
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (233)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (58)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/10/01 14:57:07 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens. The SQL statement executed was: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.`basID`
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL)' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(233): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(58): JSONClassificationController::japiSynonyms('citation', 10400, 0)
+#3 [internal function]: JSONjsTreeController->japiClassificationBrowser('citation', '10400', '0')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONjsTreeController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
+2012/10/01 15:02:52 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '``
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = '0') AND (ts.basID IS NOT NUL' at line 1. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.``basID``
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (219)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (58)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/10/01 15:02:52 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '``
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = '0') AND (ts.basID IS NOT NUL' at line 1. The SQL statement executed was: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.``basID``
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL)' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(219): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(58): JSONClassificationController::japiSynonyms('citation', 10400, 0)
+#3 [internal function]: JSONjsTreeController->japiClassificationBrowser('citation', '10400', '0')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONjsTreeController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
+2012/10/01 15:03:23 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '``
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = '0') AND (ts.basID IS NOT NUL' at line 1. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.``basID``
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (219)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (58)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/10/01 15:03:23 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '``
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = '0') AND (ts.basID IS NOT NUL' at line 1. The SQL statement executed was: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.``basID``
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL)' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(219): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(58): JSONClassificationController::japiSynonyms('citation', 10400, 0)
+#3 [internal function]: JSONjsTreeController->japiClassificationBrowser('citation', '10400', '0')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONjsTreeController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
+2012/10/01 15:03:48 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.`basID`
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (239)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (58)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/10/01 15:03:48 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens. The SQL statement executed was: SELECT `herbar_view`.GetScientificName(`ts`.`basID`, 0) AS `scientificName`, `ts`.`basID`
+FROM `tbl_tax_species` `ts`
+WHERE (ts.taxonID = :taxonID) AND (ts.basID IS NOT NULL)' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(239): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(58): JSONClassificationController::japiSynonyms('citation', 10400, 0)
+#3 [internal function]: JSONjsTreeController->japiClassificationBrowser('citation', '10400', '0')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONjsTreeController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
+2012/10/01 15:04:54 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM `tbl_tax_synonymy` `ts`
+WHERE ts.acc_taxon_ID = '0' AND source_citationID =' at line 2. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, ts.taxonID, s.
+FROM `tbl_tax_synonymy` `ts`
+WHERE ts.acc_taxon_ID = :acc_taxon_ID AND source_citationID = :referenceID.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (241)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (58)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/10/01 15:04:54 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM `tbl_tax_synonymy` `ts`
+WHERE ts.acc_taxon_ID = '0' AND source_citationID =' at line 2. The SQL statement executed was: SELECT `herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, ts.taxonID, s.
+FROM `tbl_tax_synonymy` `ts`
+WHERE ts.acc_taxon_ID = :acc_taxon_ID AND source_citationID = :referenceID' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(241): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(58): JSONClassificationController::japiSynonyms('citation', 10400, 0)
+#3 [internal function]: JSONjsTreeController->japiClassificationBrowser('citation', '10400', '0')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONjsTreeController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---
