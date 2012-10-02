@@ -224,7 +224,7 @@ class JSONClassificationController extends Controller {
                 "referenceName" => $dbRows[0]['scientificName'],
                 "referenceId" => $referenceID,
                 "referenceType" => $referenceType,
-                "type" => "basionym"
+                "type" => "homotype"
             );
         }
         
@@ -232,8 +232,22 @@ class JSONClassificationController extends Controller {
         $dbCommand = $db->createCommand();
         switch( $referenceType ) {
             case 'citation':
-                $dbRows = $dbCommand->select("`herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, ts.taxonID")
+                $dbRows = $dbCommand->select("`herbar_view`.GetScientificName( ts.taxonID, 0 ) AS scientificName, ts.taxonID, (tsp.basID = tsp_source.basID) AS homotype")
                     ->from("tbl_tax_synonymy ts")
+                    ->leftJoin(
+                            "tbl_tax_species tsp",
+                            array(
+                                "AND",
+                                "tsp.taxonID = ts.taxonID"
+                            )
+                    )
+                    ->leftJoin(
+                            "tbl_tax_species tsp_source",
+                            array(
+                                "AND",
+                                "tsp_source.taxonID = ts.acc_taxon_ID"
+                            )
+                    )
                     ->where(
                             "ts.acc_taxon_ID = :acc_taxon_ID AND source_citationID = :referenceID",
                             array( ':acc_taxon_ID' => $taxonID, ':referenceID' => $referenceID )
@@ -246,7 +260,7 @@ class JSONClassificationController extends Controller {
                         "referenceName" => $dbRow['scientificName'],
                         "referenceId" => $referenceID,
                         "referenceType" => $referenceType,
-                        "type" => "synonym"
+                        "type" => ($dbRow['homotype'] > 0) ? "homotype" : "heterotype"
                     );
                 }
                 break;

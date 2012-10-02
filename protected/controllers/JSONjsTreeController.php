@@ -67,7 +67,7 @@ class JSONjsTreeController extends Controller {
                             "data-reference-type" => $synonym["referenceType"]
                         )
                     ),
-                    "icon" => ($synonym['type'] == 'basionym') ? "images/identical_to.png" : "images/equal_to.png"
+                    "icon" => ($synonym['type'] == 'homotype') ? "images/identical_to.png" : "images/equal_to.png"
                 );
             }
         }
