@@ -198,6 +198,8 @@ class JSONClassificationController extends Controller {
      */
     public static function japiSynonyms($referenceType, $referenceID, $taxonID) {
         $results = array();
+        $basID = 0;
+        $basionymResult = null;
         
         // make sure we have correct parameters
         $referenceID = intval($referenceID);
@@ -215,16 +217,28 @@ class JSONClassificationController extends Controller {
                     )
                 )
                 ->from('tbl_tax_species ts')
-                ->where(array('AND','ts.taxonID = :taxonID','ts.basID IS NOT NULL'), array(':taxonID' => $taxonID))
+                ->where(
+                        array(
+                            'AND',
+                            'ts.taxonID = :taxonID',
+                            'ts.basID IS NOT NULL'
+                        ),
+                        array(':taxonID' => $taxonID)
+                )
                 ->queryAll();
         // check number of returned rows
         if( count($dbRows) > 0 ) {
-            $results[] = array(
-                "taxonID" => $dbRows[0]['basID'],
+            $basID = $dbRows[0]['basID'];
+            
+            $basionymResult = array(
+                "taxonID" => $basID,
                 "referenceName" => $dbRows[0]['scientificName'],
                 "referenceId" => $referenceID,
                 "referenceType" => $referenceType,
-                "type" => "homotype"
+                "referenceInfo" => array(
+                    "type" => "homotype",
+                    "cited" => false
+                )
             );
         }
         
@@ -255,15 +269,29 @@ class JSONClassificationController extends Controller {
                     ->queryAll();
                 
                 foreach( $dbRows as $dbRow ) {
+                    // ignore if synonym is basionym
+                    if( $dbRow['taxonID'] == $basID ) {
+                        $basionymResult["referenceInfo"]["cited"] = true;
+                        continue;
+                    }
+                    
                     $results[] = array(
                         "taxonID" => $dbRow['taxonID'],
                         "referenceName" => $dbRow['scientificName'],
                         "referenceId" => $referenceID,
                         "referenceType" => $referenceType,
-                        "type" => ($dbRow['homotype'] > 0) ? "homotype" : "heterotype"
+                        "referenceInfo" => array(
+                            "type" => ($dbRow['homotype'] > 0) ? "homotype" : "heterotype",
+                            'cited' => true
+                        )
                     );
                 }
                 break;
+        }
+        
+        // if we have a basionym, prepend it to list
+        if( $basionymResult != null ) {
+            array_unshift($results, $basionymResult);
         }
         
         return $results;

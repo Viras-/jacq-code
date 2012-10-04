@@ -6045,3 +6045,48 @@ Stack trace:
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=0
 HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
 ---
+2012/10/04 09:29:19 [error] [php] Undefined index: cited (/var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php:26)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): JApi->runWithParams()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): JSONjsTreeController->runAction()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): JSONjsTreeController->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=862
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (26)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/10/04 09:29:20 [error] [php] Undefined index: cited (/var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php:26)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): JApi->runWithParams()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): JSONjsTreeController->runAction()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): JSONjsTreeController->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=862
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (26)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/10/04 09:29:32 [error] [php] Undefined index: cited (/var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php:26)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): JApi->runWithParams()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): JSONjsTreeController->runAction()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): JSONjsTreeController->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=862
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (26)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)

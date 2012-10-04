@@ -14,10 +14,29 @@ class JSONjsTreeController extends Controller {
         // only execute code if we have a valid reference ID
         if( $referenceID <= 0 ) return array();
 
-        // load JSON-service controller and call functions
+        // load JSON-service controller
         include("JSONClassificationController.php");
-        $children = JSONClassificationController::japiChildren($referenceType, $referenceID, $taxonID);
         
+        // check for synonyms
+        $synonyms = JSONClassificationController::japiSynonyms($referenceType, $referenceID, $taxonID);
+        if( count($synonyms) > 0 ) {
+            foreach( $synonyms as $synonym ) {
+                $return[] = array(
+                    "data" => array(
+                        "title" => ($synonym['referenceInfo']['cited']) ? $synonym["referenceName"] : '(' . $synonym["referenceName"] . ')', // uncited synonyms (i.e. basionym) are shown in brackets
+                        "attr" => array(
+                            "data-taxon-id" => $synonym["taxonID"],
+                            "data-reference-id" => $synonym["referenceId"],
+                            "data-reference-type" => $synonym["referenceType"]
+                        )
+                    ),
+                    "icon" => ($synonym['referenceInfo']['type'] == 'homotype') ? "images/identical_to.png" : "images/equal_to.png"
+                );
+            }
+        }
+        
+        // find all classification children
+        $children = JSONClassificationController::japiChildren($referenceType, $referenceID, $taxonID);
         foreach( $children as $child ) {
             $entry = array(
                 "data" => array(
@@ -52,24 +71,6 @@ class JSONjsTreeController extends Controller {
             
             // save entry for return
             $return[] = $entry;
-        }
-        
-        // check for synonyms
-        $synonyms = JSONClassificationController::japiSynonyms($referenceType, $referenceID, $taxonID);
-        if( count($synonyms) > 0 ) {
-            foreach( $synonyms as $synonym ) {
-                $return[] = array(
-                    "data" => array(
-                        "title" => $synonym["referenceName"],
-                        "attr" => array(
-                            "data-taxon-id" => $synonym["taxonID"],
-                            "data-reference-id" => $synonym["referenceId"],
-                            "data-reference-type" => $synonym["referenceType"]
-                        )
-                    ),
-                    "icon" => ($synonym['type'] == 'homotype') ? "images/identical_to.png" : "images/equal_to.png"
-                );
-            }
         }
 
         return $return;
