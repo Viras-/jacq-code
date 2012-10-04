@@ -23,7 +23,7 @@ class JSONjsTreeController extends Controller {
             foreach( $synonyms as $synonym ) {
                 $return[] = array(
                     "data" => array(
-                        "title" => ($synonym['referenceInfo']['cited']) ? $synonym["referenceName"] : '(' . $synonym["referenceName"] . ')', // uncited synonyms (i.e. basionym) are shown in brackets
+                        "title" => ($synonym['referenceInfo']['cited']) ? $synonym["referenceName"] : '[' . $synonym["referenceName"] . ']', // uncited synonyms (i.e. basionym) are shown in brackets
                         "attr" => array(
                             "data-taxon-id" => $synonym["taxonID"],
                             "data-reference-id" => $synonym["referenceId"],
