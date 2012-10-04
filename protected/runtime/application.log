@@ -6090,3 +6090,45 @@ REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classifica
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (26)
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/10/04 10:17:25 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE (ts.source_citationID = '10400') AND (ts.acc_taxon_ID IS NULL) AND (tc.par' at line 8. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName( ts.`taxonID`, 0 ) AS `scientificName`, `tc`.`number`, `tc`.`order`, `ts`.`taxonID`, max(`has_children`.`tax_syn_ID` IS NOT NULL) AS `hasChildren`, max(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`, (`has_basionym`.`basID` IS NOT NULL) AS `hasBasionym`
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+LEFT JOIN `tbl_tax_synonymy` `has_synonyms` ON (has_synonyms.acc_taxon_ID = ts.taxonID) AND (has_synonyms.source_citationID = ts.source_citationID)
+LEFT JOIN `tbl_tax_classification` `has_children_clas` ON has_children_clas.parent_taxonID = ts.taxonID
+LEFT JOIN `tbl_tax_synonymy` `has_children` ON (has_children.tax_syn_ID = has_children_clas.tax_syn_ID) AND (has_children.source_citationID = ts.source_citationID)
+LEFT JOIN `tbl_tax_species` `has_basionym`
+WHERE (ts.source_citationID = :source_citationID) AND (ts.acc_taxon_ID IS NULL) AND (tc.parent_taxonID IS NULL) AND (has_children.tax_syn_ID IS NOT NULL)
+GROUP BY `ts`.`taxonID`
+ORDER BY `order`, `scientificName`.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (176)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (39)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/10/04 10:17:25 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE (ts.source_citationID = '10400') AND (ts.acc_taxon_ID IS NULL) AND (tc.par' at line 8. The SQL statement executed was: SELECT `herbar_view`.GetScientificName( ts.`taxonID`, 0 ) AS `scientificName`, `tc`.`number`, `tc`.`order`, `ts`.`taxonID`, max(`has_children`.`tax_syn_ID` IS NOT NULL) AS `hasChildren`, max(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`, (`has_basionym`.`basID` IS NOT NULL) AS `hasBasionym`
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+LEFT JOIN `tbl_tax_synonymy` `has_synonyms` ON (has_synonyms.acc_taxon_ID = ts.taxonID) AND (has_synonyms.source_citationID = ts.source_citationID)
+LEFT JOIN `tbl_tax_classification` `has_children_clas` ON has_children_clas.parent_taxonID = ts.taxonID
+LEFT JOIN `tbl_tax_synonymy` `has_children` ON (has_children.tax_syn_ID = has_children_clas.tax_syn_ID) AND (has_children.source_citationID = ts.source_citationID)
+LEFT JOIN `tbl_tax_species` `has_basionym`
+WHERE (ts.source_citationID = :source_citationID) AND (ts.acc_taxon_ID IS NULL) AND (tc.parent_taxonID IS NULL) AND (has_children.tax_syn_ID IS NOT NULL)
+GROUP BY `ts`.`taxonID`
+ORDER BY `order`, `scientificName`' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(176): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(39): JSONClassificationController::japiChildren('citation', 10400, 0)
+#3 [internal function]: JSONjsTreeController->japiClassificationBrowser('citation', '10400', '0')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONjsTreeController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
+---

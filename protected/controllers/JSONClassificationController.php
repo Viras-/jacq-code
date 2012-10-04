@@ -129,7 +129,8 @@ class JSONClassificationController extends Controller {
                                     "tc.order",
                                     "ts.taxonID",
                                     "max(`has_children`.`tax_syn_ID` IS NOT NULL) AS `hasChildren`",
-                                    "max(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`"
+                                    "max(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`",
+                                    "(`has_basionym`.`basID` IS NOT NULL) AS `hasBasionym`"
                                 )
                         )
                         ->from('tbl_tax_synonymy ts')
@@ -150,6 +151,10 @@ class JSONClassificationController extends Controller {
                                     'has_children.tax_syn_ID = has_children_clas.tax_syn_ID',
                                     'has_children.source_citationID = ts.source_citationID'
                                 )
+                        )
+                        ->leftJoin(
+                                'tbl_tax_species has_basionym',
+                                'ts.taxonID = has_basionym.taxonID'
                         )
                         ->group('ts.taxonID');
 
@@ -175,7 +180,7 @@ class JSONClassificationController extends Controller {
                         "referenceId" => $referenceID,
                         "referenceName" => $dbRow['scientificName'],
                         "referenceType" => "citation",
-                        "hasChildren" => ($dbRow['hasChildren'] > 0 || $dbRow['hasSynonyms'] > 0),
+                        "hasChildren" => ($dbRow['hasChildren'] > 0 || $dbRow['hasSynonyms'] > 0 || $dbRow['hasBasionym']),
                         "referenceInfo" => array(
                             "number" => $dbRow['number'],
                             "order" => $dbRow['order']
