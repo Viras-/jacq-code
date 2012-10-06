@@ -49,10 +49,6 @@
             'select' => 'js:function( event, ui ) {
                     if( typeof ui.item !== "undefined" ) {
                         $( "#AcquisitionEvent_location_id" ).val( ui.item.id );
-                        
-                        if( typeof ui.item.countryCode !== "undefined" ) {
-                            $( "#LivingPlant_ipenNumberCountryCode" ).val( ui.item.countryCode );
-                        }
                     }
                 }',
             /*'open' => 'js:function(event, ui) {
