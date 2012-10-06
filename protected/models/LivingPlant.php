@@ -9,6 +9,7 @@
  * @property integer $phyto_control
  * @property integer $accession_number_id
  * @property string $place_number
+ * @property integer $index_seminum
  *
  * The followings are the available model relations:
  * @property Certificate[] $certificates
@@ -50,14 +51,14 @@ class LivingPlant extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('id, accession_number_id', 'required'),
-            array('id, phyto_control, accession_number_id', 'numerical', 'integerOnly' => true),
+            array('id, phyto_control, accession_number_id, index_seminum', 'numerical', 'integerOnly' => true),
             array('ipen_number, place_number', 'length', 'max' => 20),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, ipen_number, phyto_control, accession_number_id', 'safe', 'on' => 'search'),
+            array('id, ipen_number, phyto_control, accession_number_id, index_seminum', 'safe', 'on' => 'search'),
         );
     }
 
@@ -85,7 +86,8 @@ class LivingPlant extends CActiveRecord {
             'ipen_number' => Yii::t('jacq', 'Ipen Number'),
             'phyto_control' => Yii::t('jacq', 'Phyto Control'),
             'accession_number_id' => Yii::t('jacq', 'Accession Number'),
-            'place_number' => Yii::t('jacq', 'Place Number')
+            'place_number' => Yii::t('jacq', 'Place Number'),
+            'index_seminum' => Yii::t('jacq', 'Index Seminum'),
         );
     }
 
