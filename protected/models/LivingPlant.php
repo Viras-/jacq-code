@@ -127,7 +127,9 @@ class LivingPlant extends CActiveRecord {
      * @param string $value ISO-2 code for the country
      */
     public function setIpenNumberCountryCode($value) {
-        $this->ipen_number = $value . substr( $this->ipen_number, 2 );
+        if( !$this->ipen_locked ) {
+            $this->ipen_number = $value . substr( $this->ipen_number, 2 );
+        }
     }
 
     public function getIpenNumberCountryCode() {
@@ -135,7 +137,9 @@ class LivingPlant extends CActiveRecord {
     }
     
     public function setIpenNumberState($value) {
-        $this->ipen_number = substr( $this->ipen_number, 0, 3 ) . $value . substr( $this->ipen_number, 4 );
+        if( !$this->ipen_locked ) {
+            $this->ipen_number = substr( $this->ipen_number, 0, 3 ) . $value . substr( $this->ipen_number, 4 );
+        }
     }
 
     public function getIpenNumberState() {
@@ -143,7 +147,9 @@ class LivingPlant extends CActiveRecord {
     }
     
     public function setIpenNumberInstitutionCode($value) {
-        $this->ipen_number = substr( $this->ipen_number, 0, 5 ) . $value;
+        if( !$this->ipen_locked ) {
+            $this->ipen_number = substr( $this->ipen_number, 0, 5 ) . $value;
+        }
     }
 
     public function getIpenNumberInstitutionCode() {
