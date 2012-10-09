@@ -6,9 +6,11 @@
  * The followings are the available columns in table 'tbl_living_plant':
  * @property integer $id
  * @property string $ipen_number
+ * @property integer $ipen_locked
  * @property integer $phyto_control
  * @property integer $accession_number_id
  * @property string $place_number
+ * @property integer $index_seminum
  *
  * The followings are the available model relations:
  * @property Certificate[] $certificates
@@ -50,14 +52,14 @@ class LivingPlant extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('id, accession_number_id', 'required'),
-            array('id, phyto_control, accession_number_id', 'numerical', 'integerOnly' => true),
+            array('id, ipen_locked, phyto_control, accession_number_id, index_seminum', 'numerical', 'integerOnly' => true),
             array('ipen_number, place_number', 'length', 'max' => 20),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, ipen_number, phyto_control, accession_number_id', 'safe', 'on' => 'search'),
+            array('id, ipen_number, ipen_locked, phyto_control, accession_number_id, index_seminum', 'safe', 'on' => 'search'),
         );
     }
 
@@ -82,10 +84,12 @@ class LivingPlant extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => Yii::t('jacq', 'ID'),
-            'ipen_number' => Yii::t('jacq', 'Ipen Number'),
+            'ipen_number' => Yii::t('jacq', 'IPEN Number'),
+            'ipen_locked' => Yii::t('jacq', 'IPEN Locked'),
             'phyto_control' => Yii::t('jacq', 'Phyto Control'),
             'accession_number_id' => Yii::t('jacq', 'Accession Number'),
-            'place_number' => Yii::t('jacq', 'Place Number')
+            'place_number' => Yii::t('jacq', 'Place Number'),
+            'index_seminum' => Yii::t('jacq', 'Index Seminum'),
         );
     }
 
@@ -123,7 +127,9 @@ class LivingPlant extends CActiveRecord {
      * @param string $value ISO-2 code for the country
      */
     public function setIpenNumberCountryCode($value) {
-        $this->ipen_number = $value . substr( $this->ipen_number, 2 );
+        if( !$this->ipen_locked ) {
+            $this->ipen_number = $value . substr( $this->ipen_number, 2 );
+        }
     }
 
     public function getIpenNumberCountryCode() {
@@ -131,7 +137,9 @@ class LivingPlant extends CActiveRecord {
     }
     
     public function setIpenNumberState($value) {
-        $this->ipen_number = substr( $this->ipen_number, 0, 3 ) . $value . substr( $this->ipen_number, 4 );
+        if( !$this->ipen_locked ) {
+            $this->ipen_number = substr( $this->ipen_number, 0, 3 ) . $value . substr( $this->ipen_number, 4 );
+        }
     }
 
     public function getIpenNumberState() {
@@ -139,7 +147,9 @@ class LivingPlant extends CActiveRecord {
     }
     
     public function setIpenNumberInstitutionCode($value) {
-        $this->ipen_number = substr( $this->ipen_number, 0, 5 ) . $value;
+        if( !$this->ipen_locked ) {
+            $this->ipen_number = substr( $this->ipen_number, 0, 5 ) . $value;
+        }
     }
 
     public function getIpenNumberInstitutionCode() {

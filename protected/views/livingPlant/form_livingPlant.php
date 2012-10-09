@@ -26,6 +26,11 @@
                 <?php echo $form->textField($model_livingPlant, 'ipenNumberInstitutionCode', array('size' => 2, 'maxlength' => 2, 'readonly' => 'readonly')); ?>
                 <?php echo $form->error($model_livingPlant, 'ipen_number'); ?>
             </td>
+            <td>
+                <?php echo $form->labelEx($model_livingPlant, 'ipen_locked'); ?>
+                <?php echo $form->checkBox($model_livingPlant, 'ipen_locked'); ?>
+                <?php echo $form->error($model_livingPlant, 'ipen_locked'); ?>
+            </td>
         </tr>
     </table>
 </div>
@@ -68,9 +73,18 @@
             $('#BotanicalObject_organisation_name').val( $(this).text() );
             $('#organisation_select_dialog').dialog('close');
             
-            // update IPEN code
-            $( "#LivingPlant_ipenNumberInstitutionCode" ).val( ipen_codes[$("#BotanicalObject_organisation_id").val()] );
+            // update IPEN code, only if not locked
+            if( !$('#LivingPlant_ipen_locked').is(':checked') ) {
+                $( "#LivingPlant_ipenNumberInstitutionCode" ).val( ipen_codes[$("#BotanicalObject_organisation_id").val()] );
+            }
             return false;
+        });
+        
+        // bind to new location event
+        $('#locationName').bind('autocompleteselect', function(event, ui) {
+            if( typeof ui.item.countryCode !== "undefined" && !$("#LivingPlant_ipen_locked").is(":checked") ) {
+                $( "#LivingPlant_ipenNumberCountryCode" ).val( ui.item.countryCode );
+            }
         });
     });
     
@@ -84,4 +98,10 @@
 
 <div class="row">
     <a href="#" onclick="$('#certificates_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq', 'Certificates'); ?></a>
+</div>
+
+<div class="row">
+    <?php echo $form->labelEx($model_livingPlant, 'index_seminum'); ?>
+    <?php echo $form->checkBox($model_livingPlant, 'index_seminum'); ?>
+    <?php echo $form->error($model_livingPlant, 'index_seminum'); ?>
 </div>
