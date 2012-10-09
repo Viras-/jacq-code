@@ -6045,222 +6045,90 @@ Stack trace:
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=0
 HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
 ---
-2012/10/06 08:12:49 [error] [exception.CException] exception 'CException' with message 'CAssetManager.basePath "/srv/www/htdocs/NetBeans/NHM/jacq-yii/assets" ist ungültig. Bitte stellen Sie sicher, dass das Verzeichnis existiert und der Webserver-Prozess Schreibrechte dafür besitzt.' in /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CAssetManager.php:128
+2012/10/04 09:29:19 [error] [php] Undefined index: cited (/var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php:26)
 Stack trace:
-#0 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CAssetManager.php(113): CAssetManager->setBasePath('/srv/www/htdocs...')
-#1 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CAssetManager.php(235): CAssetManager->getBasePath()
-#2 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CClientScript.php(463): CAssetManager->publish('/srv/www/htdocs...')
-#3 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CClientScript.php(500): CClientScript->getCoreScriptUrl()
-#4 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CClientScript.php(316): CClientScript->getPackageBaseUrl('jquery')
-#5 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CClientScript.php(209): CClientScript->renderCoreScripts()
-#6 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(352): CClientScript->render('<!DOCTYPE html ...')
-#7 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(789): CController->processOutput('<!DOCTYPE html ...')
-#8 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/SiteController.php(84): CController->render('login', Array)
-#9 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/SiteController.php(28): SiteController->actionLogin()
-#10 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/actions/CInlineAction.php(50): SiteController->actionIndex()
-#11 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
-#12 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(CInlineAction))
-#13 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
-#14 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
-#15 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('')
-#16 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
-#17 /srv/www/htdocs/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
-#18 {main}
-REQUEST_URI=/NetBeans/NHM/jacq-yii/
-HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/
----
-2012/10/06 08:13:13 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[28000] [1045] Access denied for user 'jacq_input'@'localhost' (using password: YES)' in /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php:382
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): JApi->runWithParams()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): JSONjsTreeController->runAction()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): JSONjsTreeController->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=862
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (26)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/10/04 09:29:20 [error] [php] Undefined index: cited (/var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php:26)
 Stack trace:
-#0 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(331): CDbConnection->open()
-#1 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(309): CDbConnection->setActive(true)
-#2 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CModule.php(388): CDbConnection->init()
-#3 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(431): CModule->getComponent('db')
-#4 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(624): CApplication->getDb()
-#5 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(2311): CActiveRecord->getDbConnection()
-#6 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(388): CActiveRecordMetaData->__construct(Object(LivingPlant))
-#7 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(403): CActiveRecord::model('LivingPlant')
-#8 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(78): CActiveRecord->getMetaData()
-#9 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(384): CActiveRecord->__construct('search')
-#10 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(377): LivingPlantController->actionAdmin()
-#11 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/actions/CInlineAction.php(50): LivingPlantController->actionIndex()
-#12 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
-#13 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
-#14 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(41): CFilterChain->run()
-#15 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
-#16 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
-#17 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
-#18 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
-#19 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
-#20 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
-#21 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
-#22 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
-#23 /srv/www/htdocs/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
-#24 {main}
-REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
-HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/
----
-2012/10/06 08:16:13 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[28000] [1045] Access denied for user 'jacq_input'@'localhost' (using password: YES)' in /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php:382
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): JApi->runWithParams()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): JSONjsTreeController->runAction()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): JSONjsTreeController->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=862
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (26)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/10/04 09:29:32 [error] [php] Undefined index: cited (/var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php:26)
 Stack trace:
-#0 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(331): CDbConnection->open()
-#1 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(309): CDbConnection->setActive(true)
-#2 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CModule.php(388): CDbConnection->init()
-#3 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(431): CModule->getComponent('db')
-#4 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(624): CApplication->getDb()
-#5 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(2311): CActiveRecord->getDbConnection()
-#6 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(388): CActiveRecordMetaData->__construct(Object(LivingPlant))
-#7 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(403): CActiveRecord::model('LivingPlant')
-#8 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(78): CActiveRecord->getMetaData()
-#9 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(384): CActiveRecord->__construct('search')
-#10 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(377): LivingPlantController->actionAdmin()
-#11 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/actions/CInlineAction.php(50): LivingPlantController->actionIndex()
-#12 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
-#13 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
-#14 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(41): CFilterChain->run()
-#15 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
-#16 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
-#17 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
-#18 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
-#19 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
-#20 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
-#21 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
-#22 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
-#23 /srv/www/htdocs/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
-#24 {main}
-REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
-HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/
----
-2012/10/06 08:16:14 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[28000] [1045] Access denied for user 'jacq_input'@'localhost' (using password: YES)' in /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php:382
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): JApi->runWithParams()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): JSONjsTreeController->runAction()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): JSONjsTreeController->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=862
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (26)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (87)
+2012/10/04 10:17:25 [error] [system.db.CDbCommand] CDbCommand::fetchAll fehlgeschlagen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE (ts.source_citationID = '10400') AND (ts.acc_taxon_ID IS NULL) AND (tc.par' at line 8. Der SQL-Ausdruck war: SELECT `herbar_view`.GetScientificName( ts.`taxonID`, 0 ) AS `scientificName`, `tc`.`number`, `tc`.`order`, `ts`.`taxonID`, max(`has_children`.`tax_syn_ID` IS NOT NULL) AS `hasChildren`, max(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`, (`has_basionym`.`basID` IS NOT NULL) AS `hasBasionym`
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+LEFT JOIN `tbl_tax_synonymy` `has_synonyms` ON (has_synonyms.acc_taxon_ID = ts.taxonID) AND (has_synonyms.source_citationID = ts.source_citationID)
+LEFT JOIN `tbl_tax_classification` `has_children_clas` ON has_children_clas.parent_taxonID = ts.taxonID
+LEFT JOIN `tbl_tax_synonymy` `has_children` ON (has_children.tax_syn_ID = has_children_clas.tax_syn_ID) AND (has_children.source_citationID = ts.source_citationID)
+LEFT JOIN `tbl_tax_species` `has_basionym`
+WHERE (ts.source_citationID = :source_citationID) AND (ts.acc_taxon_ID IS NULL) AND (tc.parent_taxonID IS NULL) AND (has_children.tax_syn_ID IS NOT NULL)
+GROUP BY `ts`.`taxonID`
+ORDER BY `order`, `scientificName`.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php (176)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (39)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/10/04 10:17:25 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE (ts.source_citationID = '10400') AND (ts.acc_taxon_ID IS NULL) AND (tc.par' at line 8. The SQL statement executed was: SELECT `herbar_view`.GetScientificName( ts.`taxonID`, 0 ) AS `scientificName`, `tc`.`number`, `tc`.`order`, `ts`.`taxonID`, max(`has_children`.`tax_syn_ID` IS NOT NULL) AS `hasChildren`, max(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`, (`has_basionym`.`basID` IS NOT NULL) AS `hasBasionym`
+FROM `tbl_tax_synonymy` `ts`
+LEFT JOIN `tbl_tax_classification` `tc` ON ts.tax_syn_ID = tc.tax_syn_ID
+LEFT JOIN `tbl_tax_synonymy` `has_synonyms` ON (has_synonyms.acc_taxon_ID = ts.taxonID) AND (has_synonyms.source_citationID = ts.source_citationID)
+LEFT JOIN `tbl_tax_classification` `has_children_clas` ON has_children_clas.parent_taxonID = ts.taxonID
+LEFT JOIN `tbl_tax_synonymy` `has_children` ON (has_children.tax_syn_ID = has_children_clas.tax_syn_ID) AND (has_children.source_citationID = ts.source_citationID)
+LEFT JOIN `tbl_tax_species` `has_basionym`
+WHERE (ts.source_citationID = :source_citationID) AND (ts.acc_taxon_ID IS NULL) AND (tc.parent_taxonID IS NULL) AND (has_children.tax_syn_ID IS NOT NULL)
+GROUP BY `ts`.`taxonID`
+ORDER BY `order`, `scientificName`' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:528
 Stack trace:
-#0 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(331): CDbConnection->open()
-#1 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(309): CDbConnection->setActive(true)
-#2 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CModule.php(388): CDbConnection->init()
-#3 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(431): CModule->getComponent('db')
-#4 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(624): CApplication->getDb()
-#5 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(2311): CActiveRecord->getDbConnection()
-#6 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(388): CActiveRecordMetaData->__construct(Object(LivingPlant))
-#7 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(403): CActiveRecord::model('LivingPlant')
-#8 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(78): CActiveRecord->getMetaData()
-#9 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(384): CActiveRecord->__construct('search')
-#10 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(377): LivingPlantController->actionAdmin()
-#11 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/actions/CInlineAction.php(50): LivingPlantController->actionIndex()
-#12 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
-#13 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
-#14 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(41): CFilterChain->run()
-#15 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
-#16 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
-#17 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
-#18 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
-#19 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
-#20 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
-#21 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
-#22 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
-#23 /srv/www/htdocs/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
-#24 {main}
-REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
-HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/
----
-2012/10/06 08:16:15 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[28000] [1045] Access denied for user 'jacq_input'@'localhost' (using password: YES)' in /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php:382
-Stack trace:
-#0 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(331): CDbConnection->open()
-#1 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(309): CDbConnection->setActive(true)
-#2 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CModule.php(388): CDbConnection->init()
-#3 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(431): CModule->getComponent('db')
-#4 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(624): CApplication->getDb()
-#5 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(2311): CActiveRecord->getDbConnection()
-#6 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(388): CActiveRecordMetaData->__construct(Object(LivingPlant))
-#7 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(403): CActiveRecord::model('LivingPlant')
-#8 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(78): CActiveRecord->getMetaData()
-#9 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(384): CActiveRecord->__construct('search')
-#10 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(377): LivingPlantController->actionAdmin()
-#11 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/actions/CInlineAction.php(50): LivingPlantController->actionIndex()
-#12 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
-#13 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
-#14 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(41): CFilterChain->run()
-#15 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
-#16 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
-#17 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
-#18 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
-#19 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
-#20 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
-#21 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
-#22 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
-#23 /srv/www/htdocs/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
-#24 {main}
-REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
-HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/
----
-2012/10/06 08:16:16 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[28000] [1045] Access denied for user 'jacq_input'@'localhost' (using password: YES)' in /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php:382
-Stack trace:
-#0 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(331): CDbConnection->open()
-#1 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(309): CDbConnection->setActive(true)
-#2 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CModule.php(388): CDbConnection->init()
-#3 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(431): CModule->getComponent('db')
-#4 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(624): CApplication->getDb()
-#5 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(2311): CActiveRecord->getDbConnection()
-#6 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(388): CActiveRecordMetaData->__construct(Object(LivingPlant))
-#7 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(403): CActiveRecord::model('LivingPlant')
-#8 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(78): CActiveRecord->getMetaData()
-#9 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(384): CActiveRecord->__construct('search')
-#10 /srv/www/htdocs/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php(377): LivingPlantController->actionAdmin()
-#11 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/actions/CInlineAction.php(50): LivingPlantController->actionIndex()
-#12 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
-#13 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
-#14 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(41): CFilterChain->run()
-#15 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
-#16 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
-#17 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
-#18 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
-#19 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
-#20 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
-#21 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
-#22 /srv/www/htdocs/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
-#23 /srv/www/htdocs/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
-#24 {main}
-REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
-HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/
----
-2012/10/06 08:19:39 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[28000] [1045] Access denied for user 'jacq_log'@'localhost' (using password: YES)' in /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php:382
-Stack trace:
-#0 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(331): CDbConnection->open()
-#1 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/db/CDbConnection.php(309): CDbConnection->setActive(true)
-#2 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/base/CModule.php(388): CDbConnection->init()
-#3 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/base/CModule.php(104): CModule->getComponent('dbLog')
-#4 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(60): CModule->__get('dbLog')
-#5 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/protected/behaviors/ActiveRecordLogableBehavior.php(80): ActiveRecordLogableBehavior->getDbLog()
-#6 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/base/CComponent.php(559): ActiveRecordLogableBehavior->afterFind(Object(CEvent))
-#7 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(881): CComponent->raiseEvent('onAfterFind', Object(CEvent))
-#8 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(974): CActiveRecord->onAfterFind(Object(CEvent))
-#9 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(1803): CActiveRecord->afterFind()
-#10 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(1824): CActiveRecord->populateRecord(Array, true)
-#11 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(1291): CActiveRecord->populateRecords(Array, true, NULL)
-#12 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/db/ar/CActiveRecord.php(1410): CActiveRecord->query(Object(CDbCriteria), true)
-#13 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CActiveDataProvider.php(150): CActiveRecord->findAll(Object(CDbCriteria))
-#14 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CDataProvider.php(137): CActiveDataProvider->fetchData()
-#15 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/zii/widgets/CBaseListView.php(108): CDataProvider->getData()
-#16 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/zii/widgets/grid/CGridView.php(289): CBaseListView->init()
-#17 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CBaseController.php(148): CGridView->init()
-#18 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CBaseController.php(173): CBaseController->createWidget('zii.widgets.gri...', Array)
-#19 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/protected/views/organisation/admin.php(55): CBaseController->widget('zii.widgets.gri...', Array)
-#20 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CBaseController.php(127): require('/srv/www/htdocs...')
-#21 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CBaseController.php(96): CBaseController->renderInternal('/srv/www/htdocs...', Array, true)
-#22 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CController.php(870): CBaseController->renderFile('/srv/www/htdocs...', Array, true)
-#23 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CController.php(783): CController->renderPartial('admin', Array, true)
-#24 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/protected/controllers/OrganisationController.php(138): CController->render('admin', Array)
-#25 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/protected/controllers/OrganisationController.php(119): OrganisationController->actionAdmin()
-#26 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/actions/CInlineAction.php(50): OrganisationController->actionIndex()
-#27 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
-#28 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
-#29 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(41): CFilterChain->run()
-#30 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
-#31 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
-#32 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
-#33 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
-#34 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
-#35 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
-#36 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('organisation')
-#37 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
-#38 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
-#39 {main}
-REQUEST_URI=/Programming/NetBeans/NHM/jacq-yii/index.php?r=organisation
-HTTP_REFERER=http://192.168.56.101/Programming/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(390): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONClassificationController.php(176): CDbCommand->queryAll()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php(39): JSONClassificationController::japiChildren('citation', 10400, 0)
+#3 [internal function]: JSONjsTreeController->japiClassificationBrowser('citation', '10400', '0')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs(Object(JSONjsTreeController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#11 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#12 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#13 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=0
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
 ---
