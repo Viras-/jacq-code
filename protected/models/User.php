@@ -1,16 +1,16 @@
 <?php
 
 /**
- * This is the model class for table "tbl_user".
+ * This is the model class for table "frmwrk_user".
  *
- * The followings are the available columns in table 'tbl_user':
+ * The followings are the available columns in table 'frmwrk_user':
  * @property integer $id
  * @property string $username
  * @property string $password
  * @property string $salt
  *
  * The followings are the available model relations:
- * @property GardenSite[] $gardenSites
+ * @property AuthAssignment[] $authAssignments
  */
 class User extends CActiveRecord {
 
@@ -27,7 +27,7 @@ class User extends CActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'tbl_user';
+        return 'frmwrk_user';
     }
 
     /**
@@ -37,8 +37,7 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id, username, password, salt', 'required'),
-            array('id', 'numerical', 'integerOnly' => true),
+            array('username, password, salt', 'required'),
             array('username', 'length', 'max' => 128),
             array('password, salt', 'length', 'max' => 64),
             // The following rule is used by search().
@@ -54,7 +53,7 @@ class User extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'gardenSites' => array(self::HAS_MANY, 'GardenSite', 'gardener_id'),
+            'authAssignments' => array(self::HAS_MANY, 'AuthAssignment', 'userid'),
         );
     }
 
@@ -90,12 +89,4 @@ class User extends CActiveRecord {
                 ));
     }
 
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
-    }
 }
