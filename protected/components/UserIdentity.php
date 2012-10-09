@@ -6,6 +6,10 @@
  * data can identity the user.
  */
 class UserIdentity extends CUserIdentity {
+    /**
+     * @var int userid
+     */
+    public $userid;
 
     /**
      * Authenticates a user.
@@ -26,10 +30,19 @@ class UserIdentity extends CUserIdentity {
                 $this->errorCode = self::ERROR_PASSWORD_INVALID;
             }
             else {
+                $this->userid = $model_user->id;
                 $this->errorCode = self::ERROR_NONE;
             }
         }
         
         return !$this->errorCode;
+    }
+    
+    /**
+     * we are using the database id as userid
+     * @return int id of user
+     */
+    public function getId() {
+        return $this->userid;
     }
 }

@@ -23,6 +23,13 @@ return array(
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
             'ipFilters' => array('127.0.0.1', '::1', '192.168.56.1'),
         ),
+        'rbam' => array(
+            'rbacManagerRole' => 'rbacManager',
+            'authItemsManagerRole' => 'rbacManager',
+            'authAssignmentsManagerRole' => 'rbacManager',
+            'authenticatedRole' => '',
+            'guestRole' => '',
+        ),
     ),
     // application components
     'components' => array(
@@ -99,6 +106,9 @@ return array(
         'authManager' => array(
             'class' => 'CDbAuthManager',
             'connectionID' => 'db',
+            'itemTable' => 'frmwrk_AuthItem',
+            'itemChildTable' => 'frmwrk_AuthItemChild',
+            'assignmentTable' => 'frmwrk_AuthAssignment'
         )
     ),
     // application-level parameters that can be accessed

@@ -90,15 +90,5 @@ class SiteController extends Controller {
     public function actionLogout() {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
-    }
-    
-    public function actionRBAC() {
-        $authManager = Yii::app()->authManager;
-        $authManager = new CDbAuthManager();
-        
-        $authManager->createOperation('createLivingplant', 'Create a new living plant');
-        $authManager->createOperation('readLivingplant', 'Read/Show a living plant');
-        $authManager->createOperation('deleteLivingplant', 'Delete a living plant');
-    }
-
+    }    
 }

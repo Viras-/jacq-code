@@ -6132,3 +6132,471 @@ Stack trace:
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceID=10400&taxonID=0
 HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq/output/classificationBrowser.php
 ---
+2012/10/10 09:58:45 [error] [system.db.CDbCommand] CDbCommand::fetch fehlgeschlagen: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'jacq_input.AuthItem' doesn't exist. Der SQL-Ausdruck war: SELECT *
+FROM `AuthItem`
+WHERE name=:name.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/modules/rbam/controllers/RbamController.php (52)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/10/10 09:58:45 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'jacq_input.AuthItem' doesn't exist. The SQL statement executed was: SELECT *
+FROM `AuthItem`
+WHERE name=:name' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:528
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(408): CDbCommand->queryInternal('fetch', Array, Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CDbAuthManager.php(486): CDbCommand->queryRow()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/modules/rbam/controllers/RbamController.php(52): CDbAuthManager->getAuthItem('RBAC Manager')
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1145): RbamController->accessRules()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam')
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam
+---
+2012/10/10 10:35:07 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=rbam/authItems/index
+---
+2012/10/10 10:42:43 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=rbam/authAssignments/userRoles&uid=1
+---
+2012/10/10 10:42:48 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('index')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant/ind...')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/index
+---
+2012/10/10 10:43:06 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+---
+2012/10/10 10:43:21 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+---
+2012/10/10 10:43:27 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=treeRecordFile
+---
+2012/10/10 10:43:32 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('create')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant/cre...')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/10/10 10:44:05 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php
+---
+2012/10/10 10:44:09 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=organisation
+---
+2012/10/10 10:45:31 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=rbam
+---
+2012/10/10 10:45:59 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('create')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant/cre...')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant/create
+---
+2012/10/10 10:46:28 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam
+---
+2012/10/10 10:46:34 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam
+---
+2012/10/10 10:46:39 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('index')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam/rbam/index')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam/rbam/index
+---
+2012/10/10 10:48:41 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('index')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam/rbam/index')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam/rbam/index
+---
+2012/10/10 10:48:44 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('index')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam/rbam/index')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam/rbam/index
+---
+2012/10/10 10:48:46 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam
+---
+2012/10/10 10:52:16 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=rbam
+---
+2012/10/10 10:52:52 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam
+---
+2012/10/10 10:53:49 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (77)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/10/10 10:54:27 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (77)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/10/10 10:54:53 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('delete')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant/del...')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant%2Fdelete&id=1&ajax=living-plant-grid
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+---
+2012/10/10 10:55:20 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (206)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/10/10 10:57:07 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam
+---
+2012/10/10 11:05:53 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('organisation')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=organisation
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=rbam/authItems/index
+---
+2012/10/10 11:29:56 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('userRoles')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam/authAssign...')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam%2FauthAssignments%2FuserRoles&uid=1&ajax=assignments
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=rbam/authAssignments/userRoles&uid=1
+---
+2012/10/10 11:30:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Konnte den Request "rbac" nicht auflösen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php:287
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbac')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbac
+---
+2012/10/10 11:30:17 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam
+---
+2012/10/10 11:31:16 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam
+---
+2012/10/10 11:31:19 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam')
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam
+---
