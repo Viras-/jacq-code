@@ -6600,3 +6600,33 @@ Stack trace:
 #11 {main}
 REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam
 ---
+2012/10/10 14:27:04 [error] [system.db.CDbCommand] CDbCommand::execute() fehlgeschlagen: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin-managerLivingplant' for key 'PRIMARY'. Der SQL-Ausdruck war: INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES (:parent, :child).
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/modules/rbam/controllers/AuthItemsController.php (270)
+in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/10/10 14:27:04 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand konnte das SQL-Statement nicht ausführen: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin-managerLivingplant' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES (:parent, :child)' in /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php:354
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/db/CDbCommand.php(1178): CDbCommand->execute(Array)
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/auth/CDbAuthManager.php(166): CDbCommand->insert('frmwrk_AuthItem...', Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/protected/modules/rbam/controllers/AuthItemsController.php(270): CDbAuthManager->addItemChild('admin', 'managerLivingpl...')
+#3 [internal function]: AuthItemsController->actionAddChild('admin', 'managerLivingpl...')
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(AuthItemsController), Array)
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(AuthItemsController), Object(ReflectionMethod), Array)
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1131): CFilterChain->run()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAjaxOnly(Object(CFilterChain))
+#10 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#11 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(41): CFilterChain->run()
+#12 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#13 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#14 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#15 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#16 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('addChild')
+#18 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rbam/authItems/...')
+#19 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#20 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=rbam/authItems/addChild&parent=admin&child=managerLivingplant
+HTTP_REFERER=http://192.168.56.101/NetBeans/NHM/jacq-yii/index.php?r=rbam/authItems/manage&item=admin
+---

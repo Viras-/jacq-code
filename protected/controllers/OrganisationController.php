@@ -28,7 +28,7 @@ class OrganisationController extends Controller {
                 'roles' => array('oprtn_createOrganisation'),
             ),
             array('allow', // deleting
-                'actions' => array('admin', 'delete'),
+                'actions' => array('delete'),
                 'roles' => array('oprtn_deleteOrganisation'),
             ),
             array('deny', // deny all users

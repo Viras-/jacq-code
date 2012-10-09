@@ -44,7 +44,7 @@
                     'items' => array(
                         array('label' => Yii::t('jacq', 'Living Plant'), 'url' => array('/livingPlant'), 'visible' => Yii::app()->user->checkAccess('oprtn_readLivingplant')),
                         array('label' => Yii::t('jacq', 'Garden Site'), 'url' => array('/organisation'), 'visible' => Yii::app()->user->checkAccess('oprtn_createOrganisation')),
-                        array('label' => Yii::t('jacq', 'Tree Record File'), 'url' => array('/treeRecordFile'), 'visible' => !Yii::app()->user->isGuest),
+                        array('label' => Yii::t('jacq', 'Tree Record File'), 'url' => array('/treeRecordFile'), 'visible' => Yii::app()->user->checkAccess('oprtn_createTreeRecordFile')),
                         array('label' => Yii::t('jacq', 'Login'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                         array('label' => Yii::t('jacq', 'Logout') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
                     ),
