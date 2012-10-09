@@ -49,7 +49,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'parent_organisation_id',
 		'gardener_id',
 		array(
-			'class'=>'CButtonColumn',
+			'class'=>'ORButtonColumn',
 		),
 	),
 ));

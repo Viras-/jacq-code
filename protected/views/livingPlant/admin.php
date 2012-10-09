@@ -53,7 +53,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
           'phyto_sanitary_product_number',
          */
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'LPButtonColumn',
         ),
     ),
 ));
