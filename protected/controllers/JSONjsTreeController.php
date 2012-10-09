@@ -37,6 +37,7 @@ class JSONjsTreeController extends Controller {
         
         // find all classification children
         $children = JSONClassificationController::japiChildren($referenceType, $referenceID, $taxonID);
+        if( $taxonID > 0 ) $children = array_merge($children, JSONClassificationController::japiNameReferences($taxonID, $referenceID));
         foreach( $children as $child ) {
             $entry = array(
                 "data" => array(
