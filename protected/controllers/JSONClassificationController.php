@@ -319,17 +319,24 @@ class JSONClassificationController extends Controller {
         $dbCommand = $db->createCommand();
         $dbCommand->select(
                     array(
-                        'source_citationID AS referenceId',
-                        '`herbar_view`.GetProtolog(source_citationID) AS `referenceName`'
+                        'ts.source_citationID AS referenceId',
+                        '`herbar_view`.GetProtolog(`ts`.`source_citationID`) AS `referenceName`'
                     )
                 )
-                ->from('tbl_tax_synonymy')
+                ->from('tbl_tax_synonymy ts')
+                ->leftJoin('tbl_tax_classification tc',
+                        array(
+                            'AND',
+                            'tc.tax_syn_ID = ts.tax_syn_ID'
+                        )
+                )
                 ->where(
                         array(
                             'AND',
-                            'taxonID = :taxonID',
-                            'source_citationID IS NOT NULL',
-                            'acc_taxon_ID IS NULL'
+                            'ts.taxonID = :taxonID',
+                            'ts.source_citationID IS NOT NULL',
+                            'ts.acc_taxon_ID IS NULL',
+                            'tc.tax_syn_ID IS NOT NULL'     // only select entries which are part of a classification
                         ),
                         array( ':taxonID' => $taxonID )
                 );
@@ -340,16 +347,12 @@ class JSONClassificationController extends Controller {
             // check for exclude id
             if( $dbRow['referenceId'] == $excludeReferenceId ) continue;
             
-            // only include entries which have at least one child
-            $rowChildren = JSONClassificationController::japiChildren("citation", $dbRow['referenceId'], $taxonID);
-            if( count($rowChildren) <= 0 ) continue;
-            
             $results[] = array(
                 "referenceName" => $dbRow['referenceName'],
                 "referenceId" => $dbRow['referenceId'],
                 "referenceType" => "citation",
                 "taxonID" => $taxonID,
-                "hasChildren" => true
+                "hasChildren" => (count(JSONClassificationController::japiChildren("citation", $dbRow['referenceId'], $taxonID)) > 0)
             );
         }
         
