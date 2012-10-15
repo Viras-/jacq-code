@@ -20,6 +20,11 @@
  * @property Relevancy[] $relevancies
  */
 class LivingPlant extends CActiveRecord {
+    public $scientificName_search;
+    public $organisation_search;
+    public $accessionNumber_search;
+    public $location_search;
+    
     public function init() {
         parent::init();
         
@@ -59,7 +64,7 @@ class LivingPlant extends CActiveRecord {
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, ipen_number, ipen_locked, phyto_control, accession_number_id, index_seminum', 'safe', 'on' => 'search'),
+            array('scientificName_search, organisation_search, accessionNumber_search, location_search', 'safe', 'on' => 'search'),
         );
     }
 
@@ -98,15 +103,13 @@ class LivingPlant extends CActiveRecord {
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search() {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria = new CDbCriteria;
-
-        $criteria->compare('id', $this->id);
-        $criteria->compare('ipen_number', $this->ipen_number, true);
-        $criteria->compare('phyto_control', $this->phyto_control);
-        $criteria->compare('accession_number_id', $this->accession_number_id);
+        $criteria->with = array('id0', 'accessionNumber', 'id0.organisation', 'id0.acquisitionEvent.location');
+        
+        $criteria->compare('`herbar_view`.GetScientificName(`id0`.`taxon_id`, 0)', $this->scientificName_search);
+        $criteria->compare('organisation.description', $this->organisation_search);
+        $criteria->compare('accessionNumber.AccessionNumber', $this->accessionNumber_search);
+        $criteria->compare('location.location', $this->location_search);
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,

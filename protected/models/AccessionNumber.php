@@ -106,4 +106,8 @@ class AccessionNumber extends CActiveRecord {
             "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
         );
     }
+    
+    public function getAccessionNumber() {
+        return sprintf("%4d-%05d-%s", $this->year, $this->id, $this->custom);
+    }
 }

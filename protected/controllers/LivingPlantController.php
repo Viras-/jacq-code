@@ -495,5 +495,5 @@ class LivingPlantController extends Controller {
             Yii::app()->end();
         }
     }
-
+    
 }

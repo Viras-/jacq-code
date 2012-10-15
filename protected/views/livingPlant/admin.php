@@ -30,28 +30,16 @@ $('.search-form form').submit(function(){
     or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>
 
-<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
-<div class="search-form" style="display:none">
-    <?php
-    $this->renderPartial('_search', array(
-        'model' => $model,
-    ));
-    ?>
-</div><!-- search-form -->
-
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'living-plant-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
-        'id',
-        'id0.scientificName',
-        'accession_number_id',
-        'ipen_number',
-        /*
-          'phyto_sanitary_product_number',
-         */
+        array( 'name'=>'scientificName_search', 'value'=>'$data->id0->scientificName' ),
+        array( 'name'=>'organisation_search', 'value'=>'$data->id0->organisation->description' ),
+        array( 'name'=>'accessionNumber_search', 'value'=>'$data->accessionNumber->AccessionNumber' ),
+        array( 'name'=>'location_search', 'value'=>'(isset($data->id0->acquisitionEvent->location->location)) ? $data->id0->acquisitionEvent->location->location : ""' ),
         array(
             'class' => 'LPButtonColumn',
         ),
