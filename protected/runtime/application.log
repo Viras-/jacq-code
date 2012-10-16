@@ -6688,3 +6688,20 @@ REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/views/livingPlant/admin.php (59)
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (391)
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (377)
+2012/10/16 18:00:03 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'Sie sind nicht berechtigt, diese Aktion auszuführen.' in /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php:170
+Stack trace:
+#0 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/auth/CAccessControlFilter.php(133): CAccessControlFilter->accessDenied(Object(CWebUser), 'Sie sind nicht ...')
+#1 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/filters/CFilter.php(39): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#3 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#4 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#5 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CController.php(292): CFilterChain->run()
+#6 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('')
+#8 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('livingPlant')
+#9 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /srv/www/htdocs/Programming/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/Programming/NetBeans/NHM/jacq-yii/index.php?r=livingPlant
+HTTP_REFERER=http://192.168.56.101/Programming/NetBeans/NHM/jacq-yii/
+---
