@@ -55,7 +55,7 @@ class LivingPlantController extends Controller {
      */
     public function actionView($id) {
         $this->render('view', array(
-            'model' => $this->loadModel($id),
+            'model_livingPlant' => $this->loadModel($id),
         ));
     }
 
