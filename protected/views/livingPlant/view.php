@@ -19,7 +19,7 @@ $this->menu=array(
         <legend><?php echo Yii::t('jacq', 'Recording'); ?></legend>
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0, 'recording_date'); ?>
-            <?php echo CHtml::encode($model_livingPlant->id0->recording_date); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->recording_date); ?>&nbsp;
         </div>
     </fieldset>
     <fieldset>
@@ -29,11 +29,11 @@ $this->menu=array(
                 <tr>
                     <td>
                         <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent->acquisitionDate, 'acquisition_date'); ?>
-                        <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->acquisitionDate->date); ?>
+                        <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->acquisitionDate->date); ?>&nbsp;
                     </td>
                     <td>
                         <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent->acquisitionDate, 'custom'); ?>
-                        <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->acquisitionDate->custom); ?>
+                        <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->acquisitionDate->custom); ?>&nbsp;
                     </td>
                 </tr>
             </table>
@@ -42,7 +42,7 @@ $this->menu=array(
 
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent, 'acquisition_type_id'); ?>
-            <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->acquisitionType->type); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->acquisitionType->type); ?>&nbsp;
         </div>
 
         <div class="row">
@@ -55,18 +55,18 @@ $this->menu=array(
                 <br />
                 <?php
             }
-            ?>
+            ?>&nbsp;
         </div>
 
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent, 'number'); ?>
-            <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->number); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->number); ?>&nbsp;
         </div>
         <hr />
 
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent, 'location_id'); ?>
-            <?php echo CHtml::encode(($model_livingPlant->id0->acquisitionEvent->location) ? $model_livingPlant->id0->acquisitionEvent->location->location : ''); ?>
+            <?php echo CHtml::encode(($model_livingPlant->id0->acquisitionEvent->location) ? $model_livingPlant->id0->acquisitionEvent->location->location : ''); ?>&nbsp;
         </div>
 
         <div class="row">
@@ -84,18 +84,18 @@ $this->menu=array(
                     <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->latitude_degrees); ?>
                     <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->latitude_minutes); ?>
                     <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->latitude_seconds); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->latitude_half); ?>
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->latitude_half); ?>&nbsp;
                     </td>
                     <td>
                     <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent, 'longitude'); ?>
                     <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->longitude_degrees); ?>
                     <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->longitude_minutes); ?>
                     <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->longitude_seconds); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->longitude_half); ?>
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->longitude_half); ?>&nbsp;
                     </td>
                     <td>
                     <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent, 'exactness'); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->exactness); ?>
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->exactness); ?>&nbsp;
                     </td>
                 </tr>
             </table>
@@ -103,7 +103,7 @@ $this->menu=array(
 
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent, 'annotation'); ?>
-            <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->annotation); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->annotation); ?>&nbsp;
         </div>
     </fieldset>
     <fieldset>
@@ -128,19 +128,19 @@ $this->menu=array(
 
                         echo CHtml::activeLabelEx($model_separation, 'separation_type_id');
                         echo CHtml::encode($model_separation->separationType->type);
-                        ?>
+                        ?>&nbsp;
                     </td>
                     <td>
                         <?php
                         echo CHtml::activeLabelEx($model_separation, 'date');
                         echo CHtml::encode($model_separation->date);
-                        ?>
+                        ?>&nbsp;
                     </td>
                     <td>
                         <?php
                         echo CHtml::activeLabelEx($model_separation, 'annotation');
                         echo CHtml::encode($model_separation->annotation);
-                        ?>
+                        ?>&nbsp;
                     </td>
                 </tr>
                 <?php
@@ -153,42 +153,42 @@ $this->menu=array(
         <legend><?php echo Yii::t('jacq', 'Living Plant'); ?></legend>
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0, 'taxon_id'); ?>
-            <?php echo CHtml::encode($model_livingPlant->id0->scientificName); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->scientificName); ?>&nbsp;
         </div>
 
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0, 'phenology_id'); ?>
-            <?php echo CHtml::encode($model_livingPlant->id0->phenology->phenology); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->phenology->phenology); ?>&nbsp;
         </div>
 
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0, 'determined_by_id'); ?>
-            <?php echo CHtml::encode(($model_livingPlant->id0->determinedBy != null) ? $model_livingPlant->id0->determinedBy->name : ''); ?>
+            <?php echo CHtml::encode(($model_livingPlant->id0->determinedBy != null) ? $model_livingPlant->id0->determinedBy->name : ''); ?>&nbsp;
         </div>
 
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0, 'habitat'); ?>
-            <?php echo CHtml::encode($model_livingPlant->id0->habitat); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->habitat); ?>&nbsp;
         </div>
 
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0, 'habitus'); ?>
-            <?php echo CHtml::encode($model_livingPlant->id0->habitus); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->habitus); ?>&nbsp;
         </div>
 
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0, 'annotation'); ?>
-            <?php echo CHtml::encode($model_livingPlant->id0->annotation); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->annotation); ?>&nbsp;
         </div>
         
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0, 'organisation_id'); ?>
-            <?php echo CHtml::encode($model_livingPlant->id0->organisation->description); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->organisation->description); ?>&nbsp;
         </div>
 
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant, 'place_number'); ?>
-            <?php echo CHtml::encode($model_livingPlant->place_number); ?>
+            <?php echo CHtml::encode($model_livingPlant->place_number); ?>&nbsp;
         </div>
 
         <div class="row">
@@ -198,11 +198,11 @@ $this->menu=array(
                         <?php echo CHtml::activeLabelEx($model_livingPlant, 'accession_number_id'); ?>
                         <?php echo CHtml::encode($model_livingPlant->accessionNumber->year); ?>
                         <?php printf( '%05d', $model_livingPlant->accessionNumber->id ); ?>
-                        <?php echo CHtml::encode($model_livingPlant->accessionNumber->individual); ?>
+                        <?php echo CHtml::encode($model_livingPlant->accessionNumber->individual); ?>&nbsp;
                     </td>
                     <td>
                         <?php echo CHtml::activeLabelEx($model_livingPlant, 'ipen_number'); ?>
-                        <?php echo CHtml::encode($model_livingPlant->ipen_number); ?>
+                        <?php echo CHtml::encode($model_livingPlant->ipen_number); ?>&nbsp;
                     </td>
                 </tr>
             </table>

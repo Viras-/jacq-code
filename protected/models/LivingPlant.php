@@ -106,10 +106,12 @@ class LivingPlant extends CActiveRecord {
         $criteria = new CDbCriteria;
         $criteria->with = array('id0', 'accessionNumber', 'id0.organisation', 'id0.acquisitionEvent.location');
         
-        $criteria->compare('`herbar_view`.GetScientificName(`id0`.`taxon_id`, 0)', $this->scientificName_search);
-        $criteria->compare('organisation.description', $this->organisation_search);
-        $criteria->compare('accessionNumber.AccessionNumber', $this->accessionNumber_search);
-        $criteria->compare('location.location', $this->location_search);
+        $criteria->compare('`herbar_view`.GetScientificName(`id0`.`taxon_id`, 0)', $this->scientificName_search, true);
+        $criteria->compare('organisation.description', $this->organisation_search, true);
+        $criteria->compare("CONCAT_WS('-',accessionNumber.year,accessionNumber.id,accessionNumber.custom)", $this->accessionNumber_search, true);
+        $criteria->compare('location.location', $this->location_search, true);
+        
+        error_log( "$this->accessionNumber_search" ); 
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,

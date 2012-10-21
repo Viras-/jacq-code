@@ -8,6 +8,9 @@ class LPButtonColumn extends CButtonColumn {
     public function __construct($grid) {
         $this->template = '';
         
+        if( Yii::app()->user->checkAccess('oprtn_readLivingplant') ) {
+            $this->template .= '{view}';
+        }
         if( Yii::app()->user->checkAccess('oprtn_createLivingplant') ) {
             $this->template .= '{update}';
         }

@@ -28,7 +28,7 @@ return array(
             'authItemsManagerRole' => 'rbacManager',
             'authAssignmentsManagerRole' => 'rbacManager',
             'authenticatedRole' => '',
-            'guestRole' => '',
+            'guestRole' => 'guest',
         ),
     ),
     // application components
@@ -108,7 +108,8 @@ return array(
             'connectionID' => 'db',
             'itemTable' => 'frmwrk_AuthItem',
             'itemChildTable' => 'frmwrk_AuthItemChild',
-            'assignmentTable' => 'frmwrk_AuthAssignment'
+            'assignmentTable' => 'frmwrk_AuthAssignment',
+            'defaultRoles' => array('guest')
         )
     ),
     // application-level parameters that can be accessed
