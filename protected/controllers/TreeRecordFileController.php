@@ -23,8 +23,8 @@ class TreeRecordFileController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('admin', 'index', 'view', 'create', 'update'),
+            array('allow',
+                'actions' => array('admin', 'index', 'create', 'update'),
                 'roles' => array('oprtn_createTreeRecordFile'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -39,7 +39,7 @@ class TreeRecordFileController extends Controller {
 
     /**
      * Creates a new model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * If creation is successful, the browser will be redirected to the 'update' page.
      */
     public function actionCreate() {
         $model = new TreeRecordFile;
@@ -84,7 +84,7 @@ class TreeRecordFileController extends Controller {
                     }
                 }
 
-                $this->redirect(array('view', 'id' => $model->id));
+                $this->redirect(array('update', 'id' => $model->id));
             }
         }
 
@@ -95,7 +95,7 @@ class TreeRecordFileController extends Controller {
 
     /**
      * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * If update is successful, the browser will be redirected to the 'update' page.
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
@@ -107,7 +107,7 @@ class TreeRecordFileController extends Controller {
         if (isset($_POST['TreeRecordFile'])) {
             $model->attributes = $_POST['TreeRecordFile'];
             if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+                $this->redirect(array('update', 'id' => $model->id));
         }
 
         $this->render('update', array(

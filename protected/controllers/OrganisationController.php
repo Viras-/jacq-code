@@ -1,6 +1,5 @@
 <?php
 class OrganisationController extends Controller {
-
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -44,13 +43,10 @@ class OrganisationController extends Controller {
     public function actionCreate() {
         $model = new Organisation;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
-        if (isset($_POST['GardenSite'])) {
-            $model->attributes = $_POST['GardenSite'];
+        if (isset($_POST['Organisation'])) {
+            $model->attributes = $_POST['Organisation'];
             if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+                $this->redirect(array('update', 'id' => $model->id));
         }
 
         $this->render('create', array(
@@ -69,10 +65,10 @@ class OrganisationController extends Controller {
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['GardenSite'])) {
-            $model->attributes = $_POST['GardenSite'];
+        if (isset($_POST['Organisation'])) {
+            $model->attributes = $_POST['Organisation'];
             if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+                $this->redirect(array('update', 'id' => $model->id));
         }
 
         $this->render('update', array(
@@ -103,11 +99,6 @@ class OrganisationController extends Controller {
      */
     public function actionIndex() {
         $this->actionAdmin();
-        
-        /*$dataProvider = new CActiveDataProvider('GardenSite');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-        ));*/
     }
 
     /**
