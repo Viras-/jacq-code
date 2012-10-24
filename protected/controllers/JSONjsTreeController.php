@@ -1,4 +1,7 @@
 <?php
+// load JSON-service controller
+require("JSONClassificationController.php");
+
 /**
  * Controller for fetching response as required by the jsTree jQuery plugin
  *
@@ -14,9 +17,6 @@ class JSONjsTreeController extends Controller {
         // only execute code if we have a valid reference ID
         if( $referenceID <= 0 ) return array();
 
-        // load JSON-service controller
-        include("JSONClassificationController.php");
-        
         // check for synonyms
         $synonyms = JSONClassificationController::japiSynonyms($referenceType, $referenceID, $taxonID);
         if( count($synonyms) > 0 ) {
@@ -42,7 +42,7 @@ class JSONjsTreeController extends Controller {
             
             $entry = array(
                 "data" => array(
-                    "title" => $child["referenceName"] . $infoLink,
+                    "title" => $child["referenceName"],
                     "attr" => array(
                         "data-taxon-id" => $child["taxonID"],
                         "data-reference-id" => $child["referenceId"],
@@ -62,6 +62,8 @@ class JSONjsTreeController extends Controller {
             // if a taxonID is set, always use no icon
             if( $child["taxonID"] ) {
                 $entry["icon"] = "images/spacer.gif";
+                $entry['data']['title'] .= $infoLink;
+                
                 // taxon entries do have some additional info
                 if( !empty($child['referenceInfo']['number']) ) {
                     $entry['data']['title'] = '<i><b>' . $child['referenceInfo']['number'] . '</b></i>&nbsp;'. $entry['data']['title'];
@@ -73,6 +75,43 @@ class JSONjsTreeController extends Controller {
             
             // save entry for return
             $return[] = $entry;
+        }
+        
+        return $return;
+    }
+    
+    
+    public function japiClassificationBrowserAll($referenceType, $referenceId, $taxonID) {
+        $return = array();
+        $activeChild = null;
+        
+        // virtual first parent
+        $currParent = array('referenceType' => $referenceType, 'referenceId' => $referenceId, 'taxonID' => $taxonID);
+
+        // find chain of parents
+        while( ($currParent = JSONClassificationController::japiGetParent($currParent['referenceType'], $currParent['referenceId'], $currParent['taxonID'])) != null ) {
+            $currParentChildren = $this->japiClassificationBrowser(
+                    $currParent['referenceType'],
+                    $currParent['referenceId'],
+                    $currParent['taxonID']
+                    );
+
+            // find active child among all children
+            if( $activeChild != null ) {
+                foreach( $currParentChildren as $i => $currParentChild ) {
+                    if( $currParentChild['data']['attr']['data-reference-type'] == $activeChild['referenceType'] &&
+                        $currParentChild['data']['attr']['data-reference-id'] == $activeChild['referenceId'] &&
+                        $currParentChild['data']['attr']['data-taxon-id'] == $activeChild['taxonID'] ) {
+                        
+                        $currParentChildren[$i]['state'] = 'open';
+                        $currParentChildren[$i]['children'] = $return;
+                        break;
+                    }
+                }
+            }
+            
+            $return = $currParentChildren;
+            $activeChild = $currParent;
         }
         
         return $return;

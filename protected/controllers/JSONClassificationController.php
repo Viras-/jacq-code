@@ -359,6 +359,116 @@ class JSONClassificationController extends Controller {
         return $results;
     }
     
+    public static function japiGetParent($referenceType, $referenceId, $taxonID) {
+        $parent = null;
+        $referenceId = intval($referenceId);
+        $taxonID = intval($taxonID);
+        
+        // setup db query
+        $db = JSONClassificationController::getDbHerbarInput();
+        
+        switch( $referenceType ) {
+            case 'periodical':
+                // periodical is a top level element, so no parent
+                break;
+            case 'citation':
+            default:
+                // only necessary if taxonID is not null
+                if( $taxonID > 0 ) {
+                    $where_cond = array(
+                        'AND',
+                        'ts.source_citationID = :source_citationID',
+                        'ts.acc_taxon_ID IS NULL',
+                        'tschild.taxonID = :child_taxonID'
+                    );
+                    $where_cond_values = array(
+                        ':source_citationID' => $referenceId,
+                        ':child_taxonID' => $taxonID
+                    );
+
+                    // basic query
+                    $dbCommand = $db->createCommand();
+                    $dbCommand->select(
+                                    array(
+                                        "`herbar_view`.GetScientificName( ts.`taxonID`, 0 ) AS `referenceName`",
+                                        "tc.number",
+                                        "tc.order",
+                                        "ts.taxonID",
+                                    )
+                            )
+                            ->from('tbl_tax_synonymy ts')
+                            ->leftJoin('tbl_tax_classification tc', 'ts.tax_syn_ID = tc.tax_syn_ID')
+                            ->leftJoin('tbl_tax_classification tcchild', 'ts.taxonID = tcchild.parent_taxonID')
+                            ->leftJoin('tbl_tax_synonymy tschild', array('AND', 'tschild.source_citationID = ts.source_citationID', 'tcchild.tax_syn_ID = tschild.tax_syn_ID'));
+
+                    // apply where conditions and return all rows
+                    $dbRows = $dbCommand->where($where_cond,$where_cond_values)
+                            ->queryAll();
+                    
+                    // check if we found a parent
+                    if( count($dbRows) > 0 ) {
+                        $dbRow = $dbRows[0];
+                        $parent = array(
+                            "taxonID" => $dbRow['taxonID'],
+                            "referenceId" => $referenceId,
+                            "referenceName" => $dbRow['referenceName'],
+                            "referenceType" => "citation",
+                            "referenceInfo" => array(
+                                "number" => $dbRow['number'],
+                                "order" => $dbRow['order']
+                            )
+                        );
+                    }
+                    // if not we have to return the citation entry
+                    else {
+                        $dbCommand = $db->createCommand();
+                        $dbRows = $dbCommand->select('`herbar_view`.GetProtolog(l.citationID) AS referenceName, l.citationID AS referenceId')
+                            ->from('tbl_lit l')
+                            ->where( array(
+                                'AND',
+                                'l.citationID = :referenceId'
+                            ), array(
+                                ':referenceId' => $referenceId
+                            ))
+                            ->queryAll();
+                        
+                        if( count($dbRows) > 0 ) {
+                            $dbRow = $dbRows[0];
+                            $parent = array(
+                                "taxonID" => 0,
+                                "referenceId" => $dbRow['referenceId'],
+                                "referenceName" => $dbRow['referenceName'],
+                                "referenceType" => "citation"
+                            );
+                        }
+                    }
+                }
+                // find the top-level periodical entry
+                else {
+                    $dbCommand = $db->createCommand();
+                    $dbRows = $dbCommand->select('lp.periodical AS referenceName, l.periodicalID AS referenceId')
+                        ->from('tbl_lit_periodicals lp')
+                        ->leftJoin('tbl_lit l', 'l.periodicalID = lp.periodicalID')
+                        ->where('l.citationID = :referenceId', array(':referenceId' => $referenceId) )
+                        ->queryAll();
+                    
+                    if( count($dbRows) > 0 ) {
+                        $dbRow = $dbRows[0];
+                        $parent = array(
+                            "taxonID" => 0,
+                            "referenceId" => $dbRow['referenceId'],
+                            "referenceName" => $dbRow['referenceName'],
+                            "referenceType" => "periodical"
+                        );
+                    }
+                }
+                break;
+        }
+        
+        // return results
+        return $parent;
+    }
+    
     public function actions() {
         return array(
             'japi'=>'JApi',
