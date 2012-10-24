@@ -37,11 +37,12 @@ class JSONjsTreeController extends Controller {
         
         // find all classification children
         $children = JSONClassificationController::japiChildren($referenceType, $referenceID, $taxonID);
-        if( $taxonID > 0 ) $children = array_merge($children, JSONClassificationController::japiNameReferences($taxonID, $referenceID));
         foreach( $children as $child ) {
+            $infoLink = "&nbsp;<span class='infoBox'><img src='images/information.png'></a>";
+            
             $entry = array(
                 "data" => array(
-                    "title" => $child["referenceName"],
+                    "title" => $child["referenceName"] . $infoLink,
                     "attr" => array(
                         "data-taxon-id" => $child["taxonID"],
                         "data-reference-id" => $child["referenceId"],
@@ -73,7 +74,7 @@ class JSONjsTreeController extends Controller {
             // save entry for return
             $return[] = $entry;
         }
-
+        
         return $return;
     }
     
