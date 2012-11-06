@@ -350,7 +350,8 @@ class JSONClassificationController extends Controller {
                         ),
                         array( ':taxonID' => $taxonID )
                 )
-                ->group('ts.source_citationID');
+                ->group('ts.source_citationID')
+                ->order('referenceName');
         
         // Fetch all rows
         $dbRows = $dbCommand->queryAll();
