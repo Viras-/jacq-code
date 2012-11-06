@@ -330,16 +330,27 @@ class JSONClassificationController extends Controller {
                             'tc.tax_syn_ID = ts.tax_syn_ID'
                         )
                 )
+                ->leftJoin('tbl_tax_classification has_children',
+                        array(
+                            'AND',
+                            'has_children.parent_taxonID = ts.taxonID'
+                        )
+                )
                 ->where(
                         array(
                             'AND',
-                            'ts.taxonID = :taxonID',
                             'ts.source_citationID IS NOT NULL',
                             'ts.acc_taxon_ID IS NULL',
-                            'tc.tax_syn_ID IS NOT NULL'     // only select entries which are part of a classification
+                            'ts.taxonID = :taxonID',
+                            array(
+                                'OR',
+                                'tc.tax_syn_ID IS NOT NULL',     // only select entries which are part of a classification
+                                'has_children.tax_syn_ID IS NOT NULL'     // only select entries which are part of a classification
+                            ),
                         ),
                         array( ':taxonID' => $taxonID )
-                );
+                )
+                ->group('ts.source_citationID');
         
         // Fetch all rows
         $dbRows = $dbCommand->queryAll();
