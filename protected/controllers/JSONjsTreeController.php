@@ -95,16 +95,27 @@ class JSONjsTreeController extends Controller {
                     $currParent['referenceId'],
                     $currParent['taxonID']
                     );
-
+            
             // find active child among all children
             if( $activeChild != null ) {
                 foreach( $currParentChildren as $i => $currParentChild ) {
                     if( $currParentChild['data']['attr']['data-reference-type'] == $activeChild['referenceType'] &&
                         $currParentChild['data']['attr']['data-reference-id'] == $activeChild['referenceId'] &&
                         $currParentChild['data']['attr']['data-taxon-id'] == $activeChild['taxonID'] ) {
-                        
+
                         $currParentChildren[$i]['state'] = 'open';
                         $currParentChildren[$i]['children'] = $return;
+                        break;
+                    }
+                }
+            }
+            // search for taxon we are looking for and highlight it
+            else {
+                foreach( $currParentChildren as $i => $currParentChild ) {
+                    if( $currParentChild['data']['attr']['data-taxon-id'] == $taxonID ) {
+                        $currParentChildren[$i]['data']['title'] = 
+                                '<img src="images/arrow_right.png">&nbsp;' . 
+                                $currParentChildren[$i]['data']['title'];
                         break;
                     }
                 }
