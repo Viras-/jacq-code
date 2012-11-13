@@ -41,6 +41,12 @@
 		<?php echo $form->error($model,'gardener_id'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'ipen_code'); ?>
+		<?php echo $form->textField($model,'ipen_code',array('size'=>5,'maxlength'=>5)); ?>
+		<?php echo $form->error($model,'ipen_code'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
