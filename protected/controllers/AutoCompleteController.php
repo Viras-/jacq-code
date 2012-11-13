@@ -216,8 +216,13 @@ class AutoCompleteController extends Controller {
      */
     public function accessRules() {
         return array(
+            array(
+                'allow',
+                'actions' => array('taxon'),
+                'users' => array('*'),
+            ),
             array('allow',
-                'actions' => array('taxon', 'location', 'person'),
+                'actions' => array('location', 'person'),
                 'users' => array('@'),
             ),
             array('deny', // deny all users by default
