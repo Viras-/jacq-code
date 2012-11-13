@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	Yii::t('jacq', 'Tree Record Files')=>array('index'),
-	$model->name=>array('view','id'=>$model->id),
+	$model->name=>array('update','id'=>$model->id),
 	Yii::t('jacq', 'Update'),
 );
 

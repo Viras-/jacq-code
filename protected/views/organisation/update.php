@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	Yii::t('jacq', 'Garden Sites')=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
+	$model->id=>array('update','id'=>$model->id),
 	Yii::t('jacq', 'Update'),
 );
 
