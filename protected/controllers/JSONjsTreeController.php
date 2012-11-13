@@ -120,7 +120,7 @@ class JSONjsTreeController extends Controller {
                 
                 $bParentFound = true;
             }
-
+            
             // check if we found something
             if( $bParentFound ) {
                 // check if we have a periodical structure
@@ -128,11 +128,10 @@ class JSONjsTreeController extends Controller {
                     $citations[$refIndex]['children'] = $structure;
                     $citations[$refIndex]['state'] = 'open';
                     $return = $citations;
-
-                    error_log('assigning structure ' . $refIndex);
                 }
                 // if not just return the found single structure
                 else {
+                    error_log(var_export($structure,true));
                     $return = $structure;
                 }
             }
