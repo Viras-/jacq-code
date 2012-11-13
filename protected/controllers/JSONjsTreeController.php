@@ -8,15 +8,151 @@ require("JSONClassificationController.php");
  * @author wkoller
  */
 class JSONjsTreeController extends Controller {
-    public function japiClassificationBrowser($referenceType, $referenceID, $taxonID = 0) {
+    /**
+     * Main entry function for JSON service based classification-brower requests
+     * @param type $referenceType
+     * @param type $referenceId
+     * @param type $taxonID
+     * @param type $filterId
+     * @return type 
+     */
+    public function japiClassificationBrowser($referenceType, $referenceId, $taxonID = 0, $filterId = 0) {
+        // check parameters
+        $referenceId = intval($referenceId);
+        $taxonID = intval($taxonID);
+        $filterId = intval($filterId);
+        // only execute code if we have a valid reference ID
+        if( $referenceId <= 0 ) return array();
+        
+        // check if we have a filter set
+        if( $filterId > 0 ) {
+            return $this->classificationFiltered($referenceType, $referenceId, $filterId);
+        }
+        else {
+            return $this->classificationChildren($referenceType, $referenceId, $taxonID);
+        }
+    }
+
+    /**
+     * Returns the whole classification tree filtered down to a given taxonID
+     * @param type $referenceType
+     * @param type $referenceId
+     * @param type $taxonID
+     * @return string 
+     */
+    private function classificationFiltered($referenceType, $referenceId, $taxonID) {
+        $return = array();
+        // collection of references to search for the taxonID in
+        $references = array(
+            array('referenceType' => $referenceType, 'referenceId' => $referenceId, 'taxonID' => $taxonID)
+        );
+        // optional citations which we look for (only for periodicals)
+        $citations = null;
+        
+        error_log('classificationFiltered');
+        
+        // check if we have a periodical, since then we have to fetch all citations first
+        if( $referenceType == 'periodical' ) {
+            $citations = $this->classificationChildren($referenceType, $referenceId);
+            
+            // convert all fetched citations to references to look for
+            $references = array();
+            foreach( $citations as $i => $citation ) {
+                $references[$i] = array(
+                    'referenceType' => $citation['data']['attr']['data-reference-type'],
+                    'referenceId' => $citation['data']['attr']['data-reference-id'],
+                    'taxonID' => $taxonID
+                );
+            }
+        }
+        
+        // search children for all references
+        foreach($references as $refIndex => $reference) {
+            // helper variables for handling the structure
+            $structure = array();
+            $activeChild = null;
+            $bParentFound = false;
+            
+            // virtual first parent
+            $currParent = array(
+                'referenceType' => $reference['referenceType'],
+                'referenceId' => $reference['referenceId'],
+                'taxonID' => $reference['taxonID']
+            );
+
+            // find chain of parents
+            while( ($currParent = JSONClassificationController::japiGetParent($currParent['referenceType'], $currParent['referenceId'], $currParent['taxonID'])) != null ) {
+                $currParentChildren = $this->classificationChildren(
+                        $currParent['referenceType'],
+                        $currParent['referenceId'],
+                        $currParent['taxonID']
+                        );
+
+                // find active child among all children
+                if( $activeChild != null ) {
+                    foreach( $currParentChildren as $i => $currParentChild ) {
+                        if( $currParentChild['data']['attr']['data-reference-type'] == $activeChild['referenceType'] &&
+                            $currParentChild['data']['attr']['data-reference-id'] == $activeChild['referenceId'] &&
+                            $currParentChild['data']['attr']['data-taxon-id'] == $activeChild['taxonID'] ) {
+
+                            $currParentChildren[$i]['state'] = 'open';
+                            $currParentChildren[$i]['children'] = $structure;
+                            break;
+                        }
+                    }
+                }
+                // search for taxon we are looking for and highlight it
+                else {
+                    foreach( $currParentChildren as $i => $currParentChild ) {
+                        if( $currParentChild['data']['attr']['data-taxon-id'] == $taxonID ) {
+                            $currParentChildren[$i]['data']['title'] = 
+                                    '<img src="images/arrow_right.png">&nbsp;' . 
+                                    $currParentChildren[$i]['data']['title'];
+                            break;
+                        }
+                    }
+                }
+
+                $structure = $currParentChildren;
+                $activeChild = $currParent;
+                
+                if( $currParent['taxonID'] == 0 && $citations != null ) break;
+                
+                $bParentFound = true;
+            }
+
+            // check if we found something
+            if( $bParentFound ) {
+                // check if we have a periodical structure
+                if( $citations != null ) {
+                    $citations[$refIndex]['children'] = $structure;
+                    $citations[$refIndex]['state'] = 'open';
+                    $return = $citations;
+
+                    error_log('assigning structure ' . $refIndex);
+                }
+                // if not just return the found single structure
+                else {
+                    $return = $structure;
+                }
+            }
+        }
+        
+        return $return;
+    }
+    
+    /**
+     * Returns the next classification-level below a given taxonID
+     * @param type $referenceType
+     * @param type $referenceID
+     * @param type $taxonID
+     * @return string 
+     */
+    private function classificationChildren($referenceType, $referenceID, $taxonID = 0) {
         $return = array();
         
-        // check parameters
-        $referenceID = intval($referenceID);
-        $taxonID = intval($taxonID);
-        // only execute code if we have a valid reference ID
-        if( $referenceID <= 0 ) return array();
-
+        error_log('classificationChildren');
+        
         // check for synonyms
         $synonyms = JSONClassificationController::japiSynonyms($referenceType, $referenceID, $taxonID);
         if( count($synonyms) > 0 ) {
@@ -75,54 +211,6 @@ class JSONjsTreeController extends Controller {
             
             // save entry for return
             $return[] = $entry;
-        }
-        
-        return $return;
-    }
-    
-    
-    public function japiClassificationBrowserAll($referenceType, $referenceId, $taxonID) {
-        $return = array();
-        $activeChild = null;
-        
-        // virtual first parent
-        $currParent = array('referenceType' => $referenceType, 'referenceId' => $referenceId, 'taxonID' => $taxonID);
-
-        // find chain of parents
-        while( ($currParent = JSONClassificationController::japiGetParent($currParent['referenceType'], $currParent['referenceId'], $currParent['taxonID'])) != null ) {
-            $currParentChildren = $this->japiClassificationBrowser(
-                    $currParent['referenceType'],
-                    $currParent['referenceId'],
-                    $currParent['taxonID']
-                    );
-            
-            // find active child among all children
-            if( $activeChild != null ) {
-                foreach( $currParentChildren as $i => $currParentChild ) {
-                    if( $currParentChild['data']['attr']['data-reference-type'] == $activeChild['referenceType'] &&
-                        $currParentChild['data']['attr']['data-reference-id'] == $activeChild['referenceId'] &&
-                        $currParentChild['data']['attr']['data-taxon-id'] == $activeChild['taxonID'] ) {
-
-                        $currParentChildren[$i]['state'] = 'open';
-                        $currParentChildren[$i]['children'] = $return;
-                        break;
-                    }
-                }
-            }
-            // search for taxon we are looking for and highlight it
-            else {
-                foreach( $currParentChildren as $i => $currParentChild ) {
-                    if( $currParentChild['data']['attr']['data-taxon-id'] == $taxonID ) {
-                        $currParentChildren[$i]['data']['title'] = 
-                                '<img src="images/arrow_right.png">&nbsp;' . 
-                                $currParentChildren[$i]['data']['title'];
-                        break;
-                    }
-                }
-            }
-            
-            $return = $currParentChildren;
-            $activeChild = $currParent;
         }
         
         return $return;
