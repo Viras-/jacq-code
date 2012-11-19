@@ -111,10 +111,29 @@ class LivingPlant extends CActiveRecord {
         $criteria->compare("CONCAT_WS('-',accessionNumber.year,accessionNumber.id,accessionNumber.custom)", $this->accessionNumber_search, true);
         $criteria->compare('location.location', $this->location_search, true);
         
-        error_log( "$this->accessionNumber_search" ); 
-
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
+                    'sort' => array(
+                        'attributes' => array(
+                            'scientificName_search' => array(
+                                'asc' => '`herbar_view`.GetScientificName(`id0`.`taxon_id`, 0)',
+                                'desc' => '`herbar_view`.GetScientificName(`id0`.`taxon_id`, 0) DESC'
+                            ),
+                            'organisation_search' => array(
+                                'asc' => 'organisation.description',
+                                'desc' => 'organisation.description DESC'
+                            ),
+                            'accessionNumber_search' => array(
+                                'asc' => 'CONCAT_WS('-',accessionNumber.year,accessionNumber.id,accessionNumber.custom)',
+                                'desc' => 'CONCAT_WS('-',accessionNumber.year,accessionNumber.id,accessionNumber.custom) DESC'
+                            ),
+                            'location_search' => array(
+                                'asc' => 'location.location',
+                                'desc' => 'location.location DESC'
+                            ),
+                            '*'
+                        )
+                    )
                 ));
     }
     
