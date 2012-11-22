@@ -15,6 +15,7 @@
  *
  * The followings are the available model relations:
  * @property Certificate[] $certificates
+ * @property IpenExternal[] $ipenExternals
  * @property BotanicalObject $id0
  * @property AccessionNumber $accessionNumber
  * @property LivingPlantTreeRecordFilePage[] $livingPlantTreeRecordFilePages
@@ -77,6 +78,7 @@ class LivingPlant extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'certificates' => array(self::HAS_MANY, 'Certificate', 'living_plant_id'),
+            'ipenExternals' => array(self::HAS_MANY, 'IpenExternal', 'living_plant_id'),
             'id0' => array(self::BELONGS_TO, 'BotanicalObject', 'id'),
             'accessionNumber' => array(self::BELONGS_TO, 'AccessionNumber', 'accession_number_id'),
             'livingPlantTreeRecordFilePages' => array(self::HAS_MANY, 'LivingPlantTreeRecordFilePage', 'living_plant_id'),
