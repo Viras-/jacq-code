@@ -12,7 +12,7 @@ class JSONOrganisationController extends Controller {
             }
         }
         else {
-            $model_childOrganisations = Organisation::model()->findAll('parent_organisation_id IS NULL');
+            $model_childOrganisations = Organisation::model()->findAll(array('order' => 'description', 'condition' => 'parent_organisation_id IS NULL'));
         }
         
         if( $model_childOrganisations && count($model_childOrganisations) > 0 ) {
