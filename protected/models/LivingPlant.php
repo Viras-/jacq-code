@@ -11,6 +11,7 @@
  * @property integer $accession_number_id
  * @property string $place_number
  * @property integer $index_seminum
+ * @property string $culture_notes
  *
  * The followings are the available model relations:
  * @property Certificate[] $certificates
@@ -64,7 +65,7 @@ class LivingPlant extends CActiveRecord {
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('scientificName_search, organisation_search, accessionNumber_search, location_search', 'safe', 'on' => 'search'),
+            array('scientificName_search, organisation_search, accessionNumber_search, location_search, culture_notes', 'safe', 'on' => 'search'),
         );
     }
 
@@ -95,6 +96,7 @@ class LivingPlant extends CActiveRecord {
             'accession_number_id' => Yii::t('jacq', 'Accession Number'),
             'place_number' => Yii::t('jacq', 'Place Number'),
             'index_seminum' => Yii::t('jacq', 'Index Seminum'),
+            'culture_notes' => Yii::t('jacq', 'Culture Notes')
         );
     }
 

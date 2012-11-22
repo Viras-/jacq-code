@@ -105,3 +105,9 @@
     <?php echo $form->checkBox($model_livingPlant, 'index_seminum'); ?>
     <?php echo $form->error($model_livingPlant, 'index_seminum'); ?>
 </div>
+
+<div class="row">
+    <?php echo $form->labelEx($model_livingPlant, 'culture_notes'); ?>
+    <?php echo $form->textArea($model_livingPlant, 'culture_notes', array( 'style' => 'width: 100%;' )); ?>
+    <?php echo $form->error($model_livingPlant, 'culture_notes'); ?>
+</div>
