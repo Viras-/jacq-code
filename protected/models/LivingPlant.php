@@ -12,12 +12,14 @@
  * @property string $place_number
  * @property integer $index_seminum
  * @property string $culture_notes
+ * @property integer $index_seminum_type_id
  *
  * The followings are the available model relations:
  * @property Certificate[] $certificates
  * @property IpenExternal[] $ipenExternals
  * @property BotanicalObject $id0
  * @property AccessionNumber $accessionNumber
+ * @property IndexSeminumType $indexSeminumType
  * @property LivingPlantTreeRecordFilePage[] $livingPlantTreeRecordFilePages
  * @property Relevancy[] $relevancies
  */
@@ -66,7 +68,7 @@ class LivingPlant extends CActiveRecord {
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('scientificName_search, organisation_search, accessionNumber_search, location_search, culture_notes', 'safe', 'on' => 'search'),
+            array('scientificName_search, organisation_search, accessionNumber_search, location_search, culture_notes, index_seminum_type_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -81,6 +83,7 @@ class LivingPlant extends CActiveRecord {
             'ipenExternals' => array(self::HAS_MANY, 'IpenExternal', 'living_plant_id'),
             'id0' => array(self::BELONGS_TO, 'BotanicalObject', 'id'),
             'accessionNumber' => array(self::BELONGS_TO, 'AccessionNumber', 'accession_number_id'),
+            'indexSeminumType' => array(self::BELONGS_TO, 'IndexSeminumType', 'index_seminum_type_id'),
             'livingPlantTreeRecordFilePages' => array(self::HAS_MANY, 'LivingPlantTreeRecordFilePage', 'living_plant_id'),
             'relevancies' => array(self::HAS_MANY, 'Relevancy', 'living_plant_id'),
         );
@@ -98,7 +101,8 @@ class LivingPlant extends CActiveRecord {
             'accession_number_id' => Yii::t('jacq', 'Accession Number'),
             'place_number' => Yii::t('jacq', 'Place Number'),
             'index_seminum' => Yii::t('jacq', 'Index Seminum'),
-            'culture_notes' => Yii::t('jacq', 'Culture Notes')
+            'culture_notes' => Yii::t('jacq', 'Culture Notes'),
+            'index_seminum_type_id' => Yii::t('jacq', 'Index Seminum Type'),
         );
     }
 

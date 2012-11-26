@@ -101,9 +101,20 @@
 </div>
 
 <div class="row">
-    <?php echo $form->labelEx($model_livingPlant, 'index_seminum'); ?>
-    <?php echo $form->checkBox($model_livingPlant, 'index_seminum'); ?>
-    <?php echo $form->error($model_livingPlant, 'index_seminum'); ?>
+    <table style="width: auto;">
+        <tr>
+            <td>
+                <?php echo $form->labelEx($model_livingPlant, 'index_seminum'); ?>
+                <?php echo $form->checkBox($model_livingPlant, 'index_seminum'); ?>
+                <?php echo $form->error($model_livingPlant, 'index_seminum'); ?>
+            </td>
+            <td>
+                <?php echo $form->labelEx($model_livingPlant, 'index_seminum_type_id'); ?>
+                <?php echo $form->dropDownList($model_livingPlant, 'index_seminum_type_id', CHtml::listData(IndexSeminumType::model()->findAll(), 'id', 'type')); ?>
+                <?php echo $form->error($model_livingPlant, 'index_seminum_type_id'); ?>
+            </td>
+        </tr>
+    </table>
 </div>
 
 <div class="row">
