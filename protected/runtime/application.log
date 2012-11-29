@@ -7754,3 +7754,71 @@ in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
 2012/11/14 08:20:16 [warning] [application] Ungesichertes Attribut "id" konnte nicht gesetzt werden.
 in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/LivingPlantController.php (77)
 in /var/www/html/NetBeans/NHM/jacq-yii/index.php (13)
+2012/11/29 11:34:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Action not found: japiClassificationfiltered' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:83
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#8 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationFiltered&referenceType=citation&referenceId=1283&filterId=46758
+---
+2012/11/29 11:35:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Action not found: japiClassificationfiltered' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:83
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#8 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationFiltered&referenceType=citation&referenceId=1283&filterId=46758
+---
+2012/11/29 11:35:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Action not found: japiClassificationfiltered' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:83
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#8 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationFiltered&referenceType=citation&referenceId=1283&filterId=46758
+---
+2012/11/29 11:35:48 [error] [php] Undefined variable: taxonID (/var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php:47)
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(128): ReflectionMethod->invokeArgs()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php(87): JApi->runFunc()
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): JApi->runWithParams()
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): JSONjsTreeController->runAction()
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): JSONjsTreeController->runActionWithFilters()
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): JSONjsTreeController->run()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#8 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#9 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CWebApplication->run()
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceId=1283&filterId=46758
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (47)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/controllers/JSONjsTreeController.php (29)
+in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php (128)
+2012/11/29 11:37:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Action not found: japiClassificationfiltered' in /var/www/html/NetBeans/NHM/jacq-yii/protected/components/JApi.php:83
+Stack trace:
+#0 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/actions/CAction.php(75): JApi->run()
+#1 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(309): CAction->runWithParams(Array)
+#2 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(287): CController->runAction(Object(JApi))
+#3 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(JApi), Array)
+#4 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(283): CController->run('japi')
+#5 /var/www/html/NetBeans/NHM/jacq-yii/framework/web/CWebApplication.php(142): CWebApplication->runController('jSONjsTree/japi')
+#6 /var/www/html/NetBeans/NHM/jacq-yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/html/NetBeans/NHM/jacq-yii/index.php(13): CApplication->run()
+#8 {main}
+REQUEST_URI=/NetBeans/NHM/jacq-yii/index.php?r=jSONjsTree/japi&action=classificationFiltered&referenceType=citation&referenceId=13265&filterId=46758
+---
