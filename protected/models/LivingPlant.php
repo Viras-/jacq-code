@@ -60,15 +60,16 @@ class LivingPlant extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id, accession_number_id', 'required'),
-            array('id, ipen_locked, phyto_control, accession_number_id, index_seminum', 'numerical', 'integerOnly' => true),
+            array('id, accession_number_id, index_seminum_type_id', 'required'),
+            array('id, ipen_locked, phyto_control, accession_number_id, index_seminum, index_seminum_type_id', 'numerical', 'integerOnly' => true),
             array('ipen_number, place_number', 'length', 'max' => 20),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
+            array('culture_notes', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('scientificName_search, organisation_search, accessionNumber_search, location_search, culture_notes, index_seminum_type_id', 'safe', 'on' => 'search'),
+            array('scientificName_search, organisation_search, accessionNumber_search, location_search', 'safe', 'on' => 'search'),
         );
     }
 
