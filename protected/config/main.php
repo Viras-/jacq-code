@@ -29,7 +29,7 @@ return array(
             'authItemsManagerRole' => 'rbacManager',
             'authAssignmentsManagerRole' => 'rbacManager',
             'authenticatedRole' => '',
-            'guestRole' => 'guest',
+            'guestRole' => 'grp_guest',
         ),
     ),
     // application components

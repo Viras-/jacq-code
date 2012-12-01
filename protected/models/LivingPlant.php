@@ -120,6 +120,11 @@ class LivingPlant extends ActiveRecord {
         $criteria->compare("CONCAT_WS('-',accessionNumber.year,accessionNumber.id,accessionNumber.custom)", $this->accessionNumber_search, true);
         $criteria->compare('location.location', $this->location_search, true);
         
+        // check if the user is allowed to view plants from the greenhouse
+        if( !Yii::app()->user->checkAccess('acs_greenhouse') ) {
+            $criteria->compare('organisation.greenhouse',0);
+        }
+        
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                     'sort' => array(

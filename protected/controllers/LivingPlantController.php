@@ -113,7 +113,7 @@ class LivingPlantController extends Controller {
                     }
 
                     // Save the botanical object base
-                    if ($model_botanicalObject->saveWithRelated('botanicalObjectSexes')) {
+                    if ($model_botanicalObject->save()) {
                         $model_livingPlant->id = $model_botanicalObject->id;
 
                         if ($model_accessionNumber->save()) {
@@ -194,7 +194,7 @@ class LivingPlantController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
-        $model_livingPlant = LivingPlant::model()->findByPk($id);
+        $model_livingPlant = $this->loadModel($id);
         $model_botanicalObject = $model_livingPlant->id0;
         $model_acquisitionEvent = $model_botanicalObject->acquisitionEvent;
         $model_acquisitionDate = $model_acquisitionEvent->acquisitionDate;
@@ -479,6 +479,36 @@ class LivingPlantController extends Controller {
         $model = LivingPlant::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
+        
+        // check if user is allowed to access this model
+        // default rights setup
+        $bAllowAccess = false;
+        if( !$model->id0->organisation->greenhouse ) {
+            $bAllowAccess = true;
+        }
+        
+        // greenhouse level
+        if( Yii::app()->user->checkAccess('acs_greenhouse') ) {
+            $bAllowAccess = true;
+            //throw new CHttpException(401, 'You are not allowed to access this page.');
+        }
+
+        // organisation level
+        $models_accessOrganisation = AccessOrganisation::model()->findByAttributes(
+                array(
+                    'user_id' => Yii::app()->user->getId(),
+                    'organisation_id' => $model->id0->organisation->id
+                )
+        );
+        if( $models_accessOrganisation != null ) {
+            if ($models_accessOrganisation->allowDeny == 1) {
+                $bAllowAccess = true;
+            }
+            else {
+                $bAllowAccess = false;
+            }
+        }
+        
         return $model;
     }
 
@@ -492,5 +522,4 @@ class LivingPlantController extends Controller {
             Yii::app()->end();
         }
     }
-    
 }
