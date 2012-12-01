@@ -12,7 +12,7 @@
  * The followings are the available model relations:
  * @property TreeRecordFilePage[] $treeRecordFilePages
  */
-class TreeRecordFile extends CActiveRecord {
+class TreeRecordFile extends ActiveRecord {
 
     /**
      * Holds name of uploaded file
@@ -94,15 +94,5 @@ class TreeRecordFile extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

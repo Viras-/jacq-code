@@ -14,7 +14,7 @@
  * @property TreeRecordFilePage $treeRecordFilePage
  * @property LivingPlant $livingPlant
  */
-class LivingPlantTreeRecordFilePage extends CActiveRecord {
+class LivingPlantTreeRecordFilePage extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -92,14 +92,5 @@ class LivingPlantTreeRecordFilePage extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

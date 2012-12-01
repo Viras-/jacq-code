@@ -10,7 +10,7 @@
  * The followings are the available model relations:
  * @property Relevancy[] $relevancies
  */
-class RelevancyType extends CActiveRecord {
+class RelevancyType extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -79,14 +79,5 @@ class RelevancyType extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

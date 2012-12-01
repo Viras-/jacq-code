@@ -12,7 +12,7 @@
  * @property TreeRecord[] $treeRecords
  * @property TreeRecordFile $treeRecordFile
  */
-class TreeRecordFilePage extends CActiveRecord {
+class TreeRecordFilePage extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -85,14 +85,5 @@ class TreeRecordFilePage extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

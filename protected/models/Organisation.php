@@ -18,7 +18,7 @@
  * @property Organisation[] $organisations
  * @property User $gardener
  */
-class Organisation extends CActiveRecord {
+class Organisation extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -121,14 +121,5 @@ class Organisation extends CActiveRecord {
         else {
             return 'XX';
         }
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

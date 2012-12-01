@@ -11,7 +11,7 @@
  * @property AcquisitionEvent[] $acquisitionEvents
  * @property BotanicalObject[] $botanicalObjects
  */
-class Person extends CActiveRecord {
+class Person extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -101,14 +101,5 @@ class Person extends CActiveRecord {
         
         // Finally return the model
         return $model_person;
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

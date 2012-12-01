@@ -10,7 +10,7 @@
  * The followings are the available model relations:
  * @property LivingPlant[] $livingPlants
  */
-class IndexSeminumType extends CActiveRecord
+class IndexSeminumType extends ActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.

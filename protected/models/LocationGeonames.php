@@ -12,7 +12,7 @@
  * The followings are the available model relations:
  * @property Location $id0
  */
-class LocationGeonames extends CActiveRecord {
+class LocationGeonames extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -85,14 +85,5 @@ class LocationGeonames extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

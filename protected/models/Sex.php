@@ -10,7 +10,7 @@
  * The followings are the available model relations:
  * @property ObjectSex[] $objectSexes
  */
-class Sex extends CActiveRecord {
+class Sex extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -80,14 +80,5 @@ class Sex extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

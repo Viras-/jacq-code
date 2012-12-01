@@ -14,7 +14,7 @@
  * @property CertificateType $certificateType
  * @property LivingPlant $livingPlant
  */
-class Certificate extends CActiveRecord {
+class Certificate extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -92,15 +92,5 @@ class Certificate extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

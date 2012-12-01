@@ -11,7 +11,7 @@
  * The followings are the available model relations:
  * @property LivingPlant $livingPlant
  */
-class IpenExternal extends CActiveRecord
+class IpenExternal extends ActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.

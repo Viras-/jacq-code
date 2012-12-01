@@ -10,7 +10,7 @@
  * The followings are the available model relations:
  * @property Certificate[] $certificates
  */
-class CertificateType extends CActiveRecord {
+class CertificateType extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -81,14 +81,5 @@ class CertificateType extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

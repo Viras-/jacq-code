@@ -23,7 +23,7 @@
  * @property LivingPlantTreeRecordFilePage[] $livingPlantTreeRecordFilePages
  * @property Relevancy[] $relevancies
  */
-class LivingPlant extends CActiveRecord {
+class LivingPlant extends ActiveRecord {
     public $scientificName_search;
     public $organisation_search;
     public $accessionNumber_search;
@@ -145,16 +145,7 @@ class LivingPlant extends CActiveRecord {
                     )
                 ));
     }
-    
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
-    }
-    
+
     /**
      * Set the country code for the IPEN number
      * @param string $value ISO-2 code for the country
