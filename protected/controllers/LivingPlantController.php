@@ -487,31 +487,72 @@ class LivingPlantController extends Controller {
             $bAllowAccess = true;
         }
         
-        // greenhouse level
+        /**
+         * greenhouse level
+         */
         if( Yii::app()->user->checkAccess('acs_greenhouse') ) {
             $bAllowAccess = true;
-            //throw new CHttpException(401, 'You are not allowed to access this page.');
         }
 
-        // organisation level
-        $models_accessOrganisation = AccessOrganisation::model()->findByAttributes(
+        /**
+         * organisation level
+         */
+        $user_id = Yii::app()->user->getId();
+        $bNewAllowAccess = false;
+        // fetch all groups for this user
+        $authAssignments = Yii::app()->authManager->getAuthAssignments($user_id);
+        foreach( $authAssignments as $itemName => $authAssignment ) {
+            // check if this group has an assignment in the access table
+            $model_accessOrganisation = AccessOrganisation::model()->findByAttributes(
+                    array(
+                        'AuthItem_name' => $itemName,
+                        'organisation_id' => $model->id0->organisation->id
+                    )
+            );
+            
+            $bNewAllowAccess = $this->checkAccessOrganisation($model_accessOrganisation, $bAllowAccess);
+            // check for explizit allowal in this group, if so break and ignore all other settings
+            if( $bNewAllowAccess && !$bAllowAccess ) {
+                $bAllowAccess = true;
+                break;
+            }
+        }
+        // now check the organisation access for this user
+        $model_accessOrganisation = AccessOrganisation::model()->findByAttributes(
                 array(
                     'user_id' => Yii::app()->user->getId(),
                     'organisation_id' => $model->id0->organisation->id
                 )
         );
-        if( $models_accessOrganisation != null ) {
-            if ($models_accessOrganisation->allowDeny == 1) {
-                $bAllowAccess = true;
-            }
-            else {
-                $bAllowAccess = false;
-            }
+        $bAllowAccess = $this->checkAccessOrganisation($model_accessOrganisation, $bAllowAccess);
+        
+        // finally check the result of the access checking
+        if( !$bAllowAccess ) {
+            throw new CHttpException(401, 'You are not allowed to access this page.');
         }
         
         return $model;
     }
-
+    
+    /**
+     * Helper function for checking the access on organisation level
+     * @param AccessOrganisation $model_accessOrganisation
+     * @param boolean $bAllowAccess input value for AllowAccess
+     * @return null|boolean null if no access information is available, else true or false
+     */
+    private function checkAccessOrganisation($model_accessOrganisation, $bAllowAccess) {
+        // check for valid model
+        if( $model_accessOrganisation == null ) return $bAllowAccess;
+        
+        // check for explizit allowal or denial
+        if( $model_accessOrganisation->allowDeny == 1 ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
     /**
      * Performs the AJAX validation.
      * @param CModel the model to be validated
