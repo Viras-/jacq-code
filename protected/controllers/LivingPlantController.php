@@ -498,9 +498,9 @@ class LivingPlantController extends Controller {
          * organisation level
          */
         $user_id = Yii::app()->user->getId();
-        $bNewAllowAccess = false;
-        // fetch all groups for this user
         $authAssignments = Yii::app()->authManager->getAuthAssignments($user_id);
+        $bNewAllowAccess = false;
+        // check all groups for access
         foreach( $authAssignments as $itemName => $authAssignment ) {
             // check if this group has an assignment in the access table
             $model_accessOrganisation = AccessOrganisation::model()->findByAttributes(
@@ -511,11 +511,12 @@ class LivingPlantController extends Controller {
             );
             
             $bNewAllowAccess = $this->checkAccessOrganisation($model_accessOrganisation, $bAllowAccess);
-            // check for explizit allowal in this group, if so break and ignore all other settings
+            // check for explicit allowal in this group, if so break and ignore all other settings
             if( $bNewAllowAccess && !$bAllowAccess ) {
                 $bAllowAccess = true;
                 break;
             }
+            $bAllowAccess = $bNewAllowAccess;
         }
         // now check the organisation access for this user
         $model_accessOrganisation = AccessOrganisation::model()->findByAttributes(
@@ -525,6 +526,38 @@ class LivingPlantController extends Controller {
                 )
         );
         $bAllowAccess = $this->checkAccessOrganisation($model_accessOrganisation, $bAllowAccess);
+        
+        /**
+         * Accession (livingplant) level 
+         */
+        $bNewAllowAccess = false;
+        // check all groups for access
+        foreach( $authAssignments as $itemName => $authAssignment ) {
+            // check if this group has an assignment in the access table
+            $model_accessLivingplant = AccessLivingplant::model()->findByAttributes(
+                    array(
+                        'AuthItem_name' => $itemName,
+                        'living_plant_id' => $model->id
+                    )
+            );
+            
+            $bNewAllowAccess = $this->checkAccessLivingplant($model_accessLivingplant, $bAllowAccess);
+            error_log('check: ' . $itemName . ' / ' . $bNewAllowAccess . ' / ' . $bAllowAccess);
+            // check for explizit allowal in this group, if so break and ignore all other settings
+            if( $bNewAllowAccess && !$bAllowAccess ) {
+                $bAllowAccess = true;
+                break;
+            }
+            $bAllowAccess = $bNewAllowAccess;
+        }
+        // now check the access for this user
+        $model_accessLivingplant = AccessLivingplant::model()->findByAttributes(
+                array(
+                    'user_id' => Yii::app()->user->getId(),
+                    'living_plant_id' => $model->id
+                )
+        );
+        $bAllowAccess = $this->checkAccessLivingplant($model_accessLivingplant, $bAllowAccess);
         
         // finally check the result of the access checking
         if( !$bAllowAccess ) {
@@ -546,6 +579,27 @@ class LivingPlantController extends Controller {
         
         // check for explizit allowal or denial
         if( $model_accessOrganisation->allowDeny == 1 ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    /**
+     * Helper function for checking the access on organisation level
+     * @param AccessLivingplant $model_accessLivingplant
+     * @param boolean $bAllowAccess input value for AllowAccess
+     * @return null|boolean null if no access information is available, else true or false
+     */
+    private function checkAccessLivingplant($model_accessLivingplant, $bAllowAccess) {
+        // check for valid model
+        if( $model_accessLivingplant == null ) return $bAllowAccess;
+        
+        error_log($model_accessLivingplant->allowDeny);
+        
+        // check for explizit allowal or denial
+        if( $model_accessLivingplant->allowDeny == 1 ) {
             return true;
         }
         else {
