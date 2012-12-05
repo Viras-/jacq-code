@@ -12,7 +12,7 @@
  * The followings are the available model relations:
  * @property AuthAssignment[] $authAssignments
  */
-class User extends CActiveRecord {
+class User extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.

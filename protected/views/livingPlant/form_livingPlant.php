@@ -90,6 +90,15 @@
     
 </script>
 
+<?php
+if( !$model_livingPlant->isNewRecord ) {
+?>
+<div class="row">
+    <a href="#" onclick="$('#certificates_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq', 'Certificates & Numbers'); ?></a>
+</div>
+<?php
+}
+?>
 <div class="row">
     <?php echo $form->labelEx($model_livingPlant, 'phyto_control'); ?>
     <?php echo $form->checkbox($model_livingPlant, 'phyto_control'); ?>
@@ -97,11 +106,24 @@
 </div>
 
 <div class="row">
-    <a href="#" onclick="$('#certificates_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq', 'Certificates'); ?></a>
+    <table style="width: auto;">
+        <tr>
+            <td>
+                <?php echo $form->labelEx($model_livingPlant, 'index_seminum'); ?>
+                <?php echo $form->checkBox($model_livingPlant, 'index_seminum'); ?>
+                <?php echo $form->error($model_livingPlant, 'index_seminum'); ?>
+            </td>
+            <td>
+                <?php echo $form->labelEx($model_livingPlant, 'index_seminum_type_id'); ?>
+                <?php echo $form->dropDownList($model_livingPlant, 'index_seminum_type_id', CHtml::listData(IndexSeminumType::model()->findAll(), 'id', 'type')); ?>
+                <?php echo $form->error($model_livingPlant, 'index_seminum_type_id'); ?>
+            </td>
+        </tr>
+    </table>
 </div>
 
 <div class="row">
-    <?php echo $form->labelEx($model_livingPlant, 'index_seminum'); ?>
-    <?php echo $form->checkBox($model_livingPlant, 'index_seminum'); ?>
-    <?php echo $form->error($model_livingPlant, 'index_seminum'); ?>
+    <?php echo $form->labelEx($model_livingPlant, 'culture_notes'); ?>
+    <?php echo $form->textArea($model_livingPlant, 'culture_notes', array( 'style' => 'width: 100%;' )); ?>
+    <?php echo $form->error($model_livingPlant, 'culture_notes'); ?>
 </div>

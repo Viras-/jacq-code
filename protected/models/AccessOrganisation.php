@@ -1,23 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "tbl_relevancy".
+ * This is the model class for table "frmwrk_accessOrganisation".
  *
- * The followings are the available columns in table 'tbl_relevancy':
+ * The followings are the available columns in table 'frmwrk_accessOrganisation':
  * @property integer $id
- * @property integer $relevancy_type_id
- * @property integer $living_plant_id
- *
- * The followings are the available model relations:
- * @property RelevancyType $relevancyType
- * @property LivingPlant $livingPlant
+ * @property string $AuthItem_name
+ * @property integer $user_id
+ * @property integer $allowDeny
+ * @property integer $organisation_id
  */
-class Relevancy extends ActiveRecord {
+class AccessOrganisation extends CActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Relevancy the static model class
+     * @return AccessOrganisation the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
@@ -27,7 +25,7 @@ class Relevancy extends ActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'tbl_relevancy';
+        return 'frmwrk_accessOrganisation';
     }
 
     /**
@@ -37,11 +35,11 @@ class Relevancy extends ActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('relevancy_type_id, living_plant_id', 'required'),
-            array('relevancy_type_id, living_plant_id', 'numerical', 'integerOnly' => true),
+            array('user_id, allowDeny, organisation_id', 'numerical', 'integerOnly' => true),
+            array('AuthItem_name', 'length', 'max' => 64),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, relevancy_type_id, living_plant_id', 'safe', 'on' => 'search'),
+            array('id, AuthItem_name, user_id, allowDeny, organisation_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -52,8 +50,6 @@ class Relevancy extends ActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'relevancyType' => array(self::BELONGS_TO, 'RelevancyType', 'relevancy_type_id'),
-            'livingPlant' => array(self::BELONGS_TO, 'LivingPlant', 'living_plant_id'),
         );
     }
 
@@ -62,9 +58,11 @@ class Relevancy extends ActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => Yii::t('jacq', 'ID'),
-            'relevancy_type_id' => Yii::t('jacq', 'Relevancy Type'),
-            'living_plant_id' => Yii::t('jacq', 'Living Plant'),
+            'id' => 'ID',
+            'AuthItem_name' => 'Auth Item Name',
+            'user_id' => 'User',
+            'allowDeny' => 'Allow Deny',
+            'organisation_id' => 'Organisation',
         );
     }
 
@@ -79,11 +77,14 @@ class Relevancy extends ActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('relevancy_type_id', $this->relevancy_type_id);
-        $criteria->compare('living_plant_id', $this->living_plant_id);
+        $criteria->compare('AuthItem_name', $this->AuthItem_name, true);
+        $criteria->compare('user_id', $this->user_id);
+        $criteria->compare('allowDeny', $this->allowDeny);
+        $criteria->compare('organisation_id', $this->organisation_id);
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
     }
+
 }

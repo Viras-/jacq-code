@@ -10,7 +10,7 @@
  * The followings are the available model relations:
  * @property BotanicalObject[] $botanicalObjects
  */
-class Phenology extends CActiveRecord {
+class Phenology extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -79,14 +79,5 @@ class Phenology extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

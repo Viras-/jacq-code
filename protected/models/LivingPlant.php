@@ -11,15 +11,19 @@
  * @property integer $accession_number_id
  * @property string $place_number
  * @property integer $index_seminum
+ * @property string $culture_notes
+ * @property integer $index_seminum_type_id
  *
  * The followings are the available model relations:
  * @property Certificate[] $certificates
+ * @property IpenExternal[] $ipenExternals
  * @property BotanicalObject $id0
  * @property AccessionNumber $accessionNumber
+ * @property IndexSeminumType $indexSeminumType
  * @property LivingPlantTreeRecordFilePage[] $livingPlantTreeRecordFilePages
  * @property Relevancy[] $relevancies
  */
-class LivingPlant extends CActiveRecord {
+class LivingPlant extends ActiveRecord {
     public $scientificName_search;
     public $organisation_search;
     public $accessionNumber_search;
@@ -56,12 +60,13 @@ class LivingPlant extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id, accession_number_id', 'required'),
-            array('id, ipen_locked, phyto_control, accession_number_id, index_seminum', 'numerical', 'integerOnly' => true),
+            array('id, accession_number_id, index_seminum_type_id', 'required'),
+            array('id, ipen_locked, phyto_control, accession_number_id, index_seminum, index_seminum_type_id', 'numerical', 'integerOnly' => true),
             array('ipen_number, place_number', 'length', 'max' => 20),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
+            array('culture_notes', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('scientificName_search, organisation_search, accessionNumber_search, location_search', 'safe', 'on' => 'search'),
@@ -76,8 +81,10 @@ class LivingPlant extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'certificates' => array(self::HAS_MANY, 'Certificate', 'living_plant_id'),
+            'ipenExternals' => array(self::HAS_MANY, 'IpenExternal', 'living_plant_id'),
             'id0' => array(self::BELONGS_TO, 'BotanicalObject', 'id'),
             'accessionNumber' => array(self::BELONGS_TO, 'AccessionNumber', 'accession_number_id'),
+            'indexSeminumType' => array(self::BELONGS_TO, 'IndexSeminumType', 'index_seminum_type_id'),
             'livingPlantTreeRecordFilePages' => array(self::HAS_MANY, 'LivingPlantTreeRecordFilePage', 'living_plant_id'),
             'relevancies' => array(self::HAS_MANY, 'Relevancy', 'living_plant_id'),
         );
@@ -95,6 +102,8 @@ class LivingPlant extends CActiveRecord {
             'accession_number_id' => Yii::t('jacq', 'Accession Number'),
             'place_number' => Yii::t('jacq', 'Place Number'),
             'index_seminum' => Yii::t('jacq', 'Index Seminum'),
+            'culture_notes' => Yii::t('jacq', 'Culture Notes'),
+            'index_seminum_type_id' => Yii::t('jacq', 'Index Seminum Type'),
         );
     }
 
@@ -111,22 +120,37 @@ class LivingPlant extends CActiveRecord {
         $criteria->compare("CONCAT_WS('-',accessionNumber.year,accessionNumber.id,accessionNumber.custom)", $this->accessionNumber_search, true);
         $criteria->compare('location.location', $this->location_search, true);
         
-        error_log( "$this->accessionNumber_search" ); 
-
+        // check if the user is allowed to view plants from the greenhouse
+        if( !Yii::app()->user->checkAccess('acs_greenhouse') ) {
+            $criteria->compare('organisation.greenhouse',0);
+        }
+        
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
+                    'sort' => array(
+                        'attributes' => array(
+                            'scientificName_search' => array(
+                                'asc' => '`herbar_view`.GetScientificName(`id0`.`taxon_id`, 0)',
+                                'desc' => '`herbar_view`.GetScientificName(`id0`.`taxon_id`, 0) DESC'
+                            ),
+                            'organisation_search' => array(
+                                'asc' => 'organisation.description',
+                                'desc' => 'organisation.description DESC'
+                            ),
+                            'accessionNumber_search' => array(
+                                'asc' => 'CONCAT_WS('-',accessionNumber.year,accessionNumber.id,accessionNumber.custom)',
+                                'desc' => 'CONCAT_WS('-',accessionNumber.year,accessionNumber.id,accessionNumber.custom) DESC'
+                            ),
+                            'location_search' => array(
+                                'asc' => 'location.location',
+                                'desc' => 'location.location DESC'
+                            ),
+                            '*'
+                        )
+                    )
                 ));
     }
-    
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
-    }
-    
+
     /**
      * Set the country code for the IPEN number
      * @param string $value ISO-2 code for the country

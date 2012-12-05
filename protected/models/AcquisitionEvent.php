@@ -29,7 +29,7 @@
  * @property Person[] $tblPeople
  * @property BotanicalObject[] $botanicalObjects
  */
-class AcquisitionEvent extends CActiveRecord {
+class AcquisitionEvent extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -120,14 +120,5 @@ class AcquisitionEvent extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

@@ -26,7 +26,7 @@
  * @property LivingPlant $livingPlant
  * @property Separation[] $separations
  */
-class BotanicalObject extends CActiveRecord {
+class BotanicalObject extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -102,7 +102,7 @@ class BotanicalObject extends CActiveRecord {
             array('annotation', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, acquisition_event_id, phenology_id, taxon_id, habitat, habitus, determined_by_id, annotation', 'safe', 'on' => 'search'),
+            array('id, acquisition_event_id, phenology_id, taxon_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes', 'safe', 'on' => 'search'),
         );
     }
 
@@ -165,14 +165,5 @@ class BotanicalObject extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

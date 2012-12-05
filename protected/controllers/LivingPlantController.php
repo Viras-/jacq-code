@@ -70,6 +70,8 @@ class LivingPlantController extends Controller {
         $model_botanicalObject = new BotanicalObject;
         $model_accessionNumber = new AccessionNumber;
         
+        $model_livingPlant->id0 = $model_botanicalObject;
+        
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['AccessionNumber'])) {
             $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
@@ -193,19 +195,18 @@ class LivingPlantController extends Controller {
      */
     public function actionUpdate($id) {
         $model_livingPlant = $this->loadModel($id);
-        $model_botanicalObject = BotanicalObject::model()->findByPk($model_livingPlant->id);
-        $model_acquisitionEvent = AcquisitionEvent::model()->findByPk($model_botanicalObject->getAttribute('acquisition_event_id'));
-        $model_acquisitionDate = AcquisitionDate::model()->findByPk($model_acquisitionEvent->getAttribute('acquisition_date_id'));
-        $model_accessionNumber = AccessionNumber::model()->findByPk($model_livingPlant->getAttribute('accession_number_id'));
+        $model_botanicalObject = $model_livingPlant->id0;
+        $model_acquisitionEvent = $model_botanicalObject->acquisitionEvent;
+        $model_acquisitionDate = $model_acquisitionEvent->acquisitionDate;
+        $model_accessionNumber = $model_livingPlant->accessionNumber;
         
         // Check if we have a correct submission
-        if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['AccessionNumber'])) {
+        if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'])) {
             $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
             $model_livingPlant->attributes = $_POST['LivingPlant'];
             $model_botanicalObject->attributes = $_POST['BotanicalObject'];
-            $model_accessionNumber->attributes = $_POST['AccessionNumber'];
-
+            
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
                 $locationName = trim($_POST['locationName']);
@@ -241,101 +242,97 @@ class LivingPlantController extends Controller {
                     // Save the botanical object base
                     if ($model_botanicalObject->save()) {
                         $model_livingPlant->id = $model_botanicalObject->id;
+                        
+                        // Check if a tree record was selected and add it if necessary
+                        if (isset($_POST['TreeRecord']['tree_record_file_page_id'])) {
+                            $tree_record_file_page_id = intval($_POST['TreeRecord']['tree_record_file_page_id']);
+                            if ($tree_record_file_page_id > 0) {
+                                $model_livingPlantTreeRecordFilePage = new LivingPlantTreeRecordFilePage;
 
-                        if ($model_accessionNumber->save()) {
-                            $model_livingPlant->accession_number_id = $model_accessionNumber->id;
+                                $model_livingPlantTreeRecordFilePage->tree_record_file_page_id = $tree_record_file_page_id;
+                                $model_livingPlantTreeRecordFilePage->living_plant_id = $model_livingPlant->id;
 
-                            // Check if a tree record was selected and add it if necessary
-                            if (isset($_POST['TreeRecord']['tree_record_file_page_id'])) {
-                                $tree_record_file_page_id = intval($_POST['TreeRecord']['tree_record_file_page_id']);
-                                if ($tree_record_file_page_id > 0) {
-                                    $model_livingPlantTreeRecordFilePage = new LivingPlantTreeRecordFilePage;
-
-                                    $model_livingPlantTreeRecordFilePage->tree_record_file_page_id = $tree_record_file_page_id;
-                                    $model_livingPlantTreeRecordFilePage->living_plant_id = $model_livingPlant->id;
-
-                                    $model_livingPlantTreeRecordFilePage->save();
-                                }
+                                $model_livingPlantTreeRecordFilePage->save();
                             }
+                        }
 
-                            // Update any existing entries for tree records
-                            if (isset($_POST['LivingPlantTreeRecordFilePage'])) {
-                                $LivingPlantTreeRecordFilePages = $_POST['LivingPlantTreeRecordFilePage'];
-                                foreach ($LivingPlantTreeRecordFilePages as $LivingPlantTreeRecordFilePage_id => $LivingPlantTreeRecordFilePage) {
-                                    $LivingPlantTreeRecordFilePage_id = intval($LivingPlantTreeRecordFilePage_id);
+                        // Update any existing entries for tree records
+                        if (isset($_POST['LivingPlantTreeRecordFilePage'])) {
+                            $LivingPlantTreeRecordFilePages = $_POST['LivingPlantTreeRecordFilePage'];
+                            foreach ($LivingPlantTreeRecordFilePages as $LivingPlantTreeRecordFilePage_id => $LivingPlantTreeRecordFilePage) {
+                                $LivingPlantTreeRecordFilePage_id = intval($LivingPlantTreeRecordFilePage_id);
 
-                                    if ($LivingPlantTreeRecordFilePage_id > 0) {
-                                        $model_livingPlantTreeRecordFilePage = LivingPlantTreeRecordFilePage::model()->findByPk($LivingPlantTreeRecordFilePage_id);
+                                if ($LivingPlantTreeRecordFilePage_id > 0) {
+                                    $model_livingPlantTreeRecordFilePage = LivingPlantTreeRecordFilePage::model()->findByPk($LivingPlantTreeRecordFilePage_id);
 
-                                        if ($model_livingPlantTreeRecordFilePage != null) {
-                                            $model_livingPlantTreeRecordFilePage->corrections_done = isset($LivingPlantTreeRecordFilePage['corrections_done']) ? 1 : 0;
-                                            $model_livingPlantTreeRecordFilePage->corrections_date = $LivingPlantTreeRecordFilePage['corrections_date'];
+                                    if ($model_livingPlantTreeRecordFilePage != null) {
+                                        $model_livingPlantTreeRecordFilePage->corrections_done = isset($LivingPlantTreeRecordFilePage['corrections_done']) ? 1 : 0;
+                                        $model_livingPlantTreeRecordFilePage->corrections_date = $LivingPlantTreeRecordFilePage['corrections_date'];
 
-                                            $model_livingPlantTreeRecordFilePage->save();
-                                        }
+                                        $model_livingPlantTreeRecordFilePage->save();
                                     }
                                 }
                             }
+                        }
 
-                            // Remove all previously added relevancy types
-                            Relevancy::model()->deleteAll(
-                                    'living_plant_id=:living_plant_id', array(
-                                ':living_plant_id' => $model_livingPlant->id,
-                                    )
-                            );
-                            // Check if a relevancy type was selected & add it
-                            if (isset($_POST['RelevancyType'])) {
-                                foreach ($_POST['RelevancyType'] as $relevancy_type_id) {
-                                    $model_relevancy = new Relevancy;
-                                    $model_relevancy->living_plant_id = $model_livingPlant->id;
-                                    $model_relevancy->relevancy_type_id = $relevancy_type_id;
-                                    $model_relevancy->save();
+                        // Remove all previously added relevancy types
+                        Relevancy::model()->deleteAll(
+                                'living_plant_id=:living_plant_id', array(
+                            ':living_plant_id' => $model_livingPlant->id,
+                                )
+                        );
+                        // Check if a relevancy type was selected & add it
+                        if (isset($_POST['RelevancyType'])) {
+                            foreach ($_POST['RelevancyType'] as $relevancy_type_id) {
+                                $model_relevancy = new Relevancy;
+                                $model_relevancy->living_plant_id = $model_livingPlant->id;
+                                $model_relevancy->relevancy_type_id = $relevancy_type_id;
+                                $model_relevancy->save();
+                            }
+                        }
+
+                        // Remove all previously added sexes
+                        BotanicalObjectSex::model()->deleteAll(
+                                'botanical_object_id=:botanical_object_id', array(
+                            ':botanical_object_id' => $model_livingPlant->id,
+                                )
+                        );
+                        // Check if a sex was selected & add it
+                        if (isset($_POST['Sex'])) {
+                            foreach ($_POST['Sex'] as $sex_id) {
+                                $model_botanicalObjectSex = new BotanicalObjectSex;
+                                $model_botanicalObjectSex->botanical_object_id = $model_livingPlant->id;
+                                $model_botanicalObjectSex->sex_id = $sex_id;
+                                $model_botanicalObjectSex->save();
+                            }
+                        }
+
+                        // check for separation entries and update/add them
+                        if( isset($_POST['Separation']) ) {
+                            // cycle through all posted separation entries
+                            foreach($_POST['Separation'] as $i => $separation) {
+                                // only handle separation entry if it has a type set
+                                if( empty($separation['separation_type_id']) ) continue;
+
+                                // check if this is an update and load the model
+                                $separation_model = null;
+                                if( isset($separation['id']) ) {
+                                    $separation_model = Separation::model()->findByPk($separation['id']);
                                 }
-                            }
-
-                            // Remove all previously added sexes
-                            BotanicalObjectSex::model()->deleteAll(
-                                    'botanical_object_id=:botanical_object_id', array(
-                                ':botanical_object_id' => $model_livingPlant->id,
-                                    )
-                            );
-                            // Check if a sex was selected & add it
-                            if (isset($_POST['Sex'])) {
-                                foreach ($_POST['Sex'] as $sex_id) {
-                                    $model_botanicalObjectSex = new BotanicalObjectSex;
-                                    $model_botanicalObjectSex->botanical_object_id = $model_livingPlant->id;
-                                    $model_botanicalObjectSex->sex_id = $sex_id;
-                                    $model_botanicalObjectSex->save();
+                                // .. else create a new separation entry
+                                else {
+                                    $separation_model = new Separation;
                                 }
+
+                                // set the attributes & save the separation entry
+                                $separation_model->attributes = $separation;
+                                $separation_model->botanical_object_id = $model_botanicalObject->id;
+                                $separation_model->save();
                             }
+                        }
 
-                            // check for separation entries and update/add them
-                            if( isset($_POST['Separation']) ) {
-                                // cycle through all posted separation entries
-                                foreach($_POST['Separation'] as $i => $separation) {
-                                    // only handle separation entry if it has a type set
-                                    if( empty($separation['separation_type_id']) ) continue;
-
-                                    // check if this is an update and load the model
-                                    $separation_model = null;
-                                    if( isset($separation['id']) ) {
-                                        $separation_model = Separation::model()->findByPk($separation['id']);
-                                    }
-                                    // .. else create a new separation entry
-                                    else {
-                                        $separation_model = new Separation;
-                                    }
-
-                                    // set the attributes & save the separation entry
-                                    $separation_model->attributes = $separation;
-                                    $separation_model->botanical_object_id = $model_botanicalObject->id;
-                                    $separation_model->save();
-                                }
-                            }
-
-                            if ($model_livingPlant->save()) {
-                                $this->redirect(array('update', 'id' => $model_livingPlant->id));
-                            }
+                        if ($model_livingPlant->save()) {
+                            $this->redirect(array('update', 'id' => $model_livingPlant->id));
                         }
                     }
                 }
@@ -482,9 +479,134 @@ class LivingPlantController extends Controller {
         $model = LivingPlant::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
+        
+        // check if user is allowed to access this model
+        // default rights setup
+        $bAllowAccess = false;
+        if( !$model->id0->organisation->greenhouse ) {
+            $bAllowAccess = true;
+        }
+        
+        /**
+         * greenhouse level
+         */
+        if( Yii::app()->user->checkAccess('acs_greenhouse') ) {
+            $bAllowAccess = true;
+        }
+
+        /**
+         * organisation level
+         */
+        $user_id = Yii::app()->user->getId();
+        $authAssignments = Yii::app()->authManager->getAuthAssignments($user_id);
+        $bNewAllowAccess = false;
+        // check all groups for access
+        foreach( $authAssignments as $itemName => $authAssignment ) {
+            // check if this group has an assignment in the access table
+            $model_accessOrganisation = AccessOrganisation::model()->findByAttributes(
+                    array(
+                        'AuthItem_name' => $itemName,
+                        'organisation_id' => $model->id0->organisation->id
+                    )
+            );
+            
+            $bNewAllowAccess = $this->checkAccessOrganisation($model_accessOrganisation, $bAllowAccess);
+            // check for explicit allowal in this group, if so break and ignore all other settings
+            if( $bNewAllowAccess && !$bAllowAccess ) {
+                $bAllowAccess = true;
+                break;
+            }
+            $bAllowAccess = $bNewAllowAccess;
+        }
+        // now check the organisation access for this user
+        $model_accessOrganisation = AccessOrganisation::model()->findByAttributes(
+                array(
+                    'user_id' => Yii::app()->user->getId(),
+                    'organisation_id' => $model->id0->organisation->id
+                )
+        );
+        $bAllowAccess = $this->checkAccessOrganisation($model_accessOrganisation, $bAllowAccess);
+        
+        /**
+         * Accession (livingplant) level 
+         */
+        $bNewAllowAccess = false;
+        // check all groups for access
+        foreach( $authAssignments as $itemName => $authAssignment ) {
+            // check if this group has an assignment in the access table
+            $model_accessLivingplant = AccessLivingplant::model()->findByAttributes(
+                    array(
+                        'AuthItem_name' => $itemName,
+                        'living_plant_id' => $model->id
+                    )
+            );
+            
+            $bNewAllowAccess = $this->checkAccessLivingplant($model_accessLivingplant, $bAllowAccess);
+            error_log('check: ' . $itemName . ' / ' . $bNewAllowAccess . ' / ' . $bAllowAccess);
+            // check for explizit allowal in this group, if so break and ignore all other settings
+            if( $bNewAllowAccess && !$bAllowAccess ) {
+                $bAllowAccess = true;
+                break;
+            }
+            $bAllowAccess = $bNewAllowAccess;
+        }
+        // now check the access for this user
+        $model_accessLivingplant = AccessLivingplant::model()->findByAttributes(
+                array(
+                    'user_id' => Yii::app()->user->getId(),
+                    'living_plant_id' => $model->id
+                )
+        );
+        $bAllowAccess = $this->checkAccessLivingplant($model_accessLivingplant, $bAllowAccess);
+        
+        // finally check the result of the access checking
+        if( !$bAllowAccess ) {
+            throw new CHttpException(401, 'You are not allowed to access this page.');
+        }
+        
         return $model;
     }
-
+    
+    /**
+     * Helper function for checking the access on organisation level
+     * @param AccessOrganisation $model_accessOrganisation
+     * @param boolean $bAllowAccess input value for AllowAccess
+     * @return null|boolean null if no access information is available, else true or false
+     */
+    private function checkAccessOrganisation($model_accessOrganisation, $bAllowAccess) {
+        // check for valid model
+        if( $model_accessOrganisation == null ) return $bAllowAccess;
+        
+        // check for explizit allowal or denial
+        if( $model_accessOrganisation->allowDeny == 1 ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    /**
+     * Helper function for checking the access on organisation level
+     * @param AccessLivingplant $model_accessLivingplant
+     * @param boolean $bAllowAccess input value for AllowAccess
+     * @return null|boolean null if no access information is available, else true or false
+     */
+    private function checkAccessLivingplant($model_accessLivingplant, $bAllowAccess) {
+        // check for valid model
+        if( $model_accessLivingplant == null ) return $bAllowAccess;
+        
+        error_log($model_accessLivingplant->allowDeny);
+        
+        // check for explizit allowal or denial
+        if( $model_accessLivingplant->allowDeny == 1 ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
     /**
      * Performs the AJAX validation.
      * @param CModel the model to be validated
@@ -495,5 +617,4 @@ class LivingPlantController extends Controller {
             Yii::app()->end();
         }
     }
-    
 }

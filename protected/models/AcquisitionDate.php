@@ -13,7 +13,7 @@
  * The followings are the available model relations:
  * @property AcquisitionEvent[] $acquisitionEvents
  */
-class AcquisitionDate extends CActiveRecord {
+class AcquisitionDate extends ActiveRecord {
     /**
      * Getter function for virtual date attribute
      * @return string formatted date
@@ -109,14 +109,5 @@ class AcquisitionDate extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 3.5.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 22. Okt 2012 um 11:08
--- Server Version: 5.5.27
--- PHP-Version: 5.3.16
+-- Generation Time: Dec 01, 2012 at 06:50 PM
+-- Server version: 5.1.63-log
+-- PHP Version: 5.3.5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,27 +17,28 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Datenbank: `jacq_input`
+-- Database: `jacq_input`
 --
 
 SET foreign_key_checks = 0;
 
 --
--- Daten für Tabelle `frmwrk_AuthAssignment`
+-- Dumping data for table `frmwrk_AuthAssignment`
 --
 
 INSERT INTO `frmwrk_AuthAssignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
-('admin', '1', NULL, 'N;'),
-('editorLivingplant', '2', NULL, 'N;');
+('editorLivingplant', 2, NULL, 'N;'),
+('grp_admin', 1, NULL, 'N;');
 
 --
--- Daten für Tabelle `frmwrk_AuthItem`
+-- Dumping data for table `frmwrk_AuthItem`
 --
 
 INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
-('admin', 2, 'main admin, has all roles assigned (so can do everything)', NULL, 'N;'),
+('acs_greenhouse', 1, 'Allow access to plants which are inside the greenhouse', '', 's:0:"";'),
 ('editorLivingplant', 2, 'editor for living plants', NULL, 'N;'),
-('guest', 2, 'guest (default) role', NULL, 'N;'),
+('grp_admin', 2, 'main admin, has all roles assigned (so can do everything)', '', 's:0:"";'),
+('grp_guest', 2, 'guest (default) role', '', 's:0:"";'),
 ('managerLivingplant', 2, 'manage living plants', NULL, 'N;'),
 ('managerOrganisation', 2, 'manage organisation entries', NULL, 'N;'),
 ('managerTreeRecordFile', 2, 'manage tree record files', NULL, 'N;'),
@@ -57,24 +58,25 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('tsk_editLivingplant', 1, 'Edit a living plant', '', 's:0:"";');
 
 --
--- Daten für Tabelle `frmwrk_AuthItemChild`
+-- Dumping data for table `frmwrk_AuthItemChild`
 --
 
 INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
-('admin', 'editorLivingplant'),
+('grp_admin', 'acs_greenhouse'),
+('grp_admin', 'editorLivingplant'),
 ('managerLivingplant', 'editorLivingplant'),
-('admin', 'managerLivingplant'),
-('admin', 'managerOrganisation'),
-('admin', 'managerTreeRecordFile'),
+('grp_admin', 'managerLivingplant'),
+('grp_admin', 'managerOrganisation'),
+('grp_admin', 'managerTreeRecordFile'),
 ('tsk_editLivingplant', 'oprtn_createLivingplant'),
 ('tsk_createOrganisation', 'oprtn_createOrganisation'),
 ('tsk_createTreeRecordFile', 'oprtn_createTreeRecordFile'),
 ('tsk_deleteLivingplant', 'oprtn_deleteLivingplant'),
 ('tsk_deleteOrganisation', 'oprtn_deleteOrganisation'),
 ('tsk_deleteTreeRecordFile', 'oprtn_deleteTreeRecordFile'),
-('guest', 'oprtn_readLivingplant'),
+('grp_guest', 'oprtn_readLivingplant'),
 ('oprtn_createLivingplant', 'oprtn_readLivingplant'),
-('admin', 'rbacManager'),
+('grp_admin', 'rbacManager'),
 ('managerOrganisation', 'tsk_createOrganisation'),
 ('managerTreeRecordFile', 'tsk_createTreeRecordFile'),
 ('managerLivingplant', 'tsk_deleteLivingplant'),
@@ -83,7 +85,7 @@ INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 ('editorLivingplant', 'tsk_editLivingplant');
 
 --
--- Daten für Tabelle `frmwrk_user`
+-- Dumping data for table `frmwrk_user`
 --
 
 INSERT INTO `frmwrk_user` (`id`, `username`, `password`, `salt`) VALUES

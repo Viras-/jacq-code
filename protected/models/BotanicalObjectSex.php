@@ -12,7 +12,7 @@
  * @property Sex $sex
  * @property BotanicalObject $botanicalObject
  */
-class BotanicalObjectSex extends CActiveRecord {
+class BotanicalObjectSex extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -85,14 +85,5 @@ class BotanicalObjectSex extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

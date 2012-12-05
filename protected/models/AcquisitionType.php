@@ -10,7 +10,7 @@
  * The followings are the available model relations:
  * @property AcquisitionEvent[] $acquisitionEvents
  */
-class AcquisitionType extends CActiveRecord {
+class AcquisitionType extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -79,14 +79,5 @@ class AcquisitionType extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }

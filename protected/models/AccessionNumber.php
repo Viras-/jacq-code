@@ -12,7 +12,7 @@
  * The followings are the available model relations:
  * @property LivingPlant[] $livingPlants
  */
-class AccessionNumber extends CActiveRecord {
+class AccessionNumber extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -98,15 +98,6 @@ class AccessionNumber extends CActiveRecord {
                 ));
     }
 
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
-    }
-    
     public function getAccessionNumber() {
         // check if we have a custom accession number
         if( !empty($this->custom) ) return $this->custom;

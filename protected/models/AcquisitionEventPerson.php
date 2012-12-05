@@ -7,7 +7,7 @@
  * @property integer $acquisition_event_id
  * @property integer $person_id
  */
-class AcquisitionEventPerson extends CActiveRecord {
+class AcquisitionEventPerson extends ActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -76,14 +76,5 @@ class AcquisitionEventPerson extends CActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Required for automatic logging of changes
-     */
-    public function behaviors() {
-        return array(
-            "ActiveRecordLogableBehavior" => 'application.behaviors.ActiveRecordLogableBehavior'
-        );
     }
 }
