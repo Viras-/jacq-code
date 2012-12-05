@@ -49,8 +49,6 @@ class JSONjsTreeController extends Controller {
         // optional citations which we look for (only for periodicals)
         $citations = null;
         
-        error_log('classificationFiltered');
-        
         // check if we have a periodical, since then we have to fetch all citations first
         if( $referenceType == 'periodical' ) {
             $citations = $this->classificationChildren($referenceType, $referenceId);
@@ -149,8 +147,6 @@ class JSONjsTreeController extends Controller {
      */
     private function classificationChildren($referenceType, $referenceID, $taxonID = 0) {
         $return = array();
-        
-        error_log('classificationChildren');
         
         // check for synonyms
         $synonyms = JSONClassificationController::japiSynonyms($referenceType, $referenceID, $taxonID);
