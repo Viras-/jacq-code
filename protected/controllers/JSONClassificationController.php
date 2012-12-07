@@ -505,7 +505,7 @@ class JSONClassificationController extends Controller {
         $dbCommand = $db->createCommand();
         
         // find all entries which are not parent of another entry
-        $dbRows = $dbCommand->select('`herbar_view`.GetScientificName(`ts`.`taxonID`, 0) AS scientificName, `ts`.`taxonID`')
+        $dbRows = $dbCommand->select('ts.taxonID')
                 ->from('tbl_tax_synonymy AS ts')
                 ->leftJoin('tbl_tax_classification tc', 'tc.parent_taxonID = ts.taxonID')
                 ->leftJoin('tbl_tax_synonymy children_syn', 'children_syn.source_citationID = ts.source_citationID AND children_syn.tax_syn_ID = tc.tax_syn_ID')
@@ -513,7 +513,8 @@ class JSONClassificationController extends Controller {
                         array(
                             'AND',
                             'ts.source_citationID = :source_citationID',
-                            'tc.classification_id IS NULL'
+                            'tc.classification_id IS NULL',
+                            'ts.acc_taxon_ID IS NULL'
                             ),
                         array(
                             ':source_citationID' => $citationID
@@ -527,10 +528,10 @@ class JSONClassificationController extends Controller {
         foreach( $dbRows as $dbRow ) {
             $taxonID = $dbRow['taxonID'];
             
-            $classification_info = array($dbRow['scientificName']);
+            $classification_info = array($taxonID);
             $parent = JSONClassificationController::japiGetParent('citation', $citationID, $taxonID);
             while( $parent['taxonID'] > 0 ) {
-                array_unshift($classification_info, $parent['referenceName']);
+                array_unshift($classification_info, $parent['taxonID']);
                 $parent = JSONClassificationController::japiGetParent('citation', $citationID, $parent['taxonID']);
             }
             
@@ -538,11 +539,20 @@ class JSONClassificationController extends Controller {
         }
         
         // now insert the classification info into the dump table
-        $ranks = array("kingdom", "subkingdom", "superdivision", "division", "phylum", "subdivision", "subphylum", "class", "subclass", "superorder", "order", "suborder", "family", "subfamily", "tribe", "subtribe", "genus", "subgenus", "section", "subsection", "series", "subseries", "species", "subspecies", "variety", "proles", "subvariety", "forma", "subforma", "grex", "lusus", "_unranked");
         foreach($classification_infos as $classification_info) {
             $columns = array( 'citationID' => $citationID );
-            foreach( $classification_info as $i => $scientificName ) {
-                $columns[$ranks[$i]] = $scientificName;
+            foreach( $classification_info as $taxonID ) {
+                $rank_name_row = $db->createCommand()
+                        ->select('herbar_view.GetScientificName(ts.taxonID, 0) AS scientificName, tr.rank')
+                        ->from('tbl_tax_species ts')
+                        ->leftJoin('tbl_tax_rank tr', 'tr.tax_rankID = ts.tax_rankID')
+                        ->where(array(
+                            'AND',
+                            'ts.taxonID = :taxonID'
+                        ), array(':taxonID' => $taxonID))
+                        ->queryRow();
+                
+                $columns[$rank_name_row['rank']] = $rank_name_row['scientificName'];
             }
             
             $db->createCommand()->insert('tbl_classification_dump', $columns);
