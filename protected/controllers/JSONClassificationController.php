@@ -488,6 +488,69 @@ class JSONClassificationController extends Controller {
         return $parent;
     }
     
+    /**
+     * Materialize a classification according to a given citation ID
+     * @param int $citationID
+     * @throws HttpException
+     */
+    public static function japiMaterializeClassification( $citationID ) {
+        $citationID = intval($citationID);
+        
+        if($citationID <= 0) {
+            throw new HttpException("Invalid citation ID");
+        }
+        
+        $db = JSONClassificationController::getDbHerbarInput();
+        
+        $dbCommand = $db->createCommand();
+        
+        // find all entries which are not parent of another entry
+        $dbRows = $dbCommand->select('`herbar_view`.GetScientificName(`ts`.`taxonID`, 0) AS scientificName, `ts`.`taxonID`')
+                ->from('tbl_tax_synonymy AS ts')
+                ->leftJoin('tbl_tax_classification tc', 'tc.parent_taxonID = ts.taxonID')
+                ->leftJoin('tbl_tax_synonymy children_syn', 'children_syn.source_citationID = ts.source_citationID AND children_syn.tax_syn_ID = tc.tax_syn_ID')
+                ->where(
+                        array(
+                            'AND',
+                            'ts.source_citationID = :source_citationID',
+                            'tc.classification_id IS NULL'
+                            ),
+                        array(
+                            ':source_citationID' => $citationID
+                            )
+                )->queryAll();
+        
+        // prepare main array for tree information
+        $classification_infos = array();
+        
+        // cycle through entry and find parents
+        foreach( $dbRows as $dbRow ) {
+            $taxonID = $dbRow['taxonID'];
+            
+            $classification_info = array($dbRow['scientificName']);
+            $parent = JSONClassificationController::japiGetParent('citation', $citationID, $taxonID);
+            while( $parent['taxonID'] > 0 ) {
+                array_unshift($classification_info, $parent['referenceName']);
+                $parent = JSONClassificationController::japiGetParent('citation', $citationID, $parent['taxonID']);
+            }
+            
+            $classification_infos[] = $classification_info;
+        }
+        
+        // now insert the classification info into the dump table
+        $ranks = array("kingdom", "subkingdom", "superdivision", "division", "phylum", "subdivision", "subphylum", "class", "subclass", "superorder", "order", "suborder", "family", "subfamily", "tribe", "subtribe", "genus", "subgenus", "section", "subsection", "series", "subseries", "species", "subspecies", "variety", "proles", "subvariety", "forma", "subforma", "grex", "lusus", "_unranked");
+        foreach($classification_infos as $classification_info) {
+            $columns = array( 'citationID' => $citationID );
+            foreach( $classification_info as $i => $scientificName ) {
+                $columns[$ranks[$i]] = $scientificName;
+            }
+            
+            $db->createCommand()->insert('tbl_classification_dump', $columns);
+        }
+
+        return true;
+    }
+    
     public function actions() {
         return array(
             'japi'=>'JApi',
