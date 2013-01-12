@@ -9,27 +9,18 @@
  * @property integer $acquisition_type_id
  * @property integer $location_id
  * @property string $number
- * @property integer $altitude_min
- * @property integer $altitude_max
- * @property integer $exactness
- * @property integer $latitude_degrees
- * @property integer $latitude_minutes
- * @property integer $latitude_seconds
- * @property string $latitude_half
- * @property integer $longitude_degrees
- * @property integer $longitude_minutes
- * @property integer $longitude_seconds
- * @property string $longitude_half
  * @property string $annotation
+ * @property integer $location_coordinates_id
  *
  * The followings are the available model relations:
  * @property AcquisitionDate $acquisitionDate
  * @property AcquisitionType $acquisitionType
  * @property Location $location
+ * @property LocationCoordinates $locationCoordinates
  * @property Person[] $tblPeople
  * @property BotanicalObject[] $botanicalObjects
  */
-class AcquisitionEvent extends ActiveRecord {
+class AcquisitionEvent extends CActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -54,13 +45,12 @@ class AcquisitionEvent extends ActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('acquisition_date_id, acquisition_type_id', 'required'),
-            array('acquisition_date_id, acquisition_type_id, location_id, altitude_min, altitude_max, exactness, latitude_degrees, latitude_minutes, latitude_seconds, longitude_degrees, longitude_minutes, longitude_seconds', 'numerical', 'integerOnly' => true),
-            array('latitude_half, longitude_half', 'length', 'max' => 1),
+            array('acquisition_date_id, acquisition_type_id, location_coordinates_id', 'required'),
+            array('acquisition_date_id, acquisition_type_id, location_id, location_coordinates_id', 'numerical', 'integerOnly' => true),
             array('number, annotation', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, acquisition_date_id, acquisition_type_id, location_id, number, altitude_min, altitude_max, exactness, annotation', 'safe', 'on' => 'search'),
+            array('id, acquisition_date_id, acquisition_type_id, location_id, number, annotation, location_coordinates_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -74,6 +64,7 @@ class AcquisitionEvent extends ActiveRecord {
             'acquisitionDate' => array(self::BELONGS_TO, 'AcquisitionDate', 'acquisition_date_id'),
             'acquisitionType' => array(self::BELONGS_TO, 'AcquisitionType', 'acquisition_type_id'),
             'location' => array(self::BELONGS_TO, 'Location', 'location_id'),
+            'locationCoordinates' => array(self::BELONGS_TO, 'LocationCoordinates', 'location_coordinates_id'),
             'tblPeople' => array(self::MANY_MANY, 'Person', 'tbl_acquisition_event_person(acquisition_event_id, person_id)'),
             'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'acquisition_event_id'),
         );
@@ -84,17 +75,13 @@ class AcquisitionEvent extends ActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => Yii::t('jacq', 'ID'),
-            'acquisition_date_id' => Yii::t('jacq', 'Acquisition Date'),
-            'acquisition_type_id' => Yii::t('jacq', 'Acquisition Type'),
-            'location_id' => Yii::t('jacq', 'Location'),
-            'number' => Yii::t('jacq', 'Number'),
-            'altitude' => Yii::t('jacq', 'Altitude'),
-            'exactness' => Yii::t('jacq', 'Exactness'),
-            'person_name' => Yii::t('jacq', 'Acquisition Person'),
-            'latitude' => Yii::t('jacq', 'Latitude'),
-            'longitude' => Yii::t('jacq', 'Longitude'),
-            'annotation' => Yii::t('jacq', 'Annotation'),
+            'id' => 'ID',
+            'acquisition_date_id' => 'Acquisition Date',
+            'acquisition_type_id' => 'Acquisition Type',
+            'location_id' => 'Location',
+            'number' => 'Number',
+            'annotation' => 'Annotation',
+            'location_coordinates_id' => 'Location Coordinates',
         );
     }
 
@@ -113,12 +100,12 @@ class AcquisitionEvent extends ActiveRecord {
         $criteria->compare('acquisition_type_id', $this->acquisition_type_id);
         $criteria->compare('location_id', $this->location_id);
         $criteria->compare('number', $this->number, true);
-        $criteria->compare('altitude_min', $this->altitude_min);
-        $criteria->compare('altitude_max', $this->altitude_max);
-        $criteria->compare('exactness', $this->exactness);
+        $criteria->compare('annotation', $this->annotation, true);
+        $criteria->compare('location_coordinates_id', $this->location_coordinates_id);
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
     }
+
 }

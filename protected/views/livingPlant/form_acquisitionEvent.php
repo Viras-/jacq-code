@@ -76,36 +76,36 @@
 </div>
 
 <div class="row">
-    <?php echo $form->labelEx($model_acquisitionEvent, 'altitude'); ?>
-    <?php echo $form->textField($model_acquisitionEvent, 'altitude_min', array( 'size' => 5 ) ); ?>
+    <?php echo $form->labelEx($model_locationCoordinates, 'altitude'); ?>
+    <?php echo $form->textField($model_locationCoordinates, 'altitude_min', array( 'size' => 5 ) ); ?>
     -
-    <?php echo $form->textField($model_acquisitionEvent, 'altitude_max', array( 'size' => 5 )); ?>
-    <?php echo $form->error($model_acquisitionEvent, 'altitude'); ?>
+    <?php echo $form->textField($model_locationCoordinates, 'altitude_max', array( 'size' => 5 )); ?>
+    <?php echo $form->error($model_locationCoordinates, 'altitude'); ?>
 </div>
 
 <div class="row">
     <table>
         <tr>
             <td>
-            <?php echo $form->labelEx($model_acquisitionEvent, 'latitude'); ?>
-            <?php echo $form->textField($model_acquisitionEvent, 'latitude_degrees', array( 'size' => 3 ) ); ?>
-            <?php echo $form->textField($model_acquisitionEvent, 'latitude_minutes', array( 'size' => 2 ) ); ?>
-            <?php echo $form->textField($model_acquisitionEvent, 'latitude_seconds', array( 'size' => 2 ) ); ?>
-            <?php echo $form->dropDownList($model_acquisitionEvent, 'latitude_half', array( 'N' => 'N', 'S' => 'S' ) ); ?>
-            <?php echo $form->error($model_acquisitionEvent, 'latitude_degrees'); ?>
+            <?php echo $form->labelEx($model_locationCoordinates, 'latitude'); ?>
+            <?php echo $form->textField($model_locationCoordinates, 'latitude_degrees', array( 'size' => 3 ) ); ?>
+            <?php echo $form->textField($model_locationCoordinates, 'latitude_minutes', array( 'size' => 2 ) ); ?>
+            <?php echo $form->textField($model_locationCoordinates, 'latitude_seconds', array( 'size' => 2 ) ); ?>
+            <?php echo $form->dropDownList($model_locationCoordinates, 'latitude_half', array( 'N' => 'N', 'S' => 'S' ) ); ?>
+            <?php echo $form->error($model_locationCoordinates, 'latitude_degrees'); ?>
             </td>
             <td>
-            <?php echo $form->labelEx($model_acquisitionEvent, 'longitude'); ?>
-            <?php echo $form->textField($model_acquisitionEvent, 'longitude_degrees', array( 'size' => 3 ) ); ?>
-            <?php echo $form->textField($model_acquisitionEvent, 'longitude_minutes', array( 'size' => 2 ) ); ?>
-            <?php echo $form->textField($model_acquisitionEvent, 'longitude_seconds', array( 'size' => 2 ) ); ?>
-            <?php echo $form->dropDownList($model_acquisitionEvent, 'longitude_half', array( 'E' => 'E', 'W' => 'W' ) ); ?>
-            <?php echo $form->error($model_acquisitionEvent, 'longitude_degrees'); ?>
+            <?php echo $form->labelEx($model_locationCoordinates, 'longitude'); ?>
+            <?php echo $form->textField($model_locationCoordinates, 'longitude_degrees', array( 'size' => 3 ) ); ?>
+            <?php echo $form->textField($model_locationCoordinates, 'longitude_minutes', array( 'size' => 2 ) ); ?>
+            <?php echo $form->textField($model_locationCoordinates, 'longitude_seconds', array( 'size' => 2 ) ); ?>
+            <?php echo $form->dropDownList($model_locationCoordinates, 'longitude_half', array( 'E' => 'E', 'W' => 'W' ) ); ?>
+            <?php echo $form->error($model_locationCoordinates, 'longitude_degrees'); ?>
             </td>
             <td>
-            <?php echo $form->labelEx($model_acquisitionEvent, 'exactness'); ?>
-            <?php echo $form->textField($model_acquisitionEvent, 'exactness', array( 'size' => 5 )); ?>
-            <?php echo $form->error($model_acquisitionEvent, 'exactness'); ?>
+            <?php echo $form->labelEx($model_locationCoordinates, 'exactness'); ?>
+            <?php echo $form->textField($model_locationCoordinates, 'exactness', array( 'size' => 5 )); ?>
+            <?php echo $form->error($model_locationCoordinates, 'exactness'); ?>
             </td>
         </tr>
     </table>

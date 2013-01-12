@@ -69,6 +69,7 @@ class LivingPlantController extends Controller {
         $model_livingPlant = new LivingPlant;
         $model_botanicalObject = new BotanicalObject;
         $model_accessionNumber = new AccessionNumber;
+        $model_locationCoordinates = new LocationCoordinates;
         
         $model_livingPlant->id0 = $model_botanicalObject;
         
@@ -78,6 +79,7 @@ class LivingPlantController extends Controller {
             $model_livingPlant->attributes = $_POST['LivingPlant'];
             $model_botanicalObject->attributes = $_POST['BotanicalObject'];
             $model_accessionNumber->attributes = $_POST['AccessionNumber'];
+            $model_locationCoordinates->attributes = $_POST['LocationCoordinates'];
             
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
@@ -89,6 +91,10 @@ class LivingPlantController extends Controller {
                     $model_location = Location::getByName($locationName);
                     $model_acquisitionEvent->location_id = $model_location->id;
                 }
+
+                // save coordinates info
+                $model_locationCoordinates->save();
+                $model_acquisitionEvent->location_coordinates_id = $model_locationCoordinates->id;
 
                 // Save acquisition-event and procede
                 if ($model_acquisitionEvent->save()) {
@@ -185,6 +191,7 @@ class LivingPlantController extends Controller {
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject,
             'model_accessionNumber' => $model_accessionNumber,
+            'model_locationCoordinates' => $model_locationCoordinates,
         ));
     }
 
@@ -199,6 +206,7 @@ class LivingPlantController extends Controller {
         $model_acquisitionEvent = $model_botanicalObject->acquisitionEvent;
         $model_acquisitionDate = $model_acquisitionEvent->acquisitionDate;
         $model_accessionNumber = $model_livingPlant->accessionNumber;
+        $model_locationCoordinates = $model_acquisitionEvent->locationCoordinates;
         
         // Check if we have a correct submission
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'])) {
@@ -206,6 +214,7 @@ class LivingPlantController extends Controller {
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
             $model_livingPlant->attributes = $_POST['LivingPlant'];
             $model_botanicalObject->attributes = $_POST['BotanicalObject'];
+            $model_locationCoordinates->attributes = $_POST['LocationCoordinates'];
             
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
@@ -217,6 +226,10 @@ class LivingPlantController extends Controller {
                     $model_location = Location::getByName($locationName);
                     $model_acquisitionEvent->location_id = $model_location->id;
                 }
+                
+                // save coordinates info
+                $model_locationCoordinates->save();
+                $model_acquisitionEvent->location_coordinates_id = $model_locationCoordinates->id;
 
                 // Check if a new (unknown) agent was entered
                 if (strlen($personName) > 0) {
@@ -346,6 +359,7 @@ class LivingPlantController extends Controller {
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject,
             'model_accessionNumber' => $model_accessionNumber,
+            'model_locationCoordinates' => $model_locationCoordinates,
         ));
     }
 
