@@ -11,7 +11,7 @@
  * @property AcquisitionEvent[] $acquisitionEvents
  * @property LocationGeonames $locationGeonames
  */
-class Location extends ActiveRecord {
+class Location extends CActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -60,8 +60,8 @@ class Location extends ActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => Yii::t('jacq', 'ID'),
-            'location' => Yii::t('jacq', 'Location'),
+            'id' => 'ID',
+            'location' => 'Location',
         );
     }
 
