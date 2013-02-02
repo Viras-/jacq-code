@@ -16,6 +16,7 @@ else {
         <td width="20%">
         <?php
         echo CHtml::activeHiddenField($model_certificate, "[$model_form_id]id");
+        echo CHtml::activeHiddenField($model_certificate, "[$model_form_id]delete");
 
         echo CHtml::activeDropDownList(
                 $model_certificate,
@@ -45,36 +46,11 @@ else {
         </td>
         <td>
         <?php
-        echo CHtml::imageButton('images/disk.png', array(
-            'onclick' => "
-                var id_prefix = 'Certificate_" . $model_form_id . "_';
-                var data = {
-                    id: $('#' + id_prefix + 'id').val(),
-                    living_plant_id: $('#BotanicalObject_id').val(),
-                    certificate_type_id: $('#' + id_prefix + 'certificate_type_id').val(),
-                    number: $('#' + id_prefix + 'number').val(),
-                    annotation: $('#' + id_prefix + 'annotation').val(),
-                };
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'index.php?r=livingPlant/ajaxCertificateStore',
-                    data: data
-                }).done(function(data) {
-                    $('#' + id_prefix + 'id').val(data);
-                });
-                return false;",
-        ));
-        ?>
-        &nbsp;
-        <?php
         echo CHtml::imageButton('images/delete.png', array(
             'onclick' => "
-                $.ajax({
-                    url: 'index.php?r=livingPlant/ajaxCertificateDelete&id=" . $model_form_id . "'
-                }).done(function(data) {
-                    $('#certificates_row_" . $model_form_id . "').remove();
-                });
+                $('#certificates_row_{$model_form_id}').hide();
+                $('#Certificate_{$model_form_id}_delete').val(1);
+
                 return false;"
         ));
         ?>

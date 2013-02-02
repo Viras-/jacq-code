@@ -90,15 +90,12 @@
     
 </script>
 
-<?php
-if( !$model_livingPlant->isNewRecord ) {
-?>
 <div class="row">
-    <a href="#" onclick="$('#certificates_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq', 'Certificates & Numbers'); ?></a>
+    <?php
+    // render certificates form
+    require('form_certificates.php');
+    ?>
 </div>
-<?php
-}
-?>
 <div class="row">
     <?php echo $form->labelEx($model_livingPlant, 'phyto_control'); ?>
     <?php echo $form->checkbox($model_livingPlant, 'phyto_control'); ?>

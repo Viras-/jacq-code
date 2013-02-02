@@ -15,6 +15,10 @@
  * @property LivingPlant $livingPlant
  */
 class Certificate extends ActiveRecord {
+    /**
+     * @var int helper attribute for deleting certificate entries
+     */
+    public $delete = 0;
 
     /**
      * Returns the static model of the specified AR class.

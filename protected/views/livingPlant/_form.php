@@ -123,25 +123,4 @@
     <?php
     $this->endWidget('zii.widgets.jui.CJuiDialog');
     ?>
-
-    <?php
-    // widget for chosing the organisation
-    $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-        'id' => 'certificates_dialog',
-        // additional javascript options for the dialog plugin
-        'options' => array(
-            'title' => Yii::t('jacq', 'Certificates'),
-            'autoOpen' => false,
-            'resizable' => false,
-            'width' => 700,
-            'height' => 400,
-            'modal' => true,
-        ),
-    ));
-    
-    // render certificates form
-    require('form_certificates.php');
-
-    $this->endWidget('zii.widgets.jui.CJuiDialog');
-    ?>
 </div><!-- form -->

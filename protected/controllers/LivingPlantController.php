@@ -174,6 +174,23 @@ class LivingPlantController extends Controller {
                                         $separation_model->save();
                                     }
                                 }
+                                
+                                // Check for certificate entries
+                                if( isset($_POST['Certificate']) ) {
+                                    foreach($_POST['Certificate'] as $i => $certificate) {
+                                        // auto-generate id
+                                        unset($certificate['id']);
+                                        
+                                        // check for "deleted" entry
+                                        if( $certificate['delete'] > 0 ) continue;
+                                        
+                                        // create new model and save it
+                                        $model_certificate = new Certificate();
+                                        $model_certificate->attributes = $certificate;
+                                        $model_certificate->living_plant_id = $model_livingPlant->id;
+                                        $model_certificate->save();
+                                    }
+                                }
 
                                 // Redirect to update page directly
                                 $this->redirect(array('update', 'id' => $model_livingPlant->id));
@@ -341,6 +358,28 @@ class LivingPlantController extends Controller {
                                 $separation_model->attributes = $separation;
                                 $separation_model->botanical_object_id = $model_botanicalObject->id;
                                 $separation_model->save();
+                            }
+                        }
+                        
+                        // Check for certificate entries
+                        if( isset($_POST['Certificate']) ) {
+                            foreach($_POST['Certificate'] as $i => $certificate) {
+                                // make sure we have a clean integer as id
+                                $certificate['id'] = intval($certificate['id']);
+                                
+                                // check for "deleted" entry
+                                if( $certificate['delete'] > 0 ) {
+                                    if($certificate['id'] > 0) {
+                                        Certificate::model()->deleteByPk($certificate['id']);
+                                        continue;
+                                    }
+                                }
+
+                                // create new model and save it
+                                $model_certificate = new Certificate();
+                                $model_certificate->attributes = $certificate;
+                                $model_certificate->living_plant_id = $model_livingPlant->id;
+                                $model_certificate->save();
                             }
                         }
 
