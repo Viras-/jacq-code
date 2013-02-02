@@ -36,7 +36,7 @@ class LivingPlantController extends Controller {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxCertificateDelete', 'ajaxCertificateStore'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -84,7 +84,6 @@ class LivingPlantController extends Controller {
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
                 $locationName = trim($_POST['locationName']);
-                $personName = trim($_POST['AcqusitionEvent_personName']);
 
                 // Check if a new (unknown) location was entered
                 if ($model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0) {
@@ -98,16 +97,32 @@ class LivingPlantController extends Controller {
 
                 // Save acquisition-event and procede
                 if ($model_acquisitionEvent->save()) {
-                    // Check if a new (unknown) agent was entered and add it to acquisition event
-                    if (strlen($personName) > 0) {
-                        $model_person = Person::getByName($personName);
-                        $model_acquisitionEventPerson = new AcquisitionEventPerson;
-                        $model_acquisitionEventPerson->acquisition_event_id = $model_acquisitionEvent->id;
-                        $model_acquisitionEventPerson->person_id = $model_person->id;
-                        $model_acquisitionEventPerson->save();
-                    }
-
                     $model_botanicalObject->acquisition_event_id = $model_acquisitionEvent->id;
+
+                    // check for acquisition persons
+                    if( isset($_POST['Person']) ) {
+                        foreach($_POST['Person'] as $i => $person) {
+                            // remove fake id
+                            unset($person['id']);
+                            
+                            // check for "deleted" entry
+                            if( $person['delete'] > 0 ) continue;
+                            
+                            // try to find fitting person entry
+                            $model_person = Person::getByName($person['name']);
+                            if( $model_person == NULL ) {
+                                $model_person = new Person();
+                                $model_person->attributes = $person;
+                                $model_person->save();
+                            }
+                            
+                            // now add a connection to the person
+                            $model_acquisitionEventPerson = new AcquisitionEventPerson();
+                            $model_acquisitionEventPerson->acquisition_event_id = $model_acquisitionEvent->id;
+                            $model_acquisitionEventPerson->person_id = $model_person->id;
+                            $model_acquisitionEventPerson->save();
+                        }
+                    }
 
                     // Check if we have a separation selected
                     $determinedByName = trim($_POST['determinedByName']);
@@ -236,7 +251,6 @@ class LivingPlantController extends Controller {
             if ($model_acquisitionDate->save()) {
                 $model_acquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
                 $locationName = trim($_POST['locationName']);
-                $personName = trim($_POST['AcqusitionEvent_personName']);
 
                 // Check if a new (unknown) location was entered
                 if ($model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0) {
@@ -248,13 +262,47 @@ class LivingPlantController extends Controller {
                 $model_locationCoordinates->save();
                 $model_acquisitionEvent->location_coordinates_id = $model_locationCoordinates->id;
 
-                // Check if a new (unknown) agent was entered
-                if (strlen($personName) > 0) {
-                    $model_person = Person::getByName($personName);
-                    $model_acquisitionEventPerson = new AcquisitionEventPerson;
-                    $model_acquisitionEventPerson->acquisition_event_id = $model_acquisitionEvent->id;
-                    $model_acquisitionEventPerson->person_id = $model_person->id;
-                    $model_acquisitionEventPerson->save();
+                // check for acquisition persons
+                if( isset($_POST['Person']) ) {
+                    foreach($_POST['Person'] as $i => $person) {
+                        // make clean id
+                        $person['id'] = intval($person['id']);
+
+                        // check for "deleted" entry
+                        if( $person['delete'] > 0 ) {
+                            if( $person['id'] > 0 ) {
+                                // remove all connection entries
+                                AcquisitionEventPerson::model()->deleteAllByAttributes(array(
+                                    'acquisition_event_id' => $model_acquisitionEvent->id,
+                                    'person_id' => $person['id']
+                                ));
+                            }
+                            continue;
+                        }
+                        
+                        // check if id is valid or if this is a new entry
+                        $model_acquisitionEventPerson = AcquisitionEventPerson::model()->findByAttributes(array(
+                            'acquisition_event_id' => $model_acquisitionEvent->id,
+                            'person_id' => $person['id']
+                        ));
+                        // create new empty entry
+                        if( $model_acquisitionEventPerson == NULL ) {
+                            $model_acquisitionEventPerson = new AcquisitionEventPerson();
+                        }
+
+                        // try to find fitting person entry
+                        $model_person = Person::getByName($person['name']);
+                        if( $model_person == NULL ) {
+                            $model_person = new Person();
+                            $model_person->attributes = $person;
+                            $model_person->save();
+                        }
+
+                        // now add a connection to the person
+                        $model_acquisitionEventPerson->acquisition_event_id = $model_acquisitionEvent->id;
+                        $model_acquisitionEventPerson->person_id = $model_person->id;
+                        $model_acquisitionEventPerson->save();
+                    }
                 }
 
                 if ($model_acquisitionEvent->save()) {
@@ -371,8 +419,8 @@ class LivingPlantController extends Controller {
                                 if( $certificate['delete'] > 0 ) {
                                     if($certificate['id'] > 0) {
                                         Certificate::model()->deleteByPk($certificate['id']);
-                                        continue;
                                     }
+                                    continue;
                                 }
 
                                 // create new model and save it
@@ -491,38 +539,16 @@ class LivingPlantController extends Controller {
     }
     
     /**
-     * add / update a certificate 
+     * renders form for entering a new certificate 
      */
-    public function actionAjaxCertificateStore() {
-        $id = (isset($_POST['id'])) ? intval($_POST['id']) : 0;
-        unset($_POST['id']);
-
-        // load or create certificate entry
-        $model_certificate = ($id > 0) ? Certificate::model()->findByPk($id) : new Certificate;
-        // save updated certificate information
-        $model_certificate->attributes = $_POST;
-        $model_certificate->save();
+    public function actionAjaxAcquisitionPerson() {
+        $model_acquisitionPerson = new Person();
         
-        // echo id of model certificate
-        echo $model_certificate->id;
+        $this->renderPartial('form_acquisitionPerson', array(
+            'model_acquisitionPerson' => $model_acquisitionPerson
+        ), false, true);
     }
     
-    /**
-     * remove a certificate 
-     */
-    public function actionAjaxCertificateDelete($id) {
-        $id = intval($id);
-        
-        // check for valid id
-        if( $id > 0 ) {
-            // find model entry & delete it
-            $model_certificate = Certificate::model()->findByPk($id);
-            if( $model_certificate != null ) {
-                $model_certificate->delete();
-            }
-        }
-    }
-
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.

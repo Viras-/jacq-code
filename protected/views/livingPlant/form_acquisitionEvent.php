@@ -5,29 +5,7 @@
 </div>
 
 <div class="row">
-    <?php echo $form->labelEx($model_acquisitionEvent, 'person_name'); ?>
-    <?php
-    // Add text-input for each collector
-    foreach( $model_acquisitionEvent->tblPeople as $index => $model_person ) {
-        echo CHtml::textField('AcqusitionEvent_personName_' . $index, $model_person->name, array( 'readonly' => 'readonly' ) );
-        ?>
-        <br />
-        <?php
-    }
-    ?>
-    <?php
-    // Add addition field for new collector
-    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-        'name' => 'AcqusitionEvent_personName',
-        'sourceUrl' => 'index.php?r=autoComplete/person',
-        // additional javascript options for the autocomplete plugin
-        'options' => array(
-            'minLength' => '2',
-        ),
-        'value' => '',
-    ));
-    ?>
-    <?php echo $form->error($model_acquisitionEvent, 'tblPeople'); ?>
+    <?php require("form_acquisitionPersons.php"); ?>
 </div>
 
 <div class="row">

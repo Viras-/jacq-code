@@ -12,6 +12,10 @@
  * @property BotanicalObject[] $botanicalObjects
  */
 class Person extends ActiveRecord {
+    /**
+     * @var helper attribute for deleting a person entry
+     */
+    public $delete = 0;
 
     /**
      * Returns the static model of the specified AR class.
