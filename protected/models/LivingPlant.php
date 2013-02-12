@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'tbl_living_plant':
  * @property integer $id
+ * @property integer $accession_number
  * @property string $ipen_number
  * @property integer $ipen_locked
  * @property integer $phyto_control
@@ -15,10 +16,9 @@
  * @property integer $index_seminum_type_id
  *
  * The followings are the available model relations:
+ * @property AlternativeAccessionNumber[] $alternativeAccessionNumbers
  * @property Certificate[] $certificates
- * @property IpenExternal[] $ipenExternals
  * @property BotanicalObject $id0
- * @property AccessionNumber $accessionNumber
  * @property IndexSeminumType $indexSeminumType
  * @property LivingPlantTreeRecordFilePage[] $livingPlantTreeRecordFilePages
  * @property Relevancy[] $relevancies
@@ -26,7 +26,6 @@
 class LivingPlant extends ActiveRecord {
     public $scientificName_search;
     public $organisation_search;
-    public $accessionNumber_search;
     public $location_search;
     
     public function init() {
@@ -60,8 +59,8 @@ class LivingPlant extends ActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id, accession_number_id, index_seminum_type_id', 'required'),
-            array('id, ipen_locked, phyto_control, accession_number_id, index_seminum, index_seminum_type_id', 'numerical', 'integerOnly' => true),
+            array('id', 'required'),
+            array('id, accession_number, ipen_locked, phyto_control, index_seminum, index_seminum_type_id', 'numerical', 'integerOnly' => true),
             array('ipen_number, place_number', 'length', 'max' => 20),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
@@ -69,7 +68,7 @@ class LivingPlant extends ActiveRecord {
             array('culture_notes', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('scientificName_search, organisation_search, accessionNumber_search, location_search', 'safe', 'on' => 'search'),
+            array('scientificName_search, organisation_search, accession_number, location_search', 'safe', 'on' => 'search'),
         );
     }
 
@@ -80,10 +79,9 @@ class LivingPlant extends ActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'alternativeAccessionNumbers' => array(self::HAS_MANY, 'AlternativeAccessionNumber', 'living_plant_id'),
             'certificates' => array(self::HAS_MANY, 'Certificate', 'living_plant_id'),
-            'ipenExternals' => array(self::HAS_MANY, 'IpenExternal', 'living_plant_id'),
             'id0' => array(self::BELONGS_TO, 'BotanicalObject', 'id'),
-            'accessionNumber' => array(self::BELONGS_TO, 'AccessionNumber', 'accession_number_id'),
             'indexSeminumType' => array(self::BELONGS_TO, 'IndexSeminumType', 'index_seminum_type_id'),
             'livingPlantTreeRecordFilePages' => array(self::HAS_MANY, 'LivingPlantTreeRecordFilePage', 'living_plant_id'),
             'relevancies' => array(self::HAS_MANY, 'Relevancy', 'living_plant_id'),
@@ -99,7 +97,7 @@ class LivingPlant extends ActiveRecord {
             'ipen_number' => Yii::t('jacq', 'IPEN Number'),
             'ipen_locked' => Yii::t('jacq', 'IPEN Locked'),
             'phyto_control' => Yii::t('jacq', 'Phyto Control'),
-            'accession_number_id' => Yii::t('jacq', 'Accession Number'),
+            'accession_number' => Yii::t('jacq', 'Accession Number'),
             'place_number' => Yii::t('jacq', 'Place Number'),
             'index_seminum' => Yii::t('jacq', 'Index Seminum'),
             'culture_notes' => Yii::t('jacq', 'Culture Notes'),
@@ -113,12 +111,12 @@ class LivingPlant extends ActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria;
-        $criteria->with = array('id0', 'accessionNumber', 'id0.organisation', 'id0.acquisitionEvent.location');
+        $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location');
         
         $criteria->compare('`herbar_view`.GetScientificName(`id0`.`taxon_id`, 0)', $this->scientificName_search, true);
         $criteria->compare('organisation.description', $this->organisation_search, true);
-        $criteria->compare("CONCAT_WS('-',accessionNumber.year,accessionNumber.id,accessionNumber.custom)", $this->accessionNumber_search, true);
         $criteria->compare('location.location', $this->location_search, true);
+        $criteria->compare('accession_number', $this->accession_number, true);
         
         // check if the user is allowed to view plants from the greenhouse
         if( !Yii::app()->user->checkAccess('acs_greenhouse') ) {
@@ -136,10 +134,6 @@ class LivingPlant extends ActiveRecord {
                             'organisation_search' => array(
                                 'asc' => 'organisation.description',
                                 'desc' => 'organisation.description DESC'
-                            ),
-                            'accessionNumber_search' => array(
-                                'asc' => 'CONCAT_WS('-',accessionNumber.year,accessionNumber.id,accessionNumber.custom)',
-                                'desc' => 'CONCAT_WS('-',accessionNumber.year,accessionNumber.id,accessionNumber.custom) DESC'
                             ),
                             'location_search' => array(
                                 'asc' => 'location.location',

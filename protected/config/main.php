@@ -85,6 +85,14 @@ return array(
             'charset' => 'utf8',
             'class' => 'CDbConnection'
         ),
+        'dbImport' => array(
+            'connectionString' => 'mysql:host=localhost;dbname=livingplants_import',
+            'emulatePrepare' => true,
+            'username' => 'livingplants_imp',
+            'password' => 'livingplants_import',
+            'charset' => 'utf8',
+            'class' => 'CDbConnection'
+        ),
         'errorHandler' => array(
             // use 'site/error' action to display errors
             'errorAction' => 'site/error',

@@ -68,17 +68,13 @@ class LivingPlantController extends Controller {
         $model_acquisitionEvent = new AcquisitionEvent;
         $model_livingPlant = new LivingPlant;
         $model_botanicalObject = new BotanicalObject;
-        $model_accessionNumber = new AccessionNumber;
         $model_locationCoordinates = new LocationCoordinates;
         
-        $model_livingPlant->id0 = $model_botanicalObject;
-        
-        if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['AccessionNumber'])) {
+        if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['LocationCoordinates'])) {
             $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
             $model_livingPlant->attributes = $_POST['LivingPlant'];
             $model_botanicalObject->attributes = $_POST['BotanicalObject'];
-            $model_accessionNumber->attributes = $_POST['AccessionNumber'];
             $model_locationCoordinates->attributes = $_POST['LocationCoordinates'];
             
             if ($model_acquisitionDate->save()) {
@@ -137,79 +133,75 @@ class LivingPlantController extends Controller {
                     if ($model_botanicalObject->save()) {
                         $model_livingPlant->id = $model_botanicalObject->id;
 
-                        if ($model_accessionNumber->save()) {
-                            $model_livingPlant->accession_number_id = $model_accessionNumber->id;
+                        if ($model_livingPlant->save()) {
+                            // Check if a tree record was selected and add it if necessary
+                            if (isset($_POST['TreeRecord']['tree_record_file_page_id'])) {
+                                $tree_record_file_page_id = intval($_POST['TreeRecord']['tree_record_file_page_id']);
+                                if ($tree_record_file_page_id > 0) {
+                                    $model_livingPlantTreeRecordFilePage = new LivingPlantTreeRecordFilePage;
+                                    $model_livingPlantTreeRecordFilePage->tree_record_file_page_id = $tree_record_file_page_id;
+                                    $model_livingPlantTreeRecordFilePage->living_plant_id = $model_livingPlant->id;
 
-                            if ($model_livingPlant->save()) {
-                                // Check if a tree record was selected and add it if necessary
-                                if (isset($_POST['TreeRecord']['tree_record_file_page_id'])) {
-                                    $tree_record_file_page_id = intval($_POST['TreeRecord']['tree_record_file_page_id']);
-                                    if ($tree_record_file_page_id > 0) {
-                                        $model_livingPlantTreeRecordFilePage = new LivingPlantTreeRecordFilePage;
-                                        $model_livingPlantTreeRecordFilePage->tree_record_file_page_id = $tree_record_file_page_id;
-                                        $model_livingPlantTreeRecordFilePage->living_plant_id = $model_livingPlant->id;
-
-                                        $model_livingPlantTreeRecordFilePage->save();
-                                    }
+                                    $model_livingPlantTreeRecordFilePage->save();
                                 }
-
-                                // Check if a relevancy type was selected & add it
-                                if (isset($_POST['RelevancyType'])) {
-                                    foreach ($_POST['RelevancyType'] as $relevancy_type_id) {
-                                        $model_relevancy = new Relevancy;
-                                        $model_relevancy->living_plant_id = $model_livingPlant->id;
-                                        $model_relevancy->relevancy_type_id = $relevancy_type_id;
-                                        $model_relevancy->save();
-                                    }
-                                }
-
-                                // Check if a sex was selected & add it
-                                if (isset($_POST['Sex'])) {
-                                    foreach ($_POST['Sex'] as $sex_id) {
-                                        $model_botanicalObjectSex = new BotanicalObjectSex;
-                                        $model_botanicalObjectSex->botanical_object_id = $model_livingPlant->id;
-                                        $model_botanicalObjectSex->sex_id = $sex_id;
-                                        $model_botanicalObjectSex->save();
-                                    }
-                                }
-
-                                // check for separation entries and update/add them
-                                if( isset($_POST['Separation']) ) {
-                                    // cycle through all posted separation entries
-                                    foreach($_POST['Separation'] as $i => $separation) {
-                                        // only handle separation entry if it has a type set
-                                        if( empty($separation['separation_type_id']) ) continue;
-
-                                        // check if this is an update and load the model
-                                        $separation_model = new Separation;
-
-                                        // set the attributes & save the separation entry
-                                        $separation_model->attributes = $separation;
-                                        $separation_model->botanical_object_id = $model_botanicalObject->id;
-                                        $separation_model->save();
-                                    }
-                                }
-                                
-                                // Check for certificate entries
-                                if( isset($_POST['Certificate']) ) {
-                                    foreach($_POST['Certificate'] as $i => $certificate) {
-                                        // auto-generate id
-                                        unset($certificate['id']);
-                                        
-                                        // check for "deleted" entry
-                                        if( $certificate['delete'] > 0 ) continue;
-                                        
-                                        // create new model and save it
-                                        $model_certificate = new Certificate();
-                                        $model_certificate->attributes = $certificate;
-                                        $model_certificate->living_plant_id = $model_livingPlant->id;
-                                        $model_certificate->save();
-                                    }
-                                }
-
-                                // Redirect to update page directly
-                                $this->redirect(array('update', 'id' => $model_livingPlant->id));
                             }
+
+                            // Check if a relevancy type was selected & add it
+                            if (isset($_POST['RelevancyType'])) {
+                                foreach ($_POST['RelevancyType'] as $relevancy_type_id) {
+                                    $model_relevancy = new Relevancy;
+                                    $model_relevancy->living_plant_id = $model_livingPlant->id;
+                                    $model_relevancy->relevancy_type_id = $relevancy_type_id;
+                                    $model_relevancy->save();
+                                }
+                            }
+
+                            // Check if a sex was selected & add it
+                            if (isset($_POST['Sex'])) {
+                                foreach ($_POST['Sex'] as $sex_id) {
+                                    $model_botanicalObjectSex = new BotanicalObjectSex;
+                                    $model_botanicalObjectSex->botanical_object_id = $model_livingPlant->id;
+                                    $model_botanicalObjectSex->sex_id = $sex_id;
+                                    $model_botanicalObjectSex->save();
+                                }
+                            }
+
+                            // check for separation entries and update/add them
+                            if( isset($_POST['Separation']) ) {
+                                // cycle through all posted separation entries
+                                foreach($_POST['Separation'] as $i => $separation) {
+                                    // only handle separation entry if it has a type set
+                                    if( empty($separation['separation_type_id']) ) continue;
+
+                                    // check if this is an update and load the model
+                                    $separation_model = new Separation;
+
+                                    // set the attributes & save the separation entry
+                                    $separation_model->attributes = $separation;
+                                    $separation_model->botanical_object_id = $model_botanicalObject->id;
+                                    $separation_model->save();
+                                }
+                            }
+
+                            // Check for certificate entries
+                            if( isset($_POST['Certificate']) ) {
+                                foreach($_POST['Certificate'] as $i => $certificate) {
+                                    // auto-generate id
+                                    unset($certificate['id']);
+
+                                    // check for "deleted" entry
+                                    if( $certificate['delete'] > 0 ) continue;
+
+                                    // create new model and save it
+                                    $model_certificate = new Certificate();
+                                    $model_certificate->attributes = $certificate;
+                                    $model_certificate->living_plant_id = $model_livingPlant->id;
+                                    $model_certificate->save();
+                                }
+                            }
+
+                            // Redirect to update page directly
+                            $this->redirect(array('update', 'id' => $model_livingPlant->id));
                         }
                     }
                 }
@@ -222,7 +214,6 @@ class LivingPlantController extends Controller {
             'model_acquisitionEvent' => $model_acquisitionEvent,
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject,
-            'model_accessionNumber' => $model_accessionNumber,
             'model_locationCoordinates' => $model_locationCoordinates,
         ));
     }
@@ -237,7 +228,6 @@ class LivingPlantController extends Controller {
         $model_botanicalObject = $model_livingPlant->id0;
         $model_acquisitionEvent = $model_botanicalObject->acquisitionEvent;
         $model_acquisitionDate = $model_acquisitionEvent->acquisitionDate;
-        $model_accessionNumber = $model_livingPlant->accessionNumber;
         $model_locationCoordinates = $model_acquisitionEvent->locationCoordinates;
         
         // Check if we have a correct submission
@@ -445,7 +435,6 @@ class LivingPlantController extends Controller {
             'model_acquisitionEvent' => $model_acquisitionEvent,
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject,
-            'model_accessionNumber' => $model_accessionNumber,
             'model_locationCoordinates' => $model_locationCoordinates,
         ));
     }
