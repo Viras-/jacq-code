@@ -38,7 +38,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'columns' => array(
         array( 'name'=>'scientificName_search', 'value'=>'$data->id0->scientificName' ),
         array( 'name'=>'organisation_search', 'value'=>'$data->id0->organisation->description' ),
-        array( 'name'=>'accessionNumber_search', 'value'=>'$data->accessionNumber->AccessionNumber' ),
+        array( 'name'=>'accession_number', 'value'=>'$data->accession_number' ),
         array( 'name'=>'location_search', 'value'=>'(isset($data->id0->acquisitionEvent->location->location)) ? $data->id0->acquisitionEvent->location->location : ""' ),
         array(
             'class' => 'LPButtonColumn',

@@ -21,7 +21,6 @@ echo $this->renderPartial('_form', array(
     'model_acquisitionEvent' => $model_acquisitionEvent,
     'model_livingPlant' => $model_livingPlant,
     'model_botanicalObject' => $model_botanicalObject,
-    'model_accessionNumber' => $model_accessionNumber,
     'model_locationCoordinates' => $model_locationCoordinates,
         )
 );
