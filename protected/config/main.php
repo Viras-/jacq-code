@@ -118,7 +118,7 @@ return array(
             'itemTable' => 'frmwrk_AuthItem',
             'itemChildTable' => 'frmwrk_AuthItemChild',
             'assignmentTable' => 'frmwrk_AuthAssignment',
-            'defaultRoles' => array('guest')
+            'defaultRoles' => array('grp_guest')
         )
     ),
     // application-level parameters that can be accessed

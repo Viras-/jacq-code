@@ -1,5 +1,5 @@
 <div class="form">
-    <?php echo CHtml::activeLabelEx(Person::model(), 'name'); ?>
+    <?php echo CHtml::activeLabelEx(AcquisitionEventPerson::model(), 'person_id'); ?>
     <?php
     $model_acquisitionPersons = array();
     if( isset($model_livingPlant->id0->acquisitionEvent->tblPeople) ) {
