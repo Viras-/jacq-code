@@ -2,7 +2,17 @@
 class ImportController extends Controller {
 
     public function actionImport($start = 0) {
+        $dbCriteria = new CDbCriteria();
+        $dbCriteria->limit = 100;
+        $dbCriteria->offset = $start;
         
+        // load next models
+        $models_akzession = Akzession::model()->findAll($dbCriteria);
+        
+        // cycle through each akzession and port it to new structure
+        foreach($models_akzession as $model_akzession) {
+            
+        }
         
         $this->render('import');
     }
