@@ -40,8 +40,7 @@ class AutoCompleteController extends Controller {
     /**
      * Search for fitting taxon names and return them 
      */
-    public function actionTaxon() {
-        $term = $_GET['term'];
+    public function actionTaxon($term) {
         $pieces = explode(' ', $term);
 
         // Check for valid input

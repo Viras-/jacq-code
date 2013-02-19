@@ -14,6 +14,7 @@
  * @property string $annotation
  * @property string $recording_date
  * @property integer $organisation_id
+ * @property integer $accessible
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
@@ -23,6 +24,7 @@
  * @property BotanicalObjectSex[] $botanicalObjectSexes
  * @property Diaspora $diaspora
  * @property Image[] $images
+ * @property ImportProperties[] $importProperties
  * @property LivingPlant $livingPlant
  * @property Separation[] $separations
  */
@@ -41,7 +43,7 @@ class BotanicalObject extends ActiveRecord {
         parent::init();
 
         if ($this->isNewRecord) {
-            $this->recording_date = date('Y-m-d');
+            $this->recording_date = date('Y-m-d h:i:s');
         }
     }
 
@@ -97,7 +99,7 @@ class BotanicalObject extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('acquisition_event_id, taxon_id, recording_date', 'required'),
-            array('acquisition_event_id, phenology_id, taxon_id, determined_by_id, organisation_id', 'numerical', 'integerOnly' => true),
+            array('acquisition_event_id, phenology_id, taxon_id, determined_by_id, organisation_id, accessible', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
             array('annotation', 'safe'),
             // The following rule is used by search().
@@ -119,6 +121,7 @@ class BotanicalObject extends ActiveRecord {
             'botanicalObjectSexes' => array(self::HAS_MANY, 'BotanicalObjectSex', 'botanical_object_id'),
             'diaspora' => array(self::HAS_ONE, 'Diaspora', 'id'),
             'images' => array(self::HAS_MANY, 'Image', 'botanical_object_id'),
+            'importProperties' => array(self::HAS_MANY, 'ImportProperties', 'botanical_object_id'),
             'livingPlant' => array(self::HAS_ONE, 'LivingPlant', 'id'),
             'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
             'separations' => array(self::HAS_MANY, 'Separation', 'botanical_object_id'),
@@ -140,6 +143,7 @@ class BotanicalObject extends ActiveRecord {
             'annotation' => Yii::t('jacq', 'Annotation'),
             'recording_date' => Yii::t('jacq', 'Recording Date'),
             'organisation_id' => Yii::t('jacq', 'Garden Site'),
+            'accessible' => Yii::t('jacq', 'Accessible'),
         );
     }
 
