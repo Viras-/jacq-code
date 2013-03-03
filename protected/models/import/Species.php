@@ -116,4 +116,33 @@ class Species extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function getScientificName() {
+            $scientificName = $this->Art;
+            
+            if( $this->Autor != NULL ) {
+                $scientificName .= ' ' . $this->Autor;
+            }
+            if( $this->UArt != NULL ) {
+                $scientificName .= ' ' . $this->UArt;
+            }
+            if( $this->UArtAutor != NULL ) {
+                $scientificName .= ' ' . $this->UArtAutor;
+            }
+            if( $this->Var != NULL ) {
+                $scientificName .= ' ' . $this->Var;
+            }
+            if( $this->VarAutor != NULL ) {
+                $scientificName .= ' ' . $this->VarAutor;
+            }
+            // check for "invalid" chars in formcult
+            if( $this->FormCult != NULL && stripos($this->FormCult, '`') === FALSE && stripos($this->FormCult, '\'') === FALSE ) {
+                $scientificName .= ' ' . $this->FormCult;
+            }
+            if( $this->FormCultAutor != NULL ) {
+                $scientificName .= ' ' . $this->FormCultAutor;
+            }
+            
+            return $scientificName;
+        }
 }

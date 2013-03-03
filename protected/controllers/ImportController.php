@@ -35,7 +35,23 @@ class ImportController extends Controller {
             }
             $Erstelldatum = date('Y-m-d h:i:s', $Erstelldatum);
             
+            // lookup determined-by in person table
+            if( $model_akzession->detname != NULL ) {
+                $model_determinedBy = Person::model()->findByAttributes(array('name' => $model_akzession->detname));
+                if( $model_determinedBy == NULL ) {
+                    $model_determinedBy = new Person();
+                    $model_determinedBy->name = $model_akzession->detname;
+                    $model_determinedBy->save();
+                }
+                
+                $model_botanicalObject->determined_by_id = $model_determinedBy->id;
+            }
+            
+            // setup properties
             $model_botanicalObject->recording_date = $Erstelldatum;
+            $model_botanicalObject->annotation = $model_akzession->Bemerkungen;
+            $model_botanicalObject->determination_date = $model_akzession->detdat;
+            
         }
         
         $this->render('import');
