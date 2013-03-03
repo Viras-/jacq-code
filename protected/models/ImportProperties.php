@@ -7,6 +7,7 @@
  * @property integer $id
  * @property integer $botanical_object_id
  * @property integer $IDPflanze
+ * @property string $species_name
  *
  * The followings are the available model relations:
  * @property BotanicalObject $botanicalObject
@@ -41,9 +42,10 @@ class ImportProperties extends CActiveRecord
 		return array(
 			array('botanical_object_id', 'required'),
 			array('botanical_object_id, IDPflanze', 'numerical', 'integerOnly'=>true),
+			array('species_name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, botanical_object_id, IDPflanze', 'safe', 'on'=>'search'),
+			array('id, botanical_object_id, IDPflanze, species_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,6 +70,7 @@ class ImportProperties extends CActiveRecord
 			'id' => 'ID',
 			'botanical_object_id' => 'Botanical Object',
 			'IDPflanze' => 'Idpflanze',
+			'species_name' => 'Species Name',
 		);
 	}
 
@@ -85,6 +88,7 @@ class ImportProperties extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('botanical_object_id',$this->botanical_object_id);
 		$criteria->compare('IDPflanze',$this->IDPflanze);
+		$criteria->compare('species_name',$this->species_name,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

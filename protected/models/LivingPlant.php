@@ -9,10 +9,10 @@
  * @property string $ipen_number
  * @property integer $ipen_locked
  * @property integer $phyto_control
- * @property integer $accession_number_id
  * @property string $place_number
  * @property integer $index_seminum
  * @property string $culture_notes
+ * @property string $cultivation_date
  * @property integer $index_seminum_type_id
  *
  * The followings are the available model relations:
@@ -60,12 +60,12 @@ class LivingPlant extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('id', 'required'),
-            array('id, accession_number, ipen_locked, phyto_control, index_seminum, index_seminum_type_id', 'numerical', 'integerOnly' => true),
+            array('id, ipen_locked, phyto_control, index_seminum, index_seminum_type_id', 'numerical', 'integerOnly' => true),
             array('ipen_number, place_number', 'length', 'max' => 20),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
-            array('culture_notes', 'safe'),
+            array('culture_notes, cultivation_date', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('scientificName_search, organisation_search, accession_number, location_search', 'safe', 'on' => 'search'),
@@ -101,6 +101,7 @@ class LivingPlant extends ActiveRecord {
             'place_number' => Yii::t('jacq', 'Place Number'),
             'index_seminum' => Yii::t('jacq', 'Index Seminum'),
             'culture_notes' => Yii::t('jacq', 'Culture Notes'),
+            'cultivation_date' => Yii::t('jacq', 'Cultivation Date'),
             'index_seminum_type_id' => Yii::t('jacq', 'Index Seminum Type'),
         );
     }

@@ -9,6 +9,7 @@
  * @property integer $phenology_id
  * @property integer $scientific_name_id
  * @property integer $determined_by_id
+ * @property string $determination_date
  * @property string $habitat
  * @property string $habitus
  * @property string $annotation
@@ -101,7 +102,7 @@ class BotanicalObject extends ActiveRecord {
             array('acquisition_event_id, scientific_name_id, recording_date', 'required'),
             array('acquisition_event_id, phenology_id, scientific_name_id, determined_by_id, organisation_id, accessible', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
-            array('annotation', 'safe'),
+            array('determination_date, annotation', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, acquisition_event_id, phenology_id, scientific_name_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes', 'safe', 'on' => 'search'),
@@ -140,6 +141,7 @@ class BotanicalObject extends ActiveRecord {
             'habitat' => Yii::t('jacq', 'Habitat'),
             'habitus' => Yii::t('jacq', 'Habitus'),
             'determined_by_id' => Yii::t('jacq', 'Determined By'),
+            'determination_date' => Yii::t('jacq', 'Determination Date'),
             'annotation' => Yii::t('jacq', 'Annotation'),
             'recording_date' => Yii::t('jacq', 'Recording Date'),
             'organisation_id' => Yii::t('jacq', 'Garden Site'),
