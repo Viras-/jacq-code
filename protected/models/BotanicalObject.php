@@ -7,7 +7,7 @@
  * @property integer $id
  * @property integer $acquisition_event_id
  * @property integer $phenology_id
- * @property integer $taxon_id
+ * @property integer $scientific_name_id
  * @property integer $determined_by_id
  * @property string $habitat
  * @property string $habitus
@@ -81,11 +81,11 @@ class BotanicalObject extends ActiveRecord {
      * @return string 
      */
     private function getScientificName() {
-        if ($this->taxon_id <= 0)
+        if ($this->scientific_name_id <= 0)
             return NULL;
 
         $dbHerbarView = $this->getDbHerbarView();
-        $command = $dbHerbarView->createCommand("SELECT GetScientificName( " . $this->taxon_id . ", 0 ) AS 'ScientificName'");
+        $command = $dbHerbarView->createCommand("SELECT GetScientificName( " . $this->scientific_name_id . ", 0 ) AS 'ScientificName'");
         $scientificNames = $command->queryAll();
 
         return $scientificNames[0]['ScientificName'];
@@ -98,13 +98,13 @@ class BotanicalObject extends ActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('acquisition_event_id, taxon_id, recording_date', 'required'),
-            array('acquisition_event_id, phenology_id, taxon_id, determined_by_id, organisation_id, accessible', 'numerical', 'integerOnly' => true),
+            array('acquisition_event_id, scientific_name_id, recording_date', 'required'),
+            array('acquisition_event_id, phenology_id, scientific_name_id, determined_by_id, organisation_id, accessible', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
             array('annotation', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, acquisition_event_id, phenology_id, taxon_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes', 'safe', 'on' => 'search'),
+            array('id, acquisition_event_id, phenology_id, scientific_name_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes', 'safe', 'on' => 'search'),
         );
     }
 
@@ -136,7 +136,7 @@ class BotanicalObject extends ActiveRecord {
             'id' => Yii::t('jacq', 'ID'),
             'acquisition_event_id' => Yii::t('jacq', 'Acquisition Event'),
             'phenology_id' => Yii::t('jacq', 'Phenology'),
-            'taxon_id' => Yii::t('jacq', 'Taxon'),
+            'scientific_name_id' => Yii::t('jacq', 'Taxon'),
             'habitat' => Yii::t('jacq', 'Habitat'),
             'habitus' => Yii::t('jacq', 'Habitus'),
             'determined_by_id' => Yii::t('jacq', 'Determined By'),
@@ -160,7 +160,7 @@ class BotanicalObject extends ActiveRecord {
         $criteria->compare('id', $this->id);
         $criteria->compare('acquisition_event_id', $this->acquisition_event_id);
         $criteria->compare('phenology_id', $this->phenology_id);
-        $criteria->compare('taxon_id', $this->taxon_id);
+        $criteria->compare('scientific_name_id', $this->scientific_name_id);
         $criteria->compare('habitat', $this->habitat, true);
         $criteria->compare('habitus', $this->habitus, true);
         $criteria->compare('determined_by_id', $this->determined_by_id);

@@ -152,7 +152,7 @@ $this->menu=array(
     <fieldset>
         <legend><?php echo Yii::t('jacq', 'Living Plant'); ?></legend>
         <div class="row">
-            <?php echo CHtml::activeLabelEx($model_livingPlant->id0, 'taxon_id'); ?>
+            <?php echo CHtml::activeLabelEx($model_livingPlant->id0, 'scientific_name_id'); ?>
             <?php echo CHtml::encode($model_livingPlant->id0->scientificName); ?>&nbsp;
         </div>
 

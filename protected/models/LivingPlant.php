@@ -113,7 +113,7 @@ class LivingPlant extends ActiveRecord {
         $criteria = new CDbCriteria;
         $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location');
         
-        $criteria->compare('`herbar_view`.GetScientificName(`id0`.`taxon_id`, 0)', $this->scientificName_search, true);
+        $criteria->compare('`herbar_view`.GetScientificName(`id0`.`scientific_name_id`, 0)', $this->scientificName_search, true);
         $criteria->compare('organisation.description', $this->organisation_search, true);
         $criteria->compare('location.location', $this->location_search, true);
         $criteria->compare('accession_number', $this->accession_number, true);
@@ -128,8 +128,8 @@ class LivingPlant extends ActiveRecord {
                     'sort' => array(
                         'attributes' => array(
                             'scientificName_search' => array(
-                                'asc' => '`herbar_view`.GetScientificName(`id0`.`taxon_id`, 0)',
-                                'desc' => '`herbar_view`.GetScientificName(`id0`.`taxon_id`, 0) DESC'
+                                'asc' => '`herbar_view`.GetScientificName(`id0`.`scientific_name_id`, 0)',
+                                'desc' => '`herbar_view`.GetScientificName(`id0`.`scientific_name_id`, 0) DESC'
                             ),
                             'organisation_search' => array(
                                 'asc' => 'organisation.description',

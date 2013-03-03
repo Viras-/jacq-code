@@ -1,5 +1,5 @@
 <div class="row">
-    <?php echo $form->labelEx($model_botanicalObject, 'taxon_id'); ?>
+    <?php echo $form->labelEx($model_botanicalObject, 'scientific_name_id'); ?>
     <?php
     // Enable auto-completer for taxon field
     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
@@ -10,7 +10,7 @@
             'minLength' => '2',
             'change' => 'js:function( event, ui ) {
                     if( typeof ui.item !== "undefined" ) {
-                        $( "#BotanicalObject_taxon_id" ).val( ui.item.id );
+                        $( "#BotanicalObject_scientific_name_id" ).val( ui.item.id );
                     }
                 }',
         ),
@@ -20,8 +20,8 @@
               ), */
     ));
     ?>
-    <?php echo $form->hiddenField($model_botanicalObject, 'taxon_id'); ?>
-    <?php echo $form->error($model_botanicalObject, 'taxon_id'); ?>
+    <?php echo $form->hiddenField($model_botanicalObject, 'scientific_name_id'); ?>
+    <?php echo $form->error($model_botanicalObject, 'scientific_name_id'); ?>
 </div>
 
 <div class="row">
