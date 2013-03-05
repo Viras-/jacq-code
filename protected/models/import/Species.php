@@ -117,6 +117,10 @@ class Species extends CActiveRecord
 		));
 	}
         
+        /**
+         * Helper function for constructing the scientific name
+         * @return string
+         */
         public function getScientificName() {
             $scientificName = $this->Art;
             
