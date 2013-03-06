@@ -117,6 +117,17 @@ class ImportController extends Controller {
                 if( $model_akzession->AkzessNr_alt != NULL ) {
                     $this->assignAccessionNumber($model_livingPlant->id, $model_akzession->AkzessNr_alt);
                 }
+                
+                // import certificates
+                if( $model_akzession->CITES != NULL ) {
+                    $this->assignCertificate($model_livingPlant->id, 1, $model_akzession->CITES);
+                }
+                if( $model_akzession->PHYTO != NULL ) {
+                    $this->assignCertificate($model_livingPlant->id, 2, $model_akzession->PHYTO);
+                }
+                if( $model_akzession->CUSTOM != NULL ) {
+                    $this->assignCertificate($model_livingPlant->id, 7, $model_akzession->CUSTOM);
+                }
             }
             catch( Exception $e ) {
                 echo "Error during import: " . $e->getMessage() . "\n";
@@ -144,6 +155,23 @@ class ImportController extends Controller {
         $model_accessionNumber->number = $number;
         if( !$model_accessionNumber->save() ) {
             throw new Exception('Unable to save accessionNumber');
+        }
+    }
+    
+    /**
+     * Helper function for assigning a certificate to the imported object
+     * @param int $living_plant_id ID of living plant to assign the certificate to
+     * @param int $certificate_type_id Type of certificate
+     * @param string $number Certificate number
+     * @throws Exception
+     */
+    protected function assignCertificate( $living_plant_id, $certificate_type_id, $number ) {
+        $model_certificate = new Certificate();
+        $model_certificate->living_plant_id = $living_plant_id;
+        $model_certificate->certificate_type_id = $certificate_type_id;
+        $model_certificate->number = $number;
+        if( !$model_certificate->save() ) {
+            throw new Exception('Unable to save certificate');
         }
     }
 
