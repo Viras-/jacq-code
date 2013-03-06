@@ -83,6 +83,40 @@ class ImportController extends Controller {
                 if( $model_botanicalObject->scientific_name_id == 0 ) {
                     $model_botanicalObject->scientific_name_id = 46996;
                 }
+                
+                // save botanical object model
+                if( !$model_botanicalObject->save() ) {
+                    throw new Exception('Unable to save botanicalObject');
+                }
+                
+                // create import properties & save them
+                $model_importProperties = new ImportProperties();
+                $model_importProperties->botanical_object_id = $model_botanicalObject->id;
+                $model_importProperties->species_name = $model_importSpecies->getScientificName();
+                $model_importProperties->IDPflanze = $model_akzession->IDPflanze;
+                if( !$model_importProperties->save() ) {
+                    throw new Exception('Unable to save importProperties');
+                }
+                
+                $model_akzession = new Akzession();
+                
+                // now create living plant model & import properties
+                $model_livingPlant = new LivingPlant();
+                $model_livingPlant->id = $model_botanicalObject->id;
+                $model_livingPlant->ipen_number = $model_akzession->IPENNr;
+                $model_livingPlant->culture_notes = $model_akzession->Kulturhinweise;
+                $model_livingPlant->cultivation_date = $model_akzession->Anbaudatum;
+                if( !$model_livingPlant->save() ) {
+                    throw new Exception('Unable to save livingPlant');
+                }
+                
+                // import old accession numbers
+                if( $model_akzession->AkzessNr != NULL ) {
+                    $this->assignAccessionNumber($model_livingPlant->id, $model_akzession->AkzessNr);
+                }
+                if( $model_akzession->AkzessNr_alt != NULL ) {
+                    $this->assignAccessionNumber($model_livingPlant->id, $model_akzession->AkzessNr_alt);
+                }
             }
             catch( Exception $e ) {
                 echo "Error during import: " . $e->getMessage() . "\n";
@@ -96,6 +130,21 @@ class ImportController extends Controller {
 
     public function actionIndex() {
         $this->render('index');
+    }
+    
+    /**
+     * Helper function for assigning an accession number
+     * @param int $living_plant_id ID of living plant to assign this accession number to
+     * @param string $number accession number to assign
+     * @throws Exception
+     */
+    protected function assignAccessionNumber( $living_plant_id, $number ) {
+        $model_accessionNumber = new AlternativeAccessionNumber();
+        $model_accessionNumber->living_plant_id = $living_plant_id;
+        $model_accessionNumber->number = $number;
+        if( !$model_accessionNumber->save() ) {
+            throw new Exception('Unable to save accessionNumber');
+        }
     }
 
     // Uncomment the following methods and override them if needed
