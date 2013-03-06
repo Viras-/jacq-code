@@ -61,7 +61,7 @@ class AcquisitionDate extends ActiveRecord {
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, year, month, day, custom', 'safe', 'on' => 'search'),
-            array('date', 'type', 'type' => 'date', 'dateFormat' => 'yyyy-MM-dd'),
+            //array('date', 'type', 'type' => 'date', 'dateFormat' => 'yyyy-MM-dd'),
         );
     }
 

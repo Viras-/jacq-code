@@ -14,14 +14,40 @@ class ImportController extends Controller {
         // load next models
         $models_akzession = Akzession::model()->findAll($dbCriteria);
         
-        // begin transaction
-        $transaction_import = Yii::app()->db->beginTransaction();
-        
         // cycle through each akzession and port it to new structure
         foreach($models_akzession as $model_akzession) {
+            // begin transaction
+            $transaction_import = Yii::app()->db->beginTransaction();
             try {
+                // load Herkunft model
+                $model_importHerkunft = Herkunft::model()->findByAttributes(array('IDPflanze' => $model_akzession->IDPflanze));
+                
+                // create location coordinates object
+                $model_locationCoordinates = new LocationCoordinates();
+                if( !$model_locationCoordinates->save() ) {
+                    throw new Exception('Unable to save locationCoordinates');
+                }
+                
+                // create acquisition date object
+                $model_acquisitionDate = new AcquisitionDate();
+                $model_acquisitionDate->custom = $model_akzession->Eingangsdatum;
+                if(!$model_acquisitionDate->save()) {
+                    throw new Exception('Unable to save acquisitionDate: ' . var_export($model_acquisitionDate->getErrors(), true));
+                }
+                
+                // create aquisition event
+                $model_aquisitionEvent = new AcquisitionEvent();
+                $model_aquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
+                $model_aquisitionEvent->location_coordinates_id = $model_locationCoordinates->id;
+                $model_aquisitionEvent->acquisition_type_id = 1;
+                if( !$model_aquisitionEvent->save() ) {
+                    throw new Exception('Unable to save aquisitionEvent');
+                }
+                
                 // create wrapper model
                 $model_botanicalObject = new BotanicalObject();
+                $model_botanicalObject->acquisition_event_id = $model_aquisitionEvent->id;
+                $model_botanicalObject->phenology_id = 1;
                 
                 // parse & prepare erstelldatum to be converted to unix timestamp
                 $recording_date = 0;
@@ -86,7 +112,7 @@ class ImportController extends Controller {
                 
                 // save botanical object model
                 if( !$model_botanicalObject->save() ) {
-                    throw new Exception('Unable to save botanicalObject');
+                    throw new Exception('Unable to save botanicalObject: ' . var_export($model_botanicalObject->getErrors(), true) );
                 }
                 
                 // create import properties & save them
@@ -97,8 +123,6 @@ class ImportController extends Controller {
                 if( !$model_importProperties->save() ) {
                     throw new Exception('Unable to save importProperties');
                 }
-                
-                $model_akzession = new Akzession();
                 
                 // now create living plant model & import properties
                 $model_livingPlant = new LivingPlant();
@@ -128,13 +152,16 @@ class ImportController extends Controller {
                 if( $model_akzession->CUSTOM != NULL ) {
                     $this->assignCertificate($model_livingPlant->id, 7, $model_akzession->CUSTOM);
                 }
+                
+                // finally commit the import
+                $transaction_import->commit();
             }
             catch( Exception $e ) {
                 echo "Error during import: " . $e->getMessage() . "\n";
+                $transaction_import->rollback();
             }
+            
         }
-        
-        $transaction_import->rollback();
         
         $this->render('import');
     }

@@ -71,9 +71,9 @@ $this->menu=array(
 
         <div class="row">
             <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent, 'altitude'); ?>
-            <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->altitude_min); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->locationCoordinates->altitude_min); ?>
             -
-            <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->altitude_max); ?>
+            <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->locationCoordinates->altitude_max); ?>
         </div>
 
         <div class="row">
@@ -81,21 +81,21 @@ $this->menu=array(
                 <tr>
                     <td>
                     <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent, 'latitude'); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->latitude_degrees); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->latitude_minutes); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->latitude_seconds); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->latitude_half); ?>&nbsp;
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->locationCoordinates->latitude_degrees); ?>
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->locationCoordinates->latitude_minutes); ?>
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->locationCoordinates->latitude_seconds); ?>
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->locationCoordinates->latitude_half); ?>&nbsp;
                     </td>
                     <td>
                     <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent, 'longitude'); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->longitude_degrees); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->longitude_minutes); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->longitude_seconds); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->longitude_half); ?>&nbsp;
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->locationCoordinates->longitude_degrees); ?>
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->locationCoordinates->longitude_minutes); ?>
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->locationCoordinates->longitude_seconds); ?>
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->locationCoordinates->longitude_half); ?>&nbsp;
                     </td>
                     <td>
                     <?php echo CHtml::activeLabelEx($model_livingPlant->id0->acquisitionEvent, 'exactness'); ?>
-                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->exactness); ?>&nbsp;
+                    <?php echo CHtml::encode($model_livingPlant->id0->acquisitionEvent->locationCoordinates->exactness); ?>&nbsp;
                     </td>
                 </tr>
             </table>
@@ -195,10 +195,8 @@ $this->menu=array(
             <table style="width: auto;">
                 <tr>
                     <td>
-                        <?php echo CHtml::activeLabelEx($model_livingPlant, 'accession_number_id'); ?>
-                        <?php echo CHtml::encode($model_livingPlant->accessionNumber->year); ?>
-                        <?php printf( '%05d', $model_livingPlant->accessionNumber->id ); ?>
-                        <?php echo CHtml::encode($model_livingPlant->accessionNumber->individual); ?>&nbsp;
+                        <?php echo CHtml::activeLabelEx($model_livingPlant, 'accession_number'); ?>
+                        <?php echo CHtml::encode($model_livingPlant->accession_number); ?>
                     </td>
                     <td>
                         <?php echo CHtml::activeLabelEx($model_livingPlant, 'ipen_number'); ?>
