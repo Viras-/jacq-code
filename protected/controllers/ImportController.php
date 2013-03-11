@@ -153,6 +153,18 @@ class ImportController extends Controller {
                     $this->assignCertificate($model_livingPlant->id, 7, $model_akzession->CUSTOM);
                 }
                 
+                // check if there is a separation for this akzession
+                if( $model_akzession->Abgang > 0 ) {
+                    $model_separation = new Separation();
+                    $model_separation->botanical_object_id = $model_botanicalObject->id;
+                    $model_separation->separation_type_id = 1;
+                    $model_separation->date = $model_akzession->AbgangDatum;
+                    $model_separation->annotation = $model_akzession->AbgangMemo;
+                    if( !$model_separation->save() ) {
+                        throw new Exception('Unable to save separation');
+                    }
+                }
+                
                 // finally commit the import
                 $transaction_import->commit();
             }
