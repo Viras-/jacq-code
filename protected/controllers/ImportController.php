@@ -4,6 +4,10 @@ require("AutoCompleteController.php");
 class ImportController extends Controller {
 
     public function actionImport($start = 0) {
+        // import import models
+        Yii::import('application.models.import.*');
+        
+        // setup default dbcriteria
         $dbCriteria = new CDbCriteria();
         $dbCriteria->limit = 10;
         $dbCriteria->offset = $start;
