@@ -44,6 +44,33 @@ class ImportController extends Controller {
                 $model_aquisitionEvent->acquisition_date_id = $model_acquisitionDate->id;
                 $model_aquisitionEvent->location_coordinates_id = $model_locationCoordinates->id;
                 $model_aquisitionEvent->acquisition_type_id = 1;
+                $model_aquisitionEvent->annotation = $model_importHerkunft->Standort;
+                
+                // import the collection country / place
+                // construct location string for importing
+                $location_components = array();
+                if($model_importHerkunft->CollLand != NULL) $location_components[] = $model_importHerkunft->CollLand;
+                if($model_importHerkunft->CollOrt != NULL) $location_components[] = $model_importHerkunft->CollOrt;
+                $location_string = trim(implode(', ', $location_components));
+                if( !empty($location_string) ) {
+                    // try to find an existing entry
+                    $model_location = Location::model()->findByAttributes(array(
+                        'location' => $location_string
+                    ));
+                    // if no location with this info is found, create a new one
+                    if( $model_location == NULL ) {
+                        $model_location = new Location();
+                        $model_location->location = $location_string;
+                        if( !$model_location->save() ) {
+                            throw new Exception('Unable to save location');
+                        }
+                    }
+                    
+                    // assign location id to acquisition event
+                    $model_aquisitionEvent->location_id = $model_location->id;
+                }
+                
+                // save the acquisition event after preparing all info
                 if( !$model_aquisitionEvent->save() ) {
                     throw new Exception('Unable to save aquisitionEvent');
                 }
