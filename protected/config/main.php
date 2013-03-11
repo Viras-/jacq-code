@@ -14,7 +14,6 @@ return array(
     'import' => array(
         'application.models.*',
         'application.components.*',
-        'application.extensions.*',
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
@@ -119,6 +118,11 @@ return array(
             'itemChildTable' => 'frmwrk_AuthItemChild',
             'assignmentTable' => 'frmwrk_AuthAssignment',
             'defaultRoles' => array('grp_guest')
+        ),
+        // geonames service
+        'geoNameService' => array(
+            'class' => 'application.extensions.EGeoNameService.EGeoNameService',
+            'username' => 'demo'
         )
     ),
     // application-level parameters that can be accessed
