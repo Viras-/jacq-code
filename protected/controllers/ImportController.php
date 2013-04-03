@@ -20,11 +20,14 @@ class ImportController extends Controller {
         
         // cycle through each akzession and port it to new structure
         foreach($models_akzession as $model_akzession) {
+            $model_akzession = new Akzession();
+            
             // begin transaction
             $transaction_import = Yii::app()->db->beginTransaction();
             try {
                 // load Herkunft model
                 $model_importHerkunft = Herkunft::model()->findByAttributes(array('IDPflanze' => $model_akzession->IDPflanze));
+                $model_importHerkunft = new Herkunft();
                 
                 // create location coordinates object
                 $model_locationCoordinates = new LocationCoordinates();
@@ -73,6 +76,15 @@ class ImportController extends Controller {
                 // save the acquisition event after preparing all info
                 if( !$model_aquisitionEvent->save() ) {
                     throw new Exception('Unable to save aquisitionEvent');
+                }
+                
+                // add the collecting person
+                $model_collectorPerson = Person::getCollector($model_importHerkunft->Collector, $model_importHerkunft->CollNr);
+                $model_acquisitionEventPerson = new AcquisitionEventPerson();
+                $model_acquisitionEventPerson->acquisition_event_id = $model_aquisitionEvent->id;
+                $model_acquisitionEventPerson->person_id = $model_collectorPerson->id;
+                if( !$model_acquisitionEventPerson->save() ) {
+                    throw new Exception('Unable to save aquisition event person');
                 }
                 
                 // create wrapper model

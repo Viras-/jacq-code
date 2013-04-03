@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'tbl_person':
  * @property integer $id
  * @property string $name
+ * @property string $collNr
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent[] $acquisitionEvents
@@ -42,6 +43,7 @@ class Person extends ActiveRecord {
         return array(
             array('name', 'required'),
             array('name', 'length', 'max' => 255),
+            array('collNr', 'length', 'max'=>45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, name', 'safe', 'on' => 'search'),
@@ -67,6 +69,7 @@ class Person extends ActiveRecord {
         return array(
             'id' => 'ID',
             'name' => 'Name',
+            'collNr' => 'Coll Nr',
         );
     }
 
@@ -86,6 +89,27 @@ class Person extends ActiveRecord {
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
+    }
+    
+    /**
+     * Find a person as a collector
+     * @param string $name Name of collector
+     * @param string $collNr Collector number (optional)
+     * @return \Person
+     */
+    public static function getCollector( $name, $collNr = '' ) {
+        // Find fitting entry
+        $model_person = Person::model()->findByAttributes(array("name" => $name, 'collNr' => $collNr));
+        // If none found, add a new one
+        if( $model_person == null ) {
+            $model_person = new Person;
+            $model_person->name = $name;
+            $model_person->collNr = $collNr;
+            $model_person->save();
+        }
+        
+        // Finally return the model
+        return $model_person;
     }
 
     /**
