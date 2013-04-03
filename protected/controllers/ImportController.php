@@ -20,14 +20,14 @@ class ImportController extends Controller {
         
         // cycle through each akzession and port it to new structure
         foreach($models_akzession as $model_akzession) {
-            $model_akzession = new Akzession();
+            //$model_akzession = new Akzession();
             
             // begin transaction
             $transaction_import = Yii::app()->db->beginTransaction();
             try {
                 // load Herkunft model
                 $model_importHerkunft = Herkunft::model()->findByAttributes(array('IDPflanze' => $model_akzession->IDPflanze));
-                $model_importHerkunft = new Herkunft();
+                //$model_importHerkunft = new Herkunft();
                 
                 // create location coordinates object
                 $model_locationCoordinates = new LocationCoordinates();
@@ -80,11 +80,13 @@ class ImportController extends Controller {
                 
                 // add the collecting person
                 $model_collectorPerson = Person::getCollector($model_importHerkunft->Collector, $model_importHerkunft->CollNr);
-                $model_acquisitionEventPerson = new AcquisitionEventPerson();
-                $model_acquisitionEventPerson->acquisition_event_id = $model_aquisitionEvent->id;
-                $model_acquisitionEventPerson->person_id = $model_collectorPerson->id;
-                if( !$model_acquisitionEventPerson->save() ) {
-                    throw new Exception('Unable to save aquisition event person');
+                if( $model_collectorPerson != NULL ) {
+                    $model_acquisitionEventPerson = new AcquisitionEventPerson();
+                    $model_acquisitionEventPerson->acquisition_event_id = $model_aquisitionEvent->id;
+                    $model_acquisitionEventPerson->person_id = $model_collectorPerson->id;
+                    if( !$model_acquisitionEventPerson->save() ) {
+                        throw new Exception('Unable to save acquisitionEventPerson: ' . var_export($model_acquisitionEventPerson->getErrors(), true));
+                    }
                 }
                 
                 // create wrapper model
@@ -213,16 +215,17 @@ class ImportController extends Controller {
             }
             catch( Exception $e ) {
                 echo "Error during import: " . $e->getMessage() . "\n";
+                
                 $transaction_import->rollback();
             }
-            
         }
         
-        $this->render('import');
+        // continue with import
+        $this->render('index', array('start' => $start + 10));
     }
 
     public function actionIndex() {
-        $this->render('index');
+        $this->render('index', array('start' => 0));
     }
     
     /**

@@ -98,6 +98,8 @@ class Person extends ActiveRecord {
      * @return \Person
      */
     public static function getCollector( $name, $collNr = '' ) {
+        if( empty($name) ) return NULL;
+        
         // Find fitting entry
         $model_person = Person::model()->findByAttributes(array("name" => $name, 'collNr' => $collNr));
         // If none found, add a new one
