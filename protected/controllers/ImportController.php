@@ -155,6 +155,25 @@ class ImportController extends Controller {
                     $model_botanicalObject->scientific_name_id = 46996;
                 }
                 
+                // Try to find a matching entry for the revier
+                $model_botanicalObject->organisation_id = 1;
+                $model_importRevier = Revier::model()->findByAttributes(array('IDRevier' => $model_akzession->IDRevier));
+                if( $model_importRevier != NULL ) {
+                    // use either unterabteilung or revierbezeichnung for finding a fitting organisation
+                    $revierName = $model_importRevier->Unterabteilung;
+                    if($revierName == NULL) $revierName = $model_importRevier->Revierbezeichnung;
+                    
+                    // create criteria for searching the organisation data
+                    $dbRevierCriteria = new CDbCriteria();
+                    $dbRevierCriteria->addSearchCondition('description', $revierName);
+                    $model_organisation = Organisation::model()->find($dbRevierCriteria);
+                    
+                    // if we find a fitting organisation, assign it to the botanical object
+                    if( $model_organisation != NULL ) {
+                        $model_botanicalObject->organisation_id = $model_organisation->id;
+                    }
+                }
+                
                 // save botanical object model
                 if( !$model_botanicalObject->save() ) {
                     throw new Exception('Unable to save botanicalObject: ' . var_export($model_botanicalObject->getErrors(), true) );
@@ -165,6 +184,9 @@ class ImportController extends Controller {
                 $model_importProperties->botanical_object_id = $model_botanicalObject->id;
                 $model_importProperties->species_name = $model_importSpecies->getScientificName();
                 $model_importProperties->IDPflanze = $model_akzession->IDPflanze;
+                if( $model_importRevier != NULL ) {
+                    $model_importProperties->Revier = $model_importRevier->Revierbezeichnung . ', ' . $model_importRevier->Unterabteilung;
+                }
                 if( !$model_importProperties->save() ) {
                     throw new Exception('Unable to save importProperties');
                 }
@@ -188,13 +210,13 @@ class ImportController extends Controller {
                 }
                 
                 // import certificates
-                if( $model_akzession->CITES != NULL ) {
+                if( $model_akzession->CITES != 0 ) {
                     $this->assignCertificate($model_livingPlant->id, 1, $model_akzession->CITES);
                 }
-                if( $model_akzession->PHYTO != NULL ) {
+                if( $model_akzession->PHYTO != 0 ) {
                     $this->assignCertificate($model_livingPlant->id, 2, $model_akzession->PHYTO);
                 }
-                if( $model_akzession->CUSTOM != NULL ) {
+                if( $model_akzession->CUSTOM != 0 ) {
                     $this->assignCertificate($model_livingPlant->id, 7, $model_akzession->CUSTOM);
                 }
                 
@@ -225,7 +247,7 @@ class ImportController extends Controller {
     }
 
     public function actionIndex() {
-        $this->render('index', array('start' => 0));
+        $this->actionImport();
     }
     
     /**
