@@ -14,6 +14,7 @@
  * @property string $culture_notes
  * @property string $cultivation_date
  * @property integer $index_seminum_type_id
+ * @property string $incoming_date
  *
  * The followings are the available model relations:
  * @property AlternativeAccessionNumber[] $alternativeAccessionNumbers
@@ -65,7 +66,7 @@ class LivingPlant extends ActiveRecord {
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
-            array('culture_notes, cultivation_date', 'safe'),
+            array('culture_notes, cultivation_date, incoming_date', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('scientificName_search, organisation_search, accession_number, location_search', 'safe', 'on' => 'search'),
@@ -103,6 +104,7 @@ class LivingPlant extends ActiveRecord {
             'culture_notes' => Yii::t('jacq', 'Culture Notes'),
             'cultivation_date' => Yii::t('jacq', 'Cultivation Date'),
             'index_seminum_type_id' => Yii::t('jacq', 'Index Seminum Type'),
+            'incoming_date' => Yii::t('jacq', 'Incoming Date'),
         );
     }
 

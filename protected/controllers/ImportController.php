@@ -37,7 +37,7 @@ class ImportController extends Controller {
                 
                 // create acquisition date object
                 $model_acquisitionDate = new AcquisitionDate();
-                $model_acquisitionDate->custom = $model_akzession->Eingangsdatum;
+                $model_acquisitionDate->date = $model_importHerkunft->CollDatum;
                 if(!$model_acquisitionDate->save()) {
                     throw new Exception('Unable to save acquisitionDate: ' . var_export($model_acquisitionDate->getErrors(), true));
                 }
@@ -111,7 +111,10 @@ class ImportController extends Controller {
                     if($recording_date == false) {
                         throw new Exception('Invalid Erstelldatum:' . $Erstelldatum);
                     }
-                    
+                }
+                // old entries do not contain the recording date, add current date for them
+                else {
+                    $recording_date = time();
                 }
 
                 // lookup determined-by in person table
@@ -127,7 +130,7 @@ class ImportController extends Controller {
                 }
 
                 // setup properties
-                $model_botanicalObject->recording_date = date('Y-m-d h:i:s', $recording_date);;
+                $model_botanicalObject->recording_date = date('Y-m-d h:i:s', $recording_date);
                 $model_botanicalObject->annotation = $model_akzession->Bemerkungen;
                 $model_botanicalObject->determination_date = $model_akzession->detdat;
 
@@ -197,6 +200,7 @@ class ImportController extends Controller {
                 $model_livingPlant->ipen_number = $model_akzession->IPENNr;
                 $model_livingPlant->culture_notes = $model_akzession->Kulturhinweise;
                 $model_livingPlant->cultivation_date = $model_akzession->Anbaudatum;
+                $model_livingPlant->incoming_date = $model_akzession->Eingangsdatum;
                 if( !$model_livingPlant->save() ) {
                     throw new Exception('Unable to save livingPlant');
                 }
@@ -247,7 +251,7 @@ class ImportController extends Controller {
     }
 
     public function actionIndex() {
-        $this->actionImport();
+        $this->actionImport(1000);
     }
     
     /**
