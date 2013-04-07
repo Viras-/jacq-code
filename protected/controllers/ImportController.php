@@ -269,7 +269,7 @@ class ImportController extends Controller {
     }
 
     public function actionIndex() {
-        $this->render('index', array('start' => 0));
+        $this->actionImport();
     }
     
     /**
