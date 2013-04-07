@@ -7,5 +7,12 @@
         window.location = '<?php echo $this->createUrl('import/import', array('start' => $start)); ?>';
     }
     
-    setTimeout(startImport, 5000);
+    <?php
+    // continue processing if limit was not reached yet
+    if( $start < $akzessionCount ) {
+    ?>
+    setTimeout(startImport, 1000);
+    <?php
+    }
+    ?>
 </script>

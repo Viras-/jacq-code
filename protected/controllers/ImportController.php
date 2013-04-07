@@ -30,7 +30,8 @@ class ImportController extends Controller {
             try {
                 // load Herkunft model
                 $model_importHerkunft = Herkunft::model()->findByAttributes(array('IDPflanze' => $model_akzession->IDPflanze));
-                //$model_importHerkunft = new Herkunft();
+                // if no herkunft entry is found, use default properties
+                if( $model_importHerkunft == NULL ) $model_importHerkunft = new Herkunft();
                 
                 // create location coordinates object
                 $model_locationCoordinates = new LocationCoordinates();
