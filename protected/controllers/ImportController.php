@@ -12,6 +12,9 @@ class ImportController extends Controller {
         $dbCriteria->limit = 10;
         $dbCriteria->offset = $start;
         
+        // fetch number of akzession entries
+        $akzessionCount = Akzession::model()->count($dbCriteria);
+        
         // create JSON-RPC client object for taxamatch service
         $taxmatchService = new jsonRPCClient('http://131.130.131.9/taxamatch/jsonRPC/json_rpc_taxamatchMdld.php');
         
@@ -246,12 +249,22 @@ class ImportController extends Controller {
             catch( Exception $e ) {
                 echo "Error during import: " . $e->getMessage() . "\n";
                 
+                // discard any saved changes
                 $transaction_import->rollback();
+ 
+                // Save error to database
+                $model_importError = new ImportError();
+                $model_importError->IDPflanze = $model_akzession->IDPflanze;
+                $model_importError->message = $e->getMessage();
+                $model_importError->save();
             }
         }
         
         // continue with import
-        $this->render('index', array('start' => $start + 10));
+        $this->render('index', array(
+            'start' => $start + 10,
+            'akzessionCount' => $akzessionCount
+        ));
     }
 
     public function actionIndex() {
