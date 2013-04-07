@@ -49,6 +49,10 @@ class ImportController extends Controller {
                 $model_aquisitionEvent->acquisition_type_id = 1;
                 $model_aquisitionEvent->annotation = $model_importHerkunft->Standort;
                 
+                // check if annotation is not empty, because then we need to add a separator
+                if( $model_aquisitionEvent->annotation != NULL && $model_importHerkunft->Bezugsquelle != NULL ) $model_aquisitionEvent->annotation .= '; ';
+                $model_aquisitionEvent->annotation .= $model_importHerkunft->Bezugsquelle;
+                
                 // import the collection country / place
                 // construct location string for importing
                 $location_components = array();
@@ -251,7 +255,7 @@ class ImportController extends Controller {
     }
 
     public function actionIndex() {
-        $this->actionImport(1000);
+        $this->render('index', array('start' => 0));
     }
     
     /**
