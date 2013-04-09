@@ -15,21 +15,15 @@
     <table style="width: auto;">
         <tr>
             <td>
-                <?php require("form_accessionNumber.php"); ?>
-            </td>
-            <td>
-                <?php echo $form->labelEx($model_livingPlant, 'ipen_number'); ?>
-                <?php echo $form->textField($model_livingPlant,'ipenNumberCountryCode', array('size' => 2, 'maxlength' => 2, 'readonly' => 'readonly')); ?>
-                -
-                <?php echo $form->dropDownList($model_livingPlant, 'ipenNumberState', array( 'X' => 'X', '0' => '0', '1' => '1' ) ); ?>
-                -
-                <?php echo $form->textField($model_livingPlant, 'ipenNumberInstitutionCode', array('size' => 2, 'maxlength' => 2, 'readonly' => 'readonly')); ?>
-                <?php echo $form->error($model_livingPlant, 'ipen_number'); ?>
+                <?php require("form_ipenNumber.php"); ?>
             </td>
             <td>
                 <?php echo $form->labelEx($model_livingPlant, 'ipen_locked'); ?>
                 <?php echo $form->checkBox($model_livingPlant, 'ipen_locked'); ?>
                 <?php echo $form->error($model_livingPlant, 'ipen_locked'); ?>
+            </td>
+            <td>
+                <?php require("form_accessionNumber.php"); ?>
             </td>
         </tr>
     </table>
