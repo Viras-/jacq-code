@@ -36,7 +36,7 @@ class LivingPlantController extends Controller {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -197,6 +197,23 @@ class LivingPlantController extends Controller {
                                     $model_certificate->attributes = $certificate;
                                     $model_certificate->living_plant_id = $model_livingPlant->id;
                                     $model_certificate->save();
+                                }
+                            }
+
+                            // Check for alternative acqisition number entries
+                            if( isset($_POST['AlternativeAccessionNumber']) ) {
+                                foreach($_POST['AlternativeAccessionNumber'] as $i => $alternativeAccessionNumber) {
+                                    // auto-generate id
+                                    unset($alternativeAccessionNumber['id']);
+
+                                    // check for "deleted" entry
+                                    if( $alternativeAccessionNumber['delete'] > 0 ) continue;
+
+                                    // create new model and save it
+                                    $model_alternativeAccessionNumber = new AlternativeAccessionNumber();
+                                    $model_alternativeAccessionNumber->attributes = $alternativeAccessionNumber;
+                                    $model_alternativeAccessionNumber->living_plant_id = $model_livingPlant->id;
+                                    $model_alternativeAccessionNumber->save();
                                 }
                             }
 
@@ -389,7 +406,7 @@ class LivingPlantController extends Controller {
                                 }
                                 // .. else create a new separation entry
                                 else {
-                                    $separation_model = new Separation;
+                                    $separation_model = new Separation();
                                 }
 
                                 // set the attributes & save the separation entry
@@ -412,15 +429,52 @@ class LivingPlantController extends Controller {
                                     }
                                     continue;
                                 }
+                                
+                                // check if this is an existing entry
+                                if( $certificate['id'] > 0 ) {
+                                    $model_certificate = Certificate::model()->findByPk($certificate['id']);
+                                }
+                                else {
+                                    $model_certificate = new Certificate();
+                                }
 
-                                // create new model and save it
-                                $model_certificate = new Certificate();
+                                // assign attributes and save it
                                 $model_certificate->attributes = $certificate;
                                 $model_certificate->living_plant_id = $model_livingPlant->id;
                                 $model_certificate->save();
                             }
                         }
 
+                        // Check for alternative acqisition number entries
+                        if( isset($_POST['AlternativeAccessionNumber']) ) {
+                            foreach($_POST['AlternativeAccessionNumber'] as $i => $alternativeAccessionNumber) {
+                                // make sure we have a clean integer as id
+                                $alternativeAccessionNumber['id'] = intval($alternativeAccessionNumber['id']);
+
+                                // check for "deleted" entry
+                                if( $alternativeAccessionNumber['delete'] > 0 ) {
+                                    if($alternativeAccessionNumber['id'] > 0) {
+                                        AlternativeAccessionNumber::model()->deleteByPk($alternativeAccessionNumber['id']);
+                                    }
+                                    continue;
+                                }
+                                
+                                // check if this is an existing entry
+                                if( $alternativeAccessionNumber['id'] > 0 ) {
+                                    $model_alternativeAccessionNumber = AlternativeAccessionNumber::model()->findByPk($alternativeAccessionNumber['id']);
+                                }
+                                else {
+                                    $model_alternativeAccessionNumber = new AlternativeAccessionNumber();
+                                }
+
+                                // assign attributes and save it
+                                $model_alternativeAccessionNumber->attributes = $alternativeAccessionNumber;
+                                $model_alternativeAccessionNumber->living_plant_id = $model_livingPlant->id;
+                                $model_alternativeAccessionNumber->save();
+                            }
+                        }
+
+                        // finally save the living plant
                         if ($model_livingPlant->save()) {
                             $this->redirect(array('update', 'id' => $model_livingPlant->id));
                         }
@@ -535,6 +589,17 @@ class LivingPlantController extends Controller {
         
         $this->renderPartial('form_acquisitionPerson', array(
             'model_acquisitionPerson' => $model_acquisitionPerson
+        ), false, true);
+    }
+    
+    /**
+     * renders form for entering a new certificate 
+     */
+    public function actionAjaxAlternativeAccessionNumber() {
+        $model_alternativeAccessionNumber = new AlternativeAccessionNumber();
+        
+        $this->renderPartial('form_alternativeAccessionNumber', array(
+            'model_alternativeAccessionNumber' => $model_alternativeAccessionNumber
         ), false, true);
     }
     
