@@ -205,7 +205,10 @@ class ImportController extends Controller {
                 // now create living plant model & import properties
                 $model_livingPlant = new LivingPlant();
                 $model_livingPlant->id = $model_botanicalObject->id;
-                $model_livingPlant->ipen_number = $model_akzession->IPENNr;
+                if( $model_akzession->IPENNr != NULL ) {
+                    $model_livingPlant->ipen_number = $model_akzession->IPENNr;
+                    $model_livingPlant->ipen_locked = 1;
+                }
                 $model_livingPlant->culture_notes = $model_akzession->Kulturhinweise;
                 $model_livingPlant->cultivation_date = $model_akzession->Anbaudatum;
                 $model_livingPlant->incoming_date = $model_akzession->Eingangsdatum;
