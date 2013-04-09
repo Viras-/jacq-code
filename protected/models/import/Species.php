@@ -122,31 +122,43 @@ class Species extends CActiveRecord
          * @return string
          */
         public function getScientificName() {
-            $scientificName = $this->Art;
+            $scientificNameComponents = array();
+
+            // Find out the Genus
+            $model_systematik = Systematik::model()->findByAttributes(array(
+                'IDSys' => $this->IDSys
+            ));
+            if( $model_systematik != NULL ) {
+                $scientificNameComponents[] = $model_systematik->Gattung;
+            }
+            
+            
+            $scientificNameComponents[] = $this->Art;
             
             if( $this->Autor != NULL ) {
-                $scientificName .= ' ' . $this->Autor;
+                $scientificNameComponents[] = $this->Autor;
             }
             if( $this->UArt != NULL ) {
-                $scientificName .= ' ' . $this->UArt;
+                $scientificNameComponents[] = $this->UArt;
             }
             if( $this->UArtAutor != NULL ) {
-                $scientificName .= ' ' . $this->UArtAutor;
+                $scientificNameComponents[] = $this->UArtAutor;
             }
             if( $this->Var != NULL ) {
-                $scientificName .= ' ' . $this->Var;
+                $scientificNameComponents[] = $this->Var;
             }
             if( $this->VarAutor != NULL ) {
-                $scientificName .= ' ' . $this->VarAutor;
+                $scientificNameComponents[] = $this->VarAutor;
             }
             // check for "invalid" chars in formcult
             if( $this->FormCult != NULL && stripos($this->FormCult, '`') === FALSE && stripos($this->FormCult, '\'') === FALSE ) {
-                $scientificName .= ' ' . $this->FormCult;
+                $scientificNameComponents[] = $this->FormCult;
             }
             if( $this->FormCultAutor != NULL ) {
-                $scientificName .= ' ' . $this->FormCultAutor;
+                $scientificNameComponents[] = $this->FormCultAutor;
             }
             
-            return $scientificName;
+            // return complete scientifc name
+            return implode(' ', $scientificNameComponents);
         }
 }
