@@ -28,6 +28,12 @@
         </tr>
     </table>
 </div>
+
+<!-- display alternative accession numbers -->
+<div class="row">
+    <?php require("form_alternativeAccessionNumbers.php"); ?>
+</div>
+
 <!-- List of source-codes for institutions to auto-fill the IPEN number -->
 <script type="text/javascript">
     var ipen_codes = {

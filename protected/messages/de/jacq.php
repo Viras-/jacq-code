@@ -27,6 +27,7 @@ return array (
   'Ipen Code' => 'IPEN Code',
   'View' => 'Anzeigen',
   'View Living Plant' => 'Lebendpflanze anzeigen',
+  'Alternative Accession Number' => 'Alternative Akzessionsnummer(n)',
   'Accession Number' => 'Akzessionsnummer',
   'Acquisition' => 'Aufsammlung',
   'Acquisition Date' => 'Sammeldatum',

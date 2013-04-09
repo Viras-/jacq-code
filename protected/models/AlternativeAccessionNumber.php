@@ -12,6 +12,10 @@
  * @property LivingPlant $livingPlant
  */
 class AlternativeAccessionNumber extends CActiveRecord {
+    /**
+     * @var helper attribute for deleting an alternative accession number entry
+     */
+    public $delete = 0;
 
     /**
      * Returns the static model of the specified AR class.
@@ -61,9 +65,9 @@ class AlternativeAccessionNumber extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => 'ID',
-            'living_plant_id' => 'Living Plant',
-            'number' => 'Number',
+            'id' => Yii::t('jacq', 'ID'),
+            'living_plant_id' => Yii::t('jacq', 'Living Plant'),
+            'number' => Yii::t('jacq', 'Alternative Accession Number(s)'),
         );
     }
 
