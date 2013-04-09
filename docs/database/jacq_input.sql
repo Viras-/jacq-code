@@ -781,7 +781,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tbl_import_error` ;
 
 CREATE  TABLE IF NOT EXISTS `tbl_import_error` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `IDPflanze` INT NOT NULL ,
   `message` TEXT NOT NULL ,
   PRIMARY KEY (`id`) )
