@@ -31,7 +31,7 @@ return array (
   'Acquisition' => 'Aufsammlung',
   'Acquisition Date' => 'Sammeldatum',
   'Acquisition Event' => 'Sammel Ereignis',
-  'Acquisition Person' => 'Sammler',
+  'Acquisition Person(s)' => 'Sammler-Name(n)',
   'Acquisition Type' => 'Sammel Typ',
   'Altitude' => 'Altitude',
   'Annotation' => 'Bemerkung',

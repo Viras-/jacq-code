@@ -56,7 +56,7 @@ class AcquisitionEventPerson extends ActiveRecord {
     public function attributeLabels() {
         return array(
             'acquisition_event_id' => 'Acquisition Event',
-            'person_id' => Yii::t('jacq', 'Acquisition Person'),
+            'person_id' => Yii::t('jacq', 'Acquisition Person(s)'),
         );
     }
 
