@@ -36,8 +36,8 @@ class ImportError extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, IDPflanze, message', 'required'),
-			array('id, IDPflanze', 'numerical', 'integerOnly'=>true),
+			array('IDPflanze, message', 'required'),
+			array('IDPflanze', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, IDPflanze, message', 'safe', 'on'=>'search'),
