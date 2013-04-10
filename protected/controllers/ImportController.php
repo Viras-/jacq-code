@@ -276,7 +276,10 @@ class ImportController extends Controller {
                 $model_importError = new ImportError();
                 $model_importError->IDPflanze = $model_akzession->IDPflanze;
                 $model_importError->message = $e->getMessage();
-                $model_importError->save();
+                // last chance: log to PHP error log
+                if( !$model_importError->save() ) {
+                    error_log("Can't save import error: " . implode(',', $model_importError->getErrors()));
+                }
             }
         }
         
