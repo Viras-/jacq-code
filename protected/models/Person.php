@@ -120,8 +120,12 @@ class Person extends ActiveRecord {
      * @return Person 
      */
     public static function getByName( $name ) {
+        // create search criteria
+        $dbCriteria = new CDbCriteria();
+        $dbCriteria->addSearchCondition('name', $name);
+        
         // Find fitting entry
-        $model_person = Person::model()->findByAttributes(array("name" => $name));
+        $model_person = Person::model()->find($dbCriteria);
         // If none found, add a new one
         if( $model_person == null ) {
             $model_person = new Person;
