@@ -19,7 +19,12 @@ class AcquisitionDate extends ActiveRecord {
      * @return string formatted date
      */
     public function getDate() {
-        return sprintf('%04d-%02d-%02d', $this->year, $this->month, $this->day);
+        if( $this->custom != NULL ) {
+            return $this->custom;
+        }
+        else {
+            return sprintf('%04d-%02d-%02d', $this->year, $this->month, $this->day);
+        }
     }
     
     /**
