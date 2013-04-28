@@ -14,13 +14,14 @@
  * @property string $culture_notes
  * @property string $cultivation_date
  * @property integer $index_seminum_type_id
- * @property string $incoming_date
+ * @property integer $incoming_date_id
  *
  * The followings are the available model relations:
  * @property AlternativeAccessionNumber[] $alternativeAccessionNumbers
  * @property Certificate[] $certificates
  * @property BotanicalObject $id0
  * @property IndexSeminumType $indexSeminumType
+ * @property AcquisitionDate $incomingDate
  * @property LivingPlantTreeRecordFilePage[] $livingPlantTreeRecordFilePages
  * @property Relevancy[] $relevancies
  */
@@ -61,7 +62,7 @@ class LivingPlant extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('id', 'required'),
-            array('id, ipen_locked, phyto_control, index_seminum, index_seminum_type_id', 'numerical', 'integerOnly' => true),
+            array('id, ipen_locked, phyto_control, index_seminum, index_seminum_type_id, incoming_date_id', 'numerical', 'integerOnly' => true),
             array('ipen_number, place_number', 'length', 'max' => 20),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
@@ -84,6 +85,7 @@ class LivingPlant extends ActiveRecord {
             'certificates' => array(self::HAS_MANY, 'Certificate', 'living_plant_id'),
             'id0' => array(self::BELONGS_TO, 'BotanicalObject', 'id'),
             'indexSeminumType' => array(self::BELONGS_TO, 'IndexSeminumType', 'index_seminum_type_id'),
+            'incomingDate' => array(self::BELONGS_TO, 'AcquisitionDate', 'incoming_date_id'),
             'livingPlantTreeRecordFilePages' => array(self::HAS_MANY, 'LivingPlantTreeRecordFilePage', 'living_plant_id'),
             'relevancies' => array(self::HAS_MANY, 'Relevancy', 'living_plant_id'),
         );
