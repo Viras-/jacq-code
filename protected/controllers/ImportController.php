@@ -218,6 +218,13 @@ class ImportController extends Controller {
                     throw new Exception('Unable to save importProperties');
                 }
                 
+                // create a date entry for "Eingangsdatum"
+                $model_incomingDate = new AcquisitionDate();
+                $model_incomingDate->custom = $model_akzession->Eingangsdatum;
+                if( !$model_incomingDate->save() ) {
+                    throw new Exception('Unable to save incomingDate');
+                }
+                
                 // now create living plant model & import properties
                 $model_livingPlant = new LivingPlant();
                 $model_livingPlant->id = $model_botanicalObject->id;
@@ -227,7 +234,7 @@ class ImportController extends Controller {
                 }
                 $model_livingPlant->culture_notes = $model_akzession->Kulturhinweise;
                 $model_livingPlant->cultivation_date = $model_akzession->Anbaudatum;
-                $model_livingPlant->incoming_date = $model_akzession->Eingangsdatum;
+                $model_livingPlant->incoming_date_id = $model_incomingDate->id;
                 if( !$model_livingPlant->save() ) {
                     throw new Exception('Unable to save livingPlant');
                 }
