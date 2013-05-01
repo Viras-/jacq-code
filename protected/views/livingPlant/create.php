@@ -19,5 +19,6 @@ echo $this->renderPartial('_form', array(
     'model_livingPlant' => $model_livingPlant,
     'model_botanicalObject' => $model_botanicalObject,
     'model_locationCoordinates' => $model_locationCoordinates,
+    'model_incomingDate' => $model_incomingDate,
         )
 );

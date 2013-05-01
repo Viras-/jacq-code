@@ -37,6 +37,26 @@
                 ?>
             <?php echo $form->error($model_botanicalObject, 'recording_date'); ?>
         </div>
+        <div class="row">
+            <?php echo $form->labelEx($model_incomingDate, 'incoming_date'); ?>
+            <?php
+            $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                'name' => 'IncomingDate[date]',
+                // additional javascript options for the date picker plugin
+                'options' => array(
+                    'showAnim' => 'fold',
+                    'dateFormat' => 'yy-mm-dd',
+                    'changeMonth' => true,
+                    'changeYear' => true
+                ),
+                'htmlOptions' => array(
+
+                ),
+                'value' => $model_incomingDate->date,
+            ));
+            ?>
+            <?php echo $form->error($model_incomingDate, 'date'); ?>
+        </div>
     </fieldset>
     <fieldset>
         <legend><?php echo Yii::t('jacq', 'Acquisition'); ?></legend>
