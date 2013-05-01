@@ -255,10 +255,11 @@ CREATE  TABLE IF NOT EXISTS `tbl_living_plant` (
   `culture_notes` TEXT NULL DEFAULT NULL ,
   `cultivation_date` DATE NULL DEFAULT NULL ,
   `index_seminum_type_id` INT NULL DEFAULT NULL ,
-  `incoming_date` DATE NULL DEFAULT NULL ,
+  `incoming_date_id` INT NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_tbl_living_plant_tbl_index_seminum_type1` (`index_seminum_type_id` ASC) ,
   UNIQUE INDEX `accession_number_UNIQUE` (`accession_number` ASC) ,
+  INDEX `fk_tbl_living_plant_tbl_acquisition_date1` (`incoming_date_id` ASC) ,
   CONSTRAINT `fk_livingplant_object1`
     FOREIGN KEY (`id` )
     REFERENCES `tbl_botanical_object` (`id` )
@@ -267,6 +268,11 @@ CREATE  TABLE IF NOT EXISTS `tbl_living_plant` (
   CONSTRAINT `fk_tbl_living_plant_tbl_index_seminum_type1`
     FOREIGN KEY (`index_seminum_type_id` )
     REFERENCES `tbl_index_seminum_type` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tbl_living_plant_tbl_acquisition_date1`
+    FOREIGN KEY (`incoming_date_id` )
+    REFERENCES `tbl_acquisition_date` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
