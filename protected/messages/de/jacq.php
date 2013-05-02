@@ -88,6 +88,7 @@ return array (
   'Place Number' => 'Platznummer',
   'Recording' => 'Aufnahme',
   'Recording Date' => 'Aufnahmedatum',
+  'Incoming Date' => 'Eingangsdatum',
   'Relevancy Type' => 'Relevanz',
   'Remember me next time' => 'Login merken',
   'Salt' => 'Salt',

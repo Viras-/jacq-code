@@ -38,7 +38,7 @@
             <?php echo $form->error($model_botanicalObject, 'recording_date'); ?>
         </div>
         <div class="row">
-            <?php echo $form->labelEx($model_incomingDate, 'incoming_date'); ?>
+            <?php echo $form->labelEx($model_livingPlant, 'incoming_date'); ?>
             <?php
             $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'name' => 'IncomingDate[date]',
