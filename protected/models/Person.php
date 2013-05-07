@@ -97,21 +97,8 @@ class Person extends ActiveRecord {
      * @param string $collNr Collector number (optional)
      * @return \Person
      */
-    public static function getCollector( $name, $collNr = '' ) {
-        if( empty($name) ) return NULL;
-        
-        // Find fitting entry
-        $model_person = Person::model()->findByAttributes(array("name" => $name, 'collNr' => $collNr));
-        // If none found, add a new one
-        if( $model_person == null ) {
-            $model_person = new Person;
-            $model_person->name = $name;
-            $model_person->collNr = $collNr;
-            $model_person->save();
-        }
-        
-        // Finally return the model
-        return $model_person;
+    public static function getCollector( $name, $collNr ) {
+        return Person::getByAttributes($name, $collNr);
     }
 
     /**
@@ -120,9 +107,22 @@ class Person extends ActiveRecord {
      * @return Person 
      */
     public static function getByName( $name ) {
+        return Person::getByAttributes($name);
+    }
+
+    /**
+     * Get a person by its attributes, but use like condition
+     * @param string $name Name of person to search for
+     * @param string $collNr collector number of person
+     * @return null|\Person
+     */
+    private static function getByAttributes( $name = '', $collNr = '' ) {
+        if( empty($name) && empty($collNr) ) return NULL;
+        
         // create search criteria
         $dbCriteria = new CDbCriteria();
-        $dbCriteria->addSearchCondition('name', $name);
+        if( !empty($name) ) $dbCriteria->addSearchCondition('name', $name);
+        if( !empty($collNr) ) $dbCriteria->addSearchCondition('collNr', $collNr);
         
         // Find fitting entry
         $model_person = Person::model()->find($dbCriteria);
@@ -130,6 +130,7 @@ class Person extends ActiveRecord {
         if( $model_person == null ) {
             $model_person = new Person;
             $model_person->name = $name;
+            $model_person->collNr = $collNr;
             $model_person->save();
         }
         
