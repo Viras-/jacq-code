@@ -57,6 +57,27 @@
 </div>
 
 <div class="row">
+    <?php echo $form->labelEx($model_botanicalObject, 'determination_date'); ?>
+    <?php
+    $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+        'name' => 'BotanicalObject[determination_date]',
+        // additional javascript options for the date picker plugin
+        'options' => array(
+            'showAnim' => 'fold',
+            'dateFormat' => 'yy-mm-dd',
+            'changeMonth' => true,
+            'changeYear' => true
+        ),
+        'htmlOptions' => array(
+
+        ),
+        'value' => $model_botanicalObject->determination_date,
+    ));
+    ?>
+    <?php echo $form->error($model_botanicalObject, 'determination_date'); ?>
+</div>
+
+<div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'habitat'); ?>
     <?php echo $form->textField($model_botanicalObject, 'habitat'); ?>
     <?php echo $form->error($model_botanicalObject, 'habitat'); ?>
