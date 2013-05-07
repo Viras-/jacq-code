@@ -76,12 +76,12 @@ class AcquisitionEvent extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'acquisition_date_id' => 'Acquisition Date',
-            'acquisition_type_id' => 'Acquisition Type',
-            'location_id' => 'Location',
-            'number' => 'Number',
-            'annotation' => 'Annotation',
-            'location_coordinates_id' => 'Location Coordinates',
+            'acquisition_date_id' => Yii::t('jacq', 'Acquisition Date'),
+            'acquisition_type_id' => Yii::t('jacq', 'Acquisition Type'),
+            'location_id' => Yii::t('jacq', 'Location'),
+            'number' => Yii::t('jacq', 'Number'),
+            'annotation' => Yii::t('jacq', 'Annotation'),
+            'location_coordinates_id' => Yii::t('jacq', 'Location Coordinates'),
         );
     }
 
