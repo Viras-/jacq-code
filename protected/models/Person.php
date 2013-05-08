@@ -6,7 +6,6 @@
  * The followings are the available columns in table 'tbl_person':
  * @property integer $id
  * @property string $name
- * @property string $collNr
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent[] $acquisitionEvents
@@ -43,7 +42,6 @@ class Person extends ActiveRecord {
         return array(
             array('name', 'required'),
             array('name', 'length', 'max' => 255),
-            array('collNr', 'length', 'max'=>45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, name', 'safe', 'on' => 'search'),
@@ -69,7 +67,6 @@ class Person extends ActiveRecord {
         return array(
             'id' => 'ID',
             'name' => 'Name',
-            'collNr' => 'Coll Nr',
         );
     }
 
@@ -92,16 +89,6 @@ class Person extends ActiveRecord {
     }
     
     /**
-     * Find a person as a collector
-     * @param string $name Name of collector
-     * @param string $collNr Collector number (optional)
-     * @return \Person
-     */
-    public static function getCollector( $name, $collNr ) {
-        return Person::getByAttributes($name, $collNr);
-    }
-
-    /**
      * Return a person entry by name, automatically adds a new one if it does not find any
      * @param string $name Name to search for
      * @return Person 
@@ -113,16 +100,14 @@ class Person extends ActiveRecord {
     /**
      * Get a person by its attributes, but use like condition
      * @param string $name Name of person to search for
-     * @param string $collNr collector number of person
      * @return null|\Person
      */
-    private static function getByAttributes( $name = '', $collNr = '' ) {
-        if( empty($name) && empty($collNr) ) return NULL;
+    private static function getByAttributes( $name = '' ) {
+        if( empty($name) ) return NULL;
         
         // create search criteria
         $dbCriteria = new CDbCriteria();
         if( !empty($name) ) $dbCriteria->addSearchCondition('name', $name);
-        if( !empty($collNr) ) $dbCriteria->addSearchCondition('collNr', $collNr);
         
         // Find fitting entry
         $model_person = Person::model()->find($dbCriteria);
@@ -130,7 +115,6 @@ class Person extends ActiveRecord {
         if( $model_person == null ) {
             $model_person = new Person;
             $model_person->name = $name;
-            $model_person->collNr = $collNr;
             $model_person->save();
         }
         

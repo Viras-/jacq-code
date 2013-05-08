@@ -1,6 +1,6 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 DROP SCHEMA IF EXISTS `jacq_input` ;
 CREATE SCHEMA IF NOT EXISTS `jacq_input` DEFAULT CHARACTER SET utf8 ;
@@ -129,7 +129,7 @@ CREATE  TABLE IF NOT EXISTS `tbl_acquisition_event` (
   INDEX `fk_tbl_acquisition_event_tbl_acquisition_date1_idx` (`acquisition_date_id` ASC) ,
   INDEX `fk_tbl_acquisition_event_tbl_acquisition_type1_idx` (`acquisition_type_id` ASC) ,
   INDEX `fk_tbl_acquisition_event_tbl_location1_idx` (`location_id` ASC) ,
-  INDEX `fk_tbl_acquisition_event_tbl_location_coordinates` (`location_coordinates_id` ASC) ,
+  INDEX `fk_tbl_acquisition_event_tbl_location_coordinates_idx` (`location_coordinates_id` ASC) ,
   CONSTRAINT `fk_tbl_acquisition_event_tbl_acquisition_date`
     FOREIGN KEY (`acquisition_date_id` )
     REFERENCES `tbl_acquisition_date` (`id` )
@@ -174,7 +174,6 @@ DROP TABLE IF EXISTS `tbl_person` ;
 CREATE  TABLE IF NOT EXISTS `tbl_person` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL ,
-  `collNr` VARCHAR(45) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `name` (`name` ASC) ,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
@@ -257,9 +256,9 @@ CREATE  TABLE IF NOT EXISTS `tbl_living_plant` (
   `index_seminum_type_id` INT NULL DEFAULT NULL ,
   `incoming_date_id` INT NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_tbl_living_plant_tbl_index_seminum_type1` (`index_seminum_type_id` ASC) ,
+  INDEX `fk_tbl_living_plant_tbl_index_seminum_type1_idx` (`index_seminum_type_id` ASC) ,
   UNIQUE INDEX `accession_number_UNIQUE` (`accession_number` ASC) ,
-  INDEX `fk_tbl_living_plant_tbl_acquisition_date1` (`incoming_date_id` ASC) ,
+  INDEX `fk_tbl_living_plant_tbl_acquisition_date1_idx` (`incoming_date_id` ASC) ,
   CONSTRAINT `fk_livingplant_object1`
     FOREIGN KEY (`id` )
     REFERENCES `tbl_botanical_object` (`id` )
@@ -530,7 +529,7 @@ CREATE  TABLE IF NOT EXISTS `tbl_alternative_accession_number` (
   `living_plant_id` INT NOT NULL ,
   `number` VARCHAR(255) NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_tbl_alternative_accession_number_tbl_living_plant1` (`living_plant_id` ASC) ,
+  INDEX `fk_tbl_alternative_accession_number_tbl_living_plant1_idx` (`living_plant_id` ASC) ,
   CONSTRAINT `fk_tbl_alternative_accession_number_tbl_living_plant1`
     FOREIGN KEY (`living_plant_id` )
     REFERENCES `tbl_living_plant` (`id` )
@@ -701,9 +700,9 @@ CREATE  TABLE IF NOT EXISTS `frmwrk_accessOrganisation` (
   `allowDeny` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0 = deny, 1 = allow' ,
   `organisation_id` INT NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_frmwrk_AccessOrganisation_frmwrk_AuthItem1` (`AuthItem_name` ASC) ,
-  INDEX `fk_frmwrk_AccessOrganisation_frmwrk_user1` (`user_id` ASC) ,
-  INDEX `fk_frmwrk_accessOrganisation_tbl_organisation` (`organisation_id` ASC) ,
+  INDEX `fk_frmwrk_AccessOrganisation_frmwrk_AuthItem1_idx` (`AuthItem_name` ASC) ,
+  INDEX `fk_frmwrk_AccessOrganisation_frmwrk_user1_idx` (`user_id` ASC) ,
+  INDEX `fk_frmwrk_accessOrganisation_tbl_organisation_idx` (`organisation_id` ASC) ,
   UNIQUE INDEX `user_assignment_UNIQUE` (`organisation_id` ASC, `user_id` ASC) ,
   INDEX `group_assignment_UNIQUE` (`organisation_id` ASC, `AuthItem_name` ASC) ,
   CONSTRAINT `fk_frmwrk_AccessOrganisation_frmwrk_AuthItem1`
@@ -737,9 +736,9 @@ CREATE  TABLE IF NOT EXISTS `frmwrk_accessLivingplant` (
   `allowDeny` TINYINT(1) NOT NULL DEFAULT 0 ,
   `living_plant_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_frmwrk_accessLivingplant_frmwrk_AuthItem1` (`AuthItem_name` ASC) ,
-  INDEX `fk_frmwrk_accessLivingplant_frmwrk_user1` (`user_id` ASC) ,
-  INDEX `fk_frmwrk_accessLivingplant_tbl_living_plant` (`living_plant_id` ASC) ,
+  INDEX `fk_frmwrk_accessLivingplant_frmwrk_AuthItem1_idx` (`AuthItem_name` ASC) ,
+  INDEX `fk_frmwrk_accessLivingplant_frmwrk_user1_idx` (`user_id` ASC) ,
+  INDEX `fk_frmwrk_accessLivingplant_tbl_living_plant_idx` (`living_plant_id` ASC) ,
   UNIQUE INDEX `user_assignment_UNIQUE` (`user_id` ASC, `living_plant_id` ASC) ,
   UNIQUE INDEX `group_assignment_UNIQUE` (`living_plant_id` ASC, `AuthItem_name` ASC) ,
   CONSTRAINT `fk_frmwrk_accessLivingplant_frmwrk_AuthItem1`
@@ -772,7 +771,7 @@ CREATE  TABLE IF NOT EXISTS `tbl_import_properties` (
   `species_name` VARCHAR(255) NULL ,
   `Revier` TEXT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_tbl_import_properties_tbl_botanical_object1` (`botanical_object_id` ASC) ,
+  INDEX `fk_tbl_import_properties_tbl_botanical_object1_idx` (`botanical_object_id` ASC) ,
   CONSTRAINT `fk_tbl_import_properties_tbl_botanical_object1`
     FOREIGN KEY (`botanical_object_id` )
     REFERENCES `tbl_botanical_object` (`id` )
@@ -793,6 +792,7 @@ CREATE  TABLE IF NOT EXISTS `tbl_import_error` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
+USE `jacq_input` ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

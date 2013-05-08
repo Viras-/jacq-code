@@ -68,6 +68,7 @@ class ImportController extends Controller {
                 $model_aquisitionEvent->location_coordinates_id = $model_locationCoordinates->id;
                 $model_aquisitionEvent->acquisition_type_id = 1;
                 $model_aquisitionEvent->annotation = $model_importHerkunft->Standort;
+                $model_aquisitionEvent->number = $model_importHerkunft->CollNr;
                 
                 // check if annotation is not empty, because then we need to add a separator
                 if( $model_aquisitionEvent->annotation != NULL && $model_importHerkunft->Bezugsquelle != NULL ) $model_aquisitionEvent->annotation .= '; ';
@@ -103,7 +104,7 @@ class ImportController extends Controller {
                 }
                 
                 // add the collecting person
-                $model_collectorPerson = Person::getCollector($model_importHerkunft->Collector, $model_importHerkunft->CollNr);
+                $model_collectorPerson = Person::getByName($model_importHerkunft->Collector);
                 if( $model_collectorPerson != NULL ) {
                     $model_acquisitionEventPerson = new AcquisitionEventPerson();
                     $model_acquisitionEventPerson->acquisition_event_id = $model_aquisitionEvent->id;
