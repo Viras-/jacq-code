@@ -195,6 +195,11 @@ class JSONjsTreeController extends Controller {
                 $entry["icon"] = "images/spacer.gif";
                 $entry['data']['title'] .= $infoLink;
                 
+                // check for rank display
+                if( $child['referenceInfo']['rank_hierarchy'] > 15 && $child['referenceInfo']['rank_hierarchy'] < 21 ) {
+                    $entry['data']['title'] = $child['referenceInfo']['rank_abbr'] . ' ' . $entry['data']['title'];
+                }
+                
                 // taxon entries do have some additional info
                 if( !empty($child['referenceInfo']['number']) ) {
                     $entry['data']['title'] = '<i><b>' . $child['referenceInfo']['number'] . '</b></i>&nbsp;'. $entry['data']['title'];
