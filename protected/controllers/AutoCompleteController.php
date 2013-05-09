@@ -1,6 +1,8 @@
 <?php
-
-class AutoCompleteController extends Controller {
+/**
+ * Handles the auto-complete functions
+ */
+class AutoCompleteController extends JSONServiceController {
 
     /**
      * Return connection to herbarinput database
@@ -29,12 +31,6 @@ class AutoCompleteController extends Controller {
         $scientificNames = $command->queryAll();
 
         return $scientificNames[0]['ScientificName'];
-    }
-
-    private function serviceOutput($output) {
-        header('Content-type: application/json');
-        echo CJSON::encode($output);
-        Yii::app()->end();
     }
 
     /**
