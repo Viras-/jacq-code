@@ -13,6 +13,16 @@
     ?>
 
     <p class="note">Fields with <span class="required">*</span> are required.</p>
+    
+    <?php
+    if( !$model_botanicalObject->isNewRecord ) {
+    ?>
+    <div style="text-align: right;">
+        <a href="#"><img src="images/user.png" border="0" /></a>
+    </div>
+    <?php
+    }
+    ?>
 
     <?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);  ?>
 

@@ -130,5 +130,6 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmail' => 'w.koller@senegate.at',
+        'groupPrefix' => 'grp_',
     ),
 );
