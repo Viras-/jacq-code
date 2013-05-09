@@ -6,9 +6,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-//	array('label'=>'List LivingPlant', 'url'=>array('index')),
     array('label' => Yii::t('jacq', 'Create Living Plant'), 'url' => array('create')),
-//	array('label'=>'View LivingPlant', 'url'=>array('view', 'id'=>$model_livingPlant->id)),
     array('label' => Yii::t('jacq', 'Manage Living Plant'), 'url' => array('admin')),
 );
 ?>
