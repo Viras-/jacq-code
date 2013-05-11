@@ -123,6 +123,10 @@ return array(
         'geoNameService' => array(
             'class' => 'application.extensions.EGeoNameService.EGeoNameService',
             'username' => 'demo'
+        ),
+        // authorization helper component (access level checking)
+        'authorization' => array(
+            'class' => 'Authorization'
         )
     ),
     // application-level parameters that can be accessed

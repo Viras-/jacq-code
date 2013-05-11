@@ -678,34 +678,8 @@ class LivingPlantController extends Controller {
         /**
          * Accession (livingplant) level 
          */
-        $bNewAllowAccess = false;
-        // check all groups for access
-        foreach( $authAssignments as $itemName => $authAssignment ) {
-            // check if this group has an assignment in the access table
-            $model_accessLivingplant = AccessLivingplant::model()->findByAttributes(
-                    array(
-                        'AuthItem_name' => $itemName,
-                        'living_plant_id' => $model->id
-                    )
-            );
-            
-            $bNewAllowAccess = $this->checkAccessLivingplant($model_accessLivingplant, $bAllowAccess);
-            error_log('check: ' . $itemName . ' / ' . $bNewAllowAccess . ' / ' . $bAllowAccess);
-            // check for explizit allowal in this group, if so break and ignore all other settings
-            if( $bNewAllowAccess && !$bAllowAccess ) {
-                $bAllowAccess = true;
-                break;
-            }
-            $bAllowAccess = $bNewAllowAccess;
-        }
-        // now check the access for this user
-        $model_accessLivingplant = AccessLivingplant::model()->findByAttributes(
-                array(
-                    'user_id' => Yii::app()->user->getId(),
-                    'living_plant_id' => $model->id
-                )
-        );
-        $bAllowAccess = $this->checkAccessLivingplant($model_accessLivingplant, $bAllowAccess);
+        $accessionAccess = Yii::app()->authorization->botanicalObjectAccess($model->id, Yii::app()->user->getId());
+        if( $accessionAccess != NULL ) $bAllowAccess = $accessionAccess;
         
         // finally check the result of the access checking
         if( !$bAllowAccess ) {
@@ -725,29 +699,8 @@ class LivingPlantController extends Controller {
         // check for valid model
         if( $model_accessOrganisation == null ) return $bAllowAccess;
         
-        // check for explizit allowal or denial
+        // check for explicit allowal or denial
         if( $model_accessOrganisation->allowDeny == 1 ) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    
-    /**
-     * Helper function for checking the access on organisation level
-     * @param AccessLivingplant $model_accessLivingplant
-     * @param boolean $bAllowAccess input value for AllowAccess
-     * @return null|boolean null if no access information is available, else true or false
-     */
-    private function checkAccessLivingplant($model_accessLivingplant, $bAllowAccess) {
-        // check for valid model
-        if( $model_accessLivingplant == null ) return $bAllowAccess;
-        
-        error_log($model_accessLivingplant->allowDeny);
-        
-        // check for explizit allowal or denial
-        if( $model_accessLivingplant->allowDeny == 1 ) {
             return true;
         }
         else {

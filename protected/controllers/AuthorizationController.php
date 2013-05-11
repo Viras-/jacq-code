@@ -5,7 +5,7 @@
 class AuthorizationController extends Controller {
     public function actionAjaxAccessionAccess($botanical_object_id) {
         $this->renderPartial(
-            'accession',
+            'permission',
             array(
                 'groups' => $this->listGroups(),
                 'users' => $this->listUsers(),

@@ -1,21 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "frmwrk_accessLivingplant".
+ * This is the model class for table "frmwrk_accessBotanicalObject".
  *
- * The followings are the available columns in table 'frmwrk_accessLivingplant':
+ * The followings are the available columns in table 'frmwrk_accessBotanicalObject':
  * @property integer $id
  * @property string $AuthItem_name
  * @property integer $user_id
  * @property integer $allowDeny
- * @property integer $living_plant_id
+ * @property integer $botanical_object_id
  */
-class AccessLivingplant extends CActiveRecord
+class AccessBotanicalObject extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return AccessLivingplant the static model class
+	 * @return AccessBotanicalObject the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -27,7 +27,7 @@ class AccessLivingplant extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'frmwrk_accessLivingplant';
+		return 'frmwrk_accessBotanicalObject';
 	}
 
 	/**
@@ -38,12 +38,12 @@ class AccessLivingplant extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('living_plant_id', 'required'),
-			array('user_id, allowDeny, living_plant_id', 'numerical', 'integerOnly'=>true),
+			array('botanical_object_id', 'required'),
+			array('user_id, allowDeny, botanical_object_id', 'numerical', 'integerOnly'=>true),
 			array('AuthItem_name', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, AuthItem_name, user_id, allowDeny, living_plant_id', 'safe', 'on'=>'search'),
+			array('id, AuthItem_name, user_id, allowDeny, botanical_object_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,7 +68,7 @@ class AccessLivingplant extends CActiveRecord
 			'AuthItem_name' => 'Auth Item Name',
 			'user_id' => 'User',
 			'allowDeny' => 'Allow Deny',
-			'living_plant_id' => 'Living Plant',
+			'botanical_object_id' => 'Botanical Object',
 		);
 	}
 
@@ -87,7 +87,7 @@ class AccessLivingplant extends CActiveRecord
 		$criteria->compare('AuthItem_name',$this->AuthItem_name,true);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('allowDeny',$this->allowDeny);
-		$criteria->compare('living_plant_id',$this->living_plant_id);
+		$criteria->compare('botanical_object_id',$this->botanical_object_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

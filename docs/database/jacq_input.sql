@@ -1,6 +1,6 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 DROP SCHEMA IF EXISTS `jacq_input` ;
 CREATE SCHEMA IF NOT EXISTS `jacq_input` DEFAULT CHARACTER SET utf8 ;
@@ -734,13 +734,13 @@ CREATE  TABLE IF NOT EXISTS `frmwrk_accessLivingplant` (
   `AuthItem_name` VARCHAR(64) NULL ,
   `user_id` INT NULL ,
   `allowDeny` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `living_plant_id` INT NOT NULL ,
+  `botanical_object_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_frmwrk_accessLivingplant_frmwrk_AuthItem1_idx` (`AuthItem_name` ASC) ,
   INDEX `fk_frmwrk_accessLivingplant_frmwrk_user1_idx` (`user_id` ASC) ,
-  INDEX `fk_frmwrk_accessLivingplant_tbl_living_plant_idx` (`living_plant_id` ASC) ,
-  UNIQUE INDEX `user_assignment_UNIQUE` (`user_id` ASC, `living_plant_id` ASC) ,
-  UNIQUE INDEX `group_assignment_UNIQUE` (`living_plant_id` ASC, `AuthItem_name` ASC) ,
+  INDEX `fk_frmwrk_accessLivingplant_tbl_living_plant_idx` (`botanical_object_id` ASC) ,
+  UNIQUE INDEX `user_assignment_UNIQUE` (`user_id` ASC, `botanical_object_id` ASC) ,
+  UNIQUE INDEX `group_assignment_UNIQUE` (`botanical_object_id` ASC, `AuthItem_name` ASC) ,
   CONSTRAINT `fk_frmwrk_accessLivingplant_frmwrk_AuthItem1`
     FOREIGN KEY (`AuthItem_name` )
     REFERENCES `frmwrk_AuthItem` (`name` )
@@ -752,7 +752,7 @@ CREATE  TABLE IF NOT EXISTS `frmwrk_accessLivingplant` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_frmwrk_accessLivingplant_tbl_living_plant`
-    FOREIGN KEY (`living_plant_id` )
+    FOREIGN KEY (`botanical_object_id` )
     REFERENCES `tbl_living_plant` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -792,7 +792,6 @@ CREATE  TABLE IF NOT EXISTS `tbl_import_error` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
-USE `jacq_input` ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
