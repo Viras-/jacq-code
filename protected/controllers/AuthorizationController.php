@@ -20,6 +20,10 @@ class AuthorizationController extends Controller {
         );
     }
     
+    public function actionAjaxBotanicalObjectAccessSave() {
+        
+    }
+    
     /**
      * Helper function for returning a list of all groups
      * @return array Array with CAuthItem entries for all groups
@@ -30,6 +34,9 @@ class AuthorizationController extends Controller {
         // fetch a list of authitems (only roles)
         $roleItems = Yii::app()->authManager->getAuthItems(2);
         
+        return $roleItems;
+        
+        /*
         // filter auth item roles 
         foreach($roleItems as $roleItemName => $roleItem) {
             // check if auth item entry is a name
@@ -40,6 +47,7 @@ class AuthorizationController extends Controller {
         }
         
         return $groups;
+        */
     }
 
     /**
