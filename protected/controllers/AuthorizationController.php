@@ -3,9 +3,13 @@
  * Provides interface functions for authorization control
  */
 class AuthorizationController extends Controller {
-    public function actionAjaxAccessionAccess($botanical_object_id) {
+    /**
+     * Action for rendering permission mask for botanical object level
+     * @param int $botanical_object_id ID of botanical object to check
+     */
+    public function actionAjaxBotanicalObjectAccess($botanical_object_id) {
         $this->renderPartial(
-            'permission',
+            'permissionBotanicalObject',
             array(
                 'groups' => $this->listGroups(),
                 'users' => $this->listUsers(),
