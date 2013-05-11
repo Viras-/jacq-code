@@ -5,11 +5,17 @@
         foreach($groups as $groupName => $group) {
             ?>
             <li>
-                <select id='<?php echo $group->name; ?>'>
-                    <option value='auto'>auto</option>
-                    <option value='yes'>yes</option>
-                    <option value='no'>no</option>
-                </select>
+                <?php
+                echo CHtml::dropDownList(
+                        'grp_' . $group->name,
+                        Yii::app()->authorization->botanicalObjectAccessGroup($group->name,$botanical_object_id),
+                        array(
+                            NULL => 'auto',
+                            true => 'yes',
+                            false => 'no'
+                        )
+                );
+                ?>
                 <?php echo $groupName; ?>
             </li>
             <?php
@@ -24,11 +30,17 @@
         foreach($users as $user) {
             ?>
             <li>
-                <select id='<?php echo $user->id; ?>'>
-                    <option value='auto'>auto</option>
-                    <option value='yes'>yes</option>
-                    <option value='no'>no</option>
-                </select>
+                <?php
+                echo CHtml::dropDownList(
+                        'usr_' . $user->id,
+                        Yii::app()->authorization->botanicalObjectAccessUser($user->id,$botanical_object_id),
+                        array(
+                            NULL => 'auto',
+                            true => 'yes',
+                            false => 'no'
+                        )
+                );
+                ?>
                 <?php echo $user->username; ?>
             </li>
             <?php

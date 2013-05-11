@@ -4,6 +4,12 @@
  */
 class Authorization extends CComponent {
     /**
+     * Stub function which is required for a component
+     */
+    public function init() {
+    }
+    
+    /**
      * Check access to botanical object
      * @param int $botanical_object_id ID of botanical object to check
      * @param int $user_id ID of user for access checking (groups are fetched automatically)
