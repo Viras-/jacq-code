@@ -1,6 +1,20 @@
 <?php
 require("AutoCompleteController.php");
+ 
+/**
+ * Helper exception class for import errors
+ */
+class ImportException extends Exception {
+    public function __construct($message, $activeRecord) {
+        $message .= ': ' . var_export($activeRecord->getErrors());
+        
+        parent::__construct($message);
+    }
+}
 
+/**
+ * Controller for handling import of old data
+ */
 class ImportController extends Controller {
     /**
      * Specifies the access control rules.
@@ -52,14 +66,14 @@ class ImportController extends Controller {
                 // create location coordinates object
                 $model_locationCoordinates = new LocationCoordinates();
                 if( !$model_locationCoordinates->save() ) {
-                    throw new Exception('Unable to save locationCoordinates');
+                    throw new ImportException('Unable to save locationCoordinates', $model_locationCoordinates);
                 }
                 
                 // create acquisition date object
                 $model_acquisitionDate = new AcquisitionDate();
                 $model_acquisitionDate->date = $model_importHerkunft->CollDatum;
                 if(!$model_acquisitionDate->save()) {
-                    throw new Exception('Unable to save acquisitionDate: ' . var_export($model_acquisitionDate->getErrors(), true));
+                    throw new ImportException('Unable to save acquisitionDate', $model_acquisitionDate);
                 }
                 
                 // create aquisition event
@@ -90,7 +104,7 @@ class ImportController extends Controller {
                         $model_location = new Location();
                         $model_location->location = $location_string;
                         if( !$model_location->save() ) {
-                            throw new Exception('Unable to save location');
+                            throw new ImportException('Unable to save location', $model_location);
                         }
                     }
                     
@@ -100,7 +114,7 @@ class ImportController extends Controller {
                 
                 // save the acquisition event after preparing all info
                 if( !$model_aquisitionEvent->save() ) {
-                    throw new Exception('Unable to save aquisitionEvent');
+                    throw new ImportException('Unable to save aquisitionEvent', $model_aquisitionEvent);
                 }
                 
                 // add the collecting person
@@ -110,7 +124,7 @@ class ImportController extends Controller {
                     $model_acquisitionEventPerson->acquisition_event_id = $model_aquisitionEvent->id;
                     $model_acquisitionEventPerson->person_id = $model_collectorPerson->id;
                     if( !$model_acquisitionEventPerson->save() ) {
-                        throw new Exception('Unable to save acquisitionEventPerson: ' . var_export($model_acquisitionEventPerson->getErrors(), true));
+                        throw new ImportException('Unable to save acquisitionEventPerson', $model_acquisitionEventPerson);
                     }
                 }
                 
@@ -204,7 +218,7 @@ class ImportController extends Controller {
                 
                 // save botanical object model
                 if( !$model_botanicalObject->save() ) {
-                    throw new Exception('Unable to save botanicalObject: ' . var_export($model_botanicalObject->getErrors(), true) );
+                    throw new ImportException('Unable to save botanicalObject', $model_botanicalObject);
                 }
                 
                 // create import properties & save them
@@ -216,14 +230,14 @@ class ImportController extends Controller {
                     $model_importProperties->Revier = $model_importRevier->Revierbezeichnung . ', ' . $model_importRevier->Unterabteilung;
                 }
                 if( !$model_importProperties->save() ) {
-                    throw new Exception('Unable to save importProperties');
+                    throw new ImportException('Unable to save importProperties', $model_importProperties);
                 }
                 
                 // create a date entry for "Eingangsdatum"
                 $model_incomingDate = new AcquisitionDate();
                 $model_incomingDate->custom = $model_akzession->Eingangsdatum;
                 if( !$model_incomingDate->save() ) {
-                    throw new Exception('Unable to save incomingDate');
+                    throw new ImportException('Unable to save incomingDate', $model_incomingDate);
                 }
                 
                 // now create living plant model & import properties
@@ -237,7 +251,7 @@ class ImportController extends Controller {
                 $model_livingPlant->cultivation_date = $model_akzession->Anbaudatum;
                 $model_livingPlant->incoming_date_id = $model_incomingDate->id;
                 if( !$model_livingPlant->save() ) {
-                    throw new Exception('Unable to save livingPlant');
+                    throw new ImportException('Unable to save livingPlant', $model_livingPlant);
                 }
                 
                 // import old accession numbers
@@ -267,7 +281,7 @@ class ImportController extends Controller {
                     $model_separation->date = $model_akzession->AbgangDatum;
                     $model_separation->annotation = $model_akzession->AbgangMemo;
                     if( !$model_separation->save() ) {
-                        throw new Exception('Unable to save separation');
+                        throw new ImportException('Unable to save separation', $model_separation);
                     }
                 }
                 
@@ -275,8 +289,6 @@ class ImportController extends Controller {
                 $transaction_import->commit();
             }
             catch( Exception $e ) {
-                echo "Error during import: " . $e->getMessage() . "\n";
-                
                 // discard any saved changes
                 $transaction_import->rollback();
  
