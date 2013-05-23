@@ -69,11 +69,11 @@ class Certificate extends ActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => 'ID',
-            'living_plant_id' => 'Living Plant',
-            'certificate_type_id' => 'Certificate Type',
-            'number' => 'Number',
-            'annotation' => 'Annotation',
+            'id' => Yii::t('jacq', 'ID'),
+            'living_plant_id' => Yii::t('jacq', 'Living Plant'),
+            'certificate_type_id' => Yii::t('jacq', 'Certificate Type'),
+            'number' => Yii::t('jacq', 'Number'),
+            'annotation' => Yii::t('jacq', 'Annotation'),
         );
     }
 

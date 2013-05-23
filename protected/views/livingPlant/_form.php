@@ -111,7 +111,7 @@
     </fieldset>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? 'Create' : 'Save', array('data-plus-as-tab' => "false")); ?>
+        <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? Yii::t('jacq', 'Create') : Yii::t('jacq', 'Save'), array('data-plus-as-tab' => "false")); ?>
     </div>
     <?php $this->endWidget(); ?>
 

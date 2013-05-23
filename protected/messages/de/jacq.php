@@ -19,12 +19,10 @@
  * @version $Id: $
  */
 return array (
-  'Accessible' => 'Accessible',
-  'Authorization' => 'Autorisierung',
-  'Close' => 'Schließen',
-  'Save' => 'Speichern',
+  'Certificate Type' => 'Zertifikat-Art',
   'Access for groups' => 'Zugriff für Gruppen',
   'Access for users' => 'Zugriff für Benutzer',
+  'Accessible' => 'Accessible',
   'Accession Number' => 'Akzessionsnummer',
   'Acquisition' => 'Aufsammlung',
   'Acquisition Date' => 'Sammeldatum',
@@ -34,8 +32,10 @@ return array (
   'Alternative Accession Number(s)' => 'Alternative Akzessionsnummer(n)',
   'Altitude' => 'Altitude',
   'Annotation' => 'Bemerkung',
+  'Authorization' => 'Autorisierung',
   'Botanical Object' => 'Botanisches Objekt',
   'Certificates' => 'Zertifikate',
+  'Close' => 'Schließen',
   'Corrections Date' => 'Massnahmen Datum',
   'Corrections Done' => 'Massnahmen erledigt',
   'Country Code' => 'Ländercode',
@@ -97,6 +97,7 @@ return array (
   'Relevancy Type' => 'Relevanz',
   'Remember me next time' => 'Login merken',
   'Salt' => 'Salt',
+  'Save' => 'Speichern',
   'Separation' => 'Abgang',
   'Separation Type' => 'Abgang',
   'Service Data' => 'Service Daten',

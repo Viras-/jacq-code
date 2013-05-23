@@ -7,10 +7,10 @@
                 <td colspan="2">
                     <table style="width: auto;">
                         <tr>
-                            <th>year</th>
-                            <th>name</th>
-                            <th>page</th>
-                            <th>corrections done</th>
+                            <th><?php echo $form->labelEx(TreeRecordFile::model(), 'year'); ?></th>
+                            <th><?php echo $form->labelEx(TreeRecordFile::model(), 'name'); ?></th>
+                            <th><?php echo $form->labelEx(TreeRecordFilePage::model(), 'page'); ?></th>
+                            <th><?php echo $form->labelEx(LivingPlantTreeRecordFilePage::model(), 'corrections_date'); ?></th>
                             <th></th>
                         </tr>
                         <?php
