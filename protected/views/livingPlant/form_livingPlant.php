@@ -34,62 +34,6 @@
     <?php require("form_alternativeAccessionNumbers.php"); ?>
 </div>
 
-<!-- List of source-codes for institutions to auto-fill the IPEN number -->
-<script type="text/javascript">
-    var ipen_codes = {
-        <?php
-        $ipen_code_models = Organisation::model()->findAll();
-        foreach( $ipen_code_models as $ipen_code_model ) {
-            echo "'" . $ipen_code_model->id . "': '" . $ipen_code_model->getIpenCode() . "',\n";
-        }
-        ?>
-        '0': ''
-    };
-    
-    // Bind to change event of institution select
-    $(document).ready(function(){
-        // initialize jsTree for organisation
-        $('#organisation_tree').jstree({
-            "json_data": {
-                "ajax": {
-                    "url": "index.php?r=jSONOrganisation/japi&action=getChildren",
-                    "data": function(n) {
-                        var link = (n.children) ? n.children('a').first() : n;
-                        var organisation_id = (link.attr) ? link.attr("data-organisation-id") : 0;
-                        
-                        return {
-                            "organisation_id": organisation_id
-                        };
-                    }
-                }
-            },
-            "plugins": ["json_data", "themes"]
-        });
-        
-        // bind to click events onto tree items
-        $('#organisation_tree a').live('click', function() {
-            // update references to organisation
-            $('#BotanicalObject_organisation_id').val( $(this).attr('data-organisation-id') );
-            $('#BotanicalObject_organisation_name').val( $(this).text() );
-            $('#organisation_select_dialog').dialog('close');
-            
-            // update IPEN code, only if not locked
-            if( !$('#LivingPlant_ipen_locked').is(':checked') ) {
-                $( "#LivingPlant_ipenNumberInstitutionCode" ).val( ipen_codes[$("#BotanicalObject_organisation_id").val()] );
-            }
-            return false;
-        });
-        
-        // bind to new location event
-        $('#locationName').bind('autocompleteselect', function(event, ui) {
-            if( typeof ui.item.countryCode !== "undefined" && !$("#LivingPlant_ipen_locked").is(":checked") ) {
-                $( "#LivingPlant_ipenNumberCountryCode" ).val( ui.item.countryCode );
-            }
-        });
-    });
-    
-</script>
-
 <div class="row">
     <?php
     // render certificates form
