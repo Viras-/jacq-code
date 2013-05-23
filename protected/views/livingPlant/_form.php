@@ -174,6 +174,8 @@
                     'click' => new CJavaScriptExpression('authorizationSave')
                 ),
             ),
+            'open' => new CJavaScriptExpression('authorizationOpen'),
+            'close' => new CJavaScriptExpression('authorizationClose'),
         ),
     ));
     ?>
@@ -195,6 +197,21 @@
         ?>
         '0': ''
     };
+    
+    /**
+     * Called when the authorization dialog is opened (for reloading)
+     */
+    function authorizationOpen(event,ui) {
+        // load authorization view and assign it to div
+        $('#authorization_view').load('<?php echo $this->createUrl('authorization/ajaxBotanicalObjectAccess', array('botanical_object_id' => $model_botanicalObject->id)); ?>');
+    }
+    
+    /**
+     * Called when the authorization dialog is closed (empty content)
+     */
+    function authorizationClose(event,ui) {
+        $('#authorization_view').html('');
+    }
     
     /**
      * Called when the authorization settings are saved
