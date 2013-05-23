@@ -81,6 +81,10 @@ class LocationCoordinates extends CActiveRecord {
             'longitude_minutes' => 'Longitude Minutes',
             'longitude_seconds' => 'Longitude Seconds',
             'longitude_half' => 'Longitude Half',
+            'altitude' => Yii::t('jacq','Altitude'),
+            'exactness' => Yii::t('jacq','Exactness'),
+            'latitude' => Yii::t('jacq','Latitude'),
+            'longitude' => Yii::t('jacq','Longitude'),
         );
     }
 

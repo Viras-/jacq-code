@@ -160,17 +160,17 @@
         'id' => 'authorization_management_dialog',
         // additional javascript options for the dialog plugin
         'options' => array(
-            'title' => 'Authorization',
+            'title' => Yii::t('jacq', 'Authorization'),
             'autoOpen' => false,
             'resizable' => false,
             'width' => 630,
             'buttons' => array(
                 array(
-                    'text' => 'Close',
+                    'text' => Yii::t('jacq', 'Close'),
                     'click' => new CJavaScriptExpression("function() { $(this).dialog('close'); }")
                 ),
                 array(
-                    'text' => 'Save',
+                    'text' => Yii::t('jacq', 'Save'),
                     'click' => new CJavaScriptExpression('authorizationSave')
                 ),
             ),
@@ -261,9 +261,6 @@
                 $( "#LivingPlant_ipenNumberCountryCode" ).val( ui.item.countryCode );
             }
         });
-        
-        // reload authorization data once the dialog closes
-        
     });
     
 </script>
