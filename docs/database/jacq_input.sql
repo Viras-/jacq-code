@@ -1,6 +1,6 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 DROP SCHEMA IF EXISTS `jacq_input` ;
 CREATE SCHEMA IF NOT EXISTS `jacq_input` DEFAULT CHARACTER SET utf8 ;
@@ -725,11 +725,11 @@ COMMENT = 'access assignment for organisation level';
 
 
 -- -----------------------------------------------------
--- Table `frmwrk_accessLivingplant`
+-- Table `frmwrk_accessBotanicalObject`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmwrk_accessLivingplant` ;
+DROP TABLE IF EXISTS `frmwrk_accessBotanicalObject` ;
 
-CREATE  TABLE IF NOT EXISTS `frmwrk_accessLivingplant` (
+CREATE  TABLE IF NOT EXISTS `frmwrk_accessBotanicalObject` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `AuthItem_name` VARCHAR(64) NULL ,
   `user_id` INT NULL ,
@@ -792,6 +792,7 @@ CREATE  TABLE IF NOT EXISTS `tbl_import_error` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
+USE `jacq_input` ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
