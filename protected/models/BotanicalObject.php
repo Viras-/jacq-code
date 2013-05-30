@@ -28,6 +28,7 @@
  * @property ImportProperties[] $importProperties
  * @property LivingPlant $livingPlant
  * @property Separation[] $separations
+ * @property ViewTaxon $viewTaxon
  */
 class BotanicalObject extends ActiveRecord {
 
@@ -126,6 +127,7 @@ class BotanicalObject extends ActiveRecord {
             'livingPlant' => array(self::HAS_ONE, 'LivingPlant', 'id'),
             'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
             'separations' => array(self::HAS_MANY, 'Separation', 'botanical_object_id'),
+            'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'scientific_name_id'),
         );
     }
 
@@ -169,7 +171,7 @@ class BotanicalObject extends ActiveRecord {
         $criteria->compare('annotation', $this->annotation, true);
 
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
 }

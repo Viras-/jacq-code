@@ -115,10 +115,15 @@ class LivingPlant extends ActiveRecord {
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search() {
+        // split scientific name search string into components
+        $scientificName_searchComponents = explode(' ', $this->scientificName_search);
+
         $criteria = new CDbCriteria;
-        $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location');
+        $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location', 'id0.viewTaxon');
         
-        $criteria->compare('`herbar_view`.GetScientificName(`id0`.`scientific_name_id`, 0)', $this->scientificName_search, true);
+        $criteria->compare('viewTaxon.genus', $scientificName_searchComponents[0], true);
+        if (count($scientificName_searchComponents) >= 2)
+            $criteria->compare('viewTaxon.epithet', $scientificName_searchComponents[1], true);
         $criteria->compare('organisation.description', $this->organisation_search, true);
         $criteria->compare('location.location', $this->location_search, true);
         $criteria->compare('accession_number', $this->accession_number, true);

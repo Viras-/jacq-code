@@ -13,6 +13,7 @@ return array(
     // autoloading model and component classes
     'import' => array(
         'application.models.*',
+        'application.models.views.*',
         'application.components.*',
         'application.controllers.JSONServiceController',
     ),
