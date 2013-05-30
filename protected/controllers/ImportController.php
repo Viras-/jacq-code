@@ -178,6 +178,9 @@ class ImportController extends Controller {
                 if( $model_importSpecies == NULL ) {
                     throw new Exception('Invalid species');
                 }
+                
+                // load additional information for Species
+                $model_importSysDiverses = SysDiverses::model()->findByPk($model_akzession->IDArt);
 
                 // try to find a match
                 $matches = $taxmatchService->getMatchesService('vienna', $model_importSpecies->getScientificName(), array('showSyn' => false, 'NearMatch' => false));
@@ -226,6 +229,7 @@ class ImportController extends Controller {
                 $model_importProperties->botanical_object_id = $model_botanicalObject->id;
                 $model_importProperties->species_name = $model_importSpecies->getScientificName();
                 $model_importProperties->IDPflanze = $model_akzession->IDPflanze;
+                $model_importProperties->Verbreitung = $model_importSysDiverses->Verbreitung;
                 if( $model_importRevier != NULL ) {
                     $model_importProperties->Revier = $model_importRevier->Revierbezeichnung . ', ' . $model_importRevier->Unterabteilung;
                 }
