@@ -19,7 +19,7 @@
  * @version $Id: $
  */
 return array (
-  'Certificate Type' => 'Zertifikat-Art',
+  'Scientific Name' => 'Wissenschaftlicher Name',
   'Access for groups' => 'Zugriff für Gruppen',
   'Access for users' => 'Zugriff für Benutzer',
   'Accessible' => 'Accessible',
@@ -34,6 +34,7 @@ return array (
   'Annotation' => 'Bemerkung',
   'Authorization' => 'Autorisierung',
   'Botanical Object' => 'Botanisches Objekt',
+  'Certificate Type' => 'Zertifikat-Art',
   'Certificates' => 'Zertifikate',
   'Close' => 'Schließen',
   'Corrections Date' => 'Massnahmen Datum',
@@ -102,7 +103,6 @@ return array (
   'Separation Type' => 'Abgang',
   'Service Data' => 'Service Daten',
   'Sex' => 'Geschlecht',
-  'Taxon' => 'Taxon',
   'Tree Record File' => 'Baumkontrollblatt',
   'Tree Record File Page' => 'Baumkontrollblatt - Seite',
   'Tree Record Files' => 'Baumkontrollblätter',

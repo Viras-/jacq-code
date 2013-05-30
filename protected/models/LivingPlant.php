@@ -26,9 +26,20 @@
  * @property Relevancy[] $relevancies
  */
 class LivingPlant extends ActiveRecord {
+    /**
+     * Helper attributes for searching across relations
+     */
     public $scientificName_search;
     public $organisation_search;
     public $location_search;
+    
+    /**
+     * Virtual AccessionNumber Attribute which returns a formatted version of the actual accession_number
+     * @return string
+     */
+    public function getAccessionNumber() {
+        return sprintf('%07d', $this->accession_number);
+    }
     
     public function init() {
         parent::init();
@@ -107,6 +118,9 @@ class LivingPlant extends ActiveRecord {
             'cultivation_date' => Yii::t('jacq', 'Cultivation Date'),
             'index_seminum_type_id' => Yii::t('jacq', 'Index Seminum Type'),
             'incoming_date' => Yii::t('jacq', 'Incoming Date'),
+            'scientificName_search' => Yii::t('jacq', 'Scientific Name'),
+            'organisation_search' => Yii::t('jacq', 'Garden Site'),
+            'location_search' => Yii::t('jacq', 'Location'),
         );
     }
 

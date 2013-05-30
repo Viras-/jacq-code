@@ -139,7 +139,7 @@ class BotanicalObject extends ActiveRecord {
             'id' => Yii::t('jacq', 'ID'),
             'acquisition_event_id' => Yii::t('jacq', 'Acquisition Event'),
             'phenology_id' => Yii::t('jacq', 'Phenology'),
-            'scientific_name_id' => Yii::t('jacq', 'Taxon'),
+            'scientific_name_id' => Yii::t('jacq', 'Scientific Name'),
             'habitat' => Yii::t('jacq', 'Habitat'),
             'habitus' => Yii::t('jacq', 'Habitus'),
             'determined_by_id' => Yii::t('jacq', 'Determined By'),

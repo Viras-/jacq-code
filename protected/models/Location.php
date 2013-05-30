@@ -61,7 +61,7 @@ class Location extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'location' => 'Location',
+            'location' => Yii::t('jacq', 'Location'),
         );
     }
 
