@@ -1,19 +1,16 @@
 <?php
 class JSONOrganisationController extends Controller {
     public function japiGetChildren($organisation_id) {
+        $organisation_id = intval($organisation_id);
         $result = array();
         $model_childOrganisations = array();
+        $condition = 'parent_organisation_id IS NULL';
         
-        // find fitting organisation
+        // check if we search for children
         if( $organisation_id ) {
-            $model_organisation = Organisation::model()->findByPk($organisation_id);
-            if( $model_organisation ) {
-                $model_childOrganisations = $model_organisation->organisations;
-            }
+            $condition = "parent_organisation_id = $organisation_id";
         }
-        else {
-            $model_childOrganisations = Organisation::model()->findAll(array('order' => 'description', 'condition' => 'parent_organisation_id IS NULL'));
-        }
+        $model_childOrganisations = Organisation::model()->findAll(array('order' => 'description', 'condition' => $condition));
         
         if( $model_childOrganisations && count($model_childOrganisations) > 0 ) {
             foreach( $model_childOrganisations as $model_childOrganisation ) {
