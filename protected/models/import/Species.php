@@ -116,4 +116,49 @@ class Species extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+        /**
+         * Helper function for constructing the scientific name
+         * @return string
+         */
+        public function getScientificName() {
+            $scientificNameComponents = array();
+
+            // Find out the Genus
+            $model_systematik = Systematik::model()->findByAttributes(array(
+                'IDSys' => $this->IDSys
+            ));
+            if( $model_systematik != NULL ) {
+                $scientificNameComponents[] = $model_systematik->Gattung;
+            }
+            
+            
+            $scientificNameComponents[] = $this->Art;
+            
+            if( $this->Autor != NULL ) {
+                $scientificNameComponents[] = $this->Autor;
+            }
+            if( $this->UArt != NULL ) {
+                $scientificNameComponents[] = $this->UArt;
+            }
+            if( $this->UArtAutor != NULL ) {
+                $scientificNameComponents[] = $this->UArtAutor;
+            }
+            if( $this->Var != NULL ) {
+                $scientificNameComponents[] = $this->Var;
+            }
+            if( $this->VarAutor != NULL ) {
+                $scientificNameComponents[] = $this->VarAutor;
+            }
+            // check for "invalid" chars in formcult
+            if( $this->FormCult != NULL && stripos($this->FormCult, '`') === FALSE && stripos($this->FormCult, '\'') === FALSE ) {
+                $scientificNameComponents[] = $this->FormCult;
+            }
+            if( $this->FormCultAutor != NULL ) {
+                $scientificNameComponents[] = $this->FormCultAutor;
+            }
+            
+            // return complete scientifc name
+            return implode(' ', $scientificNameComponents);
+        }        
 }

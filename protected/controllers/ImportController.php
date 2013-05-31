@@ -199,6 +199,25 @@ class ImportController extends Controller {
                 if( $model_botanicalObject->scientific_name_id == 0 ) {
                     $model_botanicalObject->scientific_name_id = 46996;
                 }
+                // if match is found, add extend information
+                else {
+                    // check for valid extra information entry
+                    if($model_importSysDiverses != NULL) {
+                        // try to find existing entry
+                        $model_scientificNameInformation = ScientificNameInformation::model()->findByPk($model_botanicalObject->scientific_name_id);
+                        // create new entry if necessary
+                        if( $model_scientificNameInformation == NULL ) {
+                            $model_scientificNameInformation = new ScientificNameInformation();
+                            $model_scientificNameInformation->scientific_name_id = $model_botanicalObject->scientific_name_id;
+                            // add spatial distribution info
+                            $model_scientificNameInformation->spatial_distribution = $model_importSysDiverses->Verbreitung;
+                            // finally save the model
+                            if(!$model_scientificNameInformation->save()) {
+                                throw new ImportException('Unable to save scientificNameInformation', $model_scientificNameInformation);
+                            }
+                        }
+                    }
+                }
                 
                 // Try to find a matching entry for the revier
                 $model_botanicalObject->organisation_id = 1;
@@ -229,9 +248,11 @@ class ImportController extends Controller {
                 $model_importProperties->botanical_object_id = $model_botanicalObject->id;
                 $model_importProperties->species_name = $model_importSpecies->getScientificName();
                 $model_importProperties->IDPflanze = $model_akzession->IDPflanze;
-                $model_importProperties->Verbreitung = $model_importSysDiverses->Verbreitung;
                 if( $model_importRevier != NULL ) {
                     $model_importProperties->Revier = $model_importRevier->Revierbezeichnung . ', ' . $model_importRevier->Unterabteilung;
+                }
+                if( $model_importSysDiverses != NULL ) {
+                    $model_importProperties->Verbreitung = $model_importSysDiverses->Verbreitung;
                 }
                 if( !$model_importProperties->save() ) {
                     throw new ImportException('Unable to save importProperties', $model_importProperties);
@@ -304,6 +325,9 @@ class ImportController extends Controller {
                 if( !$model_importError->save() ) {
                     error_log("Can't save import error: " . implode(',', $model_importError->getErrors()));
                 }
+                
+                // output error message
+                echo 'Error during import: ' . $e->getMessage() . '<br />';
             }
         }
         

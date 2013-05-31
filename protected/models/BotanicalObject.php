@@ -22,6 +22,7 @@
  * @property Phenology $phenology
  * @property Person $determinedBy
  * @property Organisation $organisation
+ * @property ScientificNameInformation $scientificNameInformation
  * @property BotanicalObjectSex[] $botanicalObjectSexes
  * @property Diaspora $diaspora
  * @property Image[] $images
@@ -126,6 +127,7 @@ class BotanicalObject extends ActiveRecord {
             'importProperties' => array(self::HAS_MANY, 'ImportProperties', 'botanical_object_id'),
             'livingPlant' => array(self::HAS_ONE, 'LivingPlant', 'id'),
             'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
+            'scientificNameInformation' => array(self::BELONGS_TO, 'ScientificNameInformation', 'scientific_name_id'),
             'separations' => array(self::HAS_MANY, 'Separation', 'botanical_object_id'),
             'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'scientific_name_id'),
         );

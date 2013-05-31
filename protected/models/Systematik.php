@@ -1,22 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "tbl_scientific_name_information".
+ * This is the model class for table "Systematik".
  *
- * The followings are the available columns in table 'tbl_scientific_name_information':
- * @property integer $scientific_name_id
- * @property string $spatial_distribution
- * @property string $variety
- *
- * The followings are the available model relations:
- * @property BotanicalObject[] $botanicalObjects
+ * The followings are the available columns in table 'Systematik':
+ * @property integer $IDSys
+ * @property string $Klasse
+ * @property string $Familie
+ * @property string $AbkFamilie
+ * @property string $Gattung
+ * @property string $Ersteller
+ * @property string $Erstelldatum
  */
-class ScientificNameInformation extends CActiveRecord
+class Systematik extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return ScientificNameInformation the static model class
+	 * @return Systematik the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -24,11 +25,19 @@ class ScientificNameInformation extends CActiveRecord
 	}
 
 	/**
+	 * @return CDbConnection database connection
+	 */
+	public function getDbConnection()
+	{
+		return Yii::app()->dbImport;
+	}
+
+	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_scientific_name_information';
+		return 'Systematik';
 	}
 
 	/**
@@ -39,12 +48,12 @@ class ScientificNameInformation extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('scientific_name_id', 'required'),
-			array('scientific_name_id', 'numerical', 'integerOnly'=>true),
-			array('spatial_distribution, variety', 'length', 'max'=>255),
+			array('IDSys, Klasse, Familie, AbkFamilie', 'required'),
+			array('IDSys', 'numerical', 'integerOnly'=>true),
+			array('Klasse, Familie, AbkFamilie, Gattung, Ersteller, Erstelldatum', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('scientific_name_id, spatial_distribution, variety', 'safe', 'on'=>'search'),
+			array('IDSys, Klasse, Familie, AbkFamilie, Gattung, Ersteller, Erstelldatum', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,7 +65,6 @@ class ScientificNameInformation extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'scientific_name_id'),
 		);
 	}
 
@@ -66,9 +74,13 @@ class ScientificNameInformation extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'scientific_name_id' => 'Scientific Name',
-			'spatial_distribution' => 'Spatial Distribution',
-			'variety' => 'Variety',
+			'IDSys' => 'Idsys',
+			'Klasse' => 'Klasse',
+			'Familie' => 'Familie',
+			'AbkFamilie' => 'Abk Familie',
+			'Gattung' => 'Gattung',
+			'Ersteller' => 'Ersteller',
+			'Erstelldatum' => 'Erstelldatum',
 		);
 	}
 
@@ -83,9 +95,13 @@ class ScientificNameInformation extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('scientific_name_id',$this->scientific_name_id);
-		$criteria->compare('spatial_distribution',$this->spatial_distribution,true);
-		$criteria->compare('variety',$this->variety,true);
+		$criteria->compare('IDSys',$this->IDSys);
+		$criteria->compare('Klasse',$this->Klasse,true);
+		$criteria->compare('Familie',$this->Familie,true);
+		$criteria->compare('AbkFamilie',$this->AbkFamilie,true);
+		$criteria->compare('Gattung',$this->Gattung,true);
+		$criteria->compare('Ersteller',$this->Ersteller,true);
+		$criteria->compare('Erstelldatum',$this->Erstelldatum,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
