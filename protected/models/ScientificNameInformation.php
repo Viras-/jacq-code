@@ -41,7 +41,7 @@ class ScientificNameInformation extends CActiveRecord
 		return array(
 			array('scientific_name_id', 'required'),
 			array('scientific_name_id', 'numerical', 'integerOnly'=>true),
-			array('spatial_distribution, variety', 'length', 'max'=>255),
+			array('variety', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('scientific_name_id, spatial_distribution, variety', 'safe', 'on'=>'search'),
@@ -66,9 +66,9 @@ class ScientificNameInformation extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'scientific_name_id' => 'Scientific Name',
-			'spatial_distribution' => 'Spatial Distribution',
-			'variety' => 'Variety',
+			'scientific_name_id' => Yii::t('jacq', 'Scientific Name'),
+			'spatial_distribution' => Yii::t('jacq', 'Spatial Distribution'),
+			'variety' => Yii::t('jacq', 'Variety'),
 		);
 	}
 

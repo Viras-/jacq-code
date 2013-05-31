@@ -36,7 +36,7 @@ class LivingPlantController extends Controller {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxScientifcNameInformation'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -70,6 +70,7 @@ class LivingPlantController extends Controller {
         $model_botanicalObject = new BotanicalObject;
         $model_locationCoordinates = new LocationCoordinates;
         $model_incomingDate = new AcquisitionDate;
+        $model_botanicalObject->scientificNameInformation = new ScientificNameInformation;
         
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['LocationCoordinates'])) {
             $model_acquisitionDate->setDate($_POST['AcquisitionDate']['date']);
@@ -223,7 +224,7 @@ class LivingPlantController extends Controller {
                                         $model_alternativeAccessionNumber->save();
                                     }
                                 }
-
+                                
                                 // Redirect to update page directly
                                 $this->redirect(array('update', 'id' => $model_livingPlant->id));
                             }
@@ -616,6 +617,28 @@ class LivingPlantController extends Controller {
         $this->renderPartial('form_alternativeAccessionNumber', array(
             'model_alternativeAccessionNumber' => $model_alternativeAccessionNumber
         ), false, true);
+    }
+    
+    /**
+     * load additional scientific name information and return it
+     * @param int $scientific_name_id ID of scientific name
+     */
+    public function actionAjaxScientifcNameInformation($scientific_name_id) {
+        $scientific_name_id = intval($scientific_name_id);
+        $scientificNameInformation = array(
+            'spatial_distribution' => '',
+            'variety' => '',
+        );
+        
+        $model_scientificNameInformation = ScientificNameInformation::model()->findByPk($scientific_name_id);
+        if( $model_scientificNameInformation != NULL ) {
+            $scientificNameInformation['spatial_distribution'] = $model_scientificNameInformation->spatial_distribution;
+            $scientificNameInformation['variety'] = $model_scientificNameInformation->variety;
+        }
+        
+        // output scientific name information & exit
+        echo CJSON::encode($scientificNameInformation);
+        exit(0);
     }
     
     /**
