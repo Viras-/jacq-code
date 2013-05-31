@@ -92,4 +92,5 @@
 <div class="row">
     <?php echo $form->labelEx($model_acquisitionEvent, 'annotation'); ?>
     <?php echo $form->textArea($model_acquisitionEvent, 'annotation', array( 'style' => 'width: 100%;' ) ); ?>
+    <?php echo $form->error($model_acquisitionEvent, 'annotation'); ?>
 </div>
