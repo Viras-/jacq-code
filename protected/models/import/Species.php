@@ -158,7 +158,13 @@ class Species extends CActiveRecord
                 $scientificNameComponents[] = $this->FormCultAutor;
             }
             
+            // construct final scientific name
+            $scientificName = implode(' ', $scientificNameComponents);
+            // remove unused "sp/sp." suffixes
+            $scientificName = preg_replace('/^(.*)sp\.$/i', '$1', $scientificName);
+            $scientificName = preg_replace('/^(.*)sp$/i', '$1', $scientificName);
+            
             // return complete scientifc name
-            return implode(' ', $scientificNameComponents);
+            return $scientificName;
         }        
 }
