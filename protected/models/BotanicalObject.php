@@ -16,6 +16,7 @@
  * @property string $recording_date
  * @property integer $organisation_id
  * @property integer $accessible
+ * @property integer $redetermine
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
@@ -102,12 +103,12 @@ class BotanicalObject extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('acquisition_event_id, scientific_name_id, recording_date', 'required'),
-            array('acquisition_event_id, phenology_id, scientific_name_id, determined_by_id, organisation_id, accessible', 'numerical', 'integerOnly' => true),
+            array('acquisition_event_id, phenology_id, scientific_name_id, determined_by_id, organisation_id, accessible, redetermine', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
             array('determination_date, annotation', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, acquisition_event_id, phenology_id, scientific_name_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes', 'safe', 'on' => 'search'),
+            array('id, acquisition_event_id, phenology_id, scientific_name_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes, redetermine', 'safe', 'on' => 'search'),
         );
     }
 
@@ -150,6 +151,7 @@ class BotanicalObject extends ActiveRecord {
             'recording_date' => Yii::t('jacq', 'Recording Date'),
             'organisation_id' => Yii::t('jacq', 'Garden Site'),
             'accessible' => Yii::t('jacq', 'Accessible'),
+            'redetermine' => Yii::t('jacq', 'Redetermine'),
         );
     }
 

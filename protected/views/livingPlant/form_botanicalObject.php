@@ -33,10 +33,9 @@
 </div>
 
 <div class="row">
-    <!-- Spatial distribution for scientific name, readonly by default since data is loaded on scientific name select -->
-    <?php echo $form->labelEx($model_botanicalObject->scientificNameInformation, 'spatial_distribution'); ?>
-    <?php echo $form->textArea($model_botanicalObject->scientificNameInformation, 'spatial_distribution', array( 'style' => 'width: 100%;' ) ); ?>
-    <?php echo $form->error($model_botanicalObject->scientificNameInformation, 'spatial_distribution'); ?>
+    <?php echo $form->labelEx($model_botanicalObject, 'redetermine'); ?>
+    <?php echo $form->checkBox($model_botanicalObject, 'redetermine' ); ?>
+    <?php echo $form->error($model_botanicalObject, 'redetermine'); ?>
 </div>
 
 <div class="row">
