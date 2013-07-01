@@ -26,7 +26,7 @@
  * @property BotanicalObjectSex[] $botanicalObjectSexes
  * @property Diaspora $diaspora
  * @property Image[] $images
- * @property ImportProperties[] $importProperties
+ * @property ImportProperties $importProperties
  * @property LivingPlant $livingPlant
  * @property Separation[] $separations
  * @property ViewTaxon $viewTaxon
@@ -124,7 +124,7 @@ class BotanicalObject extends ActiveRecord {
             'botanicalObjectSexes' => array(self::HAS_MANY, 'BotanicalObjectSex', 'botanical_object_id'),
             'diaspora' => array(self::HAS_ONE, 'Diaspora', 'id'),
             'images' => array(self::HAS_MANY, 'Image', 'botanical_object_id'),
-            'importProperties' => array(self::HAS_MANY, 'ImportProperties', 'botanical_object_id'),
+            'importProperties' => array(self::HAS_ONE, 'ImportProperties', 'botanical_object_id'),
             'livingPlant' => array(self::HAS_ONE, 'LivingPlant', 'id'),
             'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
             'scientificNameInformation' => array(self::BELONGS_TO, 'ScientificNameInformation', 'scientific_name_id'),

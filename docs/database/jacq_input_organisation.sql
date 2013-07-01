@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 04. Apr 2013 um 20:54
--- Server Version: 5.1.51
--- PHP-Version: 5.3.10
+-- Generation Time: Jun 24, 2013 at 02:56 PM
+-- Server version: 5.1.51
+-- PHP Version: 5.3.10
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,11 +17,11 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Datenbank: `jacq_input`
+-- Database: `jacq_input`
 --
 
 --
--- Daten für Tabelle `tbl_organisation`
+-- Dumping data for table `tbl_organisation`
 --
 
 INSERT INTO `tbl_organisation` (`id`, `description`, `department`, `greenhouse`, `parent_organisation_id`, `gardener_id`, `ipen_code`) VALUES
@@ -105,11 +105,11 @@ INSERT INTO `tbl_organisation` (`id`, `description`, `department`, `greenhouse`,
 (81, 'G19 (Victoriabecken)', 'Freiland', 0, 29, 1, NULL),
 (82, 'Gruppe 49 (Allee bei Nutzpflanzen)', 'Freiland', 0, 29, 1, NULL),
 (83, 'Gruppe 57', 'Freiland', 0, 29, 1, NULL),
-(84, 'G1 System Dicots', 'Freiland', 0, 29, 1, NULL),
-(85, 'G2 System Dicots', 'Freiland', 0, 29, 1, NULL),
-(86, 'G3 System Dicots', 'Freiland', 0, 29, 1, NULL),
-(87, 'G4 System Dicots', 'Freiland', 0, 29, 1, NULL),
-(88, 'G5 System Dicots', 'Freiland', 0, 29, 1, NULL),
+(84, 'Gruppe 1 System Dicots', 'Freiland', 0, 29, 1, ''),
+(85, 'Gruppe 2 System Dicots', 'Freiland', 0, 29, 1, ''),
+(86, 'Gruppe 3 System Dicots', 'Freiland', 0, 29, 1, ''),
+(87, 'Gruppe 4 System Dicots', 'Freiland', 0, 29, 1, ''),
+(88, 'Gruppe 5 System Dicots', 'Freiland', 0, 29, 1, ''),
 (89, 'Gruppe 36', 'Freiland', 0, 36, 2, NULL),
 (90, 'Gruppe 37', 'Freiland', 0, 36, 2, NULL),
 (91, 'Gruppe 35', 'Freiland', 0, 36, 2, NULL),
@@ -124,7 +124,20 @@ INSERT INTO `tbl_organisation` (`id`, `description`, `department`, `greenhouse`,
 (100, 'Gruppe 46', 'Freiland', 0, 36, 2, NULL),
 (101, 'Gruppe 47', 'Freiland', 0, 36, 2, NULL),
 (102, 'Baumschule', 'Freiland', 0, 36, 2, NULL),
-(103, 'Gruppe 56 (Experimentalgarten)', 'Freiland', 0, 36, 2, NULL);
+(103, 'Gruppe 56 (Experimentalgarten)', 'Freiland', 0, 36, 2, NULL),
+(104, 'Gruppe 6 System Dicots', 'Freiland', 0, 29, 1, ''),
+(105, 'Gruppe 7 System Dicots', 'Freiland', 0, 29, 1, ''),
+(106, 'Gruppe 8 System Dicots', 'Freiland', 0, 29, 1, ''),
+(107, 'Gruppe 9 System Dicots', 'Freiland', 0, 29, 1, ''),
+(108, 'Gruppe 10 System Dicots', 'Freiland', 0, 29, 1, ''),
+(109, 'Gruppe 11 System Dicots', 'Freiland', 0, 29, 1, ''),
+(110, 'Gruppe 12 System Dicots', 'Freiland', 0, 29, 1, ''),
+(111, 'Gruppe 13 System Dicots', 'Freiland', 0, 29, 1, ''),
+(112, 'Gruppe 14 System Dicots', 'Freiland', 0, 29, 1, ''),
+(113, 'Gruppe 15 System Dicots', 'Freiland', 0, 29, 1, ''),
+(114, 'Gruppe 16 System Dicots', 'Freiland', 0, 29, 1, ''),
+(115, 'Gruppe 17 System Dicots', 'Freiland', 0, 29, 1, ''),
+(116, 'Gruppe 18 System Dicots', 'Freiland', 0, 29, 1, '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

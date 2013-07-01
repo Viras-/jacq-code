@@ -109,6 +109,7 @@
         require('form_sex.php');
         ?>
     </fieldset>
+    <?php require('form_importProperties.php'); ?>
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? Yii::t('jacq', 'Create') : Yii::t('jacq', 'Save'), array('data-plus-as-tab' => "false")); ?>
