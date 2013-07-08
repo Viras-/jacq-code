@@ -17,12 +17,14 @@
  * @property integer $organisation_id
  * @property integer $accessible
  * @property integer $redetermine
+ * @property integer $ident_status_id
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
  * @property Phenology $phenology
  * @property Person $determinedBy
  * @property Organisation $organisation
+ * @property IdentStatus $identStatus
  * @property ScientificNameInformation $scientificNameInformation
  * @property BotanicalObjectSex[] $botanicalObjectSexes
  * @property Diaspora $diaspora
@@ -103,12 +105,12 @@ class BotanicalObject extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('acquisition_event_id, scientific_name_id, recording_date', 'required'),
-            array('acquisition_event_id, phenology_id, scientific_name_id, determined_by_id, organisation_id, accessible, redetermine', 'numerical', 'integerOnly' => true),
+            array('acquisition_event_id, phenology_id, scientific_name_id, determined_by_id, organisation_id, accessible, redetermine, ident_status_id', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
             array('determination_date, annotation', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, acquisition_event_id, phenology_id, scientific_name_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes, redetermine', 'safe', 'on' => 'search'),
+            array('id, acquisition_event_id, phenology_id, scientific_name_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes, redetermine, ident_status_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -128,6 +130,7 @@ class BotanicalObject extends ActiveRecord {
             'importProperties' => array(self::HAS_ONE, 'ImportProperties', 'botanical_object_id'),
             'livingPlant' => array(self::HAS_ONE, 'LivingPlant', 'id'),
             'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
+            'identStatus' => array(self::BELONGS_TO, 'IdentStatus', 'ident_status_id'),
             'scientificNameInformation' => array(self::BELONGS_TO, 'ScientificNameInformation', 'scientific_name_id'),
             'separations' => array(self::HAS_MANY, 'Separation', 'botanical_object_id'),
             'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'scientific_name_id'),
@@ -152,6 +155,7 @@ class BotanicalObject extends ActiveRecord {
             'organisation_id' => Yii::t('jacq', 'Garden Site'),
             'accessible' => Yii::t('jacq', 'Accessible'),
             'redetermine' => Yii::t('jacq', 'Redetermine'),
+            'ident_status_id' => Yii::t('jacq', 'Ident Status'),
         );
     }
 

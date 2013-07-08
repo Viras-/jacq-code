@@ -45,6 +45,12 @@
 </div>
 
 <div class="row">
+    <?php echo $form->labelEx($model_botanicalObject, 'ident_status_id'); ?>
+    <?php echo $form->dropDownList($model_botanicalObject, 'ident_status_id', CHtml::listData(IdentStatus::model()->findAll(array('order'=>'status')), 'ident_status_id', 'status'), array('empty' => '')); ?>
+    <?php echo $form->error($model_botanicalObject, 'ident_status_id'); ?>
+</div>
+
+<div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'determined_by_id'); ?>
     <?php
     // Enable auto-completer for determined by field
