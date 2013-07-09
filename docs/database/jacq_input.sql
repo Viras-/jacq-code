@@ -181,6 +181,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `tbl_ident_status`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_ident_status` ;
+
+CREATE  TABLE IF NOT EXISTS `tbl_ident_status` (
+  `ident_status_id` INT NOT NULL AUTO_INCREMENT ,
+  `status` VARCHAR(10) NOT NULL ,
+  PRIMARY KEY (`ident_status_id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `tbl_botanical_object`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `tbl_botanical_object` ;
@@ -198,11 +210,14 @@ CREATE  TABLE IF NOT EXISTS `tbl_botanical_object` (
   `recording_date` DATETIME NOT NULL ,
   `organisation_id` INT NULL DEFAULT 1 ,
   `accessible` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `redetermine` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `ident_status_id` INT NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_tbl_object_tbl_acquisition_event1_idx` (`acquisition_event_id` ASC) ,
   INDEX `fk_tbl_object_tbl_phenology1_idx` (`phenology_id` ASC) ,
   INDEX `fk_tbl_botanical_object_tbl_person1_idx` (`determined_by_id` ASC) ,
   INDEX `fk_tbl_botanical_object_tbl_garden_site1_idx` (`organisation_id` ASC) ,
+  INDEX `fk_tbl_botanical_object_tbl_ident_status1_idx` (`ident_status_id` ASC) ,
   CONSTRAINT `fk_tbl_object_tbl_acquisition_event1`
     FOREIGN KEY (`acquisition_event_id` )
     REFERENCES `tbl_acquisition_event` (`id` )
@@ -221,6 +236,11 @@ CREATE  TABLE IF NOT EXISTS `tbl_botanical_object` (
   CONSTRAINT `fk_tbl_botanical_object_tbl_garden_site1`
     FOREIGN KEY (`organisation_id` )
     REFERENCES `tbl_organisation` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tbl_botanical_object_tbl_ident_status1`
+    FOREIGN KEY (`ident_status_id` )
+    REFERENCES `tbl_ident_status` (`ident_status_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -770,6 +790,7 @@ CREATE  TABLE IF NOT EXISTS `tbl_import_properties` (
   `IDPflanze` INT NULL ,
   `species_name` VARCHAR(255) NULL ,
   `Revier` TEXT NULL ,
+  `Verbreitung` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_tbl_import_properties_tbl_botanical_object1_idx` (`botanical_object_id` ASC) ,
   CONSTRAINT `fk_tbl_import_properties_tbl_botanical_object1`
@@ -792,7 +813,34 @@ CREATE  TABLE IF NOT EXISTS `tbl_import_error` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `tbl_scientific_name_information`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_scientific_name_information` ;
+
+CREATE  TABLE IF NOT EXISTS `tbl_scientific_name_information` (
+  `scientific_name_id` INT NOT NULL COMMENT 'Pointer to taxonID in old system' ,
+  `spatial_distribution` TEXT NULL ,
+  `variety` VARCHAR(255) NULL ,
+  PRIMARY KEY (`scientific_name_id`) )
+ENGINE = InnoDB;
+
 USE `jacq_input` ;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `view_taxon`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `view_taxon` (`taxonID` INT, `synID` INT, `basID` INT, `genID` INT, `annotation` INT, `external` INT, `genus` INT, `DallaTorreIDs` INT, `DallaTorreZusatzIDs` INT, `author_g` INT, `family` INT, `category` INT, `status` INT, `statusID` INT, `rank` INT, `tax_rankID` INT, `rank_abbr` INT, `author` INT, `authorID` INT, `Brummit_Powell_full` INT, `author1` INT, `authorID1` INT, `bpf1` INT, `author2` INT, `authorID2` INT, `bpf2` INT, `author3` INT, `authorID3` INT, `bpf3` INT, `author4` INT, `authorID4` INT, `bpf4` INT, `author5` INT, `authorID5` INT, `bpf5` INT, `epithet` INT, `epithetID` INT, `epithet1` INT, `epithetID1` INT, `epithet2` INT, `epithetID2` INT, `epithet3` INT, `epithetID3` INT, `epithet4` INT, `epithetID4` INT, `epithet5` INT, `epithetID5` INT);
+
+-- -----------------------------------------------------
+-- View `view_taxon`
+-- -----------------------------------------------------
+DROP VIEW IF EXISTS `view_taxon` ;
+DROP TABLE IF EXISTS `view_taxon`;
+USE `jacq_input`;
+CREATE  OR REPLACE VIEW `view_taxon` AS select `ts`.`taxonID` AS `taxonID`,`ts`.`synID` AS `synID`,`ts`.`basID` AS `basID`,`ts`.`genID` AS `genID`,`ts`.`annotation` AS `annotation`,`ts`.`external` AS `external`,`tg`.`genus` AS `genus`,`tg`.`DallaTorreIDs` AS `DallaTorreIDs`,`tg`.`DallaTorreZusatzIDs` AS `DallaTorreZusatzIDs`,`tag`.`author` AS `author_g`,`tf`.`family` AS `family`,`tsc`.`category` AS `category`,`tst`.`status` AS `status`,`tst`.`statusID` AS `statusID`,`tr`.`rank` AS `rank`,`tr`.`tax_rankID` AS `tax_rankID`,`tr`.`rank_abbr` AS `rank_abbr`,`ta`.`author` AS `author`,`ta`.`authorID` AS `authorID`,`ta`.`Brummit_Powell_full` AS `Brummit_Powell_full`,`ta1`.`author` AS `author1`,`ta1`.`authorID` AS `authorID1`,`ta1`.`Brummit_Powell_full` AS `bpf1`,`ta2`.`author` AS `author2`,`ta2`.`authorID` AS `authorID2`,`ta2`.`Brummit_Powell_full` AS `bpf2`,`ta3`.`author` AS `author3`,`ta3`.`authorID` AS `authorID3`,`ta3`.`Brummit_Powell_full` AS `bpf3`,`ta4`.`author` AS `author4`,`ta4`.`authorID` AS `authorID4`,`ta4`.`Brummit_Powell_full` AS `bpf4`,`ta5`.`author` AS `author5`,`ta5`.`authorID` AS `authorID5`,`ta5`.`Brummit_Powell_full` AS `bpf5`,`te`.`epithet` AS `epithet`,`te`.`epithetID` AS `epithetID`,`te1`.`epithet` AS `epithet1`,`te1`.`epithetID` AS `epithetID1`,`te2`.`epithet` AS `epithet2`,`te2`.`epithetID` AS `epithetID2`,`te3`.`epithet` AS `epithet3`,`te3`.`epithetID` AS `epithetID3`,`te4`.`epithet` AS `epithet4`,`te4`.`epithetID` AS `epithetID4`,`te5`.`epithet` AS `epithet5`,`te5`.`epithetID` AS `epithetID5` from ((((((((((((((((((`herbarinput`.`tbl_tax_species` `ts` left join `herbarinput`.`tbl_tax_authors` `ta` on((`ta`.`authorID` = `ts`.`authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta1` on((`ta1`.`authorID` = `ts`.`subspecies_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta2` on((`ta2`.`authorID` = `ts`.`variety_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta3` on((`ta3`.`authorID` = `ts`.`subvariety_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta4` on((`ta4`.`authorID` = `ts`.`forma_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta5` on((`ta5`.`authorID` = `ts`.`subforma_authorID`))) left join `herbarinput`.`tbl_tax_epithets` `te` on((`te`.`epithetID` = `ts`.`speciesID`))) left join `herbarinput`.`tbl_tax_epithets` `te1` on((`te1`.`epithetID` = `ts`.`subspeciesID`))) left join `herbarinput`.`tbl_tax_epithets` `te2` on((`te2`.`epithetID` = `ts`.`varietyID`))) left join `herbarinput`.`tbl_tax_epithets` `te3` on((`te3`.`epithetID` = `ts`.`subvarietyID`))) left join `herbarinput`.`tbl_tax_epithets` `te4` on((`te4`.`epithetID` = `ts`.`formaID`))) left join `herbarinput`.`tbl_tax_epithets` `te5` on((`te5`.`epithetID` = `ts`.`subformaID`))) left join `herbarinput`.`tbl_tax_status` `tst` on((`tst`.`statusID` = `ts`.`statusID`))) left join `herbarinput`.`tbl_tax_rank` `tr` on((`tr`.`tax_rankID` = `ts`.`tax_rankID`))) left join `herbarinput`.`tbl_tax_genera` `tg` on((`tg`.`genID` = `ts`.`genID`))) left join `herbarinput`.`tbl_tax_authors` `tag` on((`tag`.`authorID` = `tg`.`authorID`))) left join `herbarinput`.`tbl_tax_families` `tf` on((`tf`.`familyID` = `tg`.`familyID`))) left join `herbarinput`.`tbl_tax_systematic_categories` `tsc` on((`tf`.`categoryID` = `tsc`.`categoryID`)));
+;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -818,6 +866,24 @@ START TRANSACTION;
 USE `jacq_input`;
 INSERT INTO `tbl_phenology` (`id`, `phenology`) VALUES (1, 'unknown');
 INSERT INTO `tbl_phenology` (`id`, `phenology`) VALUES (2, 'florid');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `tbl_ident_status`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `jacq_input`;
+INSERT INTO `tbl_ident_status` (`ident_status_id`, `status`) VALUES (1, 'aff.');
+INSERT INTO `tbl_ident_status` (`ident_status_id`, `status`) VALUES (2, 'agg.');
+INSERT INTO `tbl_ident_status` (`ident_status_id`, `status`) VALUES (3, 'cf.');
+INSERT INTO `tbl_ident_status` (`ident_status_id`, `status`) VALUES (4, 'ined.');
+INSERT INTO `tbl_ident_status` (`ident_status_id`, `status`) VALUES (5, 'masc.');
+INSERT INTO `tbl_ident_status` (`ident_status_id`, `status`) VALUES (6, 's.l.');
+INSERT INTO `tbl_ident_status` (`ident_status_id`, `status`) VALUES (7, 's.str.');
+INSERT INTO `tbl_ident_status` (`ident_status_id`, `status`) VALUES (8, 'sp. nov.');
+INSERT INTO `tbl_ident_status` (`ident_status_id`, `status`) VALUES (9, 'x');
+INSERT INTO `tbl_ident_status` (`ident_status_id`, `status`) VALUES (10, 'fem.');
 
 COMMIT;
 
