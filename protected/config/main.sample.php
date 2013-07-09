@@ -19,12 +19,12 @@ return array(
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
-        'gii' => array(
+        /*'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => 'gii',
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
-            'ipFilters' => array('127.0.0.1', '::1', '192.168.56.1'),
-        ),
+            'ipFilters' => array('127.0.0.1', '::1'),
+        ),*/
         'rbam' => array(
             'rbacManagerRole' => 'rbacManager',
             'authItemsManagerRole' => 'rbacManager',
@@ -58,39 +58,39 @@ return array(
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=jacq_input',
             'emulatePrepare' => true,
-            'username' => 'jacq_input',
-            'password' => 'jacq_input',
+            'username' => '',
+            'password' => '',
             'charset' => 'utf8',
         ),
         'dbHerbarInput' => array(
             'connectionString' => 'mysql:host=localhost;dbname=herbarinput',
             'emulatePrepare' => true,
-            'username' => 'herbarinput',
-            'password' => 'herbarinput',
+            'username' => '',
+            'password' => '',
             'charset' => 'utf8',
             'class' => 'CDbConnection'
         ),
         'dbHerbarView' => array(
             'connectionString' => 'mysql:host=localhost;dbname=herbar_view',
             'emulatePrepare' => true,
-            'username' => 'herbarinput',
-            'password' => 'herbarinput',
+            'username' => '',
+            'password' => '',
             'charset' => 'utf8',
             'class' => 'CDbConnection'
         ),
         'dbLog' => array(
             'connectionString' => 'mysql:host=localhost;dbname=jacq_log',
             'emulatePrepare' => true,
-            'username' => 'jacq_log',
-            'password' => 'jacq_log',
+            'username' => '',
+            'password' => '',
             'charset' => 'utf8',
             'class' => 'CDbConnection'
         ),
         'dbImport' => array(
             'connectionString' => 'mysql:host=localhost;dbname=livingplants_import',
             'emulatePrepare' => true,
-            'username' => 'livingplants_imp',
-            'password' => 'livingplants_import',
+            'username' => '',
+            'password' => '',
             'charset' => 'utf8',
             'class' => 'CDbConnection'
         ),
@@ -135,7 +135,7 @@ return array(
     // using Yii::app()->params['paramName']
     'params' => array(
         // this is used in contact page
-        'adminEmail' => 'w.koller@senegate.at',
+        'adminEmail' => 'admin@domain.com',
         'groupPrefix' => 'grp_',
     ),
 );
