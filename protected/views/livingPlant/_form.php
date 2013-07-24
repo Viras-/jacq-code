@@ -36,11 +36,11 @@
     <?php
     $this->widget('zii.widgets.jui.CJuiTabs',array(
         'tabs'=>array(
-            'Aquisition' => $this->renderPartial('form_acquisitionTab', $data, true),
-            'Gardening' => $this->renderPartial('form_gardeningTab', $data, true),
-            'Collection' => 'Content',
-            'Derivatives' => 'Content',
-            'Inventory' => 'Content',
+            Yii::t('jacq', 'Aquisition') => $this->renderPartial('form_acquisitionTab', $data, true),
+            Yii::t('jacq', 'Gardening') => $this->renderPartial('form_gardeningTab', $data, true),
+            Yii::t('jacq', 'Collection') => $this->renderPartial('form_collectionTab', $data, true),
+            Yii::t('jacq', 'Derivatives') => 'Work in progress',
+            Yii::t('jacq', 'Inventory') => 'Work in progress',
         ),
         // additional javascript options for the tabs plugin
         'options'=>array(
@@ -50,39 +50,12 @@
 
     <?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);  ?>
 
-    <fieldset>
-        <legend><?php echo Yii::t('jacq', 'Acquisition'); ?></legend>
-        <?php
-        require('form_acquisitionDate.php');
-        ?>
-        <hr/>
-        <?php
-        require('form_acquisitionEvent.php');
-        ?>
-    </fieldset>
-    <fieldset>
-        <legend><?php echo Yii::t('jacq', 'Separation'); ?></legend>
-        <?php
-        require('form_separation.php');
-        ?>
-    </fieldset>
+    <br />
+    <h3>Fields to be assigned to tabs:</h3>
     <fieldset>
         <legend><?php echo Yii::t('jacq', 'Living Plant'); ?></legend>
         <?php
         require('form_botanicalObject.php');
-        require('form_livingPlant.php');
-        ?>
-    </fieldset>
-    <fieldset>
-        <legend><?php echo Yii::t('jacq', 'Relevancy Type'); ?></legend>
-        <?php
-        require('form_relevancy.php');
-        ?>
-    </fieldset>
-    <fieldset>
-        <legend><?php echo Yii::t('jacq', 'Sex'); ?></legend>
-        <?php
-        require('form_sex.php');
         ?>
     </fieldset>
     <?php require('form_importProperties.php'); ?>

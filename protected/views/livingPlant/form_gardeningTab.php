@@ -68,3 +68,9 @@
 </div>
 <!-- tree record(s) -->
 <?php require('form_treeRecord.php'); ?>
+<!-- general annotations -->
+<div class="row">
+    <?php echo $form->labelEx($model_botanicalObject, 'annotation'); ?>
+    <?php echo $form->textField($model_botanicalObject, 'annotation'); ?>
+    <?php echo $form->error($model_botanicalObject, 'annotation'); ?>
+</div>
