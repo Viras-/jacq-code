@@ -9,6 +9,10 @@
         )
             ));
     
+    // pass reference to main form through sub-render calls
+    $data['form'] = &$form;
+    
+    // maintain reference to botanical object id
     echo $form->hiddenField($model_botanicalObject, 'id');
     ?>
 
@@ -22,6 +26,26 @@
     </div>
     <?php
     }
+    ?>
+
+    <fieldset>
+        <legend><?php echo Yii::t('jacq', 'Basic'); ?></legend>
+        <?php $this->renderPartial('form_basicTab', $data); ?>
+    </fieldset>
+
+    <?php
+    $this->widget('zii.widgets.jui.CJuiTabs',array(
+        'tabs'=>array(
+            'Aquisition' => $this->renderPartial('form_acquisitionTab', $data, true),
+            'Gardening' => 'Content',
+            'Collection' => 'Content',
+            'Derivatives' => 'Content',
+            'Inventory' => 'Content',
+        ),
+        // additional javascript options for the tabs plugin
+        'options'=>array(
+        ),
+    ));
     ?>
 
     <?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);  ?>
