@@ -13,12 +13,4 @@ $this->menu = array(
 <h1><?php echo Yii::t('jacq', 'Create Living Plant'); ?></h1>
 
 <?php
-echo $this->renderPartial('_form', array(
-    'model_acquisitionDate' => $model_acquisitionDate,
-    'model_acquisitionEvent' => $model_acquisitionEvent,
-    'model_livingPlant' => $model_livingPlant,
-    'model_botanicalObject' => $model_botanicalObject,
-    'model_locationCoordinates' => $model_locationCoordinates,
-    'model_incomingDate' => $model_incomingDate,
-        )
-);
+echo $this->renderPartial('_form', $data );

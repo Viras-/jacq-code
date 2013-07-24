@@ -1,36 +1,3 @@
-<div class="row">
-    <?php echo $form->labelEx($model_botanicalObject, 'scientific_name_id'); ?>
-    <?php
-    // Enable auto-completer for taxon field
-    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-        'name' => 'scientificName',
-        'sourceUrl' => 'index.php?r=autoComplete/taxon',
-        // additional javascript options for the autocomplete plugin
-        'options' => array(
-            'minLength' => '2',
-            'change' => 'js:function( event, ui ) {
-                    if( typeof ui.item !== "undefined" ) {
-                        $( "#BotanicalObject_scientific_name_id" ).val( ui.item.id );
-                        // load spatial distribution information for selected name
-                        $.ajax({
-                            url: "' . $this->createUrl('livingPlant/ajaxScientifcNameInformation', array('scientific_name_id' => 0) ) . '" + ui.item.id,
-                            success: function(data) {
-                                $("#ScientificNameInformation_spatial_distribution").val(data.spatial_distribution);
-                            },
-                            dataType: "json"
-                        });
-                    }
-                }',
-        ),
-        'value' => $model_botanicalObject->scientificName,
-            /* 'htmlOptions' => array(
-              'value' => $model_botanicalObject->getScientificName()
-              ), */
-    ));
-    ?>
-    <?php echo $form->hiddenField($model_botanicalObject, 'scientific_name_id'); ?>
-    <?php echo $form->error($model_botanicalObject, 'scientific_name_id'); ?>
-</div>
 
 <div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'redetermine'); ?>
