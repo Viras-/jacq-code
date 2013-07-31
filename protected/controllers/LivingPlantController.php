@@ -502,15 +502,19 @@ class LivingPlantController extends Controller {
             }
         }
 
-        // Render the update form
-        $this->render('update', array(
+        // create data array, including self reference for sub-render calls
+        $data = array(
             'model_acquisitionDate' => $model_acquisitionDate,
             'model_acquisitionEvent' => $model_acquisitionEvent,
             'model_livingPlant' => $model_livingPlant,
             'model_botanicalObject' => $model_botanicalObject,
             'model_locationCoordinates' => $model_locationCoordinates,
             'model_incomingDate' => $model_incomingDate,
-        ));
+        );
+        $data['data'] = &$data;
+
+        // Render the create form
+        $this->render('update', $data);
     }
 
     /**
