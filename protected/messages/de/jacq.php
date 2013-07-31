@@ -49,7 +49,7 @@ return array (
   'Create Tree Record File' => 'Baumkontrollblatt erstellen',
   'Cultivation Date' => 'Anbaudatum',
   'Culture Notes' => 'Kulturhinweise',
-  'Custom' => 'Frei',
+  'Custom' => 'Freies Sammeldatum',
   'Date' => 'Datum',
   'Day' => 'Tag',
   'Department' => 'Abteilung',
