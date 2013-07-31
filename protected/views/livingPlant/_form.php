@@ -16,8 +16,6 @@
     echo $form->hiddenField($model_botanicalObject, 'id');
     ?>
 
-    <p class="note">Fields with <span class="required">*</span> are required.</p>
-    
     <?php
     if( !$model_botanicalObject->isNewRecord ) {
     ?>
