@@ -92,7 +92,15 @@
                 // Create checkbox list for all relevancy type entries
                 $models_sex = Sex::model()->findAll();
                 $list_sex = CHtml::listData($models_sex, 'id', 'sex');
-                echo CHtml::checkBoxList('Sex', $selected_sex, $list_sex, array('labelOptions' => array('style' => 'display: inline')));
+                echo CHtml::checkBoxList(
+                        'Sex',
+                        $selected_sex,
+                        $list_sex,
+                        array(
+                            'labelOptions' => array('style' => 'display: inline'),
+                            'separator' => ''
+                        )
+                );
                 ?>
             </td>
         </tr>
