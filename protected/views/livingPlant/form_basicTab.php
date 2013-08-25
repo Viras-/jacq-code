@@ -77,6 +77,7 @@
     <table style="width: auto;">
         <tr>
             <td>
+                <?php echo $form->labelEx(BotanicalObjectSex::model(), 'sex_id'); ?>
                 <?php
                 // Find all checked sex for this entry
                 $selected_sex = array();
@@ -105,6 +106,13 @@
             </td>
         </tr>
     </table>
+</div>
+
+<!-- separated (not in collection anymore) -->
+<div class="row">
+    <?php echo $form->labelEx($model_botanicalObject, 'separated'); ?>
+    <?php echo $form->checkBox($model_botanicalObject, 'separated'); ?>
+    <?php echo $form->error($model_botanicalObject, 'separated'); ?>
 </div>
 
 <!-- separations -->
