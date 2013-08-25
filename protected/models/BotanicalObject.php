@@ -18,6 +18,7 @@
  * @property integer $accessible
  * @property integer $redetermine
  * @property integer $ident_status_id
+ * @property integer $separated
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
@@ -105,12 +106,12 @@ class BotanicalObject extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('acquisition_event_id, scientific_name_id, recording_date', 'required'),
-            array('acquisition_event_id, phenology_id, scientific_name_id, determined_by_id, organisation_id, accessible, redetermine, ident_status_id', 'numerical', 'integerOnly' => true),
+            array('acquisition_event_id, phenology_id, scientific_name_id, determined_by_id, organisation_id, accessible, redetermine, ident_status_id, separated', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
             array('determination_date, annotation', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, acquisition_event_id, phenology_id, scientific_name_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes, redetermine, ident_status_id', 'safe', 'on' => 'search'),
+            array('id, acquisition_event_id, phenology_id, scientific_name_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes, redetermine, ident_status_id, separated', 'safe', 'on' => 'search'),
         );
     }
 
@@ -156,6 +157,7 @@ class BotanicalObject extends ActiveRecord {
             'accessible' => Yii::t('jacq', 'Accessible'),
             'redetermine' => Yii::t('jacq', 'Redetermine'),
             'ident_status_id' => Yii::t('jacq', 'Ident Status'),
+            'separated' => Yii::t('jacq', 'Separated'),
         );
     }
 
@@ -169,14 +171,21 @@ class BotanicalObject extends ActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('id', $this->id);
-        $criteria->compare('acquisition_event_id', $this->acquisition_event_id);
-        $criteria->compare('phenology_id', $this->phenology_id);
-        $criteria->compare('scientific_name_id', $this->scientific_name_id);
-        $criteria->compare('habitat', $this->habitat, true);
-        $criteria->compare('habitus', $this->habitus, true);
-        $criteria->compare('determined_by_id', $this->determined_by_id);
-        $criteria->compare('annotation', $this->annotation, true);
+        $criteria->compare('id',$this->id);
+        $criteria->compare('acquisition_event_id',$this->acquisition_event_id);
+        $criteria->compare('phenology_id',$this->phenology_id);
+        $criteria->compare('scientific_name_id',$this->scientific_name_id);
+        $criteria->compare('determined_by_id',$this->determined_by_id);
+        $criteria->compare('determination_date',$this->determination_date,true);
+        $criteria->compare('habitat',$this->habitat,true);
+        $criteria->compare('habitus',$this->habitus,true);
+        $criteria->compare('annotation',$this->annotation,true);
+        $criteria->compare('recording_date',$this->recording_date,true);
+        $criteria->compare('organisation_id',$this->organisation_id);
+        $criteria->compare('accessible',$this->accessible);
+        $criteria->compare('redetermine',$this->redetermine);
+        $criteria->compare('ident_status_id',$this->ident_status_id);
+        $criteria->compare('separated',$this->separated);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
