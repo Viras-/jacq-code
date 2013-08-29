@@ -1,0 +1,129 @@
+<?php
+
+/**
+ * This is the model class for table "tbl_tax_synonymy".
+ *
+ * The followings are the available columns in table 'tbl_tax_synonymy':
+ * @property integer $tax_syn_ID
+ * @property integer $taxonID
+ * @property integer $acc_taxon_ID
+ * @property string $ref_date
+ * @property integer $preferred_taxonomy
+ * @property string $annotations
+ * @property integer $locked
+ * @property string $source
+ * @property integer $source_citationID
+ * @property integer $source_person_ID
+ * @property integer $source_serviceID
+ * @property integer $source_specimenID
+ * @property integer $userID
+ * @property string $timestamp
+ * 
+ * The followings are the available model relations:
+ * @property TaxClassification $taxClassification
+ */
+class TaxSynonymy extends CActiveRecord {
+
+    /**
+     * Returns the static model of the specified AR class.
+     * @param string $className active record class name.
+     * @return TaxSynonymy the static model class
+     */
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
+
+    /**
+     * @return CDbConnection database connection
+     */
+    public function getDbConnection() {
+        return Yii::app()->dbHerbarInput;
+    }
+
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return 'tbl_tax_synonymy';
+    }
+
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('userID, timestamp', 'required'),
+            array('taxonID, acc_taxon_ID, preferred_taxonomy, locked, source_citationID, source_person_ID, source_serviceID, source_specimenID, userID', 'numerical', 'integerOnly' => true),
+            array('source', 'length', 'max' => 20),
+            array('ref_date, annotations', 'safe'),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('tax_syn_ID, taxonID, acc_taxon_ID, ref_date, preferred_taxonomy, annotations, locked, source, source_citationID, source_person_ID, source_serviceID, source_specimenID, userID, timestamp', 'safe', 'on' => 'search'),
+        );
+    }
+
+    /**
+     * @return array relational rules.
+     */
+    public function relations() {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'taxClassification' => array(self::HAS_ONE, 'TaxClassification', 'tax_syn_ID'),
+        );
+    }
+
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'tax_syn_ID' => 'Tax Syn',
+            'taxonID' => 'Taxon',
+            'acc_taxon_ID' => 'Acc Taxon',
+            'ref_date' => 'Ref Date',
+            'preferred_taxonomy' => 'Preferred Taxonomy',
+            'annotations' => 'Annotations',
+            'locked' => 'Locked',
+            'source' => 'Source',
+            'source_citationID' => 'Source Citation',
+            'source_person_ID' => 'Source Person',
+            'source_serviceID' => 'Source Service',
+            'source_specimenID' => 'Source Specimen',
+            'userID' => 'User',
+            'timestamp' => 'Timestamp',
+        );
+    }
+
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search() {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
+
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('tax_syn_ID', $this->tax_syn_ID);
+        $criteria->compare('taxonID', $this->taxonID);
+        $criteria->compare('acc_taxon_ID', $this->acc_taxon_ID);
+        $criteria->compare('ref_date', $this->ref_date, true);
+        $criteria->compare('preferred_taxonomy', $this->preferred_taxonomy);
+        $criteria->compare('annotations', $this->annotations, true);
+        $criteria->compare('locked', $this->locked);
+        $criteria->compare('source', $this->source, true);
+        $criteria->compare('source_citationID', $this->source_citationID);
+        $criteria->compare('source_person_ID', $this->source_person_ID);
+        $criteria->compare('source_serviceID', $this->source_serviceID);
+        $criteria->compare('source_specimenID', $this->source_specimenID);
+        $criteria->compare('userID', $this->userID);
+        $criteria->compare('timestamp', $this->timestamp, true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+}
