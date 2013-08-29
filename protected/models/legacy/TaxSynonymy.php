@@ -21,9 +21,39 @@
  * 
  * The followings are the available model relations:
  * @property TaxClassification $taxClassification
+ * @property TaxSynonymy $taxSynonymyAccepted
  */
 class TaxSynonymy extends CActiveRecord {
-
+    /**
+     * Helper function for fetching the accepted entry
+     * @return \TaxSynonymy TaxSynonymy entry which is accepted
+     */
+    public function getAccepted() {
+        if( $this->taxSynonymyAccepted == NULL ) return $this;
+        
+        // return the accepted name for our accepted taxon
+        return $this->taxSynonymyAccepted->getAccepted();
+    }
+    
+    /**
+     * Helper function for fetching the parent of a given TaxSynonymy entry
+     * @return null|\TaxSynonymy null if no classification found or parent entry not found, else the TaxSynonymy model
+     */
+    public function getParent() {
+        if( $this->taxClassification == NULL || $this->taxClassification->parent_taxonID == NULL ) return NULL;
+        
+        $model_parentTaxSynonymy = TaxSynonymy::model()->findByAttributes(array(
+            'taxonID' => $this->taxClassification->parent_taxonID,
+            'source_citationID' => $this->source_citationID,
+            
+        ));
+        
+        if( $model_parentTaxSynonymy == NULL ) return NULL;
+        
+        // return the parent
+        return $model_parentTaxSynonymy;
+    }
+    
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -72,6 +102,7 @@ class TaxSynonymy extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'taxClassification' => array(self::HAS_ONE, 'TaxClassification', 'tax_syn_ID'),
+            'taxSynonymyAccepted' => array(self::HAS_ONE, 'TaxSynonymy', array('acc_taxon_ID' => 'taxonID', 'source_citationID' => 'source_citationID')),
         );
     }
 
