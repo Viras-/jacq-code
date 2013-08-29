@@ -19,6 +19,7 @@
  * @property integer $redetermine
  * @property integer $ident_status_id
  * @property integer $separated
+ * @property string $scientificName
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
@@ -62,42 +63,15 @@ class BotanicalObject extends ActiveRecord {
     }
 
     /**
-     * Wrapper for getting the virtual scientificName attribute
-     * @param string $name Name of attribute to get
-     * @return mixed value of attribute 
-     */
-    public function __get($name) {
-        if ($name == "scientificName") {
-            return $this->getScientificName();
-        }
-        else {
-            return parent::__get($name);
-        }
-    }
-
-    /**
-     * Return connection to herbar_view database
-     * @return CDbConnection 
-     */
-    private function getDbHerbarView() {
-        return Yii::app()->dbHerbarView;
-    }
-
-    /**
      * Fetch the scientific name for the given botanical object
      * @return string 
      */
-    private function getScientificName() {
-        if ($this->scientific_name_id <= 0)
-            return NULL;
-
-        $dbHerbarView = $this->getDbHerbarView();
-        $command = $dbHerbarView->createCommand("SELECT GetScientificName( " . $this->scientific_name_id . ", 0 ) AS 'ScientificName'");
-        $scientificNames = $command->queryAll();
-
-        return $scientificNames[0]['ScientificName'];
+    public function getScientificName() {
+        if( $this->viewTaxon == NULL ) return NULL;
+        
+        return $this->viewTaxon->getScientificName();
     }
-
+    
     /**
      * @return array validation rules for model attributes.
      */
@@ -171,21 +145,21 @@ class BotanicalObject extends ActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('acquisition_event_id',$this->acquisition_event_id);
-        $criteria->compare('phenology_id',$this->phenology_id);
-        $criteria->compare('scientific_name_id',$this->scientific_name_id);
-        $criteria->compare('determined_by_id',$this->determined_by_id);
-        $criteria->compare('determination_date',$this->determination_date,true);
-        $criteria->compare('habitat',$this->habitat,true);
-        $criteria->compare('habitus',$this->habitus,true);
-        $criteria->compare('annotation',$this->annotation,true);
-        $criteria->compare('recording_date',$this->recording_date,true);
-        $criteria->compare('organisation_id',$this->organisation_id);
-        $criteria->compare('accessible',$this->accessible);
-        $criteria->compare('redetermine',$this->redetermine);
-        $criteria->compare('ident_status_id',$this->ident_status_id);
-        $criteria->compare('separated',$this->separated);
+        $criteria->compare('id', $this->id);
+        $criteria->compare('acquisition_event_id', $this->acquisition_event_id);
+        $criteria->compare('phenology_id', $this->phenology_id);
+        $criteria->compare('scientific_name_id', $this->scientific_name_id);
+        $criteria->compare('determined_by_id', $this->determined_by_id);
+        $criteria->compare('determination_date', $this->determination_date, true);
+        $criteria->compare('habitat', $this->habitat, true);
+        $criteria->compare('habitus', $this->habitus, true);
+        $criteria->compare('annotation', $this->annotation, true);
+        $criteria->compare('recording_date', $this->recording_date, true);
+        $criteria->compare('organisation_id', $this->organisation_id);
+        $criteria->compare('accessible', $this->accessible);
+        $criteria->compare('redetermine', $this->redetermine);
+        $criteria->compare('ident_status_id', $this->ident_status_id);
+        $criteria->compare('separated', $this->separated);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
