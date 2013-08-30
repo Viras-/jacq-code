@@ -73,6 +73,49 @@ class BotanicalObject extends ActiveRecord {
     }
     
     /**
+     * Getter function for the family of the currently assigned scientific name
+     * @return string Name of family
+     */
+    public function getFamily() {
+        $model_familyTaxSynonymy = $this->getFamilyByReference(10400, 'citation');
+        
+        // if no family was found, return 'Unknown'
+        if( $model_familyTaxSynonymy == NULL ) return Yii::t('jacq', 'Unknown');
+        
+        // Otherwise return the scientific name
+        return $model_familyTaxSynonymy->viewTaxon->getScientificName();
+    }
+    
+    /**
+     * Get the family entry for the currently assigned scientific name
+     * @param int $reference_id ID of reference to use for classification
+     * @param string $reference_type Type of reference (currently only citation is supported)
+     * @return \TaxSynonymy|NULL Either the TaxSynonymy entry for the family, or NULL if none found
+     */
+    protected function getFamilyByReference($reference_id, $reference_type = 'citation') {
+        $reference_id = intval($reference_id);
+        
+        if( $reference_id <= 0 || !in_array($reference_type, array('citation')) ) {
+            return NULL;
+        }
+        
+        // try to find the synonymy entry
+        $model_taxSynonymy = TaxSynonymy::model()->findByAttributes(array(
+            'taxonID' => $this->scientific_name_id,
+            'source_citationID' => $reference_id
+        ));
+        
+        // check if we found a valid entry
+        if( $model_taxSynonymy == NULL ) return NULL;
+        
+        // make sure we have the accepted entry
+        $model_taxSynonymy = $model_taxSynonymy->getAccepted();
+        
+        // get the family entry from synonymy
+        return $model_taxSynonymy->getFamily();
+    }
+    
+    /**
      * @return array validation rules for model attributes.
      */
     public function rules() {
