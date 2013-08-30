@@ -22,6 +22,7 @@
  * The followings are the available model relations:
  * @property TaxClassification $taxClassification
  * @property TaxSynonymy $taxSynonymyAccepted
+ * @property ViewTaxon $viewTaxon
  */
 class TaxSynonymy extends CActiveRecord {
     /**
@@ -40,7 +41,7 @@ class TaxSynonymy extends CActiveRecord {
      * @return null|\TaxSynonymy null if no classification found or parent entry not found, else the TaxSynonymy model
      */
     public function getParent() {
-        if( $this->taxClassification == NULL || $this->taxClassification->parent_taxonID == NULL ) return NULL;
+        if( $this->taxClassification === NULL || $this->taxClassification->parent_taxonID === NULL ) return NULL;
         
         $model_parentTaxSynonymy = TaxSynonymy::model()->findByAttributes(array(
             'taxonID' => $this->taxClassification->parent_taxonID,
@@ -52,6 +53,22 @@ class TaxSynonymy extends CActiveRecord {
         
         // return the parent
         return $model_parentTaxSynonymy;
+    }
+    
+    /**
+     * Find the family entry
+     * @return \TaxSynonymy
+     */
+    public function getFamily() {
+        // check if this entry is family level
+        if( $this->viewTaxon->isFamily() ) return $this;
+        
+        // if not fetch the parent and check if we have one
+        $model_parentTaxSynonymy = $this->getParent();
+        if( $model_parentTaxSynonymy == NULL ) return NULL;
+        
+        // finally find the family of the parent entry
+        return $this->getParent()->getFamily();
     }
     
     /**
@@ -101,8 +118,9 @@ class TaxSynonymy extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'taxClassification' => array(self::HAS_ONE, 'TaxClassification', 'tax_syn_ID'),
-            'taxSynonymyAccepted' => array(self::HAS_ONE, 'TaxSynonymy', array('acc_taxon_ID' => 'taxonID', 'source_citationID' => 'source_citationID')),
+            'taxClassification' => array(self::BELONGS_TO, 'TaxClassification', 'tax_syn_ID'),
+            'taxSynonymyAccepted' => array(self::BELONGS_TO, 'TaxSynonymy', array('acc_taxon_ID' => 'taxonID', 'source_citationID' => 'source_citationID')),
+            'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'taxonID'),
         );
     }
 
