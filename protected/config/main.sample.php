@@ -14,6 +14,7 @@ return array(
     'import' => array(
         'application.models.*',
         'application.models.views.*',
+        'application.models.legacy.*',
         'application.components.*',
         'application.controllers.JSONServiceController',
     ),
