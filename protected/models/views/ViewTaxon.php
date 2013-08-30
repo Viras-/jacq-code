@@ -53,6 +53,7 @@
  * @property integer $epithetID5
  */
 class ViewTaxon extends CActiveRecord {
+    const C_FAMILY_RANK = 9;
 
     /**
      * Returns the static model of the specified AR class.
@@ -83,6 +84,16 @@ class ViewTaxon extends CActiveRecord {
         $scientificNames = $command->queryAll();
 
         return $scientificNames[0]['ScientificName'];
+    }
+    
+    /**
+     * Check if the entry is a family or not
+     * @return boolean
+     */
+    public function isFamily() {
+        if( $this->tax_rankID == self::C_FAMILY_RANK ) return true;
+        
+        return false;
     }
     
     /**
