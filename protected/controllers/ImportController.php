@@ -63,7 +63,7 @@ class ImportController extends Controller {
                 // if no herkunft entry is found, use default properties
                 if( $model_importHerkunft == NULL ) $model_importHerkunft = new Herkunft();
                 
-                // create location coordinates object
+                // create location coordinates objectb
                 $model_locationCoordinates = new LocationCoordinates();
                 if( !$model_locationCoordinates->save() ) {
                     throw new ImportException('Unable to save locationCoordinates', $model_locationCoordinates);
@@ -85,8 +85,8 @@ class ImportController extends Controller {
                 $model_aquisitionEvent->number = $model_importHerkunft->CollNr;
                 
                 // check if annotation is not empty, because then we need to add a separator
-                if( $model_aquisitionEvent->annotation != NULL && $model_importHerkunft->Bezugsquelle != NULL ) $model_aquisitionEvent->annotation .= '; ';
-                $model_aquisitionEvent->annotation .= $model_importHerkunft->Bezugsquelle;
+                /*if( $model_aquisitionEvent->annotation != NULL && $model_importHerkunft->Bezugsquelle != NULL ) $model_aquisitionEvent->annotation .= '; ';
+                $model_aquisitionEvent->annotation .= $model_importHerkunft->Bezugsquelle;*/
                 
                 // import the collection country / place
                 // construct location string for importing
@@ -125,6 +125,31 @@ class ImportController extends Controller {
                     $model_acquisitionEventPerson->person_id = $model_collectorPerson->id;
                     if( !$model_acquisitionEventPerson->save() ) {
                         throw new ImportException('Unable to save acquisitionEventPerson', $model_acquisitionEventPerson);
+                    }
+                }
+                
+                // add information on acquisition source
+                if( $model_importHerkunft->Bezugsquelle != NULL ) {
+                    // try to find existing entry
+                    $model_acquisitionSource = AcquisitionSource::model()->findByAttributes(array(
+                        'name' => $model_importHerkunft->Bezugsquelle
+                    ));
+                    // if not found, create a new one
+                    if( $model_acquisitionSource == NULL ) {
+                        $model_acquisitionSource = new AcquisitionSource();
+                        $model_acquisitionSource->name = $model_importHerkunft->Bezugsquelle;
+                        if( !$model_acquisitionSource->save() ) {
+                            throw new ImportException('Unable to save acquisitionSource', $model_acquisitionSource);
+                        }
+                    }
+                    
+                    // assign the acquisition source to the event
+                    $model_acquisitionEventSource = new AcquisitionEventSource();
+                    $model_acquisitionEventSource->acquisition_event_id = $model_aquisitionEvent->id;
+                    $model_acquisitionEventSource->acquisition_source_id = $model_acquisitionSource->acquisition_source_id;
+                    $model_acquisitionEventSource->source_date = $model_importHerkunft->CollDatum;
+                    if( !$model_acquisitionEventSource->save() ) {
+                        throw new ImportException('Unable to save acquisitionEventSource', $model_acquisitionEventSource);
                     }
                 }
                 

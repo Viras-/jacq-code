@@ -7,7 +7,7 @@
  * @property integer $acquisition_event_source_id
  * @property integer $acquisition_event_id
  * @property integer $acquisition_source_id
- * @property string $acquisition_source_date
+ * @property string $source_date
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
@@ -41,11 +41,12 @@ class AcquisitionEventSource extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('acquisition_event_id, acquisition_source_id, acquisition_source_date', 'required'),
+			array('acquisition_event_id, acquisition_source_id', 'required'),
 			array('acquisition_event_id, acquisition_source_id', 'numerical', 'integerOnly'=>true),
+			array('source_date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('acquisition_event_source_id, acquisition_event_id, acquisition_source_id, acquisition_source_date', 'safe', 'on'=>'search'),
+			array('acquisition_event_source_id, acquisition_event_id, acquisition_source_id, source_date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,7 +72,7 @@ class AcquisitionEventSource extends CActiveRecord
 			'acquisition_event_source_id' => 'Acquisition Event Source',
 			'acquisition_event_id' => 'Acquisition Event',
 			'acquisition_source_id' => 'Acquisition Source',
-			'acquisition_source_date' => 'Acquisition Source Date',
+			'source_date' => 'Source Date',
 		);
 	}
 
@@ -89,7 +90,7 @@ class AcquisitionEventSource extends CActiveRecord
 		$criteria->compare('acquisition_event_source_id',$this->acquisition_event_source_id);
 		$criteria->compare('acquisition_event_id',$this->acquisition_event_id);
 		$criteria->compare('acquisition_source_id',$this->acquisition_source_id);
-		$criteria->compare('acquisition_source_date',$this->acquisition_source_date,true);
+		$criteria->compare('source_date',$this->source_date,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
