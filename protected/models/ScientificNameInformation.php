@@ -7,6 +7,7 @@
  * @property integer $scientific_name_id
  * @property string $spatial_distribution
  * @property string $variety
+ * @property string $common_names
  *
  * The followings are the available model relations:
  * @property BotanicalObject[] $botanicalObjects
@@ -42,9 +43,10 @@ class ScientificNameInformation extends CActiveRecord
 			array('scientific_name_id', 'required'),
 			array('scientific_name_id', 'numerical', 'integerOnly'=>true),
 			array('variety', 'length', 'max'=>255),
+                        array('spatial_distribution, common_names', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('scientific_name_id, spatial_distribution, variety', 'safe', 'on'=>'search'),
+			array('scientific_name_id, spatial_distribution, variety, common_names', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +71,7 @@ class ScientificNameInformation extends CActiveRecord
 			'scientific_name_id' => Yii::t('jacq', 'Scientific Name'),
 			'spatial_distribution' => Yii::t('jacq', 'Spatial Distribution'),
 			'variety' => Yii::t('jacq', 'Variety'),
+                        'common_names' => Yii::t('jacq', 'Common Names'),
 		);
 	}
 
@@ -86,6 +89,7 @@ class ScientificNameInformation extends CActiveRecord
 		$criteria->compare('scientific_name_id',$this->scientific_name_id);
 		$criteria->compare('spatial_distribution',$this->spatial_distribution,true);
 		$criteria->compare('variety',$this->variety,true);
+                $criteria->compare('common_names',$this->common_names,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
