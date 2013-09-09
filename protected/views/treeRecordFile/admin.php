@@ -35,7 +35,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'tree-record-file-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,
-    'filterSelector' => '{filter}',
     'columns' => array(
         'id',
         'year',

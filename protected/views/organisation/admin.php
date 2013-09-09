@@ -35,7 +35,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'garden-site-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,
-    'filterSelector' => '{filter}',
     'columns' => array(
         'id',
         'description',

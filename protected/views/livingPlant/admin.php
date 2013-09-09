@@ -35,7 +35,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'living-plant-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,
-    'filterSelector' => '{filter}',
     'columns' => array(
         array('name' => 'scientificName_search', 'value' => '$data->id0->scientificName'),
         array('name' => 'organisation_search', 'value' => '$data->id0->organisation->description'),
