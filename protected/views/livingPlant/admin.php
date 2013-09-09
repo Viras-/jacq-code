@@ -35,11 +35,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'living-plant-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,
+    'filterSelector' => '{filter}',
     'columns' => array(
-        array( 'name'=>'scientificName_search', 'value'=>'$data->id0->scientificName' ),
-        array( 'name'=>'organisation_search', 'value'=>'$data->id0->organisation->description' ),
-        array( 'name'=>'accession_number', 'value'=>'$data->accessionNumber' ),
-        array( 'name'=>'location_search', 'value'=>'(isset($data->id0->acquisitionEvent->location->location)) ? $data->id0->acquisitionEvent->location->location : ""' ),
+        array('name' => 'scientificName_search', 'value' => '$data->id0->scientificName'),
+        array('name' => 'organisation_search', 'value' => '$data->id0->organisation->description'),
+        array('name' => 'accession_number', 'value' => '$data->accessionNumber'),
+        array('name' => 'location_search', 'value' => '(isset($data->id0->acquisitionEvent->location->location)) ? $data->id0->acquisitionEvent->location->location : ""'),
         array(
             'class' => 'LPButtonColumn',
         ),
