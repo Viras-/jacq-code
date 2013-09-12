@@ -231,8 +231,12 @@ class ImportController extends Controller {
                 if( $model_scientificNameInformation == NULL ) {
                     $model_scientificNameInformation = new ScientificNameInformation();
                     $model_scientificNameInformation->scientific_name_id = $model_botanicalObject->scientific_name_id;
-                    // add spatial distribution info, if available
-                    if( $model_importSysDiverses != NULL ) $model_scientificNameInformation->spatial_distribution = $model_importSysDiverses->Verbreitung;
+                    // add additional info, if available
+                    if( $model_importSysDiverses != NULL ) {
+                        $model_scientificNameInformation->spatial_distribution = $model_importSysDiverses->Verbreitung;
+                        $model_scientificNameInformation->common_names = $model_importSysDiverses->DtName;
+                        $model_scientificNameInformation->growth_form = $model_importSysDiverses->Wuchsform;
+                    }
                     // finally save the model
                     if(!$model_scientificNameInformation->save()) {
                         throw new ImportException('Unable to save scientificNameInformation', $model_scientificNameInformation);
