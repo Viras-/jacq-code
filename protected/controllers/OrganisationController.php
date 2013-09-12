@@ -107,8 +107,16 @@ class OrganisationController extends Controller {
     public function actionAdmin() {
         $model = new Organisation('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Organisation']))
+
+        // check for new search parameters
+        if (isset($_GET['Organisation'])) {
             $model->attributes = $_GET['Organisation'];
+            Yii::app()->session['Organisation_filter'] = $_GET['Organisation'];
+        }
+        // if not try to retrieve from session
+        else if( isset(Yii::app()->session['Organisation_filter']) ) {
+            $model->attributes = Yii::app()->session['Organisation_filter'];
+        }
 
         $this->render('admin', array(
             'model' => $model,

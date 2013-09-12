@@ -151,8 +151,16 @@ class TreeRecordFileController extends Controller {
     public function actionAdmin() {
         $model = new TreeRecordFile('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['TreeRecordFile']))
+
+        // check for new search parameters
+        if (isset($_GET['TreeRecordFile'])) {
             $model->attributes = $_GET['TreeRecordFile'];
+            Yii::app()->session['TreeRecordFile_filter'] = $_GET['TreeRecordFile'];
+        }
+        // if not try to retrieve from session
+        else if( isset(Yii::app()->session['TreeRecordFile_filter']) ) {
+            $model->attributes = Yii::app()->session['TreeRecordFile_filter'];
+        }
 
         $this->render('admin', array(
             'model' => $model,

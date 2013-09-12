@@ -548,14 +548,16 @@ class LivingPlantController extends Controller {
     public function actionAdmin() {
         $model = new LivingPlant('search');
         $model->unsetAttributes();  // clear any default values
+        
+        // check for new search parameters
         if (isset($_GET['LivingPlant'])) {
             $model->attributes = $_GET['LivingPlant'];
             Yii::app()->session['LivingPlant_filter'] = $_GET['LivingPlant'];
         }
+        // if not try to retrieve from session
         else if( isset(Yii::app()->session['LivingPlant_filter']) ) {
             $model->attributes = Yii::app()->session['LivingPlant_filter'];
         }
-            
 
         $this->render('admin', array(
             'model' => $model,
