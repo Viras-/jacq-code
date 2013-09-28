@@ -63,6 +63,22 @@ class BotanicalObject extends ActiveRecord {
     }
 
     /**
+     * Virtual attribute for CSV export
+     * @return string
+     */
+    public function getCSVSexes() {
+        $csvSexes = array();
+        
+        if( is_array($this->botanicalObjectSexes) ) {
+            foreach( $this->botanicalObjectSexes as $BotanicalObjectSex ) {
+                $csvSexes[] = Yii::t('jacq', $BotanicalObjectSex->sex);
+            }
+        }
+        
+        return join(',', $csvSexes);
+    }
+
+    /**
      * Fetch the scientific name for the given botanical object
      * @return string 
      */

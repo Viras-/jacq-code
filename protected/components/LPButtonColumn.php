@@ -17,6 +17,8 @@ class LPButtonColumn extends CButtonColumn {
         if( Yii::app()->user->checkAccess('oprtn_deleteLivingplant') ) {
             $this->template .= ' {delete}';
         }
+        
+        $this->header = Yii::t('jacq', 'Actions');
 
         parent::__construct($grid);
     }

@@ -48,6 +48,18 @@ class LivingPlantController extends Controller {
             ),
         );
     }
+    
+    /**
+     * Return used behaviors
+     */
+    public function behaviors() {
+        return array(
+            'exportableGrid' => array(
+                'class' => 'application.behaviors.ExportableGridBehavior',
+                'filename' => 'LivingPlants.csv',
+                'csvDelimiter' => ';', //i.e. Excel friendly csv delimiter
+        ));
+    }
 
     /**
      * Displays a particular model.
@@ -557,6 +569,21 @@ class LivingPlantController extends Controller {
         // if not try to retrieve from session
         else if( isset(Yii::app()->session['LivingPlant_filter']) ) {
             $model->attributes = Yii::app()->session['LivingPlant_filter'];
+        }
+
+        // Check if a CSV export is requested
+        if( $this->isExportRequest() ) {
+            $this->exportCSV(
+                    $model->search(),
+                    array(
+                        'id',
+                        'id0.scientificName',
+                        'id0.organisation.description', 
+                        'accessionNumber',
+                        'id0.acquisitionEvent.location.location',
+                        'id0.cSVSexes'
+                    )
+            );
         }
 
         $this->render('admin', array(

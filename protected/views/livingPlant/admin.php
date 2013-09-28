@@ -25,13 +25,18 @@ $('.search-form form').submit(function(){
 
 <h1><?php echo Yii::t('jacq', 'Manage Living Plants'); ?></h1>
 
-<p>
-    You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-    or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
-
+<div style="text-align: right;">
 <?php
-$this->widget('zii.widgets.grid.CGridView', array(
+// add export button for CSV
+$this->renderExportGridButton(
+        'living-plant-grid',
+        CHtml::image('images/table_save.png', Yii::t('jacq', 'Download CSV')),
+        array()
+);
+?>
+</div>
+<?php
+$lpGridView = $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'living-plant-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,
@@ -45,4 +50,3 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
     ),
 ));
-?>
