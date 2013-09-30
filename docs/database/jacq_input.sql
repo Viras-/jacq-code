@@ -792,7 +792,6 @@ CREATE  TABLE IF NOT EXISTS `tbl_import_properties` (
   `botanical_object_id` INT NOT NULL ,
   `IDPflanze` INT NULL ,
   `species_name` VARCHAR(255) NULL ,
-  `Revier` TEXT NULL ,
   `Verbreitung` TEXT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_tbl_import_properties_tbl_botanical_object1_idx` (`botanical_object_id` ASC) ,
@@ -824,9 +823,10 @@ DROP TABLE IF EXISTS `tbl_scientific_name_information` ;
 
 CREATE  TABLE IF NOT EXISTS `tbl_scientific_name_information` (
   `scientific_name_id` INT NOT NULL AUTO_INCREMENT COMMENT 'Pointer to taxonID in old system' ,
-  `spatial_distribution` TEXT NULL DEFAULT NULL ,
+  `spatial_distribution` VARCHAR(255) NULL DEFAULT NULL ,
   `variety` VARCHAR(255) NULL DEFAULT NULL ,
-  `common_names` TEXT NULL DEFAULT NULL COMMENT 'text field for common names relevant to the garden' ,
+  `common_names` VARCHAR(255) NULL DEFAULT NULL COMMENT 'text field for common names relevant to the garden' ,
+  `growth_form` VARCHAR(255) NULL DEFAULT NULL ,
   PRIMARY KEY (`scientific_name_id`) )
 ENGINE = InnoDB;
 
