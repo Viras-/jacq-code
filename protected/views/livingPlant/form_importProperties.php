@@ -12,10 +12,6 @@ if( $model_botanicalObject->importProperties != NULL ) {
             <?php echo $form->textField($model_botanicalObject->importProperties, 'species_name', array('readonly' => 'readonly')); ?>
         </div>
         <div class="row">
-            <?php echo $form->labelEx($model_botanicalObject->importProperties, 'Revier'); ?>
-            <?php echo $form->textField($model_botanicalObject->importProperties, 'Revier', array('readonly' => 'readonly')); ?>
-        </div>
-        <div class="row">
             <?php echo $form->labelEx($model_botanicalObject->importProperties, 'Verbreitung'); ?>
             <?php echo $form->textField($model_botanicalObject->importProperties, 'Verbreitung', array('readonly' => 'readonly')); ?>
         </div>

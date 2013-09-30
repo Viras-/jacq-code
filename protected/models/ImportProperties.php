@@ -8,7 +8,6 @@
  * @property integer $botanical_object_id
  * @property integer $IDPflanze
  * @property string $species_name
- * @property string $Revier
  * @property string $Verbreitung
  *
  * The followings are the available model relations:
@@ -45,10 +44,10 @@ class ImportProperties extends CActiveRecord
 			array('botanical_object_id', 'required'),
 			array('botanical_object_id, IDPflanze', 'numerical', 'integerOnly'=>true),
 			array('species_name', 'length', 'max'=>255),
-			array('Revier, Verbreitung', 'safe'),
+			array('Verbreitung', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, botanical_object_id, IDPflanze, species_name, Revier, Verbreitung', 'safe', 'on'=>'search'),
+			array('id, botanical_object_id, IDPflanze, species_name, Verbreitung', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,7 +73,6 @@ class ImportProperties extends CActiveRecord
 			'botanical_object_id' => 'Botanical Object',
 			'IDPflanze' => 'Idpflanze',
 			'species_name' => 'Species Name',
-			'Revier' => 'Revier',
 			'Verbreitung' => 'Verbreitung',
 		);
 	}
@@ -94,7 +92,6 @@ class ImportProperties extends CActiveRecord
 		$criteria->compare('botanical_object_id',$this->botanical_object_id);
 		$criteria->compare('IDPflanze',$this->IDPflanze);
 		$criteria->compare('species_name',$this->species_name,true);
-		$criteria->compare('Revier',$this->Revier,true);
 		$criteria->compare('Verbreitung',$this->Verbreitung,true);
 
 		return new CActiveDataProvider($this, array(

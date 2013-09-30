@@ -178,6 +178,9 @@ class Organisation extends ActiveRecord {
             149 => 12,
         );
         
+        // check for valid entry
+        if( !isset($IDRevierToOrganisationId[$IDRevier]) ) return NULL;
+        
         // return model for translated IDRevier
         return self::model()->findByPk($IDRevierToOrganisationId[$IDRevier]);
     }
