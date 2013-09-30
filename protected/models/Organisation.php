@@ -122,4 +122,63 @@ class Organisation extends ActiveRecord {
             return 'XX';
         }
     }
+    
+    /**
+     * Helper function for translating an old IDRevier based entry to a new organisation
+     * @param int $IDRevier
+     * @return Organisation
+     */
+    public static function getFromIDRevier($IDRevier) {
+        $IDRevierToOrganisationId = array(
+            71 => 7,
+            78 => 12,
+            79 => 11,
+            80 => 9,
+            81 => 8,
+            82 => 30,
+            83 => 31,
+            84 => 37,
+            85 => 32,
+            86 => 36,
+            87 => 39,
+            88 => 29,
+            89 => 33,
+            90 => 34,
+            91 => 6,
+            92 => 15,
+            99 => 44,
+            106 => 57,
+            107 => 11,
+            108 => 13,
+            111 => 24,
+            112 => 27,
+            113 => 26,
+            114 => 25,
+            118 => 73,
+            120 => 79,
+            122 => 119,
+            123 => 38,
+            124 => 55,
+            125 => 40,
+            126 => 42,
+            127 => 25,
+            130 => 26,
+            132 => 27,
+            135 => 76,
+            136 => 53,
+            138 => 16,
+            140 => 23,
+            141 => 22,
+            142 => 19,
+            143 => 15,
+            144 => 17,
+            145 => 118,
+            146 => 18,
+            147 => 24,
+            149 => 12,
+        );
+        
+        // return model for translated IDRevier
+        return self::model()->findByPk($IDRevierToOrganisationId[$IDRevier]);
+    }
 }

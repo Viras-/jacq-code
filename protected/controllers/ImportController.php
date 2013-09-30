@@ -242,25 +242,13 @@ class ImportController extends Controller {
                         throw new ImportException('Unable to save scientificNameInformation', $model_scientificNameInformation);
                     }
                 }
-
+                
                 // Try to find a matching entry for the revier
-                $model_botanicalObject->organisation_id = 1;
-                $model_importRevier = Revier::model()->findByAttributes(array('IDRevier' => $model_akzession->IDRevier));
-                if( $model_importRevier != NULL ) {
-                    // use either unterabteilung or revierbezeichnung for finding a fitting organisation
-                    $revierName = $model_importRevier->Unterabteilung;
-                    if($revierName == NULL) $revierName = $model_importRevier->Revierbezeichnung;
-                    
-                    // create criteria for searching the organisation data
-                    $dbRevierCriteria = new CDbCriteria();
-                    $dbRevierCriteria->addSearchCondition('description', $revierName);
-                    $model_organisation = Organisation::model()->find($dbRevierCriteria);
-                    
-                    // if we find a fitting organisation, assign it to the botanical object
-                    if( $model_organisation != NULL ) {
-                        $model_botanicalObject->organisation_id = $model_organisation->id;
-                    }
+                $model_organisation = Organisation::getFromIDRevier($model_akzession->IDRevier);
+                if( $model_organisation == NULL ) {
+                    throw new Exception('Unable to load Organisation for Revier: ' . $model_akzession->IDRevier);
                 }
+                $model_botanicalObject->organisation_id = $model_organisation->id;
                 
                 // save botanical object model
                 if( !$model_botanicalObject->save() ) {
@@ -272,9 +260,6 @@ class ImportController extends Controller {
                 $model_importProperties->botanical_object_id = $model_botanicalObject->id;
                 $model_importProperties->species_name = $model_importSpecies->getScientificName();
                 $model_importProperties->IDPflanze = $model_akzession->IDPflanze;
-                if( $model_importRevier != NULL ) {
-                    $model_importProperties->Revier = $model_importRevier->Revierbezeichnung . ', ' . $model_importRevier->Unterabteilung;
-                }
                 if( $model_importSysDiverses != NULL ) {
                     $model_importProperties->Verbreitung = $model_importSysDiverses->Verbreitung;
                 }
