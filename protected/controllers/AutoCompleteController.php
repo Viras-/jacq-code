@@ -34,9 +34,9 @@ class AutoCompleteController extends JSONServiceController {
     }
 
     /**
-     * Search for fitting taxon names and return them 
+     * Search for fitting scientific names and return them 
      */
-    public function actionTaxon($term) {
+    public function actionScientificName($term) {
         $pieces = explode(' ', $term);
 
         // Check for valid input
@@ -194,7 +194,7 @@ class AutoCompleteController extends JSONServiceController {
         // Output results as service response
         $this->serviceOutput($results);
     }
-
+    
     /**
      * @return array action filters
      */
@@ -213,11 +213,11 @@ class AutoCompleteController extends JSONServiceController {
         return array(
             array(
                 'allow',
-                'actions' => array('taxon'),
+                'actions' => array('scientificName'),
                 'users' => array('*'),
             ),
             array('allow',
-                'actions' => array('location', 'person'),
+                'actions' => array('location', 'person', 'acquisitionSource'),
                 'users' => array('@'),
             ),
             array('deny', // deny all users by default
