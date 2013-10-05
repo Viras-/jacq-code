@@ -196,6 +196,31 @@ class AutoCompleteController extends JSONServiceController {
     }
     
     /**
+     * Autocompleter function for Acquisition-Source entries
+     * @param string $term name of acquisition source entry to search for
+     */
+    public function actionAcquisitionSource($term) {
+        $results = array();
+        
+        // search for entries containing the search term as name
+        $dbCriteria = new CDbCriteria();
+        $dbCriteria->addSearchCondition('name', $term);
+        $models_acquisitionSource = AcquisitionSource::model()->findAll($dbCriteria);
+
+        // add all found entries to the result
+        foreach( $models_acquisitionSource as $model_acquisitionSource ) {
+            $results[] = array(
+                'label' => $model_acquisitionSource->name,
+                'value' => $model_acquisitionSource->name,
+                'id' => $model_acquisitionSource->acquisition_source_id,
+            );
+        }
+        
+        // Output results as service response
+        $this->serviceOutput($results);
+    }
+
+    /**
      * @return array action filters
      */
     public function filters() {

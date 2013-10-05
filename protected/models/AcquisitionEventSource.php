@@ -14,6 +14,10 @@
  * @property AcquisitionSource $acquisitionSource
  */
 class AcquisitionEventSource extends CActiveRecord {
+    /**
+     * @var int helper attribute for deleting AcquisitionEventSource entries
+     */
+    public $delete = 0;
 
     /**
      * Returns the static model of the specified AR class.

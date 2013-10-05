@@ -36,7 +36,7 @@ class LivingPlantController extends Controller {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxScientifcNameInformation'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -662,26 +662,12 @@ class LivingPlantController extends Controller {
         ), false, true);
     }
     
-    /**
-     * load additional scientific name information and return it
-     * @param int $scientific_name_id ID of scientific name
-     */
-    public function actionAjaxScientifcNameInformation($scientific_name_id) {
-        $scientific_name_id = intval($scientific_name_id);
-        $scientificNameInformation = array(
-            'spatial_distribution' => '',
-            'variety' => '',
-        );
+    public function actionAjaxAcquisitionEventSource() {
+        $model_acquisitionEventSource = new AcquisitionEventSource();
         
-        $model_scientificNameInformation = ScientificNameInformation::model()->findByPk($scientific_name_id);
-        if( $model_scientificNameInformation != NULL ) {
-            $scientificNameInformation['spatial_distribution'] = $model_scientificNameInformation->spatial_distribution;
-            $scientificNameInformation['variety'] = $model_scientificNameInformation->variety;
-        }
-        
-        // output scientific name information & exit
-        echo CJSON::encode($scientificNameInformation);
-        exit(0);
+        $this->renderPartial('form_acquisitionEventSource', array(
+            'model_acquisitionEventSource' => $model_acquisitionEventSource
+        ), false, true);
     }
     
     /**
