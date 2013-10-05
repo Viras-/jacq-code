@@ -20,11 +20,21 @@
  * @property string $timestamp
  * 
  * The followings are the available model relations:
- * @property TaxClassification $taxClassification
- * @property TaxSynonymy $taxSynonymyAccepted
  * @property ViewTaxon $viewTaxon
  */
 class TaxSynonymy extends CActiveRecord {
+    /**
+     * Reference to classification entry
+     * @var TaxClassification
+     */
+    public $taxClassification = NULL;
+    
+    /**
+     * Reference to accepted entry (if current is not accepted)
+     * @var TaxSynonymy 
+     */
+    public $taxSynonymyAccepted = NULL;
+    
     /**
      * Helper function for fetching the accepted entry
      * @return \TaxSynonymy TaxSynonymy entry which is accepted
@@ -69,6 +79,19 @@ class TaxSynonymy extends CActiveRecord {
         
         // finally find the family of the parent entry
         return $this->getParent()->getFamily();
+    }
+    
+    protected function afterFind() {
+        parent::afterFind();
+
+        $this->taxClassification = TaxClassification::model()->findByAttributes(array(
+            'tax_syn_ID' => $this->tax_syn_ID
+        ));
+        
+        $this->taxSynonymyAccepted = TaxSynonymy::model()->findByAttributes(array(
+            'taxonID' => $this->acc_taxon_ID,
+            'source_citationID' => $this->source_citationID
+        ));
     }
     
     /**
@@ -118,8 +141,8 @@ class TaxSynonymy extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'taxClassification' => array(self::BELONGS_TO, 'TaxClassification', 'tax_syn_ID'),
-            'taxSynonymyAccepted' => array(self::BELONGS_TO, 'TaxSynonymy', array('acc_taxon_ID' => 'taxonID', 'source_citationID' => 'source_citationID')),
+            'taxClassification' => array(self::HAS_ONE, 'TaxClassification', array('tax_syn_ID' => 'tax_syn_ID')),
+            'taxSynonymyAccepted' => array(self::HAS_ONE, 'TaxSynonymy', array('acc_taxon_ID' => 'taxonID', 'source_citationID' => 'source_citationID')),
             'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'taxonID'),
         );
     }

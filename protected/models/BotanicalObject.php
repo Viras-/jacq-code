@@ -93,7 +93,7 @@ class BotanicalObject extends ActiveRecord {
      * @return string Name of family
      */
     public function getFamily() {
-        $model_familyTaxSynonymy = $this->getFamilyByReference(10400, 'citation');
+        $model_familyTaxSynonymy = $this->getFamilyByReference(Yii::app()->params['familyClassificationId'], 'citation');
         
         // if no family was found, return 'Unknown'
         if( $model_familyTaxSynonymy == NULL ) return Yii::t('jacq', 'Unknown');

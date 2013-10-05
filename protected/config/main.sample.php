@@ -138,5 +138,6 @@ return array(
         // this is used in contact page
         'adminEmail' => 'admin@domain.com',
         'groupPrefix' => 'grp_',
+        'familyClassificationId' => 0,   // reference to use for family finding
     ),
 );
