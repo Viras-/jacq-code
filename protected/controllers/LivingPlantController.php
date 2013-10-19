@@ -133,6 +133,29 @@ class LivingPlantController extends Controller {
                             $model_acquisitionEventPerson->save();
                         }
                     }
+                    
+                    // check for acquisition source entries
+                    if( isset($_POST['AcquisitionEventSource']) ) {
+                        foreach($_POST['AcquisitionEventSource'] as $i => $acquisitionSource) {
+                            // check for "deleted" entry
+                            if( $acquisitionSource['delete'] > 0 ) continue;
+                            
+                            // try to find fitting acquisition source entry
+                            $model_acquisitionSource = AcquisitionSource::model()->findByAttributes(array('name' => $acquisitionSource['acquisitionSource']));
+                            if( $model_acquisitionSource == NULL ) {
+                                $model_acquisitionSource = new AcquisitionSource();
+                                $model_acquisitionSource->name = $acquisitionSource['acquisitionSource'];
+                                $model_acquisitionSource->save();
+                            }
+                            
+                            // now add a connection to the acquisition source
+                            $model_acquisitionEventSource = new AcquisitionEventSource();
+                            $model_acquisitionEventSource->acquisition_event_id = $model_acquisitionEvent->id;
+                            $model_acquisitionEventSource->acquisition_source_id = $model_acquisitionSource->acquisition_source_id;
+                            $model_acquisitionEventSource->source_date = $acquisitionSource['source_date'];
+                            $model_acquisitionEventSource->save();
+                        }
+                    }
 
                     // Check if we have a separation selected
                     $determinedByName = trim($_POST['determinedByName']);
@@ -336,6 +359,40 @@ class LivingPlantController extends Controller {
                         $model_acquisitionEventPerson->acquisition_event_id = $model_acquisitionEvent->id;
                         $model_acquisitionEventPerson->person_id = $model_person->id;
                         $model_acquisitionEventPerson->save();
+                    }
+                }
+
+                // check for acquisition source entries
+                if( isset($_POST['AcquisitionEventSource']) ) {
+                    foreach($_POST['AcquisitionEventSource'] as $i => $acquisitionSource) {
+                        // make clean id
+                        $acquisitionSource['acquisition_event_source_id'] = intval($acquisitionSource['acquisition_event_source_id']);
+                        
+                        // check for "deleted" entry
+                        if( $acquisitionSource['delete'] > 0 ) {
+                            if( $acquisitionSource['acquisition_event_source_id'] > 0 ) {
+                                AcquisitionEventSource::model()->deleteByPk($acquisitionSource['acquisition_event_source_id']);
+                            }
+                            continue;
+                        }
+
+                        // try to find fitting acquisition source entry
+                        $model_acquisitionSource = AcquisitionSource::model()->findByAttributes(array('name' => $acquisitionSource['acquisitionSource']));
+                        if( $model_acquisitionSource == NULL ) {
+                            $model_acquisitionSource = new AcquisitionSource();
+                            $model_acquisitionSource->name = $acquisitionSource['acquisitionSource'];
+                            $model_acquisitionSource->save();
+                        }
+
+                        // now add a connection to the acquisition source
+                        $model_acquisitionEventSource = AcquisitionEventSource::model()->findByPk($acquisitionSource['acquisition_event_source_id']);
+                        if( $model_acquisitionEventSource == NULL ) {
+                            $model_acquisitionEventSource = new AcquisitionEventSource();
+                        }
+                        $model_acquisitionEventSource->acquisition_event_id = $model_acquisitionEvent->id;
+                        $model_acquisitionEventSource->acquisition_source_id = $model_acquisitionSource->acquisition_source_id;
+                        $model_acquisitionEventSource->source_date = $acquisitionSource['source_date'];
+                        $model_acquisitionEventSource->save();
                     }
                 }
 
