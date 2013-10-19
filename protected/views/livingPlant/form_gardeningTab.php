@@ -66,6 +66,13 @@
     <?php echo $form->textArea($model_livingPlant, 'culture_notes', array( 'style' => 'width: 100%;' )); ?>
     <?php echo $form->error($model_livingPlant, 'culture_notes'); ?>
 </div>
+<!-- acqisition event source(s) -->
+<div class="row">
+    <?php
+    // render acquisition event sources form
+    require('form_acquisitionEventSources.php');
+    ?>
+</div>
 <!-- tree record(s) -->
 <?php require('form_treeRecord.php'); ?>
 <!-- general annotations -->
