@@ -2,11 +2,6 @@
 
 class ClassificationBrowserController extends Controller
 {
-
-    // URL to yii-based JACQ implementation (for JSON webservices)
-    protected $JACQ_URL = "https://131.130.131.9/output/jacq-yii/";
-    //protected $JACQ_URL = "http://localhost/develop.jacq/code/";
-
     /**
      * display the base view
      */
@@ -17,27 +12,36 @@ class ClassificationBrowserController extends Controller
         $referenceType = isset($_GET['referenceType']) ? $_GET['referenceType']       : '';
         $referenceId   = isset($_GET['referenceId'])   ? intval($_GET['referenceId']) : 0;
 
-        // initialize variables
-        $data = null;
-
         // check if a valid request was made
         if( $referenceType == 'citation' && $referenceId > 0 ) {
+            $url = Yii::app()->params['jsonJacqUrl'] . "index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceId=" . $referenceId;
             // check if we are looking for a specific name
             if( $filterId > 0 ) {
-                $data = file_get_contents($this->JACQ_URL . "index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceId=" . $referenceId . "&filterId=" . $filterId);
+                $data = file_get_contents($url . "&filterId=" . $filterId);
             }
             // .. if not, fetch the "normal" tree for this reference
             else {
-                $data = file_get_contents($this->JACQ_URL . "index.php?r=jSONjsTree/japi&action=classificationBrowser&referenceType=citation&referenceId=" . $referenceId);
+                $data = file_get_contents($url);
             }
+        } else {
+            $data = null;
         }
-        
+
         // Load jQuery
-        Yii::app()->clientScript->registerCoreScript('jquery');
+        //Yii::app()->clientScript->registerCoreScript('jquery');
 
-        //Yii::app()->clientScript->registerScript('uniqueid', file_get_contents('protected/views/dataBrowser/classificationBrowser/index_init.js'));
+        $pathToViews = 'protected/views/dataBrowser/classificationBrowser/';
 
-        $this->render('index', array('referenceType' => $referenceType, 'referenceId' => $referenceId, 'data' => $data));
+        Yii::app()->clientScript->registerScript('indexJstreeFct', file_get_contents($pathToViews . 'index_jstree_fct.js'), CClientScript::POS_HEAD);
+        Yii::app()->clientScript->registerScript('indexFunctions', file_get_contents($pathToViews . 'index_functions.js'), CClientScript::POS_HEAD);
+
+        Yii::app()->clientScript->registerScript('indexInit', file_get_contents($pathToViews . 'index_document_ready.js'), CClientScript::POS_READY);
+
+        Yii::app()->clientScript->registerScript('var1', 'var classBrowser = ' . CJavaScript::encode($this->createUrl('/dataBrowser/classificationBrowser')) . ';', CClientScript::POS_HEAD);
+        Yii::app()->clientScript->registerScript('var2', 'var jacq_url = ' . CJavaScript::encode(Yii::app()->params['jsonJacqUrl']) . ';', CClientScript::POS_HEAD);
+        Yii::app()->clientScript->registerScript('var3', 'var initital_data = ' . (($data) ? $data : 'null') . ';', CClientScript::POS_HEAD);
+
+        $this->render('index', array('referenceType' => $referenceType, 'referenceId' => $referenceId));
 	}
 
 	// Uncomment the following methods and override them if needed
