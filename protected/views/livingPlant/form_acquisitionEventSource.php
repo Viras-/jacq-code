@@ -58,7 +58,7 @@ else {
         echo CHtml::imageButton('images/delete.png', array(
             'onclick' => "
                 $('#acquisitionEventSource_row_{$model_form_id}').hide();
-                $('#acquisitionEventSource_{$model_form_id}_delete').val(1);
+                $('#AcquisitionEventSource_{$model_form_id}_delete').val(1);
 
                 return false;"
         ));
