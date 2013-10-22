@@ -28,7 +28,8 @@ class ClassificationBrowserController extends Controller
         }
 
         // Load jQuery
-        //Yii::app()->clientScript->registerCoreScript('jquery');
+        Yii::app()->clientScript->registerCoreScript('jquery');
+        Yii::app()->clientScript->registerCoreScript('jquery.ui');
 
         $pathToViews = 'protected/views/dataBrowser/classificationBrowser/';
 

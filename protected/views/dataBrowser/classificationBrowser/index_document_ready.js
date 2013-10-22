@@ -104,7 +104,7 @@ $('#infoBox').mouseleave( function(evt) {
 
 // initialize auto-complete
 $('#scientificName').autocomplete({
-    source: jacq_url + 'index.php?r=autoComplete/taxon',
+    source: jacq_url + 'index.php?r=autoComplete/scientificName',
     minLength: 2,
     select: function( event, ui ) {
         if( typeof ui.item !== "undefined" ) {
