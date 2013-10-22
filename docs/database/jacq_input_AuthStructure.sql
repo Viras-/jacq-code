@@ -1,26 +1,19 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.4
+-- version 3.5.5
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2012 at 06:50 PM
--- Server version: 5.1.63-log
--- PHP Version: 5.3.5
+-- Generation Time: Oct 22, 2013 at 02:39 PM
+-- Server version: 5.5.32-0ubuntu0.12.04.1
+-- PHP Version: 5.3.10-1ubuntu3.8
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `jacq_input`
 --
-
-SET foreign_key_checks = 0;
 
 --
 -- Dumping data for table `frmwrk_AuthAssignment`
@@ -49,6 +42,7 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('oprtn_deleteOrganisation', 0, 'delete an organisation entry', NULL, 'N;'),
 ('oprtn_deleteTreeRecordFile', 0, 'delete a tree record file', NULL, 'N;'),
 ('oprtn_readLivingplant', 0, 'read/show a living plant', '', 's:0:"";'),
+('oprtn_showClassificationBrowser', 0, 'show classification browser', NULL, 'N;'),
 ('rbacManager', 2, 'manage RBAC', NULL, 'N;'),
 ('tsk_createOrganisation', 1, 'create / update an organisation', NULL, 'N;'),
 ('tsk_createTreeRecordFile', 1, 'create / update a tree record file', NULL, 'N;'),
@@ -65,6 +59,7 @@ INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 ('grp_admin', 'acs_greenhouse'),
 ('grp_admin', 'editorLivingplant'),
 ('managerLivingplant', 'editorLivingplant'),
+('grp_admin', 'grp_guest'),
 ('grp_admin', 'managerLivingplant'),
 ('grp_admin', 'managerOrganisation'),
 ('grp_admin', 'managerTreeRecordFile'),
@@ -76,6 +71,7 @@ INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 ('tsk_deleteTreeRecordFile', 'oprtn_deleteTreeRecordFile'),
 ('grp_guest', 'oprtn_readLivingplant'),
 ('oprtn_createLivingplant', 'oprtn_readLivingplant'),
+('grp_guest', 'oprtn_showClassificationBrowser'),
 ('grp_admin', 'rbacManager'),
 ('managerOrganisation', 'tsk_createOrganisation'),
 ('managerTreeRecordFile', 'tsk_createTreeRecordFile'),
@@ -91,9 +87,4 @@ INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 INSERT INTO `frmwrk_user` (`id`, `username`, `password`, `salt`) VALUES
 (1, 'admin', '9ab6e20b2bb6fc6d5a8140a904af35c88a961f7d', 'hU8I9=ku'),
 (2, 'editor', 'fe759e678a18e0b2d1239fa7ff1c29ae3c206227', 'jUhdia(14');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-SET foreign_key_checks = 1;
+SET FOREIGN_KEY_CHECKS=1;
