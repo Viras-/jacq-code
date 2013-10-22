@@ -139,5 +139,6 @@ return array(
         'adminEmail' => 'admin@domain.com',
         'groupPrefix' => 'grp_',
         'familyClassificationId' => 0,   // reference to use for family finding
+        'jsonJacqUrl' => 'https://131.130.131.9/output/jacq-yii/',   // url to get all jacq-json-services
     ),
 );
