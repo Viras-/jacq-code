@@ -1,12 +1,12 @@
 <?php
 /**
  * Controller class for providing classification related informations using a JSON interface
- * NOTE: functions are static so that they can be accessed by other Controllers directly 
+ * NOTE: functions are static so that they can be accessed by other Controllers directly
  */
 class JSONClassificationController extends Controller {
     /**
      * Return connection to herbarinput database
-     * @return CDbConnection 
+     * @return CDbConnection
      */
     private static function getDbHerbarInput() {
         return Yii::app()->dbHerbarInput;
@@ -21,14 +21,14 @@ class JSONClassificationController extends Controller {
         // check parameters
         $referenceType = trim($referenceType);
         if(empty($referenceType)) return array();
-        
+
         $return = array();
-        
+
         // get reference to input database
         $db = JSONClassificationController::getDbHerbarInput();
         $dbCommand = $db->createCommand();
         $dbRows = array();
-        
+
         // make sure we have a valid parameter
         switch( $referenceType ) {
             case 'person':
@@ -60,7 +60,7 @@ class JSONClassificationController extends Controller {
                     ->queryAll();
                 break;
         }
-        
+
         // fetch all available references
         foreach( $dbRows as $dbRow ) {
             $return[] = array(
@@ -68,25 +68,25 @@ class JSONClassificationController extends Controller {
                 'id' => $dbRow['referenceID']
             );
         }
-        
+
         return $return;
     }
-    
+
     /**
      * Get classification children of a given taxonID according to a given reference
      * NOTE: the function is static so that it can be called from other controllers as well
      * @param enum $referenceType Type of reference (citation, service, etc.)
      * @param int $referenceID ID of reference
      * @param int $taxonID ID of taxon
-     * @return array structured array with classification information 
+     * @return array structured array with classification information
      */
     public static function japiChildren($referenceType, $referenceID, $taxonID = 0) {
         $results = array();
-        
+
         // setup db query
         $db = JSONClassificationController::getDbHerbarInput();
         $dbCommand = $db->createCommand();
-        
+
         switch( $referenceType ) {
             case 'periodical':
                 // get all citations which belong to the given periodical
@@ -105,7 +105,7 @@ class JSONClassificationController extends Controller {
                     ->group('ts.source_citationID')
                     ->order('referenceName')
                     ->queryAll();
-                
+
                 foreach( $dbRows as $dbRow ) {
                     $results[] = array(
                         "taxonID" => 0,
@@ -195,11 +195,11 @@ class JSONClassificationController extends Controller {
                 }
                 break;
         }
-        
+
         // return results
         return $results;
     }
-    
+
     /**
      * fetch synonyms (and basionym) for a given taxonID, according to a given reference
      * @param string $referenceType type of reference
@@ -211,15 +211,15 @@ class JSONClassificationController extends Controller {
         $results = array();
         $basID = 0;
         $basionymResult = null;
-        
+
         // make sure we have correct parameters
         $referenceID = intval($referenceID);
         $taxonID = intval($taxonID);
-        
+
         // setup db query
         $db = JSONClassificationController::getDbHerbarInput();
         $dbCommand = $db->createCommand();
-        
+
         // check if we have a basionym
         $dbRows = $dbCommand->select(
                     array(
@@ -240,7 +240,7 @@ class JSONClassificationController extends Controller {
         // check number of returned rows
         if( count($dbRows) > 0 ) {
             $basID = $dbRows[0]['basID'];
-            
+
             $basionymResult = array(
                 "taxonID" => $basID,
                 "referenceName" => $dbRows[0]['scientificName'],
@@ -252,7 +252,7 @@ class JSONClassificationController extends Controller {
                 )
             );
         }
-        
+
         // new command for actual synonyms
         $dbCommand = $db->createCommand();
         switch( $referenceType ) {
@@ -278,14 +278,14 @@ class JSONClassificationController extends Controller {
                             array( ':acc_taxon_ID' => $taxonID, ':referenceID' => $referenceID )
                     )
                     ->queryAll();
-                
+
                 foreach( $dbRows as $dbRow ) {
                     // ignore if synonym is basionym
                     if( $dbRow['taxonID'] == $basID ) {
                         $basionymResult["referenceInfo"]["cited"] = true;
                         continue;
                     }
-                    
+
                     $results[] = array(
                         "taxonID" => $dbRow['taxonID'],
                         "referenceName" => $dbRow['scientificName'],
@@ -299,15 +299,15 @@ class JSONClassificationController extends Controller {
                 }
                 break;
         }
-        
+
         // if we have a basionym, prepend it to list
         if( $basionymResult != null ) {
             array_unshift($results, $basionymResult);
         }
-        
+
         return $results;
     }
-    
+
     /**
      * Return (other) references for this name which include them in their classification
      * @param int $taxonID ID of name to look for
@@ -317,10 +317,10 @@ class JSONClassificationController extends Controller {
     public static function japiNameReferences($taxonID, $excludeReferenceId = 0) {
         $results = array();
         $taxonID = intval($taxonID);
-        
+
         // check for valid parameter
         if( $taxonID <= 0 ) return null;
-        
+
         $db = JSONClassificationController::getDbHerbarInput();
         $dbCommand = $db->createCommand();
         $dbCommand->select(
@@ -365,33 +365,34 @@ class JSONClassificationController extends Controller {
                 )
                 ->group('ts.source_citationID')
                 ->order('referenceName');
-        
+
         // Fetch all rows
         $dbRows = $dbCommand->queryAll();
         foreach( $dbRows as $dbRow ) {
             // check for exclude id
             if( $dbRow['referenceId'] == $excludeReferenceId ) continue;
-            
+
             $results[] = array(
                 "referenceName" => $dbRow['referenceName'],
                 "referenceId" => $dbRow['referenceId'],
                 "referenceType" => "citation",
                 "taxonID" => $taxonID,
-                "hasChildren" => (count(JSONClassificationController::japiChildren("citation", $dbRow['referenceId'], $taxonID)) > 0)
+                "hasChildren" => $this->hasChildren($dbRow['referenceId'], $taxonID)
+                //"hasChildren" => (count(JSONClassificationController::japiChildren("citation", $dbRow['referenceId'], $taxonID)) > 0)
             );
         }
-        
+
         return $results;
     }
-    
+
     public static function japiGetParent($referenceType, $referenceId, $taxonID) {
         $parent = null;
         $referenceId = intval($referenceId);
         $taxonID = intval($taxonID);
-        
+
         // setup db query
         $db = JSONClassificationController::getDbHerbarInput();
-        
+
         switch( $referenceType ) {
             case 'periodical':
                 // periodical is a top level element, so no parent
@@ -429,7 +430,7 @@ class JSONClassificationController extends Controller {
                     // apply where conditions and return all rows
                     $dbRows = $dbCommand->where($where_cond,$where_cond_values)
                             ->queryAll();
-                    
+
                     // check if we found a parent
                     if( count($dbRows) > 0 ) {
                         $dbRow = $dbRows[0];
@@ -456,7 +457,7 @@ class JSONClassificationController extends Controller {
                                 ':referenceId' => $referenceId
                             ))
                             ->queryAll();
-                        
+
                         if( count($dbRows) > 0 ) {
                             $dbRow = $dbRows[0];
                             $parent = array(
@@ -476,7 +477,7 @@ class JSONClassificationController extends Controller {
                         ->leftJoin('tbl_lit l', 'l.periodicalID = lp.periodicalID')
                         ->where('l.citationID = :referenceId', array(':referenceId' => $referenceId) )
                         ->queryAll();
-                    
+
                     if( count($dbRows) > 0 ) {
                         $dbRow = $dbRows[0];
                         $parent = array(
@@ -489,11 +490,11 @@ class JSONClassificationController extends Controller {
                 }
                 break;
         }
-        
+
         // return results
         return $parent;
     }
-    
+
     /**
      * Materialize a classification according to a given citation ID
      * @param int $citationID
@@ -501,15 +502,15 @@ class JSONClassificationController extends Controller {
      */
     public static function japiMaterializeClassification( $citationID ) {
         $citationID = intval($citationID);
-        
+
         if($citationID <= 0) {
             throw new HttpException("Invalid citation ID");
         }
-        
+
         $db = JSONClassificationController::getDbHerbarInput();
-        
+
         $dbCommand = $db->createCommand();
-        
+
         // find all entries which are not parent of another entry
         $dbRows = $dbCommand->select('ts.taxonID')
                 ->from('tbl_tax_synonymy AS ts')
@@ -526,24 +527,24 @@ class JSONClassificationController extends Controller {
                             ':source_citationID' => $citationID
                             )
                 )->queryAll();
-        
+
         // prepare main array for tree information
         $classification_infos = array();
-        
+
         // cycle through entry and find parents
         foreach( $dbRows as $dbRow ) {
             $taxonID = $dbRow['taxonID'];
-            
+
             $classification_info = array($taxonID);
             $parent = JSONClassificationController::japiGetParent('citation', $citationID, $taxonID);
             while( $parent['taxonID'] > 0 ) {
                 array_unshift($classification_info, $parent['taxonID']);
                 $parent = JSONClassificationController::japiGetParent('citation', $citationID, $parent['taxonID']);
             }
-            
+
             $classification_infos[] = $classification_info;
         }
-        
+
         // now insert the classification info into the dump table
         foreach($classification_infos as $classification_info) {
             $columns = array( 'citationID' => $citationID );
@@ -557,19 +558,69 @@ class JSONClassificationController extends Controller {
                             'ts.taxonID = :taxonID'
                         ), array(':taxonID' => $taxonID))
                         ->queryRow();
-                
+
                 $columns[$rank_name_row['rank']] = $rank_name_row['scientificName'];
             }
-            
+
             $db->createCommand()->insert('tbl_classification_dump', $columns);
         }
 
         return true;
     }
-    
+
     public function actions() {
         return array(
             'japi'=>'JApi',
         );
+    }
+
+    /**
+     * Are there any classification children of a given taxonID according to a given reference?
+     * @param int $referenceID ID of reference
+     * @param int $taxonID ID of taxon
+     * @return bool classification children present?
+     */
+    private function hasChildren ($referenceID, $taxonID)
+    {
+        // setup db query
+        $db = JSONClassificationController::getDbHerbarInput();
+        $dbCommand = $db->createCommand();
+
+        $dbCommand->select("ts.taxonID")
+                ->from('tbl_tax_synonymy ts')
+                ->leftJoin('tbl_tax_classification tc', 'ts.tax_syn_ID = tc.tax_syn_ID')
+                ->where(
+                        array(
+                            'AND',
+                            'ts.source_citationID = :source_citationID',
+                            'ts.acc_taxon_ID IS NULL',
+                            'tc.parent_taxonID = :parent_taxonID',
+                        ),
+                        array(
+                            ':parent_taxonID' => $taxonID,
+                            ':source_citationID' => $referenceID)
+                );
+        $dbRows = $dbCommand->queryAll();
+
+        if (count($dbRows) > 0) {
+            return true;
+        } else {
+            $dbCommand = $db->createCommand();
+            $dbCommand->select("ts.taxonID")
+                    ->from('tbl_tax_synonymy ts')
+                    ->where(
+                            array(
+                                'AND',
+                                'ts.source_citationID = :source_citationID',
+                                'ts.acc_taxon_ID = :parent_taxonID',
+                            ),
+                            array(
+                                ':parent_taxonID' => $taxonID,
+                                ':source_citationID' => $referenceID)
+                    );
+            $dbRows = $dbCommand->queryAll();
+
+            return (count($dbRows) > 0);
+        }
     }
 }

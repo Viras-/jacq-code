@@ -27,9 +27,14 @@ class ClassificationBrowserController extends Controller
             $data = null;
         }
 
+        $jsonJacqUrl = (Yii::app()->params['jsonJacqUrl']) ? Yii::app()->params['jsonJacqUrl'] : Yii::app()->getBaseUrl() . '/';
+
         // Load jQuery
         Yii::app()->clientScript->registerCoreScript('jquery');
         Yii::app()->clientScript->registerCoreScript('jquery.ui');
+
+        $cssCoreUrl = Yii::app()->getClientScript()->getCoreScriptUrl();
+        Yii::app()->getClientScript()->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css');
 
         $pathToViews = 'protected/views/dataBrowser/classificationBrowser/';
 
@@ -39,7 +44,7 @@ class ClassificationBrowserController extends Controller
         Yii::app()->clientScript->registerScript('indexInit', file_get_contents($pathToViews . 'index_document_ready.js'), CClientScript::POS_READY);
 
         Yii::app()->clientScript->registerScript('var1', 'var classBrowser = ' . CJavaScript::encode($this->createUrl('/dataBrowser/classificationBrowser')) . ';', CClientScript::POS_HEAD);
-        Yii::app()->clientScript->registerScript('var2', 'var jacq_url = ' . CJavaScript::encode(Yii::app()->params['jsonJacqUrl']) . ';', CClientScript::POS_HEAD);
+        Yii::app()->clientScript->registerScript('var2', 'var jacq_url = ' . CJavaScript::encode($jsonJacqUrl) . ';', CClientScript::POS_HEAD);
         Yii::app()->clientScript->registerScript('var3', 'var initital_data = ' . (($data) ? $data : 'null') . ';', CClientScript::POS_HEAD);
 
         $this->render('index', array('referenceType' => $referenceType, 'referenceId' => $referenceId));
