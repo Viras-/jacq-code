@@ -377,7 +377,7 @@ class JSONClassificationController extends Controller {
                 "referenceId" => $dbRow['referenceId'],
                 "referenceType" => "citation",
                 "taxonID" => $taxonID,
-                "hasChildren" => $this->hasChildren($dbRow['referenceId'], $taxonID)
+                "hasChildren" => JSONClassificationController::hasChildren($dbRow['referenceId'], $taxonID)
                 //"hasChildren" => (count(JSONClassificationController::japiChildren("citation", $dbRow['referenceId'], $taxonID)) > 0)
             );
         }
@@ -576,11 +576,12 @@ class JSONClassificationController extends Controller {
 
     /**
      * Are there any classification children of a given taxonID according to a given reference?
+     * NOTE: the function is static so that it can be called from other static functions as well
      * @param int $referenceID ID of reference
      * @param int $taxonID ID of taxon
      * @return bool classification children present?
      */
-    private function hasChildren ($referenceID, $taxonID)
+    public static function hasChildren ($referenceID, $taxonID)
     {
         // setup db query
         $db = JSONClassificationController::getDbHerbarInput();
