@@ -31,12 +31,8 @@
     </head>
 
     <body>
-
         <div class="container" id="page">
-
-            <div id="header">
-                <div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-            </div><!-- header -->
+            <img id="logo" src="images/jacq_logo.png" width="120" height="60" />
 
             <div id="mainmenu">
                 <?php
