@@ -322,52 +322,55 @@ class JSONClassificationController extends Controller {
         if( $taxonID <= 0 ) return null;
 
         $db = JSONClassificationController::getDbHerbarInput();
-        $dbCommand = $db->createCommand();
-        $dbCommand->select(
-                    array(
-                        'ts.source_citationID AS referenceId',
-                        '`herbar_view`.GetProtolog(`ts`.`source_citationID`) AS `referenceName`'
-                    )
-                )
-                ->from('tbl_tax_synonymy ts')
-                ->leftJoin('tbl_tax_classification tc',
-                        array(
-                            'AND',
-                            'tc.tax_syn_ID = ts.tax_syn_ID'
-                        )
-                )
-                ->leftJoin('tbl_tax_classification has_children',
-                        array(
-                            'AND',
-                            'has_children.parent_taxonID = ts.taxonID'
-                        )
-                )
-                ->leftJoin('tbl_tax_synonymy has_children_syn',
-                        array(
-                            'AND',
-                            'has_children_syn.tax_syn_ID = has_children.tax_syn_ID',
-                            'has_children_syn.source_citationID = ts.source_citationID'
-                        )
-                        )
-                ->where(
-                        array(
-                            'AND',
-                            'ts.source_citationID IS NOT NULL',
-                            'ts.acc_taxon_ID IS NULL',
-                            'ts.taxonID = :taxonID',
-                            array(
-                                'OR',
-                                'tc.tax_syn_ID IS NOT NULL',     // only select entries which are part of a classification
-                                'has_children_syn.tax_syn_ID IS NOT NULL'     // only select entries which are part of a classification
-                            ),
-                        ),
-                        array( ':taxonID' => $taxonID )
-                )
-                ->group('ts.source_citationID')
-                ->order('referenceName');
-
         // Fetch all rows
-        $dbRows = $dbCommand->queryAll();
+        $dbRows = $db->createCommand()
+                     ->select(
+                            array('ts.source_citationID AS referenceId',
+                                  '`herbar_view`.GetProtolog(`ts`.`source_citationID`) AS `referenceName`'
+                                 )
+                        )
+                     ->from('tbl_tax_synonymy ts')
+                     ->leftJoin('tbl_tax_classification tc', 'tc.tax_syn_ID = ts.tax_syn_ID')
+                     ->leftJoin('tbl_tax_classification has_children', 'has_children.parent_taxonID = ts.taxonID')
+                     ->leftJoin('tbl_tax_synonymy has_children_syn',
+                            array(
+                                'AND',
+                                'has_children_syn.tax_syn_ID = has_children.tax_syn_ID',
+                                'has_children_syn.source_citationID = ts.source_citationID'
+                            )
+                        )
+                     ->leftJoin('tbl_lit l', 'l.citationID = ts.source_citationID')             // direct integration
+                     ->leftJoin('tbl_lit_authors le', 'le.autorID = l.editorsID')               // of tbl_lit_...
+                     ->leftJoin('tbl_lit_authors la', 'la.autorID = l.autorID')                 // for (much) faster sorting
+                     ->leftJoin('tbl_lit_periodicals lp', 'lp.periodicalID = l.periodicalID')   // when using ORDER by
+                     ->where(
+                            array(
+                                'AND',
+                                'ts.source_citationID IS NOT NULL',
+                                'ts.acc_taxon_ID IS NULL',
+                                'ts.taxonID = :taxonID',
+                                array(
+                                    'OR',
+                                    'tc.tax_syn_ID IS NOT NULL',     // only select entries which are part of a classification
+                                    'has_children_syn.tax_syn_ID IS NOT NULL'     // only select entries which are part of a classification
+                                ),
+                            ),
+                            array( ':taxonID' => $taxonID )
+                        )
+                     ->group('ts.source_citationID')
+                     ->order(
+                            array(
+                                'la.autor',
+                                'l.jahr',
+                                'le.autor',
+                                'l.suptitel',
+                                'lp.periodical',
+                                'l.vol',
+                                'l.part',
+                                'l.pp'
+                            )
+                         )
+                     ->queryAll();
         foreach( $dbRows as $dbRow ) {
             // check for exclude id
             if( $dbRow['referenceId'] == $excludeReferenceId ) continue;
