@@ -372,12 +372,50 @@ class JSONClassificationController extends Controller {
             // check for exclude id
             if( $dbRow['referenceId'] == $excludeReferenceId ) continue;
 
+            // check if there any classification children of the taxonID according to this reference?
+            $child = $db->createCommand()
+                        ->select("ts.taxonID")
+                        ->from('tbl_tax_synonymy ts')
+                        ->leftJoin('tbl_tax_classification tc', 'ts.tax_syn_ID = tc.tax_syn_ID')
+                        ->where(
+                                array(
+                                    'AND',
+                                    'ts.source_citationID = :source_citationID',
+                                    'ts.acc_taxon_ID IS NULL',
+                                    'tc.parent_taxonID = :parent_taxonID',
+                                ),
+                                array(
+                                    ':parent_taxonID' => $taxonID,
+                                    ':source_citationID' => $dbRow['referenceId'])
+                                )
+                        ->queryRow();
+            if ($child) {
+                $hasChildren = true;
+            } else {
+                $child = $db->createCommand()
+                            ->select("ts.taxonID")
+                            ->from('tbl_tax_synonymy ts')
+                            ->where(
+                                    array(
+                                        'AND',
+                                        'ts.source_citationID = :source_citationID',
+                                        'ts.acc_taxon_ID = :parent_taxonID',
+                                    ),
+                                    array(
+                                        ':parent_taxonID' => $taxonID,
+                                        ':source_citationID' => $dbRow['referenceId'])
+                                    )
+                            ->queryRow();
+                $hasChildren = ($child) ? true : false;
+            }
+
             $results[] = array(
                 "referenceName" => $dbRow['referenceName'],
                 "referenceId" => $dbRow['referenceId'],
                 "referenceType" => "citation",
                 "taxonID" => $taxonID,
-                "hasChildren" => JSONClassificationController::hasChildren($dbRow['referenceId'], $taxonID)
+                "hasChildren" => $hasChildren
+                //"hasChildren" => JSONClassificationController::hasChildren($dbRow['referenceId'], $taxonID)
                 //"hasChildren" => (count(JSONClassificationController::japiChildren("citation", $dbRow['referenceId'], $taxonID)) > 0)
             );
         }
