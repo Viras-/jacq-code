@@ -65,7 +65,7 @@
             <div class="clear"></div>
 
             <div id="footer">
-                Copyright &copy; <?php echo date('Y'); ?> Botanischer Garten Universität Wien.<br/>
+                Copyright &copy; <?php echo date('Y'); ?> University Vienna, Museum of Natural History Vienna, Austrian Academy of Sciences.<br/>
                 All Rights Reserved.<br/>
 <?php echo Yii::powered(); ?>
             </div><!-- footer -->
