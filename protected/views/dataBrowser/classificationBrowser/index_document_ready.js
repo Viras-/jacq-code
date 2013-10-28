@@ -75,12 +75,14 @@ $('#jstree_classificationBrowser .infoBox').live({
                     $('#infoBox').data('referenceData', data);
 
                     // add all found references to infobox
+                    var referenceInfos = new Array();
                     for( var i = 0; i < data.length; i++ ) {
                         var referenceInfo = data[i].referenceName +
                             '&nbsp;<span id="arrow_down_' + i + '" style="cursor: pointer;" onclick="arrow_down(' + i + '); return false;"><img src="images/arrow_down.png"></span>' +
                             '&nbsp;<span id="world_link_' + i + '" style="cursor: pointer;" onclick="world_link(' + i + '); return false;"><img src="images/world_link.png"></span>';
-                        $('#infoBox').html($('#infoBox').html() + '<br/>' + referenceInfo);
+                        referenceInfos.push(referenceInfo);
                     }
+                    $('#infoBox').html(referenceInfos.join("<br/>"));
                 }
                 // if not display notification
                 else {
