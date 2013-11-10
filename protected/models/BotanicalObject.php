@@ -27,6 +27,7 @@
  * @property Person $determinedBy
  * @property Organisation $organisation
  * @property IdentStatus $identStatus
+ * @property LabelType[] $tblLabelTypes
  * @property ScientificNameInformation $scientificNameInformation
  * @property BotanicalObjectSex[] $botanicalObjectSexes
  * @property Diaspora $diaspora
@@ -165,6 +166,7 @@ class BotanicalObject extends ActiveRecord {
             'livingPlant' => array(self::HAS_ONE, 'LivingPlant', 'id'),
             'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
             'identStatus' => array(self::BELONGS_TO, 'IdentStatus', 'ident_status_id'),
+            'tblLabelTypes' => array(self::MANY_MANY, 'LabelType', 'tbl_botanical_object_label(botanical_object_id, label_type_id)'),
             'scientificNameInformation' => array(self::BELONGS_TO, 'ScientificNameInformation', 'scientific_name_id'),
             'separations' => array(self::HAS_MANY, 'Separation', 'botanical_object_id'),
             'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'scientific_name_id'),
