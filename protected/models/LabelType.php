@@ -54,8 +54,8 @@ class LabelType extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'label_type_id' => 'Label Type',
-			'type' => 'Type',
+			'label_type_id' => Yii::t('jacq', 'Label Type'),
+			'type' => Yii::t('jacq', 'Type'),
 		);
 	}
 
