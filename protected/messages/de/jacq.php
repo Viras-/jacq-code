@@ -15,11 +15,16 @@
  * of the guide for details.
  *
  * NOTE, this file must be saved in UTF-8 encoding.
- *
- * @version $Id: $
  */
 return array (
-  'Operations' => 'Operationen',
+  'Actions' => 'Aktionen',
+  'Classification Browser' => 'Klassifikations-Browser',
+  'Common Names' => 'Volksnamen',
+  'Download CSV' => 'CSV herunterladen',
+  'Growth Form' => 'Wuchsform',
+  'Label Type' => 'Etiketten',
+  'Separated' => 'Ausgeschieden',
+  'Unknown' => 'Unbekannt',
   'Access for groups' => 'Zugriff für Gruppen',
   'Access for users' => 'Zugriff für Benutzer',
   'Accessible' => 'Accessible',
@@ -95,6 +100,7 @@ return array (
   'Month' => 'Monat',
   'Name' => 'Name',
   'Number' => 'Nummer',
+  'Operations' => 'Operationen',
   'Page' => 'Seite',
   'Parent Organisation' => 'Übergeordnete Organisation',
   'Password' => 'Passwort',
