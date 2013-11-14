@@ -92,7 +92,7 @@
                         CHtml::listData(
                                 Sex::model()->findAll(),
                                 'id', 
-                                'sex'
+                                'sexTranslated'
                         ),
                         array(
                             'labelOptions' => array('style' => 'display: inline'),
@@ -119,7 +119,7 @@
                         CHtml::listData(
                                 LabelType::model()->findAll(),
                                 'label_type_id', 
-                                'type'
+                                'typeTranslated'
                         ),
                         array(
                             'labelOptions' => array('style' => 'display: inline'),
@@ -151,14 +151,14 @@
         <tr>
             <td>
                 <?php
-                $separation_types = CHtml::listData(SeparationType::model()->findAll(), 'id', 'type');
+                $separation_types = CHtml::listData(SeparationType::model()->findAll(), 'id', 'typeTranslated');
                 
                 // check if we have a valid id already, if not skip the hidden field
                 if( $model_separation->id > 0 ) {
                     echo $form->hiddenField($model_separation, "[$i]id");
                 }
                 else {
-                    $separation_types = array( '' => 'None' ) + $separation_types;
+                    $separation_types = array( '' => Yii::t('jacq_types', 'none') ) + $separation_types;
                 }
                 
                 echo $form->labelEx($model_separation, 'separation_type_id');
