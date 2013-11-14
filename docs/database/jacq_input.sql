@@ -381,7 +381,7 @@ DROP TABLE IF EXISTS `tbl_separation_type` ;
 
 CREATE  TABLE IF NOT EXISTS `tbl_separation_type` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `type` VARCHAR(15) NULL ,
+  `type` VARCHAR(25) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -440,7 +440,7 @@ DROP TABLE IF EXISTS `tbl_relevancy_type` ;
 
 CREATE  TABLE IF NOT EXISTS `tbl_relevancy_type` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `type` VARCHAR(20) NULL ,
+  `type` VARCHAR(25) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -871,6 +871,43 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `tbl_label_type`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_label_type` ;
+
+CREATE  TABLE IF NOT EXISTS `tbl_label_type` (
+  `label_type_id` INT NOT NULL AUTO_INCREMENT ,
+  `type` VARCHAR(25) NOT NULL ,
+  PRIMARY KEY (`label_type_id`) ,
+  UNIQUE INDEX `type_UNIQUE` (`type` ASC) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tbl_botanical_object_label`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_botanical_object_label` ;
+
+CREATE  TABLE IF NOT EXISTS `tbl_botanical_object_label` (
+  `botanical_object_id` INT NOT NULL ,
+  `label_type_id` INT NOT NULL ,
+  INDEX `fk_tbl_botanical_object_label_tbl_botanical_object1_idx` (`botanical_object_id` ASC) ,
+  INDEX `fk_tbl_botanical_object_label_tbl_label_type1_idx` (`label_type_id` ASC) ,
+  PRIMARY KEY (`botanical_object_id`, `label_type_id`) ,
+  CONSTRAINT `fk_tbl_botanical_object_label_tbl_botanical_object1`
+    FOREIGN KEY (`botanical_object_id` )
+    REFERENCES `tbl_botanical_object` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tbl_botanical_object_label_tbl_label_type1`
+    FOREIGN KEY (`label_type_id` )
+    REFERENCES `tbl_label_type` (`label_type_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Placeholder table for view `view_taxon`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `view_taxon` (`taxonID` INT, `synID` INT, `basID` INT, `genID` INT, `annotation` INT, `external` INT, `genus` INT, `DallaTorreIDs` INT, `DallaTorreZusatzIDs` INT, `author_g` INT, `family` INT, `category` INT, `status` INT, `statusID` INT, `rank` INT, `tax_rankID` INT, `rank_abbr` INT, `author` INT, `authorID` INT, `Brummit_Powell_full` INT, `author1` INT, `authorID1` INT, `bpf1` INT, `author2` INT, `authorID2` INT, `bpf2` INT, `author3` INT, `authorID3` INT, `bpf3` INT, `author4` INT, `authorID4` INT, `bpf4` INT, `author5` INT, `authorID5` INT, `bpf5` INT, `epithet` INT, `epithetID` INT, `epithet1` INT, `epithetID1` INT, `epithet2` INT, `epithetID2` INT, `epithet3` INT, `epithetID3` INT, `epithet4` INT, `epithetID4` INT, `epithet5` INT, `epithetID5` INT);
@@ -898,7 +935,6 @@ USE `jacq_input`;
 INSERT INTO `tbl_acquisition_type` (`id`, `type`) VALUES (1, 'unknown');
 INSERT INTO `tbl_acquisition_type` (`id`, `type`) VALUES (2, 'full extraction');
 INSERT INTO `tbl_acquisition_type` (`id`, `type`) VALUES (3, 'partial extraction');
-INSERT INTO `tbl_acquisition_type` (`id`, `type`) VALUES (4, 'photograph');
 
 COMMIT;
 
@@ -909,6 +945,10 @@ START TRANSACTION;
 USE `jacq_input`;
 INSERT INTO `tbl_phenology` (`id`, `phenology`) VALUES (1, 'unknown');
 INSERT INTO `tbl_phenology` (`id`, `phenology`) VALUES (2, 'florid');
+INSERT INTO `tbl_phenology` (`id`, `phenology`) VALUES (3, 'foliage');
+INSERT INTO `tbl_phenology` (`id`, `phenology`) VALUES (4, 'fruit');
+INSERT INTO `tbl_phenology` (`id`, `phenology`) VALUES (5, 'foliage_loss');
+INSERT INTO `tbl_phenology` (`id`, `phenology`) VALUES (6, 'reduced');
 
 COMMIT;
 
@@ -959,8 +999,13 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `jacq_input`;
-INSERT INTO `tbl_separation_type` (`id`, `type`) VALUES (1, 'none');
-INSERT INTO `tbl_separation_type` (`id`, `type`) VALUES (2, 'sold');
+INSERT INTO `tbl_separation_type` (`id`, `type`) VALUES (1, 'dead (spontaneous)');
+INSERT INTO `tbl_separation_type` (`id`, `type`) VALUES (2, 'dead (eliminated)');
+INSERT INTO `tbl_separation_type` (`id`, `type`) VALUES (3, 'dead (unknown cause)');
+INSERT INTO `tbl_separation_type` (`id`, `type`) VALUES (4, 'harvested');
+INSERT INTO `tbl_separation_type` (`id`, `type`) VALUES (5, 'separated');
+INSERT INTO `tbl_separation_type` (`id`, `type`) VALUES (6, 'herbarium');
+INSERT INTO `tbl_separation_type` (`id`, `type`) VALUES (7, 'unknown');
 
 COMMIT;
 
@@ -969,9 +1014,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `jacq_input`;
-INSERT INTO `tbl_relevancy_type` (`id`, `type`) VALUES (1, 'teachers');
-INSERT INTO `tbl_relevancy_type` (`id`, `type`) VALUES (2, 'students');
-INSERT INTO `tbl_relevancy_type` (`id`, `type`) VALUES (3, 'public');
+INSERT INTO `tbl_relevancy_type` (`id`, `type`) VALUES (1, 'sciences');
+INSERT INTO `tbl_relevancy_type` (`id`, `type`) VALUES (2, 'teachings');
+INSERT INTO `tbl_relevancy_type` (`id`, `type`) VALUES (3, 'protection');
+INSERT INTO `tbl_relevancy_type` (`id`, `type`) VALUES (4, 'public');
+INSERT INTO `tbl_relevancy_type` (`id`, `type`) VALUES (5, 'historic');
 
 COMMIT;
 
@@ -996,5 +1043,15 @@ INSERT INTO `tbl_certificate_type` (`id`, `type`) VALUES (4, 'abs');
 INSERT INTO `tbl_certificate_type` (`id`, `type`) VALUES (5, 'zoll');
 INSERT INTO `tbl_certificate_type` (`id`, `type`) VALUES (6, 'ipen');
 INSERT INTO `tbl_certificate_type` (`id`, `type`) VALUES (7, 'custom');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `tbl_label_type`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `jacq_input`;
+INSERT INTO `tbl_label_type` (`label_type_id`, `type`) VALUES (1, 'exhibition');
+INSERT INTO `tbl_label_type` (`label_type_id`, `type`) VALUES (2, 'working');
 
 COMMIT;
