@@ -10,7 +10,7 @@
  * The followings are the available model relations:
  * @property BotanicalObject[] $tblBotanicalObjects
  */
-class LabelType extends CActiveRecord
+class LabelType extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
