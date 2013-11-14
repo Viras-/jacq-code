@@ -132,7 +132,7 @@ class Organisation extends ActiveRecord {
         $IDRevierToOrganisationId = array(
             71 => 7,
             78 => 12,
-            79 => 11,
+            79 => 24,
             80 => 9,
             81 => 8,
             82 => 30,
@@ -164,9 +164,11 @@ class Organisation extends ActiveRecord {
             127 => 25,
             130 => 26,
             132 => 27,
+            133 => 6,
             135 => 76,
             136 => 53,
             138 => 16,
+            139 => 13,
             140 => 23,
             141 => 22,
             142 => 19,
@@ -174,8 +176,8 @@ class Organisation extends ActiveRecord {
             144 => 17,
             145 => 118,
             146 => 18,
-            147 => 24,
-            149 => 12,
+            147 => 117,
+            149 => 120,
         );
         
         // check for valid entry
