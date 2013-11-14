@@ -85,24 +85,42 @@
             <td>
                 <?php echo $form->labelEx(BotanicalObjectSex::model(), 'sex_id'); ?>
                 <?php
-                // Find all checked sex for this entry
-                $selected_sex = array();
-                if (!$model_livingPlant->isNewRecord) {
-                    $models_botanicalObjectSex = BotanicalObjectSex::model()->findAll('botanical_object_id=:botanical_object_id', array(':botanical_object_id' => $model_livingPlant->id));
-
-                    // Add all selected relevancy types to array
-                    foreach ($models_botanicalObjectSex as $model_botanicalObjectSex) {
-                        $selected_sex[] = $model_botanicalObjectSex->sex_id;
-                    }
-                }
-
-                // Create checkbox list for all relevancy type entries
-                $models_sex = Sex::model()->findAll();
-                $list_sex = CHtml::listData($models_sex, 'id', 'sex');
+                // display checkbox for assigned sexes
                 echo CHtml::checkBoxList(
                         'Sex',
-                        $selected_sex,
-                        $list_sex,
+                        CHtml::listData($model_botanicalObject->botanicalObjectSexes, 'id', 'id'),
+                        CHtml::listData(
+                                Sex::model()->findAll(),
+                                'id', 
+                                'sex'
+                        ),
+                        array(
+                            'labelOptions' => array('style' => 'display: inline'),
+                            'separator' => ''
+                        )
+                );
+                ?>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- marking for label printing -->
+<div class="row">
+    <table style="width: auto;">
+        <tr>
+            <td>
+                <?php echo $form->labelEx(LabelType::model(), 'label_type_id'); ?>
+                <?php
+                // display checkbox for label types
+                echo CHtml::checkBoxList(
+                        'LabelTypes',
+                        CHtml::listData($model_botanicalObject->tblLabelTypes, 'label_type_id', 'label_type_id'),
+                        CHtml::listData(
+                                LabelType::model()->findAll(),
+                                'label_type_id', 
+                                'type'
+                        ),
                         array(
                             'labelOptions' => array('style' => 'display: inline'),
                             'separator' => ''

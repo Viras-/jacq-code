@@ -1,22 +1,43 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.5
+-- version 4.0.8
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 22, 2013 at 02:39 PM
--- Server version: 5.5.32-0ubuntu0.12.04.1
--- PHP Version: 5.3.10-1ubuntu3.8
+-- Erstellungszeit: 10. Nov 2013 um 04:36
+-- Server Version: 5.5.33
+-- PHP-Version: 5.3.17
 
 SET FOREIGN_KEY_CHECKS=0;
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
 --
--- Database: `jacq_input`
+-- Datenbank: `jacq_input`
 --
 
 --
--- Dumping data for table `frmwrk_AuthAssignment`
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_accessBotanicalObject`
+--
+
+TRUNCATE TABLE `frmwrk_accessBotanicalObject`;
+--
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_accessOrganisation`
+--
+
+TRUNCATE TABLE `frmwrk_accessOrganisation`;
+--
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthAssignment`
+--
+
+TRUNCATE TABLE `frmwrk_AuthAssignment`;
+--
+-- Daten für Tabelle `frmwrk_AuthAssignment`
 --
 
 INSERT INTO `frmwrk_AuthAssignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
@@ -24,7 +45,12 @@ INSERT INTO `frmwrk_AuthAssignment` (`itemname`, `userid`, `bizrule`, `data`) VA
 ('grp_admin', 1, NULL, 'N;');
 
 --
--- Dumping data for table `frmwrk_AuthItem`
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthItem`
+--
+
+TRUNCATE TABLE `frmwrk_AuthItem`;
+--
+-- Daten für Tabelle `frmwrk_AuthItem`
 --
 
 INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
@@ -35,6 +61,8 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('managerLivingplant', 2, 'manage living plants', NULL, 'N;'),
 ('managerOrganisation', 2, 'manage organisation entries', NULL, 'N;'),
 ('managerTreeRecordFile', 2, 'manage tree record files', NULL, 'N;'),
+('oprtn_assignLabelType', 0, 'Assign label for printing', NULL, 'N;'),
+('oprtn_clearLabelType', 0, 'Clear label assignment(s)', NULL, 'N;'),
 ('oprtn_createLivingplant', 0, 'create a living plant', '', 's:0:"";'),
 ('oprtn_createOrganisation', 0, 'create / update an organisation', NULL, 'N;'),
 ('oprtn_createTreeRecordFile', 0, 'create / update a tree record file', '', 's:0:"";'),
@@ -49,10 +77,16 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('tsk_deleteLivingplant', 1, 'delete a living plant', '', 's:0:"";'),
 ('tsk_deleteOrganisation', 1, 'delete an organisation', NULL, 'N;'),
 ('tsk_deleteTreeRecordFile', 1, 'delete a tree record file', NULL, 'N;'),
-('tsk_editLivingplant', 1, 'Edit a living plant', '', 's:0:"";');
+('tsk_editLivingplant', 1, 'Edit a living plant', '', 's:0:"";'),
+('tsk_managementLabels', 1, 'Label Manager', NULL, 'N;');
 
 --
--- Dumping data for table `frmwrk_AuthItemChild`
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthItemChild`
+--
+
+TRUNCATE TABLE `frmwrk_AuthItemChild`;
+--
+-- Daten für Tabelle `frmwrk_AuthItemChild`
 --
 
 INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
@@ -63,6 +97,8 @@ INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 ('grp_admin', 'managerLivingplant'),
 ('grp_admin', 'managerOrganisation'),
 ('grp_admin', 'managerTreeRecordFile'),
+('tsk_managementLabels', 'oprtn_assignLabelType'),
+('tsk_managementLabels', 'oprtn_clearLabelType'),
 ('tsk_editLivingplant', 'oprtn_createLivingplant'),
 ('tsk_createOrganisation', 'oprtn_createOrganisation'),
 ('tsk_createTreeRecordFile', 'oprtn_createTreeRecordFile'),
@@ -78,13 +114,23 @@ INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 ('managerLivingplant', 'tsk_deleteLivingplant'),
 ('managerOrganisation', 'tsk_deleteOrganisation'),
 ('managerTreeRecordFile', 'tsk_deleteTreeRecordFile'),
-('editorLivingplant', 'tsk_editLivingplant');
+('editorLivingplant', 'tsk_editLivingplant'),
+('managerLivingplant', 'tsk_managementLabels');
 
 --
--- Dumping data for table `frmwrk_user`
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_user`
+--
+
+TRUNCATE TABLE `frmwrk_user`;
+--
+-- Daten für Tabelle `frmwrk_user`
 --
 
 INSERT INTO `frmwrk_user` (`id`, `username`, `password`, `salt`) VALUES
 (1, 'admin', '9ab6e20b2bb6fc6d5a8140a904af35c88a961f7d', 'hU8I9=ku'),
 (2, 'editor', 'fe759e678a18e0b2d1239fa7ff1c29ae3c206227', 'jUhdia(14');
 SET FOREIGN_KEY_CHECKS=1;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

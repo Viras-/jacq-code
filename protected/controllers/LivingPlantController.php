@@ -208,6 +208,16 @@ class LivingPlantController extends Controller {
                                         $model_botanicalObjectSex->save();
                                     }
                                 }
+                                
+                                // add all label assignments
+                                if( isset($_POST['LabelTypes'] ) ) {
+                                    foreach ($_POST['LabelTypes'] as $label_type_id ) {
+                                        $model_botanicalObjectLabel = new BotanicalObjectLabel;
+                                        $model_botanicalObjectLabel->botanical_object_id = $model_livingPlant->id;
+                                        $model_botanicalObjectLabel->label_type_id = $label_type_id;
+                                        $model_botanicalObjectLabel->save();
+                                    }
+                                }
 
                                 // check for separation entries and update/add them
                                 if( isset($_POST['Separation']) ) {
@@ -473,6 +483,23 @@ class LivingPlantController extends Controller {
                                 $model_botanicalObjectSex->botanical_object_id = $model_livingPlant->id;
                                 $model_botanicalObjectSex->sex_id = $sex_id;
                                 $model_botanicalObjectSex->save();
+                            }
+                        }
+
+                        // Remove all previous label assignments
+                        BotanicalObjectLabel::model()->deleteAll(
+                                'botanical_object_id=:botanical_object_id',
+                                array(
+                                    ':botanical_object_id' => $model_livingPlant->id,
+                                )
+                        );
+                        // add all label assignments
+                        if( isset($_POST['LabelTypes'] ) ) {
+                            foreach ($_POST['LabelTypes'] as $label_type_id ) {
+                                $model_botanicalObjectLabel = new BotanicalObjectLabel;
+                                $model_botanicalObjectLabel->botanical_object_id = $model_livingPlant->id;
+                                $model_botanicalObjectLabel->label_type_id = $label_type_id;
+                                $model_botanicalObjectLabel->save();
                             }
                         }
 
