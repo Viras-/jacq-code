@@ -37,7 +37,7 @@ class ActiveRecord extends CActiveRecord {
         if (strpos($name, self::TRANSLATE_SUFFIX) !== false) {
             $name = str_replace(self::TRANSLATE_SUFFIX, "", $name);
 
-            return Yii::t('jacq', parent::__get($name));
+            return Yii::t('jacq_types', parent::__get($name));
         }
 
         return parent::__get($name);
