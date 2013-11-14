@@ -193,6 +193,7 @@ class BotanicalObject extends ActiveRecord {
             'redetermine' => Yii::t('jacq', 'Redetermine'),
             'ident_status_id' => Yii::t('jacq', 'Ident Status'),
             'separated' => Yii::t('jacq', 'Separated'),
+            'family' => Yii::t('jacq', 'Family'),
         );
     }
 

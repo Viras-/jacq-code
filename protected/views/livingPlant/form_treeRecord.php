@@ -80,7 +80,7 @@
                 <?php
                 // Find all available files
                 $treeRecordFiles = TreeRecordFile::model()->findAll(array('order' => 'year'));
-                $treeRecordFilesListData = array('' => 'None');
+                $treeRecordFilesListData = array('' => Yii::t('jacq', 'none'));
                 foreach ($treeRecordFiles as $treeRecordFile) {
                     $treeRecordFilesListData[$treeRecordFile->id] = '[' . $treeRecordFile->year . '] ' . $treeRecordFile->name;
                 }

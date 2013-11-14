@@ -68,10 +68,11 @@ class AcquisitionEventSource extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'acquisition_event_source_id' => 'Acquisition Event Source',
-            'acquisition_event_id' => 'Acquisition Event',
-            'acquisition_source_id' => 'Acquisition Source',
-            'source_date' => 'Source Date',
+            'acquisition_event_source_id' => Yii::t('jacq', 'Acquisition Source'),
+            'acquisition_event_id' => Yii::t('jacq', 'Acquisition Event'),
+            'acquisition_source_id' => Yii::t('jacq', 'Source Name'),
+            'source_date' => Yii::t('jacq', 'Source Date'),
+            'actions' => Yii::t('jacq', 'Actions'),
         );
     }
 

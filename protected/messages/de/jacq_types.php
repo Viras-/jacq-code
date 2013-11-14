@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Message translations.
  *
@@ -9,25 +10,36 @@
  * Each array element represents the translation (value) of a message (key).
  * If the value is empty, the message is considered as not translated.
  * Messages that no longer need translation will have their translations
- * enclosed between a pair of '@@' marks.
+ * enclosed between a pair of '' marks.
  *
  * Message string can be used with plural forms format. Check i18n section
  * of the guide for details.
  *
  * NOTE, this file must be saved in UTF-8 encoding.
  */
-return array (
-    'female' => 'weiblich',
-    'male' => 'männlich',
+return array(
+    'dead (eliminated)' => 'Tot (eliminiert)',
+    'dead (spontaneous)' => 'Tot (spontant)',
+    'dead (unknown cause)' => 'Tot (unbekannte Ursache)',
     'exhibition' => 'Austellung',
+    'female' => 'weiblich',
+    'florid' => 'Blüte',
+    'foliage' => 'Laubaustrieb',
+    'foliage_loss' => 'Laubfall',
+    'fruit' => 'Frucht',
+    'full extraction' => 'Vollständige Entnahme',
+    'harvested' => 'Abgebaut',
+    'herbarium' => 'Herbar',
+    'male' => 'männlich',
+    'partial extraction' => 'Teilweise Entnahme',
+    'reduced' => 'Eingezogen',
+    'separated' => 'Abgegeben',
+    'unknown' => 'Unbekannt',
     'working' => 'Arbeit',
     'none' => 'kein',
-    'dead (spontaneous)' => 'Tot (spontant)',
-    'dead (eliminated)' => 'Tot (eliminiert)',
-    'dead (unknown cause)' => 'Tot (unbekannte Ursache)',
-    'harvested' => 'Abgebaut',
-    'separated' => 'Abgegeben',
-    'herbarium' => 'Herbar',
-    'unknown' => 'Unbekannt'
-    
+    'sciences' => 'Forschung',
+    'teachings' => 'Lehre',
+    'protection' => 'Naturschutz',
+    'public' => 'Öffentlichkeit',
+    'historic' => 'Historisch',
 );

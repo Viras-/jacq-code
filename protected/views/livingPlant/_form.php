@@ -49,13 +49,6 @@
     <?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);  ?>
 
     <br />
-    <h3>Fields to be assigned to tabs:</h3>
-    <fieldset>
-        <legend><?php echo Yii::t('jacq', 'Living Plant'); ?></legend>
-        <?php
-        require('form_botanicalObject.php');
-        ?>
-    </fieldset>
     <?php require('form_importProperties.php'); ?>
 
     <div class="row buttons">
