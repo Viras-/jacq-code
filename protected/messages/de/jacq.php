@@ -141,4 +141,5 @@ return array (
   'yes' => 'Ja',
   'none' => 'kein',
     'Family' => 'Familie',
+    'Successfully saved' => 'Erfolgreich gespeichert',
 );

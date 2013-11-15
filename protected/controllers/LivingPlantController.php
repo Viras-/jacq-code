@@ -271,7 +271,7 @@ class LivingPlantController extends Controller {
                                 }
                                 
                                 // Redirect to update page directly
-                                $this->redirect(array('update', 'id' => $model_livingPlant->id));
+                                $this->redirect(array('update', 'id' => $model_livingPlant->id, 'success' => true));
                             }
                         }
                     }
@@ -299,7 +299,7 @@ class LivingPlantController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id, $success = false) {
         $model_livingPlant = $this->loadModel($id);
         $model_botanicalObject = $model_livingPlant->id0;
         $model_acquisitionEvent = $model_botanicalObject->acquisitionEvent;
@@ -590,7 +590,7 @@ class LivingPlantController extends Controller {
                         if( $model_incomingDate->save() ) {
                             // finally save the living plant
                             if ($model_livingPlant->save()) {
-                                $this->redirect(array('update', 'id' => $model_livingPlant->id));
+                                $this->redirect(array('update', 'id' => $model_livingPlant->id, 'success' => true));
                             }
                         }
                     }
@@ -606,6 +606,7 @@ class LivingPlantController extends Controller {
             'model_botanicalObject' => $model_botanicalObject,
             'model_locationCoordinates' => $model_locationCoordinates,
             'model_incomingDate' => $model_incomingDate,
+            'success' => $success
         );
         $data['data'] = &$data;
 
