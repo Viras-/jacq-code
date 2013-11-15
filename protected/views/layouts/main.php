@@ -3,7 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="en" />
-
+        <?php
+        // register jquery & jquery-ui js code
+        Yii::App()->clientScript->registerCoreScript('jquery');
+        Yii::App()->clientScript->registerCoreScript('jquery.ui');
+        Yii::app()->getClientScript()->registerCssFile(Yii::app()->getClientScript()->getCoreScriptUrl() . '/jui/css/base/jquery-ui.css');
+        ?>
         <!-- blueprint CSS framework -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />

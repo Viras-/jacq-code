@@ -29,13 +29,6 @@ class ClassificationBrowserController extends Controller
 
         $jsonJacqUrl = (Yii::app()->params['jsonJacqUrl']) ? Yii::app()->params['jsonJacqUrl'] : Yii::app()->getBaseUrl() . '/';
 
-        // Load jQuery
-        Yii::app()->clientScript->registerCoreScript('jquery');
-        Yii::app()->clientScript->registerCoreScript('jquery.ui');
-
-        $cssCoreUrl = Yii::app()->getClientScript()->getCoreScriptUrl();
-        Yii::app()->getClientScript()->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css');
-
         $pathToViews = 'protected/views/dataBrowser/classificationBrowser/';
 
         Yii::app()->clientScript->registerScript('indexJstreeFct', file_get_contents($pathToViews . 'index_jstree_fct.js'), CClientScript::POS_HEAD);
