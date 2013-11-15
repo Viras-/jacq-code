@@ -14,4 +14,17 @@ $this->menu = array(
 <h1><?php echo Yii::t('jacq', 'Update Living Plant'); ?> <?php echo $model_livingPlant->id; ?></h1>
 
 <?php
+// check if saving was successfull
+if( $success ) {
+    ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            MsgBox.infoMsg('<?php echo Yii::t('jacq', 'Successfully saved'); ?>');
+        });
+    </script>
+    <?php
+}
+?>
+
+<?php
 echo $this->renderPartial('_form', $data);

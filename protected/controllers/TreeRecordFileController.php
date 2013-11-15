@@ -84,7 +84,7 @@ class TreeRecordFileController extends Controller {
                     }
                 }
 
-                $this->redirect(array('update', 'id' => $model->id));
+                $this->redirect(array('update', 'id' => $model->id, 'success' => true));
             }
         }
 
@@ -98,7 +98,7 @@ class TreeRecordFileController extends Controller {
      * If update is successful, the browser will be redirected to the 'update' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id, $success = false) {
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
@@ -107,11 +107,12 @@ class TreeRecordFileController extends Controller {
         if (isset($_POST['TreeRecordFile'])) {
             $model->attributes = $_POST['TreeRecordFile'];
             if ($model->save())
-                $this->redirect(array('update', 'id' => $model->id));
+                $this->redirect(array('update', 'id' => $model->id, 'success' => true));
         }
 
         $this->render('update', array(
             'model' => $model,
+            'success' => $success,
         ));
     }
 
