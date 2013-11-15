@@ -33,9 +33,27 @@
 
          <!-- custom styles -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/custom.css" />
+        
+         <!-- MsgBox -->
+         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/msgbox.js" ></script>
     </head>
 
     <body>
+        <!-- generic ui-dialog which can be used to display errors -->
+        <div id="error-dialog" title="Error" style="display:none;">
+            <p>
+                <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+                <span id="error-dialog_text"></span>
+            </p>
+        </div>
+        <!-- generic ui-dialog which can be used to display infos -->
+        <div id="info-dialog" title="Info" style="display:none;">
+            <p>
+                <span class="ui-icon ui-icon-info" style="float: left; margin: 0 7px 20px 0;"></span>
+                <span id="info-dialog_text"></span>
+            </p>
+        </div>
+
         <div class="container" id="page">
             <img id="logo" src="images/jacq_logo.png" width="120" height="60" />
 
