@@ -281,6 +281,26 @@ class ImportController extends Controller {
                     $model_livingPlant->ipen_number = $model_akzession->IPENNr;
                     $model_livingPlant->ipen_locked = 1;
                 }
+                else {
+                    $countryCode = "XX";
+                    $ipenState = $model_organisation->greenhouse;
+                    
+                    // try to find the country-code through the acquisition country
+                    if( $model_importHerkunft->CollLand != NULL ) {
+                        $results = Yii::app()->geoNameService->search(array(
+                            'name' => $model_importHerkunft->CollLand,  // search for the collection country
+                            'adminCode1' => '00',                       // find only countries
+                        ));
+                        
+                        // if we have a valid result, use the first countryCode found
+                        if( $results['totalResultsCount'] > 0 ) {
+                            $countryCode = $results['geonames'][0]['countryCode'];
+                        }
+                    }
+                    
+                    // generate new IPEN numbers
+                    $model_livingPlant->ipen_number = $countryCode . '-' . $ipenState . '-' . 'WU';
+                }
                 $model_livingPlant->culture_notes = $model_akzession->Kulturhinweise;
                 $model_livingPlant->cultivation_date = $model_akzession->Anbaudatum;
                 $model_livingPlant->incoming_date_id = $model_incomingDate->id;
