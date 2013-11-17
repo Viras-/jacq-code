@@ -26,6 +26,16 @@
  * @property TblOrganisation $organisation
  */
 class User extends ActiveRecord {
+    /**
+     * characters used for salt generating
+     */
+    private $saltCharset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!§$%&/()=?-_.:,;<>';
+    
+    /**
+     *length of salt hash
+     * @var type 
+     */
+    private $saltLength = 10;
 
     /**
      * @return string the associated database table name
@@ -44,7 +54,7 @@ class User extends ActiveRecord {
             array('username, password, salt, user_type_id, employment_type_id, organisation_id', 'required'),
             array('user_type_id, employment_type_id, organisation_id', 'numerical', 'integerOnly' => true),
             array('username', 'length', 'max' => 128),
-            array('password, salt', 'length', 'max' => 64),
+            array('newPassword, salt', 'length', 'max' => 64),
             array('title_prefix, firstname, lastname, title_suffix', 'length', 'max' => 45),
             array('birthdate', 'safe'),
             // The following rule is used by search().
@@ -134,4 +144,50 @@ class User extends ActiveRecord {
         return parent::model($className);
     }
 
+    /**
+     * check if the given password matches the one for this user
+     * @param string $password password to check (plaintext)
+     * @return boolean true if valid, else false
+     */
+    public function checkPassword($password) {
+        // generate password hash
+        $password = sha1($password . sha1($this->salt));
+        
+        // check for valid password
+        if( $password == $this->password ) return true;
+        
+        return false;
+    }
+    
+    /**
+     * set a new password
+     * @param string $password new password (plaintext)
+     */
+    public function setNewPassword($password) {
+        // generate new salt
+        $this->updateSalt();
+        
+        // update password
+        $this->password = sha1($password . sha1($this->salt));
+    }
+    
+    public function getNewPassword() {
+        return '';
+    }
+    
+    /**
+     * generate a new salt
+     */
+    private function updateSalt() {
+        // reset current salt
+        $this->salt = '';
+        // prepare variables
+        $count = strlen($this->saltCharset);
+        $length = $this->saltLength;
+        
+        // generate the new hash
+        while ($length--) {
+            $this->salt .= $this->saltCharset[mt_rand(0, $count-1)];
+        }
+    }
 }

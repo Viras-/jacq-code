@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Users'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
+	$model->id=>array('update','id'=>$model->id),
 	'Update',
 );
 

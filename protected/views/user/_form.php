@@ -28,15 +28,9 @@
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'password'); ?>
-        <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 64)); ?>
-        <?php echo $form->error($model, 'password'); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $form->labelEx($model, 'salt'); ?>
-        <?php echo $form->textField($model, 'salt', array('size' => 60, 'maxlength' => 64)); ?>
-        <?php echo $form->error($model, 'salt'); ?>
+        <?php echo $form->labelEx($model, 'newPassword'); ?>
+        <?php echo $form->passwordField($model, 'newPassword', array('size' => 60, 'maxlength' => 64)); ?>
+        <?php echo $form->error($model, 'newPassword'); ?>
     </div>
 
     <div class="row">
