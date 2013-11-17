@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.8
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 10. Nov 2013 um 04:36
+-- Erstellungszeit: 17. Nov 2013 um 15:13
 -- Server Version: 5.5.33
 -- PHP-Version: 5.3.17
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `jacq_input`
 --
+CREATE DATABASE IF NOT EXISTS `jacq_input` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `jacq_input`;
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `frmwrk_accessBotanicalObject`
@@ -70,6 +72,7 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('oprtn_deleteOrganisation', 0, 'delete an organisation entry', NULL, 'N;'),
 ('oprtn_deleteTreeRecordFile', 0, 'delete a tree record file', NULL, 'N;'),
 ('oprtn_readLivingplant', 0, 'read/show a living plant', '', 's:0:"";'),
+('oprtn_readUser', 0, 'Read (show) user manager', NULL, 'N;'),
 ('oprtn_showClassificationBrowser', 0, 'show classification browser', NULL, 'N;'),
 ('rbacManager', 2, 'manage RBAC', NULL, 'N;'),
 ('tsk_createOrganisation', 1, 'create / update an organisation', NULL, 'N;'),
@@ -78,7 +81,8 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('tsk_deleteOrganisation', 1, 'delete an organisation', NULL, 'N;'),
 ('tsk_deleteTreeRecordFile', 1, 'delete a tree record file', NULL, 'N;'),
 ('tsk_editLivingplant', 1, 'Edit a living plant', '', 's:0:"";'),
-('tsk_managementLabels', 1, 'Label Manager', NULL, 'N;');
+('tsk_managementLabels', 1, 'Label Manager', NULL, 'N;'),
+('tsk_managerUser', 1, 'manager users', NULL, 'N;');
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthItemChild`
@@ -107,6 +111,7 @@ INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 ('tsk_deleteTreeRecordFile', 'oprtn_deleteTreeRecordFile'),
 ('grp_guest', 'oprtn_readLivingplant'),
 ('oprtn_createLivingplant', 'oprtn_readLivingplant'),
+('tsk_managerUser', 'oprtn_readUser'),
 ('grp_guest', 'oprtn_showClassificationBrowser'),
 ('grp_admin', 'rbacManager'),
 ('managerOrganisation', 'tsk_createOrganisation'),
@@ -115,7 +120,26 @@ INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 ('managerOrganisation', 'tsk_deleteOrganisation'),
 ('managerTreeRecordFile', 'tsk_deleteTreeRecordFile'),
 ('editorLivingplant', 'tsk_editLivingplant'),
-('managerLivingplant', 'tsk_managementLabels');
+('managerLivingplant', 'tsk_managementLabels'),
+('grp_admin', 'tsk_managerUser');
+
+--
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_employment_type`
+--
+
+TRUNCATE TABLE `frmwrk_employment_type`;
+--
+-- Daten für Tabelle `frmwrk_employment_type`
+--
+
+INSERT INTO `frmwrk_employment_type` (`employment_type_id`, `type`) VALUES
+(1, 'fixed'),
+(2, 'trainee'),
+(3, 'seasonal'),
+(4, 'left_company'),
+(5, 'doctoral_candidate'),
+(6, 'postdoc'),
+(7, 'student');
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `frmwrk_user`
@@ -126,9 +150,22 @@ TRUNCATE TABLE `frmwrk_user`;
 -- Daten für Tabelle `frmwrk_user`
 --
 
-INSERT INTO `frmwrk_user` (`id`, `username`, `password`, `salt`) VALUES
-(1, 'admin', '9ab6e20b2bb6fc6d5a8140a904af35c88a961f7d', 'hU8I9=ku'),
-(2, 'editor', 'fe759e678a18e0b2d1239fa7ff1c29ae3c206227', 'jUhdia(14');
+INSERT INTO `frmwrk_user` (`id`, `username`, `password`, `salt`, `user_type_id`, `employment_type_id`, `title_prefix`, `firstname`, `lastname`, `title_suffix`, `birthdate`, `organisation_id`) VALUES
+(1, 'admin', '9ab6e20b2bb6fc6d5a8140a904af35c88a961f7d', 'hU8I9=ku', 0, 0, NULL, NULL, NULL, NULL, NULL, 0),
+(2, 'editor', 'fe759e678a18e0b2d1239fa7ff1c29ae3c206227', 'jUhdia(14', 0, 0, NULL, NULL, NULL, NULL, NULL, 0);
+
+--
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_user_type`
+--
+
+TRUNCATE TABLE `frmwrk_user_type`;
+--
+-- Daten für Tabelle `frmwrk_user_type`
+--
+
+INSERT INTO `frmwrk_user_type` (`user_type_id`, `type`) VALUES
+(1, 'gardener'),
+(2, 'scientist');
 SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -13,6 +13,7 @@ return array(
     // autoloading model and component classes
     'import' => array(
         'application.models.*',
+        'application.models.frmwrk.*',
         'application.models.views.*',
         'application.models.legacy.*',
         'application.components.*',
