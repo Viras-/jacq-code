@@ -8,7 +8,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List User', 'url'=>array('index')),
 	array('label'=>'Create User', 'url'=>array('create')),
 );
 
@@ -47,20 +46,20 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'columns'=>array(
 		'id',
 		'username',
+		'firstname',
+		'lastname',
+		/*
 		'password',
 		'salt',
 		'user_type_id',
 		'employment_type_id',
-		/*
 		'title_prefix',
-		'firstname',
-		'lastname',
 		'title_suffix',
 		'birthdate',
 		'organisation_id',
 		*/
 		array(
-			'class'=>'CButtonColumn',
+			'class'=>'UButtonColumn',
 		),
 	),
 )); ?>

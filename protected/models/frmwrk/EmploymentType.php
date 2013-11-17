@@ -10,7 +10,7 @@
  * The followings are the available model relations:
  * @property User[] $users
  */
-class EmploymentType extends CActiveRecord
+class EmploymentType extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name

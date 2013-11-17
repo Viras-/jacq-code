@@ -25,7 +25,7 @@
  * @property UserType $userType
  * @property TblOrganisation $organisation
  */
-class User extends CActiveRecord {
+class User extends ActiveRecord {
 
     /**
      * @return string the associated database table name
