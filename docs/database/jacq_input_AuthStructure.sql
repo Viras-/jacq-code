@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 17. Nov 2013 um 15:13
+-- Erstellungszeit: 17. Nov 2013 um 16:31
 -- Server Version: 5.5.33
 -- PHP-Version: 5.3.17
 
@@ -68,11 +68,12 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('oprtn_createLivingplant', 0, 'create a living plant', '', 's:0:"";'),
 ('oprtn_createOrganisation', 0, 'create / update an organisation', NULL, 'N;'),
 ('oprtn_createTreeRecordFile', 0, 'create / update a tree record file', '', 's:0:"";'),
+('oprtn_createUser', 0, 'create user', '', 's:0:"";'),
 ('oprtn_deleteLivingplant', 0, 'delete a living plant', '', 's:0:"";'),
 ('oprtn_deleteOrganisation', 0, 'delete an organisation entry', NULL, 'N;'),
 ('oprtn_deleteTreeRecordFile', 0, 'delete a tree record file', NULL, 'N;'),
+('oprtn_deleteUser', 0, 'delete user', NULL, 'N;'),
 ('oprtn_readLivingplant', 0, 'read/show a living plant', '', 's:0:"";'),
-('oprtn_readUser', 0, 'Read (show) user manager', NULL, 'N;'),
 ('oprtn_showClassificationBrowser', 0, 'show classification browser', NULL, 'N;'),
 ('rbacManager', 2, 'manage RBAC', NULL, 'N;'),
 ('tsk_createOrganisation', 1, 'create / update an organisation', NULL, 'N;'),
@@ -106,12 +107,13 @@ INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 ('tsk_editLivingplant', 'oprtn_createLivingplant'),
 ('tsk_createOrganisation', 'oprtn_createOrganisation'),
 ('tsk_createTreeRecordFile', 'oprtn_createTreeRecordFile'),
+('tsk_managerUser', 'oprtn_createUser'),
 ('tsk_deleteLivingplant', 'oprtn_deleteLivingplant'),
 ('tsk_deleteOrganisation', 'oprtn_deleteOrganisation'),
 ('tsk_deleteTreeRecordFile', 'oprtn_deleteTreeRecordFile'),
+('tsk_managerUser', 'oprtn_deleteUser'),
 ('grp_guest', 'oprtn_readLivingplant'),
 ('oprtn_createLivingplant', 'oprtn_readLivingplant'),
-('tsk_managerUser', 'oprtn_readUser'),
 ('grp_guest', 'oprtn_showClassificationBrowser'),
 ('grp_admin', 'rbacManager'),
 ('managerOrganisation', 'tsk_createOrganisation'),
@@ -151,8 +153,8 @@ TRUNCATE TABLE `frmwrk_user`;
 --
 
 INSERT INTO `frmwrk_user` (`id`, `username`, `password`, `salt`, `user_type_id`, `employment_type_id`, `title_prefix`, `firstname`, `lastname`, `title_suffix`, `birthdate`, `organisation_id`) VALUES
-(1, 'admin', '9ab6e20b2bb6fc6d5a8140a904af35c88a961f7d', 'hU8I9=ku', 0, 0, NULL, NULL, NULL, NULL, NULL, 0),
-(2, 'editor', 'fe759e678a18e0b2d1239fa7ff1c29ae3c206227', 'jUhdia(14', 0, 0, NULL, NULL, NULL, NULL, NULL, 0);
+(1, 'admin', '1c011c98a7fade5132f4a95ff1a0edf40d7f1c38', 'P?4wP>GT,m', 1, 1, '', '', '', '', '0000-00-00', 1),
+(2, 'editor', '7bbc1c5812d76078e8b0954afe521dc7bcbcfd59', '=PHazE,4Sc', 1, 1, '', '', '', '', '0000-00-00', 1);
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `frmwrk_user_type`
