@@ -9,6 +9,30 @@ CREATE SCHEMA IF NOT EXISTS `jacq_log` DEFAULT CHARACTER SET utf8 COLLATE utf8_g
 USE `jacq_input` ;
 
 -- -----------------------------------------------------
+-- Table `frmwrk_user_type`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `frmwrk_user_type` ;
+
+CREATE  TABLE IF NOT EXISTS `frmwrk_user_type` (
+  `user_type_id` INT NOT NULL AUTO_INCREMENT ,
+  `type` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`user_type_id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `frmwrk_employment_type`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `frmwrk_employment_type` ;
+
+CREATE  TABLE IF NOT EXISTS `frmwrk_employment_type` (
+  `employment_type_id` INT NOT NULL AUTO_INCREMENT ,
+  `type` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`employment_type_id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `frmwrk_user`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `frmwrk_user` ;
@@ -18,7 +42,33 @@ CREATE  TABLE IF NOT EXISTS `frmwrk_user` (
   `username` VARCHAR(128) NOT NULL ,
   `password` VARCHAR(64) NOT NULL COMMENT 'SHA-256 hash' ,
   `salt` VARCHAR(64) NOT NULL COMMENT 'random salt' ,
-  PRIMARY KEY (`id`) )
+  `user_type_id` INT NOT NULL ,
+  `employment_type_id` INT NOT NULL ,
+  `title_prefix` VARCHAR(45) NULL ,
+  `firstname` VARCHAR(45) NULL ,
+  `lastname` VARCHAR(45) NULL ,
+  `title_suffix` VARCHAR(45) NULL ,
+  `birthdate` DATE NULL ,
+  `organisation_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_frmwrk_user_frmwrk_user_type1_idx` (`user_type_id` ASC) ,
+  INDEX `fk_frmwrk_user_frmwrk_employment_type1_idx` (`employment_type_id` ASC) ,
+  INDEX `fk_frmwrk_user_tbl_organisation1_idx` (`organisation_id` ASC) ,
+  CONSTRAINT `fk_frmwrk_user_frmwrk_user_type1`
+    FOREIGN KEY (`user_type_id` )
+    REFERENCES `frmwrk_user_type` (`user_type_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_frmwrk_user_frmwrk_employment_type1`
+    FOREIGN KEY (`employment_type_id` )
+    REFERENCES `frmwrk_employment_type` (`employment_type_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_frmwrk_user_tbl_organisation1`
+    FOREIGN KEY (`organisation_id` )
+    REFERENCES `tbl_organisation` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -926,6 +976,31 @@ USE `jacq_log` ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `frmwrk_user_type`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `jacq_input`;
+INSERT INTO `frmwrk_user_type` (`user_type_id`, `type`) VALUES (1, 'gardener');
+INSERT INTO `frmwrk_user_type` (`user_type_id`, `type`) VALUES (2, 'scientist');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `frmwrk_employment_type`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `jacq_input`;
+INSERT INTO `frmwrk_employment_type` (`employment_type_id`, `type`) VALUES (1, 'fixed');
+INSERT INTO `frmwrk_employment_type` (`employment_type_id`, `type`) VALUES (2, 'trainee');
+INSERT INTO `frmwrk_employment_type` (`employment_type_id`, `type`) VALUES (3, 'seasonal');
+INSERT INTO `frmwrk_employment_type` (`employment_type_id`, `type`) VALUES (4, 'left_company');
+INSERT INTO `frmwrk_employment_type` (`employment_type_id`, `type`) VALUES (5, 'doctoral_candidate');
+INSERT INTO `frmwrk_employment_type` (`employment_type_id`, `type`) VALUES (6, 'postdoc');
+INSERT INTO `frmwrk_employment_type` (`employment_type_id`, `type`) VALUES (7, 'student');
+
+COMMIT;
 
 -- -----------------------------------------------------
 -- Data for table `tbl_acquisition_type`
