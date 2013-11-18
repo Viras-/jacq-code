@@ -23,7 +23,7 @@
  * @property AccessOrganisation[] $accessOrganisations
  * @property EmploymentType $employmentType
  * @property UserType $userType
- * @property TblOrganisation $organisation
+ * @property Organisation $organisation
  */
 class User extends ActiveRecord {
     /**
@@ -56,7 +56,7 @@ class User extends ActiveRecord {
             array('username', 'length', 'max' => 128),
             array('newPassword, salt', 'length', 'max' => 64),
             array('title_prefix, firstname, lastname, title_suffix', 'length', 'max' => 45),
-            array('birthdate', 'safe'),
+            array('birthdate', 'type', 'type' => 'date', 'dateFormat' => 'yyyy-MM-dd'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, username, password, salt, user_type_id, employment_type_id, title_prefix, firstname, lastname, title_suffix, birthdate, organisation_id', 'safe', 'on' => 'search'),
@@ -75,7 +75,7 @@ class User extends ActiveRecord {
             'accessOrganisations' => array(self::HAS_MANY, 'AccessOrganisation', 'user_id'),
             'employmentType' => array(self::BELONGS_TO, 'EmploymentType', 'employment_type_id'),
             'userType' => array(self::BELONGS_TO, 'UserType', 'user_type_id'),
-            'organisation' => array(self::BELONGS_TO, 'TblOrganisation', 'organisation_id'),
+            'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
         );
     }
 
@@ -87,6 +87,7 @@ class User extends ActiveRecord {
             'id' => Yii::t('jacq', 'ID'),
             'username' => Yii::t('jacq', 'Username'),
             'password' => Yii::t('jacq', 'Password'),
+            'newPassword' => Yii::t('jacq', 'New Password'),
             'salt' => Yii::t('jacq', 'Salt'),
             'user_type_id' => Yii::t('jacq', 'User Type'),
             'employment_type_id' => Yii::t('jacq', 'Employment Type'),

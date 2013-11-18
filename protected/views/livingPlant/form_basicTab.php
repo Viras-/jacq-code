@@ -44,7 +44,7 @@
     <?php echo $form->labelEx($model_botanicalObject, 'organisation_id'); ?>
     <?php echo CHtml::textField('BotanicalObject_organisation_name', $model_botanicalObject->organisation->description, array('readonly' => 'readonly')); ?>
     <?php echo $form->hiddenField($model_botanicalObject, 'organisation_id'); ?>
-    <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;">Change</a>
+    <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq','Change'); ?></a>
 </div>
 
 <!-- place number -->

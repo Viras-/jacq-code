@@ -23,7 +23,14 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'username'); ?>
-        <?php echo $form->textField($model, 'username', array('size' => 60, 'maxlength' => 128)); ?>
+        <?php
+        if( $model->isNewRecord ) {
+            echo $form->textField($model, 'username', array('size' => 60, 'maxlength' => 128));
+        }
+        else {
+            echo CHtml::encode($model->username); 
+        }
+        ?>
         <?php echo $form->error($model, 'username'); ?>
     </div>
 
@@ -71,19 +78,87 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'birthdate'); ?>
-        <?php echo $form->textField($model, 'birthdate'); ?>
+        <?php
+        $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+            'name' => 'User[birthdate]',
+            // additional javascript options for the date picker plugin
+            'options' => array(
+                'showAnim' => 'fold',
+                'dateFormat' => 'yy-mm-dd',
+                'changeMonth' => true,
+                'changeYear' => true
+            ),
+            'htmlOptions' => array(
+
+            ),
+            'value' => $model->birthdate,
+        ));
+        ?>
         <?php echo $form->error($model, 'birthdate'); ?>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'organisation_id'); ?>
-        <?php echo $form->dropDownList($model, 'organisation_id', CHtml::listData(Organisation::model()->findAll(), 'id', 'description')); ?>
+        <?php echo CHtml::textField('User_organisation_name', (isset($model->organisation)) ? $model->organisation->description : '', array('readonly' => 'readonly')); ?>
+        <?php echo $form->hiddenField($model, 'organisation_id'); ?>
+        <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq','Change'); ?></a>
         <?php echo $form->error($model, 'organisation_id'); ?>
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('jacq','Create') : Yii::t('jacq','Save')); ?>
     </div>
+
+    <?php
+    // widget for chosing the organisation
+    $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+        'id' => 'organisation_select_dialog',
+        // additional javascript options for the dialog plugin
+        'options' => array(
+            'title' => 'Organisation',
+            'autoOpen' => false,
+            'resizable' => false,
+            'width' => 630,
+        ),
+    ));
+    ?>
+    <div id="organisation_tree" style="height: 400px;"></div>
+    <?php
+    $this->endWidget('zii.widgets.jui.CJuiDialog');
+    ?>
 
     <?php $this->endWidget(); ?>
 </div><!-- form -->
+
+<script type="text/javascript">
+    // Bind to change event of institution select
+    $(document).ready(function(){
+        // initialize jsTree for organisation
+        $('#organisation_tree').jstree({
+            "json_data": {
+                "ajax": {
+                    "url": "index.php?r=jSONOrganisation/japi&action=getChildren",
+                    "data": function(n) {
+                        var link = (n.children) ? n.children('a').first() : n;
+                        var organisation_id = (link.attr) ? link.attr("data-organisation-id") : 0;
+                        
+                        return {
+                            "organisation_id": organisation_id
+                        };
+                    }
+                }
+            },
+            "plugins": ["json_data", "themes"]
+        });
+        
+        // bind to click events onto tree items
+        $('#organisation_tree a').live('click', function() {
+            // update references to organisation
+            $('#User_organisation_id').val( $(this).attr('data-organisation-id') );
+            $('#User_organisation_name').val( $(this).text() );
+            $('#organisation_select_dialog').dialog('close');
+            return false;
+        });
+    });
+    
+</script>
