@@ -101,12 +101,12 @@
         <?php echo $form->labelEx($model, 'organisation_id'); ?>
         <?php echo CHtml::textField('User_organisation_name', (isset($model->organisation)) ? $model->organisation->description : '', array('readonly' => 'readonly')); ?>
         <?php echo $form->hiddenField($model, 'organisation_id'); ?>
-        <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;">Change</a>
+        <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq','Change'); ?></a>
         <?php echo $form->error($model, 'organisation_id'); ?>
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('jacq','Create') : Yii::t('jacq','Save')); ?>
     </div>
 
     <?php

@@ -17,7 +17,7 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'New Password' => 'Neues Passwort',
+  'Change' => 'Ändern',
   'Access for groups' => 'Zugriff für Gruppen',
   'Access for users' => 'Zugriff für Benutzer',
   'Accessible' => 'Accessible',
@@ -107,6 +107,7 @@ return array (
   'Manage Users' => 'Benutzer verwalten',
   'Month' => 'Monat',
   'Name' => 'Name',
+  'New Password' => 'Neues Passwort',
   'Number' => 'Nummer',
   'Operations' => 'Operationen',
   'Organisation' => 'Revier',
