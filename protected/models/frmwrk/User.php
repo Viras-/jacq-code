@@ -56,7 +56,7 @@ class User extends ActiveRecord {
             array('username', 'length', 'max' => 128),
             array('newPassword, salt', 'length', 'max' => 64),
             array('title_prefix, firstname, lastname, title_suffix', 'length', 'max' => 45),
-            array('birthdate', 'safe'),
+            array('birthdate', 'type', 'type' => 'date', 'dateFormat' => 'yyyy-MM-dd'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, username, password, salt, user_type_id, employment_type_id, title_prefix, firstname, lastname, title_suffix, birthdate, organisation_id', 'safe', 'on' => 'search'),

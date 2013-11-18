@@ -72,9 +72,10 @@ class UserController extends Controller {
         $model = $this->loadModel($id);
 
         if (isset($_POST['User'])) {
-            // protect the salt & password properties
-            unset($_POST['User']['password']);
+            // protect the username, salt & password properties
+            unset($_POST['User']['username']);
             unset($_POST['User']['salt']);
+            unset($_POST['User']['password']);
             
             $model->attributes = $_POST['User'];
             $model->save();

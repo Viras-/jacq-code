@@ -23,7 +23,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'username'); ?>
-        <?php echo $form->textField($model, 'username', array('size' => 60, 'maxlength' => 128)); ?>
+        <?php echo CHtml::encode($model->username); ?>
         <?php echo $form->error($model, 'username'); ?>
     </div>
 
@@ -71,7 +71,22 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'birthdate'); ?>
-        <?php echo $form->textField($model, 'birthdate'); ?>
+        <?php
+        $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+            'name' => 'User[birthdate]',
+            // additional javascript options for the date picker plugin
+            'options' => array(
+                'showAnim' => 'fold',
+                'dateFormat' => 'yy-mm-dd',
+                'changeMonth' => true,
+                'changeYear' => true
+            ),
+            'htmlOptions' => array(
+
+            ),
+            'value' => $model->birthdate,
+        ));
+        ?>
         <?php echo $form->error($model, 'birthdate'); ?>
     </div>
 
