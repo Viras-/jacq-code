@@ -23,7 +23,7 @@
  * @property AccessOrganisation[] $accessOrganisations
  * @property EmploymentType $employmentType
  * @property UserType $userType
- * @property TblOrganisation $organisation
+ * @property Organisation $organisation
  */
 class User extends ActiveRecord {
     /**
@@ -75,7 +75,7 @@ class User extends ActiveRecord {
             'accessOrganisations' => array(self::HAS_MANY, 'AccessOrganisation', 'user_id'),
             'employmentType' => array(self::BELONGS_TO, 'EmploymentType', 'employment_type_id'),
             'userType' => array(self::BELONGS_TO, 'UserType', 'user_type_id'),
-            'organisation' => array(self::BELONGS_TO, 'TblOrganisation', 'organisation_id'),
+            'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
         );
     }
 

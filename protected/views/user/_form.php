@@ -92,7 +92,9 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'organisation_id'); ?>
-        <?php echo $form->dropDownList($model, 'organisation_id', CHtml::listData(Organisation::model()->findAll(), 'id', 'description')); ?>
+        <?php echo CHtml::textField('User_organisation_name', (isset($model->organisation)) ? $model->organisation->description : '', array('readonly' => 'readonly')); ?>
+        <?php echo $form->hiddenField($model, 'organisation_id'); ?>
+        <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;">Change</a>
         <?php echo $form->error($model, 'organisation_id'); ?>
     </div>
 
@@ -100,5 +102,56 @@
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
 
+    <?php
+    // widget for chosing the organisation
+    $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+        'id' => 'organisation_select_dialog',
+        // additional javascript options for the dialog plugin
+        'options' => array(
+            'title' => 'Organisation',
+            'autoOpen' => false,
+            'resizable' => false,
+            'width' => 630,
+        ),
+    ));
+    ?>
+    <div id="organisation_tree" style="height: 400px;"></div>
+    <?php
+    $this->endWidget('zii.widgets.jui.CJuiDialog');
+    ?>
+
     <?php $this->endWidget(); ?>
 </div><!-- form -->
+
+<script type="text/javascript">
+    // Bind to change event of institution select
+    $(document).ready(function(){
+        // initialize jsTree for organisation
+        $('#organisation_tree').jstree({
+            "json_data": {
+                "ajax": {
+                    "url": "index.php?r=jSONOrganisation/japi&action=getChildren",
+                    "data": function(n) {
+                        var link = (n.children) ? n.children('a').first() : n;
+                        var organisation_id = (link.attr) ? link.attr("data-organisation-id") : 0;
+                        
+                        return {
+                            "organisation_id": organisation_id
+                        };
+                    }
+                }
+            },
+            "plugins": ["json_data", "themes"]
+        });
+        
+        // bind to click events onto tree items
+        $('#organisation_tree a').live('click', function() {
+            // update references to organisation
+            $('#User_organisation_id').val( $(this).attr('data-organisation-id') );
+            $('#User_organisation_name').val( $(this).text() );
+            $('#organisation_select_dialog').dialog('close');
+            return false;
+        });
+    });
+    
+</script>
