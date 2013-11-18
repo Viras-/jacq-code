@@ -87,6 +87,7 @@ class User extends ActiveRecord {
             'id' => Yii::t('jacq', 'ID'),
             'username' => Yii::t('jacq', 'Username'),
             'password' => Yii::t('jacq', 'Password'),
+            'newPassword' => Yii::t('jacq', 'New Password'),
             'salt' => Yii::t('jacq', 'Salt'),
             'user_type_id' => Yii::t('jacq', 'User Type'),
             'employment_type_id' => Yii::t('jacq', 'Employment Type'),
