@@ -23,7 +23,14 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'username'); ?>
-        <?php echo CHtml::encode($model->username); ?>
+        <?php
+        if( $model->isNewRecord ) {
+            echo $form->textField($model, 'username', array('size' => 60, 'maxlength' => 128));
+        }
+        else {
+            echo CHtml::encode($model->username); 
+        }
+        ?>
         <?php echo $form->error($model, 'username'); ?>
     </div>
 
