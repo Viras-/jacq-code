@@ -63,14 +63,14 @@ class Authorization extends CComponent {
         );
         
         // if no entry exists, return default value
-        if( $model_accessBotanicalObject == NULL ) return NULL;
+        if( $model_accessBotanicalObject == NULL ) return "";
         
         // check value of entry and return permission for it
         if( $model_accessBotanicalObject->allowDeny == 1 ) {
-            return true;
+            return 1;
         }
         else {
-            return false;
+            return 0;
         }
     }
     
@@ -90,14 +90,14 @@ class Authorization extends CComponent {
         );
         
         // if no entry exists, return default value
-        if( $model_accessBotanicalObject == NULL ) return NULL;
+        if( $model_accessBotanicalObject == NULL ) return "";
         
         // check value of entry and return permission for it
         if( $model_accessBotanicalObject->allowDeny == 1 ) {
-            return true;
+            return 1;
         }
         else {
-            return false;
+            return 0;
         }
     }
 }
