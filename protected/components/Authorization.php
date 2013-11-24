@@ -40,6 +40,36 @@ class Authorization extends CComponent {
     }
     
     /**
+     * Check access to organisation
+     * @param int $organisation_id ID of organisation
+     * @param int $user_id ID of user for access checking (groups are fetched automatically)
+     * @return boolean|NULL true / false or NULL if no explicit setting is given
+     */
+    public function organisationAccess($organisation_id, $user_id) {
+        return $this->checkAccess($user_id, AccessOrganisation::model(), $organisation_id, "organisation_id");
+    }
+    
+    /**
+     * Checks for group access on organisation level
+     * @param string $group Name of group to check for
+     * @param int $organisation_id ID of organisation to check
+     * @return integer|string empty string if no result found, 1 on granted and 0 and denied
+     */
+    public function organisationAccessGroup($group, $organisation_id) {
+        return $this->checkAccessByType(AccessOrganisation::model(), $organisation_id, "organisation_id", $group, "group");
+    }
+    
+    /**
+     * Check for user access on organisation level
+     * @param int $user_id ID of user to check for
+     * @param int $organisation_id ID of organisation to check
+     * @return integer|string empty string if no result found, 1 on granted and 0 and denied
+     */
+    public function organisationAccessUser($user_id, $organisation_id) {
+        return $this->checkAccessByType(AccessOrganisation::model(), $organisation_id, "organisation_id", $user_id, "user");
+    }
+    
+    /**
      * Check access to botanical object
      * @param int $botanical_object_id ID of botanical object to check
      * @param int $user_id ID of user for access checking (groups are fetched automatically)
