@@ -783,40 +783,16 @@ class LivingPlantController extends Controller {
          * organisation level
          */
         $user_id = Yii::app()->user->getId();
-        $authAssignments = Yii::app()->authManager->getAuthAssignments($user_id);
-        $bNewAllowAccess = false;
-        // check all groups for access
-        foreach( $authAssignments as $itemName => $authAssignment ) {
-            // check if this group has an assignment in the access table
-            $model_accessOrganisation = AccessOrganisation::model()->findByAttributes(
-                    array(
-                        'AuthItem_name' => $itemName,
-                        'organisation_id' => $model->id0->organisation->id
-                    )
-            );
-            
-            $bNewAllowAccess = $this->checkAccessOrganisation($model_accessOrganisation, $bAllowAccess);
-            // check for explicit allowal in this group, if so break and ignore all other settings
-            if( $bNewAllowAccess && !$bAllowAccess ) {
-                $bAllowAccess = true;
-                break;
-            }
-            $bAllowAccess = $bNewAllowAccess;
+        $bOrganisationAccess = Yii::app()->authorization->organisationAccess($model->id0->organisation->id, $user_id);
+        if( $bOrganisationAccess !== NULL ) {
+            $bAllowAccess = $bOrganisationAccess;
         }
-        // now check the organisation access for this user
-        $model_accessOrganisation = AccessOrganisation::model()->findByAttributes(
-                array(
-                    'user_id' => Yii::app()->user->getId(),
-                    'organisation_id' => $model->id0->organisation->id
-                )
-        );
-        $bAllowAccess = $this->checkAccessOrganisation($model_accessOrganisation, $bAllowAccess);
         
         /**
          * Accession (livingplant) level 
          */
-        $accessionAccess = Yii::app()->authorization->botanicalObjectAccess($model->id, Yii::app()->user->getId());
-        if( $accessionAccess != NULL ) $bAllowAccess = $accessionAccess;
+        $bAccessionAccess = Yii::app()->authorization->botanicalObjectAccess($model->id, Yii::app()->user->getId());
+        if( $bAccessionAccess !== NULL ) $bAllowAccess = $bAccessionAccess;
         
         // finally check the result of the access checking
         if( !$bAllowAccess ) {

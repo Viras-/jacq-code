@@ -80,27 +80,27 @@ class Authorization extends CComponent {
 
         // fetch all group assignments for the given user
         $groupItems = Yii::app()->authManager->getAuthItems(2, $user_id);
-        
+
         foreach( $groupItems as $groupName => $groupItem ) {
             $groupAccess = $this->checkAccessByType($model, $reference_id, $reference_id_name, $groupName, "group");
             
             // if no entry exists, continue
-            if( $groupAccess == "" ) continue;
+            if( $groupAccess === "" ) continue;
             
             // if access is allowed, assign & stop
-            if( $groupAccess == 1 ) {
+            if( $groupAccess === 1 ) {
                 $bAllowAccess = true;
                 break;
             }
             
-            // by default use group access
-            $bAllowAccess = $groupAccess;
+            // by default we disallow
+            $bAllowAccess = false;
         }
         
         // check user level access
         $userAccess = $this->checkAccessByType($model, $reference_id, $reference_id_name, $user_id, "user");
-        if( $userAccess != NULL ) {
-            $bAllowAccess = ($userAccess == 1) ? true : false;
+        if( $userAccess !== "" ) {
+            $bAllowAccess = ($userAccess === 1) ? true : false;
         }
         
         // finally return access specification
