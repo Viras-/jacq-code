@@ -158,8 +158,27 @@
      * Called when the authorization settings are saved
      */
     function authorizationSave(event,ui) {
-        // close the calling dialog
-        $(this).dialog('close');
+        // keep reference to dialog
+        var self = this;
+        
+        // get all select values for sending to the server
+        var formData = {};
+        $('#authorization_form select').each(function() {
+            formData[$(this).attr('name')] = $(this).val();
+        });
+        
+        // disable the whole form
+        $('#authorization_form select').attr('disabled', 'disabled');
+        
+        // send the request to the server
+        $.post(
+                '<?php echo $this->createUrl('authorization/ajaxBotanicalObjectAccessSave', array('botanical_object_id' => $model_botanicalObject->id)); ?>',
+                formData,
+                function(data, textStatus, jqXHR) {
+                    // close the calling dialog
+                    $(self).dialog('close');
+                }
+        );
     }
     
     // Bind to change event of institution select
