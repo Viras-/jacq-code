@@ -464,26 +464,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tbl_image`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_image` ;
-
-CREATE  TABLE IF NOT EXISTS `tbl_image` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `image_id` INT NOT NULL ,
-  `botanical_object_id` INT NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_tbl_image_tbl_botanical_object1_idx` (`botanical_object_id` ASC) ,
-  UNIQUE INDEX `botanical_object_image_id_UNIQUE` (`image_id` ASC, `botanical_object_id` ASC) ,
-  CONSTRAINT `fk_tbl_image_tbl_botanical_object1`
-    FOREIGN KEY (`botanical_object_id` )
-    REFERENCES `tbl_botanical_object` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `tbl_relevancy_type`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `tbl_relevancy_type` ;
