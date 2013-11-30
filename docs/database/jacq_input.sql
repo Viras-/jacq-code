@@ -958,6 +958,24 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `tbl_image_server`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_image_server` ;
+
+CREATE  TABLE IF NOT EXISTS `tbl_image_server` (
+  `organisation_id` INT NOT NULL ,
+  `base_url` TEXT NOT NULL ,
+  `key` VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (`organisation_id`) ,
+  CONSTRAINT `fk_tbl_image_server_tbl_organisation1`
+    FOREIGN KEY (`organisation_id` )
+    REFERENCES `tbl_organisation` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Placeholder table for view `view_taxon`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `view_taxon` (`taxonID` INT, `synID` INT, `basID` INT, `genID` INT, `annotation` INT, `external` INT, `genus` INT, `DallaTorreIDs` INT, `DallaTorreZusatzIDs` INT, `author_g` INT, `family` INT, `category` INT, `status` INT, `statusID` INT, `rank` INT, `tax_rankID` INT, `rank_abbr` INT, `author` INT, `authorID` INT, `Brummit_Powell_full` INT, `author1` INT, `authorID1` INT, `bpf1` INT, `author2` INT, `authorID2` INT, `bpf2` INT, `author3` INT, `authorID3` INT, `bpf3` INT, `author4` INT, `authorID4` INT, `bpf4` INT, `author5` INT, `authorID5` INT, `bpf5` INT, `epithet` INT, `epithetID` INT, `epithet1` INT, `epithetID1` INT, `epithet2` INT, `epithetID2` INT, `epithet3` INT, `epithetID3` INT, `epithet4` INT, `epithetID4` INT, `epithet5` INT, `epithetID5` INT);
