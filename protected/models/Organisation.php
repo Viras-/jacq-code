@@ -14,6 +14,7 @@
  *
  * The followings are the available model relations:
  * @property BotanicalObject[] $botanicalObjects
+ * @property ImageServer $imageServer
  * @property Organisation $parentOrganisation
  * @property Organisation[] $organisations
  * @property User $gardener
@@ -60,6 +61,7 @@ class Organisation extends ActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'organisation_id'),
+            'imageServer' => array(self::HAS_ONE, 'ImageServer', 'organisation_id'),
             'parentOrganisation' => array(self::BELONGS_TO, 'Organisation', 'parent_organisation_id'),
             'organisations' => array(self::HAS_MANY, 'Organisation', 'parent_organisation_id'),
             'gardener' => array(self::BELONGS_TO, 'User', 'gardener_id'),
