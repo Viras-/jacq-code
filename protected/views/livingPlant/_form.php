@@ -37,7 +37,7 @@
             Yii::t('jacq', 'Aquisition') => $this->renderPartial('form_acquisitionTab', $data, true),
             Yii::t('jacq', 'Gardening') => $this->renderPartial('form_gardeningTab', $data, true),
             Yii::t('jacq', 'Collection') => $this->renderPartial('form_collectionTab', $data, true),
-            Yii::t('jacq', 'Derivatives') => 'Work in progress',
+            Yii::t('jacq', 'Derivatives') => $this->renderPartial('form_derivativesTab', $data, true),
             Yii::t('jacq', 'Inventory') => 'Work in progress',
         ),
         // additional javascript options for the tabs plugin

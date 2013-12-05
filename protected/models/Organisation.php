@@ -188,4 +188,23 @@ class Organisation extends ActiveRecord {
         // return model for translated IDRevier
         return self::model()->findByPk($IDRevierToOrganisationId[$IDRevier]);
     }
+    
+    /**
+     * Recursive function for returning the image server for the current institution
+     * @return null
+     */
+    public function getImageServer() {
+        // check if we have an image server defined
+        if( $this->imageServer != NULL ) {
+            return $this->imageServer;
+        }
+        
+        // if not check the parent one
+        if( $this->parentOrganisation != NULL ) {
+            return $this->parentOrganisation->getImageServer();
+        }
+        
+        // otherwise we can't find any
+        return NULL;
+    }
 }
