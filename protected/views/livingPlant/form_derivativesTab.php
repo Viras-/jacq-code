@@ -20,6 +20,7 @@
     <a href="<?php echo $imageServer->base_url; ?>/jacq-viewer/viewer.html?rft_id=<?php echo $resource; ?>&identifiers=<?php echo join(',', $resources); ?>" target="_blank">
         <img width="160" src="<?php echo $imageServer->base_url; ?>/adore-djatoka/resolver?url_ver=Z39.88-2004&rft_id=<?php echo $resource ?>&svc_id=info:lanl-repo/svc/getRegion&svc_val_fmt=info:ofi/fmt:kev:mtx:jpeg2000&svc.format=image/jpeg&svc.scale=160,0" />
     </a>
+    &nbsp;
         <?php
         }
     }
