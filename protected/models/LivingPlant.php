@@ -131,6 +131,8 @@ class LivingPlant extends ActiveRecord {
     public function search() {
         // split scientific name search string into components
         $scientificName_searchComponents = explode(' ', $this->scientificName_search);
+        $accession_number_search = intval($this->accession_number);
+        if( $accession_number_search <= 0 ) $accession_number_search = '';
 
         $criteria = new CDbCriteria;
         $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location', 'id0.viewTaxon');
@@ -140,7 +142,7 @@ class LivingPlant extends ActiveRecord {
             $criteria->compare('viewTaxon.epithet', $scientificName_searchComponents[1], true);
         $criteria->compare('organisation.description', $this->organisation_search, true);
         $criteria->compare('location.location', $this->location_search, true);
-        $criteria->compare('accession_number', $this->accession_number, true);
+        $criteria->compare('accession_number', $accession_number_search, true);
         
         // check if the user is allowed to view plants from the greenhouse
         if( !Yii::app()->user->checkAccess('acs_greenhouse') ) {
