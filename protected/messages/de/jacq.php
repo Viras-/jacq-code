@@ -64,7 +64,7 @@ return array (
   'Document Number' => 'Aktennummer',
   'Download CSV' => 'CSV herunterladen',
   'Employment Type' => 'Anstellungsverhältnis',
-  'Exactness' => 'Genaugikeit',
+  'Exactness' => 'Genauigkeit',
   'Family' => 'Familie',
   'Firstname' => 'Vorname',
   'Garden Site' => 'Standort',
