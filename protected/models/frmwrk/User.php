@@ -56,10 +56,11 @@ class User extends ActiveRecord {
             array('username', 'length', 'max' => 128),
             array('newPassword, salt', 'length', 'max' => 64),
             array('title_prefix, firstname, lastname, title_suffix', 'length', 'max' => 45),
+            array('groups', 'type', 'type' => 'array'),
             array('birthdate', 'type', 'type' => 'date', 'dateFormat' => 'yyyy-MM-dd'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, username, password, salt, user_type_id, employment_type_id, title_prefix, firstname, lastname, title_suffix, birthdate, organisation_id', 'safe', 'on' => 'search'),
+            array('id, username, password, salt, user_type_id, employment_type_id, title_prefix, firstname, lastname, title_suffix, birthdate, organisation_id, groups', 'safe', 'on' => 'search'),
         );
     }
 
@@ -174,6 +175,31 @@ class User extends ActiveRecord {
     
     public function getNewPassword() {
         return '';
+    }
+    
+    /**
+     * Set groups for assignment to this user
+     * @param type $groups
+     */
+    public function setGroups($groups) {
+        // first of all remove all old assignments
+        $groupItems = Yii::app()->authManager->getAuthItems(2);
+        foreach($groupItems as $groupName => $groupItem) {
+            Yii::app()->authManager->revoke($groupName, $this->id);
+        }
+        
+        // now add new ones
+        foreach( $groups as $group ) {
+            Yii::app()->authManager->assign($group, $this->id);
+        }
+    }
+    
+    /**
+     * Receive assigned groups
+     * @return type
+     */
+    public function getGroups() {
+        return Yii::app()->authManager->getAuthItems(2, $this->id);
     }
     
     /**
