@@ -104,6 +104,35 @@
         <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq','Change'); ?></a>
         <?php echo $form->error($model, 'organisation_id'); ?>
     </div>
+    
+    <div class="row">
+        <?php echo $form->labelEx($model, 'groups'); ?>
+        <?php
+        // fetch available groups and prepare them for display
+        $groupItems = Yii::app()->authorization->listGroups();
+        $groups = array();
+        foreach( $groupItems as $groupName => $groupItem ) {
+            $groups[$groupItem->name] = $groupName;
+        }
+        // fetch assigned groups
+        $groupItems = $model->groups;
+        $assignedGroups = array();
+        foreach( $groupItems as $groupName => $groupItem ) {
+            $assignedGroups[] = $groupName;
+        }
+        
+        // display checkboxlist
+        echo CHtml::checkBoxList(
+                'User[groups]',
+                $assignedGroups,
+                $groups,
+                array(
+                    'labelOptions' => array('style' => 'display: inline'),
+                    'separator' => ''
+                )
+        );
+        ?>
+    </div>
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('jacq','Create') : Yii::t('jacq','Save')); ?>
