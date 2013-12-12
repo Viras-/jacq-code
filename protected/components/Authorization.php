@@ -70,6 +70,26 @@ class Authorization extends CComponent {
     }
     
     /**
+     * Checks for group access on classification level
+     * @param string $group Name of group to check for
+     * @param int $tax_syn_ID ID of classification entry to check
+     * @return integer|string empty string if no result found, 1 on granted and 0 and denied
+     */
+    public function classificationAccessGroup($group, $tax_syn_ID) {
+        return $this->checkAccessByType(AccessClassification::model(), $tax_syn_ID, "tax_syn_ID", $group, "group");
+    }
+    
+    /**
+     * Check for user access on classification level
+     * @param int $user_id ID of user to check for
+     * @param int $tax_syn_ID ID of classification entry to check
+     * @return integer|string empty string if no result found, 1 on granted and 0 and denied
+     */
+    public function classificationAccessUser($user_id, $tax_syn_ID) {
+        return $this->checkAccessByType(AccessClassification::model(), $tax_syn_ID, "tax_syn_ID", $user_id, "user");
+    }
+    
+    /**
      * Check access to botanical object
      * @param int $botanical_object_id ID of botanical object to check
      * @param int $user_id ID of user for access checking (groups are fetched automatically)

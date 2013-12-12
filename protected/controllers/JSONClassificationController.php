@@ -132,7 +132,8 @@ class JSONClassificationController extends Controller {
                                     "max(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`",
                                     "(`has_basionym`.`basID` IS NOT NULL) AS `hasBasionym`",
                                     "tr.rank_abbr",
-                                    "tr.rank_hierarchy"
+                                    "tr.rank_hierarchy",
+                                    "ts.tax_syn_ID",
                                 )
                         )
                         ->from('tbl_tax_synonymy ts')
@@ -189,7 +190,8 @@ class JSONClassificationController extends Controller {
                             "number" => $dbRow['number'],
                             "order" => $dbRow['order'],
                             "rank_abbr" => $dbRow['rank_abbr'],
-                            "rank_hierarchy" => $dbRow['rank_hierarchy']
+                            "rank_hierarchy" => $dbRow['rank_hierarchy'],
+                            "tax_syn_ID" => $dbRow['tax_syn_ID'],
                         )
                     );
                 }

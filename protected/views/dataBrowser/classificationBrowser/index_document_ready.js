@@ -97,6 +97,24 @@ $('#jstree_classificationBrowser .infoBox').live({
     }
 });
 
+// add click handler for access handling
+$('#jstree_classificationBrowser .acl').live({
+    click: function() {
+        var tax_syn_ID = $(this).attr('data-tax-syn-id');
+
+        // load authorization view and assign it to div
+        $('#authorization_view').load(
+                jacq_url + "index.php?r=authorization/ajaxClassificationAccess&tax_syn_ID=" + tax_syn_ID,
+                null,
+                function(responseText, textStatus, XMLHttpRequest) {
+                    $('#authorization_management_dialog').dialog('open');
+                }
+        );
+
+        return false;
+    }
+});
+
 // Add hover-behaviour for infoBox
 $('#infoBox').mouseleave( function(evt) {
     if( $(evt.target).attr('id') != 'infoBox' ) return;

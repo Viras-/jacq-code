@@ -169,7 +169,7 @@ class JSONjsTreeController extends Controller {
         // find all classification children
         $children = JSONClassificationController::japiChildren($referenceType, $referenceID, $taxonID);
         foreach( $children as $child ) {
-            $infoLink = "&nbsp;<span class='infoBox'><img src='images/information.png'></a>";
+            $infoLink = "&nbsp;<span class='infoBox'><img src='images/information.png'></span>";
             
             $entry = array(
                 "data" => array(
@@ -192,8 +192,14 @@ class JSONjsTreeController extends Controller {
             }
             // if a taxonID is set, always use no icon
             if( $child["taxonID"] ) {
+                // add ACL icon if user has permission
+                $aclLink = "";
+                if( Yii::app()->user->checkAccess('oprtn_aclClassification') ) {
+                    $aclLink = "&nbsp;<span class='acl' data-tax-syn-id='" . $child['referenceInfo']['tax_syn_ID'] . "'><img src='images/user.png'></span>";
+                }
+
                 $entry["icon"] = "images/spacer.gif";
-                $entry['data']['title'] .= $infoLink;
+                $entry['data']['title'] .= $infoLink . $aclLink;
                 
                 // check for rank display
                 if( $child['referenceInfo']['rank_hierarchy'] > 15 && $child['referenceInfo']['rank_hierarchy'] < 21 ) {
