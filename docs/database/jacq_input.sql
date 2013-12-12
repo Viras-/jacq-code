@@ -2,10 +2,9 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-DROP SCHEMA IF EXISTS `jacq_input` ;
 CREATE SCHEMA IF NOT EXISTS `jacq_input` DEFAULT CHARACTER SET utf8 ;
-DROP SCHEMA IF EXISTS `jacq_log` ;
 CREATE SCHEMA IF NOT EXISTS `jacq_log` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+CREATE SCHEMA IF NOT EXISTS `herbarinput` DEFAULT CHARACTER SET utf8 ;
 USE `jacq_input` ;
 
 -- -----------------------------------------------------
@@ -956,6 +955,71 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `tbl_tax_synonymy`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_tax_synonymy` ;
+
+CREATE  TABLE IF NOT EXISTS `tbl_tax_synonymy` (
+  `tax_syn_ID` INT(11) NOT NULL AUTO_INCREMENT ,
+  `taxonID` INT(11) NOT NULL DEFAULT '0' ,
+  `acc_taxon_ID` INT(11) NULL DEFAULT NULL ,
+  `ref_date` DATE NULL DEFAULT NULL ,
+  `preferred_taxonomy` TINYINT(4) NOT NULL DEFAULT '0' ,
+  `annotations` LONGTEXT NULL DEFAULT NULL ,
+  `locked` TINYINT(4) NOT NULL DEFAULT '1' ,
+  `source` VARCHAR(20) NOT NULL DEFAULT 'person' ,
+  `source_citationID` INT(11) NULL DEFAULT NULL ,
+  `source_person_ID` INT(11) NULL DEFAULT '39269' ,
+  `source_serviceID` INT(11) NULL DEFAULT NULL ,
+  `source_specimenID` INT(11) NULL DEFAULT NULL ,
+  `userID` INT(11) NOT NULL ,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
+  PRIMARY KEY (`tax_syn_ID`) ,
+  UNIQUE INDEX `unique_syn_tax_cit` (`taxonID` ASC, `acc_taxon_ID` ASC, `source_citationID` ASC, `source_person_ID` ASC) ,
+  INDEX `taxonID` (`taxonID` ASC) ,
+  INDEX `acc_taxon_ID` (`acc_taxon_ID` ASC) ,
+  INDEX `locked` (`locked` ASC) ,
+  INDEX `userID` (`userID` ASC) ,
+  INDEX `acc_taxon_ID_2` (`acc_taxon_ID` ASC, `source_citationID` ASC) )
+ENGINE = MyISAM
+AUTO_INCREMENT = 230184
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `frmwrk_accessClassification`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `frmwrk_accessClassification` ;
+
+CREATE  TABLE IF NOT EXISTS `frmwrk_accessClassification` (
+  `access_classification_id` INT NOT NULL AUTO_INCREMENT ,
+  `AuthItem_name` VARCHAR(64) NULL ,
+  `user_id` INT NULL ,
+  `allowDeny` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `tax_syn_ID` INT NOT NULL DEFAULT 0 COMMENT 'reference to synonymy / classification table in legacy system' ,
+  PRIMARY KEY (`access_classification_id`) ,
+  INDEX `fk_frmwrk_accessClassification_frmwrk_AuthItem1_idx` (`AuthItem_name` ASC) ,
+  INDEX `fk_frmwrk_accessClassification_frmwrk_user1_idx` (`user_id` ASC) ,
+  INDEX `fk_frmwrk_accessClassification_tbl_tax_classification1_idx` (`tax_syn_ID` ASC) ,
+  CONSTRAINT `fk_frmwrk_accessClassification_frmwrk_AuthItem1`
+    FOREIGN KEY (`AuthItem_name` )
+    REFERENCES `frmwrk_AuthItem` (`name` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_frmwrk_accessClassification_frmwrk_user1`
+    FOREIGN KEY (`user_id` )
+    REFERENCES `frmwrk_user` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_frmwrk_accessClassification_tbl_tax_synonymy1`
+    FOREIGN KEY (`tax_syn_ID` )
+    REFERENCES `herbarinput`.`tbl_tax_synonymy` (`tax_syn_ID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Placeholder table for view `view_taxon`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `view_taxon` (`taxonID` INT, `synID` INT, `basID` INT, `genID` INT, `annotation` INT, `external` INT, `genus` INT, `DallaTorreIDs` INT, `DallaTorreZusatzIDs` INT, `author_g` INT, `family` INT, `category` INT, `status` INT, `statusID` INT, `rank` INT, `tax_rankID` INT, `rank_abbr` INT, `author` INT, `authorID` INT, `Brummit_Powell_full` INT, `author1` INT, `authorID1` INT, `bpf1` INT, `author2` INT, `authorID2` INT, `bpf2` INT, `author3` INT, `authorID3` INT, `bpf3` INT, `author4` INT, `authorID4` INT, `bpf4` INT, `author5` INT, `authorID5` INT, `bpf5` INT, `epithet` INT, `epithetID` INT, `epithet1` INT, `epithetID1` INT, `epithet2` INT, `epithetID2` INT, `epithet3` INT, `epithetID3` INT, `epithet4` INT, `epithetID4` INT, `epithet5` INT, `epithetID5` INT);
@@ -969,6 +1033,25 @@ USE `jacq_input`;
 CREATE  OR REPLACE VIEW `view_taxon` AS select `ts`.`taxonID` AS `taxonID`,`ts`.`synID` AS `synID`,`ts`.`basID` AS `basID`,`ts`.`genID` AS `genID`,`ts`.`annotation` AS `annotation`,`ts`.`external` AS `external`,`tg`.`genus` AS `genus`,`tg`.`DallaTorreIDs` AS `DallaTorreIDs`,`tg`.`DallaTorreZusatzIDs` AS `DallaTorreZusatzIDs`,`tag`.`author` AS `author_g`,`tf`.`family` AS `family`,`tsc`.`category` AS `category`,`tst`.`status` AS `status`,`tst`.`statusID` AS `statusID`,`tr`.`rank` AS `rank`,`tr`.`tax_rankID` AS `tax_rankID`,`tr`.`rank_abbr` AS `rank_abbr`,`ta`.`author` AS `author`,`ta`.`authorID` AS `authorID`,`ta`.`Brummit_Powell_full` AS `Brummit_Powell_full`,`ta1`.`author` AS `author1`,`ta1`.`authorID` AS `authorID1`,`ta1`.`Brummit_Powell_full` AS `bpf1`,`ta2`.`author` AS `author2`,`ta2`.`authorID` AS `authorID2`,`ta2`.`Brummit_Powell_full` AS `bpf2`,`ta3`.`author` AS `author3`,`ta3`.`authorID` AS `authorID3`,`ta3`.`Brummit_Powell_full` AS `bpf3`,`ta4`.`author` AS `author4`,`ta4`.`authorID` AS `authorID4`,`ta4`.`Brummit_Powell_full` AS `bpf4`,`ta5`.`author` AS `author5`,`ta5`.`authorID` AS `authorID5`,`ta5`.`Brummit_Powell_full` AS `bpf5`,`te`.`epithet` AS `epithet`,`te`.`epithetID` AS `epithetID`,`te1`.`epithet` AS `epithet1`,`te1`.`epithetID` AS `epithetID1`,`te2`.`epithet` AS `epithet2`,`te2`.`epithetID` AS `epithetID2`,`te3`.`epithet` AS `epithet3`,`te3`.`epithetID` AS `epithetID3`,`te4`.`epithet` AS `epithet4`,`te4`.`epithetID` AS `epithetID4`,`te5`.`epithet` AS `epithet5`,`te5`.`epithetID` AS `epithetID5` from ((((((((((((((((((`herbarinput`.`tbl_tax_species` `ts` left join `herbarinput`.`tbl_tax_authors` `ta` on((`ta`.`authorID` = `ts`.`authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta1` on((`ta1`.`authorID` = `ts`.`subspecies_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta2` on((`ta2`.`authorID` = `ts`.`variety_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta3` on((`ta3`.`authorID` = `ts`.`subvariety_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta4` on((`ta4`.`authorID` = `ts`.`forma_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta5` on((`ta5`.`authorID` = `ts`.`subforma_authorID`))) left join `herbarinput`.`tbl_tax_epithets` `te` on((`te`.`epithetID` = `ts`.`speciesID`))) left join `herbarinput`.`tbl_tax_epithets` `te1` on((`te1`.`epithetID` = `ts`.`subspeciesID`))) left join `herbarinput`.`tbl_tax_epithets` `te2` on((`te2`.`epithetID` = `ts`.`varietyID`))) left join `herbarinput`.`tbl_tax_epithets` `te3` on((`te3`.`epithetID` = `ts`.`subvarietyID`))) left join `herbarinput`.`tbl_tax_epithets` `te4` on((`te4`.`epithetID` = `ts`.`formaID`))) left join `herbarinput`.`tbl_tax_epithets` `te5` on((`te5`.`epithetID` = `ts`.`subformaID`))) left join `herbarinput`.`tbl_tax_status` `tst` on((`tst`.`statusID` = `ts`.`statusID`))) left join `herbarinput`.`tbl_tax_rank` `tr` on((`tr`.`tax_rankID` = `ts`.`tax_rankID`))) left join `herbarinput`.`tbl_tax_genera` `tg` on((`tg`.`genID` = `ts`.`genID`))) left join `herbarinput`.`tbl_tax_authors` `tag` on((`tag`.`authorID` = `tg`.`authorID`))) left join `herbarinput`.`tbl_tax_families` `tf` on((`tf`.`familyID` = `tg`.`familyID`))) left join `herbarinput`.`tbl_tax_systematic_categories` `tsc` on((`tf`.`categoryID` = `tsc`.`categoryID`)));
 ;
 USE `jacq_log` ;
+USE `herbarinput` ;
+
+-- -----------------------------------------------------
+-- Table `tbl_tax_classification`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_tax_classification` ;
+
+CREATE  TABLE IF NOT EXISTS `tbl_tax_classification` (
+  `classification_id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `tax_syn_ID` INT(11) NOT NULL ,
+  `parent_taxonID` INT(11) NOT NULL ,
+  `number` VARCHAR(15) NULL DEFAULT NULL ,
+  `order` INT(11) NOT NULL DEFAULT '0' ,
+  PRIMARY KEY (`classification_id`) ,
+  UNIQUE INDEX `tax_syn_ID` (`tax_syn_ID` ASC, `parent_taxonID` ASC) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 86017
+DEFAULT CHARACTER SET = utf8;
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
