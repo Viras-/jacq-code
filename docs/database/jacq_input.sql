@@ -955,38 +955,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tbl_tax_synonymy`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_tax_synonymy` ;
-
-CREATE  TABLE IF NOT EXISTS `tbl_tax_synonymy` (
-  `tax_syn_ID` INT(11) NOT NULL AUTO_INCREMENT ,
-  `taxonID` INT(11) NOT NULL DEFAULT '0' ,
-  `acc_taxon_ID` INT(11) NULL DEFAULT NULL ,
-  `ref_date` DATE NULL DEFAULT NULL ,
-  `preferred_taxonomy` TINYINT(4) NOT NULL DEFAULT '0' ,
-  `annotations` LONGTEXT NULL DEFAULT NULL ,
-  `locked` TINYINT(4) NOT NULL DEFAULT '1' ,
-  `source` VARCHAR(20) NOT NULL DEFAULT 'person' ,
-  `source_citationID` INT(11) NULL DEFAULT NULL ,
-  `source_person_ID` INT(11) NULL DEFAULT '39269' ,
-  `source_serviceID` INT(11) NULL DEFAULT NULL ,
-  `source_specimenID` INT(11) NULL DEFAULT NULL ,
-  `userID` INT(11) NOT NULL ,
-  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
-  PRIMARY KEY (`tax_syn_ID`) ,
-  UNIQUE INDEX `unique_syn_tax_cit` (`taxonID` ASC, `acc_taxon_ID` ASC, `source_citationID` ASC, `source_person_ID` ASC) ,
-  INDEX `taxonID` (`taxonID` ASC) ,
-  INDEX `acc_taxon_ID` (`acc_taxon_ID` ASC) ,
-  INDEX `locked` (`locked` ASC) ,
-  INDEX `userID` (`userID` ASC) ,
-  INDEX `acc_taxon_ID_2` (`acc_taxon_ID` ASC, `source_citationID` ASC) )
-ENGINE = MyISAM
-AUTO_INCREMENT = 230184
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `frmwrk_accessClassification`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `frmwrk_accessClassification` ;
@@ -1000,7 +968,6 @@ CREATE  TABLE IF NOT EXISTS `frmwrk_accessClassification` (
   PRIMARY KEY (`access_classification_id`) ,
   INDEX `fk_frmwrk_accessClassification_frmwrk_AuthItem1_idx` (`AuthItem_name` ASC) ,
   INDEX `fk_frmwrk_accessClassification_frmwrk_user1_idx` (`user_id` ASC) ,
-  INDEX `fk_frmwrk_accessClassification_tbl_tax_classification1_idx` (`tax_syn_ID` ASC) ,
   CONSTRAINT `fk_frmwrk_accessClassification_frmwrk_AuthItem1`
     FOREIGN KEY (`AuthItem_name` )
     REFERENCES `frmwrk_AuthItem` (`name` )
@@ -1009,11 +976,6 @@ CREATE  TABLE IF NOT EXISTS `frmwrk_accessClassification` (
   CONSTRAINT `fk_frmwrk_accessClassification_frmwrk_user1`
     FOREIGN KEY (`user_id` )
     REFERENCES `frmwrk_user` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_frmwrk_accessClassification_tbl_tax_synonymy1`
-    FOREIGN KEY (`tax_syn_ID` )
-    REFERENCES `herbarinput`.`tbl_tax_synonymy` (`tax_syn_ID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -1050,6 +1012,38 @@ CREATE  TABLE IF NOT EXISTS `tbl_tax_classification` (
   UNIQUE INDEX `tax_syn_ID` (`tax_syn_ID` ASC, `parent_taxonID` ASC) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 86017
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `tbl_tax_synonymy`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_tax_synonymy` ;
+
+CREATE  TABLE IF NOT EXISTS `tbl_tax_synonymy` (
+  `tax_syn_ID` INT(11) NOT NULL AUTO_INCREMENT ,
+  `taxonID` INT(11) NOT NULL DEFAULT '0' ,
+  `acc_taxon_ID` INT(11) NULL DEFAULT NULL ,
+  `ref_date` DATE NULL DEFAULT NULL ,
+  `preferred_taxonomy` TINYINT(4) NOT NULL DEFAULT '0' ,
+  `annotations` LONGTEXT NULL DEFAULT NULL ,
+  `locked` TINYINT(4) NOT NULL DEFAULT '1' ,
+  `source` VARCHAR(20) NOT NULL DEFAULT 'person' ,
+  `source_citationID` INT(11) NULL DEFAULT NULL ,
+  `source_person_ID` INT(11) NULL DEFAULT '39269' ,
+  `source_serviceID` INT(11) NULL DEFAULT NULL ,
+  `source_specimenID` INT(11) NULL DEFAULT NULL ,
+  `userID` INT(11) NOT NULL ,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
+  PRIMARY KEY (`tax_syn_ID`) ,
+  UNIQUE INDEX `unique_syn_tax_cit` (`taxonID` ASC, `acc_taxon_ID` ASC, `source_citationID` ASC, `source_person_ID` ASC) ,
+  INDEX `taxonID` (`taxonID` ASC) ,
+  INDEX `acc_taxon_ID` (`acc_taxon_ID` ASC) ,
+  INDEX `locked` (`locked` ASC) ,
+  INDEX `userID` (`userID` ASC) ,
+  INDEX `acc_taxon_ID_2` (`acc_taxon_ID` ASC, `source_citationID` ASC) )
+ENGINE = MyISAM
+AUTO_INCREMENT = 230184
 DEFAULT CHARACTER SET = utf8;
 
 

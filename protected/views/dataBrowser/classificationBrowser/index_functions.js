@@ -59,3 +59,37 @@ function arrow_down (p_i)
     addedReferences[referenceData.referenceId] = true;
     liElement.data(referenceData.referenceType, addedReferences);
 }
+
+/**
+ * Called when the authorization dialog is closed (empty content)
+ */
+function authorizationClose(event,ui) {
+    $('#authorization_view').html('');
+}
+
+/**
+ * Called when the authorization settings are saved
+ */
+function authorizationSave(event,ui) {
+    // keep reference to dialog
+    var self = this;
+
+    // get all select values for sending to the server
+    var formData = {};
+    $('#authorization_form select').each(function() {
+        formData[$(this).attr('name')] = $(this).val();
+    });
+
+    // disable the whole form
+    $('#authorization_form select').attr('disabled', 'disabled');
+
+    // send the request to the server
+    $.post(
+            jacq_url + "index.php?r=authorization/ajaxClassificationAccessSave&tax_syn_ID=" + $('#tax_syn_ID').val(),
+            formData,
+            function(data, textStatus, jqXHR) {
+                // close the calling dialog
+                $(self).dialog('close');
+            }
+    );
+}

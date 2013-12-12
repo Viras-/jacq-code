@@ -17,7 +17,7 @@
     ?>
 
     <?php
-    if( !$model_botanicalObject->isNewRecord ) {
+    if( !$model_botanicalObject->isNewRecord && Yii::app()->user->checkAccess('oprtn_aclBotanicalObject') ) {
     ?>
     <div style="text-align: right;">
         <a href="#"><img src="images/user.png" border="0" onclick="$('#authorization_management_dialog').dialog('open'); return false;" /></a>
