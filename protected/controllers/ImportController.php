@@ -41,6 +41,7 @@ class ImportController extends Controller {
         $dbCriteria = new CDbCriteria();
         $dbCriteria->limit = 10;
         $dbCriteria->offset = $start;
+        $dbCriteria->order = 'IDPflanze ASC';
         
         // fetch number of akzession entries
         $akzessionCount = Akzession::model()->count($dbCriteria);
@@ -304,10 +305,13 @@ class ImportController extends Controller {
                 $model_livingPlant->culture_notes = $model_akzession->Kulturhinweise;
                 $model_livingPlant->cultivation_date = $model_akzession->Anbaudatum;
                 $model_livingPlant->incoming_date_id = $model_incomingDate->id;
+                // use old "FreilandNr" as place_number
+                $model_livingPlant->place_number = $model_akzession->FreilandNr;
+
+                // save the living plant
                 if( !$model_livingPlant->save() ) {
                     throw new ImportException('Unable to save livingPlant', $model_livingPlant);
                 }
-                
                 // import old accession numbers
                 if( $model_akzession->AkzessNr != NULL ) {
                     $this->assignAccessionNumber($model_livingPlant->id, $model_akzession->AkzessNr);

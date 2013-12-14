@@ -1,13 +1,16 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.0.5
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 12. Dez 2013 um 19:21
--- Server Version: 5.5.33
+-- Erstellungszeit: 14. Dez 2013 um 07:01
+-- Server Version: 5.5.31
 -- PHP-Version: 5.3.17
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,9 +22,12 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `jacq_input`
 --
-CREATE DATABASE IF NOT EXISTS `jacq_input` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `jacq_input`;
 
+--
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthAssignment`
+--
+
+TRUNCATE TABLE `frmwrk_AuthAssignment`;
 --
 -- Daten für Tabelle `frmwrk_AuthAssignment`
 --
@@ -30,6 +36,11 @@ INSERT INTO `frmwrk_AuthAssignment` (`itemname`, `userid`, `bizrule`, `data`) VA
 ('editorLivingplant', 2, NULL, 'N;'),
 ('grp_admin', 1, NULL, 'N;');
 
+--
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthItem`
+--
+
+TRUNCATE TABLE `frmwrk_AuthItem`;
 --
 -- Daten für Tabelle `frmwrk_AuthItem`
 --
@@ -68,6 +79,11 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('tsk_managementLabels', 1, 'Label Manager', NULL, 'N;'),
 ('tsk_managerUser', 1, 'manager users', NULL, 'N;');
 
+--
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthItemChild`
+--
+
+TRUNCATE TABLE `frmwrk_AuthItemChild`;
 --
 -- Daten für Tabelle `frmwrk_AuthItemChild`
 --
@@ -108,12 +124,19 @@ INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 ('grp_admin', 'tsk_managerUser');
 
 --
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_user`
+--
+
+TRUNCATE TABLE `frmwrk_user`;
+--
 -- Daten für Tabelle `frmwrk_user`
 --
 
 INSERT INTO `frmwrk_user` (`id`, `username`, `password`, `salt`, `user_type_id`, `employment_type_id`, `title_prefix`, `firstname`, `lastname`, `title_suffix`, `birthdate`, `organisation_id`) VALUES
-(1, 'admin', '1c011c98a7fade5132f4a95ff1a0edf40d7f1c38', 'P?4wP>GT,m', 1, 1, '', '', '', '', '0000-00-00', 1),
+(1, 'admin', '7e0ae685a84eedefe091fc1a6ea8388fc5961089', 'WzbA$vhKNh', 2, 1, '', '', '', '', '2013-12-10', 4),
 (2, 'editor', '7bbc1c5812d76078e8b0954afe521dc7bcbcfd59', '=PHazE,4Sc', 1, 1, '', '', '', '', '0000-00-00', 1);
+SET FOREIGN_KEY_CHECKS=1;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
