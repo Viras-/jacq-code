@@ -3,11 +3,14 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 30. Sep 2013 um 12:39
--- Server Version: 5.5.32
+-- Erstellungszeit: 14. Dez 2013 um 07:20
+-- Server Version: 5.5.33
 -- PHP-Version: 5.3.17
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,7 +22,14 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `jacq_input`
 --
+CREATE DATABASE IF NOT EXISTS `jacq_input` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `jacq_input`;
 
+--
+-- TRUNCATE Tabelle vor dem Einfügen `tbl_organisation`
+--
+
+TRUNCATE TABLE `tbl_organisation`;
 --
 -- Daten für Tabelle `tbl_organisation`
 --
@@ -141,7 +151,10 @@ INSERT INTO `tbl_organisation` (`id`, `description`, `department`, `greenhouse`,
 (117, 'G6 (Tropenhaus)', 'Orchideen', 1, 12, 1, ''),
 (118, 'G15 (Orchideen temp. Haus)', 'Orchideen', 1, 12, 1, ''),
 (119, 'Gruppe 50 (Umfeld Gewächshäuser)', 'System', 0, 29, 1, ''),
-(120, 'Aquarien', 'Orchideen', 0, 12, 1, '');
+(120, 'Aquarien', 'Orchideen', 0, 12, 1, ''),
+(121, 'Index Seminum', '', 1, 6, 1, '');
+SET FOREIGN_KEY_CHECKS=1;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
