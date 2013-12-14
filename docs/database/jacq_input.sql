@@ -4,7 +4,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 CREATE SCHEMA IF NOT EXISTS `jacq_input` DEFAULT CHARACTER SET utf8 ;
 CREATE SCHEMA IF NOT EXISTS `jacq_log` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-CREATE SCHEMA IF NOT EXISTS `herbarinput` DEFAULT CHARACTER SET utf8 ;
 USE `jacq_input` ;
 
 -- -----------------------------------------------------
@@ -996,57 +995,6 @@ CREATE  OR REPLACE VIEW `view_taxon` AS select `ts`.`taxonID` AS `taxonID`,`ts`.
 ;
 USE `jacq_log` ;
 USE `herbarinput` ;
-
--- -----------------------------------------------------
--- Table `tbl_tax_classification`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_tax_classification` ;
-
-CREATE  TABLE IF NOT EXISTS `tbl_tax_classification` (
-  `classification_id` INT(11) NOT NULL AUTO_INCREMENT ,
-  `tax_syn_ID` INT(11) NOT NULL ,
-  `parent_taxonID` INT(11) NOT NULL ,
-  `number` VARCHAR(15) NULL DEFAULT NULL ,
-  `order` INT(11) NOT NULL DEFAULT '0' ,
-  PRIMARY KEY (`classification_id`) ,
-  UNIQUE INDEX `tax_syn_ID` (`tax_syn_ID` ASC, `parent_taxonID` ASC) )
-ENGINE = InnoDB
-AUTO_INCREMENT = 86017
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `tbl_tax_synonymy`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_tax_synonymy` ;
-
-CREATE  TABLE IF NOT EXISTS `tbl_tax_synonymy` (
-  `tax_syn_ID` INT(11) NOT NULL AUTO_INCREMENT ,
-  `taxonID` INT(11) NOT NULL DEFAULT '0' ,
-  `acc_taxon_ID` INT(11) NULL DEFAULT NULL ,
-  `ref_date` DATE NULL DEFAULT NULL ,
-  `preferred_taxonomy` TINYINT(4) NOT NULL DEFAULT '0' ,
-  `annotations` LONGTEXT NULL DEFAULT NULL ,
-  `locked` TINYINT(4) NOT NULL DEFAULT '1' ,
-  `source` VARCHAR(20) NOT NULL DEFAULT 'person' ,
-  `source_citationID` INT(11) NULL DEFAULT NULL ,
-  `source_person_ID` INT(11) NULL DEFAULT '39269' ,
-  `source_serviceID` INT(11) NULL DEFAULT NULL ,
-  `source_specimenID` INT(11) NULL DEFAULT NULL ,
-  `userID` INT(11) NOT NULL ,
-  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
-  PRIMARY KEY (`tax_syn_ID`) ,
-  UNIQUE INDEX `unique_syn_tax_cit` (`taxonID` ASC, `acc_taxon_ID` ASC, `source_citationID` ASC, `source_person_ID` ASC) ,
-  INDEX `taxonID` (`taxonID` ASC) ,
-  INDEX `acc_taxon_ID` (`acc_taxon_ID` ASC) ,
-  INDEX `locked` (`locked` ASC) ,
-  INDEX `userID` (`userID` ASC) ,
-  INDEX `acc_taxon_ID_2` (`acc_taxon_ID` ASC, `source_citationID` ASC) )
-ENGINE = MyISAM
-AUTO_INCREMENT = 230184
-DEFAULT CHARACTER SET = utf8;
-
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
