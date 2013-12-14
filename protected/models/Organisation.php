@@ -127,10 +127,11 @@ class Organisation extends ActiveRecord {
     
     /**
      * Helper function for translating an old IDRevier based entry to a new organisation
-     * @param int $IDRevier
+     * @param int $IDRevier ID of old Revier
+     * @param int $FreilandNr First two digits of FreilandNr used for more specialized assignment
      * @return Organisation
      */
-    public static function getFromIDRevier($IDRevier) {
+    public static function getFromIDRevier($IDRevier, $FreilandNr = NULL) {
         $IDRevierToOrganisationId = array(
             71 => 7,
             78 => 12,
@@ -182,11 +183,114 @@ class Organisation extends ActiveRecord {
             149 => 120,
         );
         
+        // assigned of organisation id & freilandNr to suborganisationid
+        $OrganisationIdFreilandNrToSubOrganisationId = array(
+            37 => array(    // Alpinum
+                51 => 45,
+                56 => 46,
+            ),
+            33 => array(    // Arboretum 20-25
+                20 => 47,
+                21 => 48,
+                22 => 49,
+                23 => 50,
+                24 => 51,
+                25 => 52,
+            ),
+            40 => array(    // Betriebshof
+                54 => 54,
+            ),
+            38 => array(    // Biologische gruppe
+                52 => 55,
+            ),
+            30 => array(    // Experimentalgarten
+                56 => 59,
+                60 => 60,
+            ),
+            39 => array(    // Genetische Gruppe
+                53 => 61,
+            ),
+            44 => array(    // Geographische Gruppe
+                60 => 62,
+            ),
+            42 => array(    // Grünfläche hinter dem Institut
+                58 => 63,
+            ),
+            35 => array(    // Hostischer Garten 26-34
+                26 => 64,
+                27 => 65,
+                28 => 66,
+                29 => 67,
+                30 => 68,
+                31 => 69,
+                32 => 70,
+                33 => 71,
+                34 => 72,
+            ),
+            43 => array(    // Institutsvorplatz
+                59 => 73,
+            ),
+            32 => array(    // Monocotyledonen 19
+                19 => 74,
+                60 => 75,
+            ),
+            31 => array(    // Nutzpflanzen
+                48 => 77,
+                60 => 78,
+            ),
+            36 => array(    // Österreich 35-47
+                35 => 91,
+                36 => 89,
+                37 => 90,
+                38 => 92,
+                39 => 93,
+                40 => 94,
+                41 => 95,
+                42 => 96,
+                43 => 97,
+                44 => 98,
+                45 => 99,
+                46 => 100,
+                47 => 101,
+            ),
+            41 => array(    // Parkplatz
+                57 => 79,
+            ),
+            29 => array(    // System 1-18
+                1 => 84,
+                2 => 85,
+                3 => 86,
+                4 => 87,
+                5 => 88,
+                6 => 104,
+                7 => 105,
+                8 => 106,
+                9 => 107,
+                10 => 108,
+                11 => 109,
+                12 => 110,
+                13 => 111,
+                14 => 112,
+                15 => 113,
+                16 => 114,
+                17 => 115,
+                18 => 116,
+            ),
+        );
+        
         // check for valid entry
         if( !isset($IDRevierToOrganisationId[$IDRevier]) ) return NULL;
         
+        // fetch organisation id
+        $organisation_id = $IDRevierToOrganisationId[$IDRevier];
+        
+        // check if we have a possible refinement
+        if( $FreilandNr != NULL && isset($OrganisationIdFreilandNrToSubOrganisationId[$organisation_id][$FreilandNr]) ) {
+            $organisation_id = $OrganisationIdFreilandNrToSubOrganisationId[$organisation_id][$FreilandNr];
+        }
+        
         // return model for translated IDRevier
-        return self::model()->findByPk($IDRevierToOrganisationId[$IDRevier]);
+        return self::model()->findByPk($organisation_id);
     }
     
     /**
