@@ -245,7 +245,7 @@ class ImportController extends Controller {
                 }
                 
                 // Try to find a matching entry for the revier
-                $model_organisation = Organisation::getFromIDRevier($model_akzession->IDRevier);
+                $model_organisation = Organisation::getFromIDRevier($model_akzession->IDRevier, intval(substr($model_akzession->FreilandNr,0,2)));
                 if( $model_organisation == NULL ) {
                     throw new Exception('Unable to load Organisation for Revier: ' . $model_akzession->IDRevier);
                 }
