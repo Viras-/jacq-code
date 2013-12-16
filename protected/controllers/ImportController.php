@@ -223,7 +223,7 @@ class ImportController extends Controller {
                 }
                 // if no match was found, assign default name
                 if( $model_botanicalObject->scientific_name_id == 0 ) {
-                    $model_botanicalObject->scientific_name_id = 46996;
+                    $model_botanicalObject->scientific_name_id = Yii::app()->params['indetScientificNameId'];
                 }
                 
                 // Add addition scientific name information

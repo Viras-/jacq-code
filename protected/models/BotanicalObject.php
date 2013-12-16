@@ -84,8 +84,17 @@ class BotanicalObject extends ActiveRecord {
      * @return string 
      */
     public function getScientificName() {
+        // replace indet name with originally imported name
+        if( $this->scientific_name_id == Yii::app()->params['indetScientificNameId'] ) {
+            if( $this->importProperties != NULL ) {
+                return $this->importProperties->species_name . "*";
+            }
+        }
+        
+        // check for a correct scientific name entry
         if( $this->viewTaxon == NULL ) return NULL;
         
+        // return the constructed scientific name
         return $this->viewTaxon->getScientificName();
     }
     
