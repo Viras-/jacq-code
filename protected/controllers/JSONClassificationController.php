@@ -471,8 +471,39 @@ class JSONClassificationController extends Controller {
                             ->leftJoin('tbl_tax_synonymy tschild', array('AND', 'tschild.source_citationID = ts.source_citationID', 'tcchild.tax_syn_ID = tschild.tax_syn_ID'));
 
                     // apply where conditions and return all rows
-                    $dbRows = $dbCommand->where($where_cond,$where_cond_values)
+                    $dbRows = $dbCommand->where($where_cond, $where_cond_values)
                             ->queryAll();
+
+                    // if we haven't found anything possibly we have to find a synonym
+                    // so let's try again
+                    if (count($dbRows) == 0) {
+                        $accTaxon = $db->createCommand()
+                                       ->select('acc_taxon_ID')
+                                       ->from('tbl_tax_synonymy')
+                                       ->where(
+                                                array(
+                                                    'AND',
+                                                    'taxonID = :synID',
+                                                    'source_citationID = :source_citationID',
+                                                    'acc_taxon_ID IS NOT NULL'
+                                                ),
+                                                array(
+                                                    ':synID' => $taxonID,
+                                                    ':source_citationID' => $referenceId
+                                                )
+                                              )
+                                       ->queryRow();
+                        // if the taxonID points to a synonym, let's search for the accepted taxon instead
+                        if ($accTaxon) {
+                            $where_cond_values = array(
+                                ':source_citationID' => $referenceId,
+                                ':child_taxonID' => $accTaxon['acc_taxon_ID']
+                            );
+                            $dbRows = $dbCommand->where($where_cond, $where_cond_values)
+                                    ->queryAll();
+                        }
+
+                    }
 
                     // check if we found a parent
                     if( count($dbRows) > 0 ) {
