@@ -135,11 +135,19 @@ class LivingPlant extends ActiveRecord {
         if( $accession_number_search <= 0 ) $accession_number_search = '';
 
         $criteria = new CDbCriteria;
-        $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location', 'id0.viewTaxon');
+        $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location', 'id0.viewTaxon', 'id0.importProperties');
         
+        // search for scientific name
         $criteria->compare('viewTaxon.genus', $scientificName_searchComponents[0], true);
-        if (count($scientificName_searchComponents) >= 2)
+        if (count($scientificName_searchComponents) >= 2) {
             $criteria->compare('viewTaxon.epithet', $scientificName_searchComponents[1], true);
+        }
+        // search in imported scientific names
+        if(!empty($this->scientificName_search)) {
+            $criteria->addCondition("id0.scientific_name_id = " . Yii::app()->params['indetScientificNameId'] . " AND importProperties.species_name LIKE '%" . implode('%', $scientificName_searchComponents) ."%'", "OR");
+        }
+        
+        // add all other search criterias
         $criteria->compare('organisation.description', $this->organisation_search, true);
         $criteria->compare('location.location', $this->location_search, true);
         $criteria->compare('accession_number', $accession_number_search, true);
