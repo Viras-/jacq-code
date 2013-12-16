@@ -474,9 +474,22 @@ class JSONClassificationController extends Controller {
                     $dbRows = $dbCommand->where($where_cond, $where_cond_values)
                             ->queryAll();
 
-                    // if we haven't found anything possibly we have to find a synonym
-                    // so let's try again
-                    if (count($dbRows) == 0) {
+                    // check if we found a parent
+                    if( count($dbRows) > 0 ) {
+                        $dbRow = $dbRows[0];
+                        $parent = array(
+                            "taxonID" => $dbRow['taxonID'],
+                            "referenceId" => $referenceId,
+                            "referenceName" => $dbRow['referenceName'],
+                            "referenceType" => "citation",
+                            "referenceInfo" => array(
+                                "number" => $dbRow['number'],
+                                "order" => $dbRow['order']
+                            )
+                        );
+                    }
+                    // if not we either have a synonym and have to search for an accepted taxon or have to return the citation entry
+                    else {
                         $accTaxon = $db->createCommand()
                                        ->select('acc_taxon_ID')
                                        ->from('tbl_tax_synonymy')
@@ -493,53 +506,36 @@ class JSONClassificationController extends Controller {
                                                 )
                                               )
                                        ->queryRow();
-                        // if the taxonID points to a synonym, let's search for the accepted taxon instead
+                        // if we have found an accepted taxon for our synonym then return it
                         if ($accTaxon) {
-                            $where_cond_values = array(
-                                ':source_citationID' => $referenceId,
-                                ':child_taxonID' => $accTaxon['acc_taxon_ID']
-                            );
-                            $dbRows = $dbCommand->where($where_cond, $where_cond_values)
-                                    ->queryAll();
-                        }
-
-                    }
-
-                    // check if we found a parent
-                    if( count($dbRows) > 0 ) {
-                        $dbRow = $dbRows[0];
-                        $parent = array(
-                            "taxonID" => $dbRow['taxonID'],
-                            "referenceId" => $referenceId,
-                            "referenceName" => $dbRow['referenceName'],
-                            "referenceType" => "citation",
-                            "referenceInfo" => array(
-                                "number" => $dbRow['number'],
-                                "order" => $dbRow['order']
-                            )
-                        );
-                    }
-                    // if not we have to return the citation entry
-                    else {
-                        $dbCommand = $db->createCommand();
-                        $dbRows = $dbCommand->select('`herbar_view`.GetProtolog(l.citationID) AS referenceName, l.citationID AS referenceId')
-                            ->from('tbl_lit l')
-                            ->where( array(
-                                'AND',
-                                'l.citationID = :referenceId'
-                            ), array(
-                                ':referenceId' => $referenceId
-                            ))
-                            ->queryAll();
-
-                        if( count($dbRows) > 0 ) {
-                            $dbRow = $dbRows[0];
                             $parent = array(
-                                "taxonID" => 0,
-                                "referenceId" => $dbRow['referenceId'],
-                                "referenceName" => $dbRow['referenceName'],
+                                "taxonID" => $accTaxon['acc_taxon_ID'],
+                                "referenceId" => $referenceId,
                                 "referenceType" => "citation"
                             );
+                        }
+                        // if not we have to return the citation entry
+                        else {
+                            $dbCommand = $db->createCommand();
+                            $dbRows = $dbCommand->select('`herbar_view`.GetProtolog(l.citationID) AS referenceName, l.citationID AS referenceId')
+                                ->from('tbl_lit l')
+                                ->where( array(
+                                    'AND',
+                                    'l.citationID = :referenceId'
+                                ), array(
+                                    ':referenceId' => $referenceId
+                                ))
+                                ->queryAll();
+
+                            if( count($dbRows) > 0 ) {
+                                $dbRow = $dbRows[0];
+                                $parent = array(
+                                    "taxonID" => 0,
+                                    "referenceId" => $dbRow['referenceId'],
+                                    "referenceName" => $dbRow['referenceName'],
+                                    "referenceType" => "citation"
+                                );
+                            }
                         }
                     }
                 }
