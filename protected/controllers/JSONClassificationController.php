@@ -425,6 +425,84 @@ class JSONClassificationController extends Controller {
             );
         }
 
+        // Fetch all synonym rows (if any)
+        $dbSyns = $db->createCommand()
+                     ->select(
+                            array('ts.source_citationID AS referenceId',
+                                  '`herbar_view`.GetProtolog(`ts`.`source_citationID`) AS `referenceName`',
+                                  'ts.acc_taxon_ID AS acceptedId'
+                                 )
+                        )
+                     ->from('tbl_tax_synonymy ts')
+                     ->leftJoin('tbl_lit l', 'l.citationID = ts.source_citationID')             // direct integration
+                     ->leftJoin('tbl_lit_authors le', 'le.autorID = l.editorsID')               // of tbl_lit_...
+                     ->leftJoin('tbl_lit_authors la', 'la.autorID = l.autorID')                 // for (much) faster sorting
+                     ->leftJoin('tbl_lit_periodicals lp', 'lp.periodicalID = l.periodicalID')   // when using ORDER by
+                     ->where(
+                            array(
+                                'AND',
+                                'ts.source_citationID IS NOT NULL',
+                                'ts.source_citationID != :excludeReference',
+                                'ts.acc_taxon_ID IS NOT NULL',
+                                'ts.taxonID = :taxonID',
+                            ),
+                            array( ':taxonID' => $taxonID, ':excludeReference' => $excludeReferenceId )
+                        )
+                     ->group('ts.source_citationID')
+                     ->order(
+                            array(
+                                'la.autor',
+                                'l.jahr',
+                                'le.autor',
+                                'l.suptitel',
+                                'lp.periodical',
+                                'l.vol',
+                                'l.part',
+                                'l.pp'
+                            )
+                         )
+                     ->queryAll();
+        foreach ($dbSyns as $dbSyn) {
+            // check if the accepted taxon is part of a classification
+            $accRow = $db->createCommand()
+                         ->select('ts.source_citationID AS referenceId')
+                         ->from('tbl_tax_synonymy ts')
+                         ->leftJoin('tbl_tax_classification tc', 'tc.tax_syn_ID = ts.tax_syn_ID')
+                         ->leftJoin('tbl_tax_classification has_children', 'has_children.parent_taxonID = ts.taxonID')
+                         ->leftJoin('tbl_tax_synonymy has_children_syn',
+                                array(
+                                    'AND',
+                                    'has_children_syn.tax_syn_ID = has_children.tax_syn_ID',
+                                    'has_children_syn.source_citationID = ts.source_citationID'
+                                )
+                            )
+                         ->where(
+                                array(
+                                    'AND',
+                                    'ts.source_citationID = :checkReference',
+                                    'ts.acc_taxon_ID IS NULL',
+                                    'ts.taxonID = :taxonID',
+                                    array(
+                                        'OR',
+                                        'tc.tax_syn_ID IS NOT NULL',                  // only select entries which are part of a classification
+                                        'has_children_syn.tax_syn_ID IS NOT NULL'     // only select entries which are part of a classification
+                                    ),
+                                ),
+                                array( ':taxonID' => $dbSyn['acceptedId'], ':checkReference' => $dbSyn['referenceId'] )
+                            )
+                         ->queryRow();
+            // and add the entry only if the accepted taxon is part of a classification
+            if ($accRow) {
+                $results[] = array(
+                    "referenceName" => '= ' . $dbSyn['referenceName'],  //  mark the reference Name as synonym
+                    "referenceId" => $dbSyn['referenceId'],
+                    "referenceType" => "citation",
+                    "taxonID" => $taxonID,
+                    "hasChildren" => false,
+                );
+            }
+        }
+
         return $results;
     }
 
@@ -491,7 +569,12 @@ class JSONClassificationController extends Controller {
                     // if not we either have a synonym and have to search for an accepted taxon or have to return the citation entry
                     else {
                         $accTaxon = $db->createCommand()
-                                       ->select('acc_taxon_ID')
+                                       ->select(
+                                                array(
+                                                    "`herbar_view`.GetScientificName( taxonID, 0 ) AS referenceName",
+                                                    "acc_taxon_ID",
+                                                )
+                                               )
                                        ->from('tbl_tax_synonymy')
                                        ->where(
                                                 array(
@@ -511,6 +594,7 @@ class JSONClassificationController extends Controller {
                             $parent = array(
                                 "taxonID" => $accTaxon['acc_taxon_ID'],
                                 "referenceId" => $referenceId,
+                                "referenceName" => $accTaxon['referenceName'],
                                 "referenceType" => "citation"
                             );
                         }
