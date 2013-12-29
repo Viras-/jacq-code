@@ -69,7 +69,7 @@ $('#jstree_classificationBrowser .infoBox').live({
             success: function(data) {
                 // check if we found additional references
                 if( data && data.length && data.length > 0 ) {
-                    $('#infoBox').html('<b>also used in:</b>');
+                    $('#infoBox').html('<b>also used in:</b><br/>');
 
                     // remember return reference-data
                     $('#infoBox').data('referenceData', data);
@@ -82,7 +82,7 @@ $('#jstree_classificationBrowser .infoBox').live({
                             '&nbsp;<span id="world_link_' + i + '" style="cursor: pointer;" onclick="world_link(' + i + '); return false;"><img src="images/world_link.png"></span>';
                         referenceInfos.push(referenceInfo);
                     }
-                    $('#infoBox').html(referenceInfos.join("<br/>"));
+                    $('#infoBox').html($('#infoBox').html() + referenceInfos.join("<br/>"));
                 }
                 // if not display notification
                 else {
