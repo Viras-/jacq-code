@@ -10,12 +10,8 @@ $this->menu = array(
 );
 
 Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('living-plant-grid', {
+	$('#living-plant-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -24,6 +20,13 @@ $('.search-form form').submit(function(){
 ?>
 
 <h1><?php echo Yii::t('jacq', 'Manage Living Plants'); ?></h1>
+
+<div class="search-form">
+    <?php
+    $lpGridView = $this->renderPartial('_search',array(
+            'model'=>$model,
+    )); ?>
+</div><!-- search-form -->
 
 <div style="text-align: right;">
 <?php
