@@ -134,11 +134,9 @@ class LivingPlant extends ActiveRecord {
     public function search() {
         // split scientific name search string into components
         $scientificName_searchComponents = explode(' ', $this->scientificName_search);
-        $accession_number_search = intval($this->accession_number);
-        if( $accession_number_search <= 0 ) $accession_number_search = '';
 
         $criteria = new CDbCriteria;
-        $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location', 'id0.viewTaxon', 'id0.importProperties', 'id0.tblLabelTypes');
+        $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location', 'id0.viewTaxon', 'id0.importProperties');
         $criteria->together = true;
         
         // search for scientific name
@@ -154,14 +152,31 @@ class LivingPlant extends ActiveRecord {
         // add all other search criterias
         $criteria->compare('organisation.description', $this->organisation_search, true);
         $criteria->compare('location.location', $this->location_search, true);
-        $criteria->compare('accession_number', $accession_number_search, true);
+        
+        // prepare searching for (alternative) accession numbers
+        if( !empty($this->accession_number) ) {
+            $accessionNumberCriteria = new CDbCriteria();
+            $accessionNumberCriteria->with = array('alternativeAccessionNumbers');
+            $accessionNumberCriteria->compare('accession_number', $this->accession_number, true, 'OR');
+            $accessionNumberCriteria->compare('alternativeAccessionNumbers.number', $this->accession_number, true, 'OR');
+
+            // add accession number searching to main criteria
+            $criteria->with[] = 'alternativeAccessionNumbers';
+            $criteria->mergeWith($accessionNumberCriteria, 'AND');
+        }
+        
+        // search for separated entries
         $criteria->compare('id0.separated', $this->separated_search);
+        
+        // search for index seminum entries
         if( $this->index_seminum == 1 ) {
             $criteria->compare('index_seminum', $this->index_seminum);
         }
         
         // search for label by their types
         if( is_array($this->label_type_search) ) {
+            $criteria->with[] = 'id0.tblLabelTypes';
+            
             foreach( $this->label_type_search as $label_type ) {
                 $criteria->compare('tblLabelTypes.label_type_id', $label_type);
             }
