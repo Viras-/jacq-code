@@ -32,6 +32,8 @@ class LivingPlant extends ActiveRecord {
     public $scientificName_search;
     public $organisation_search;
     public $location_search;
+    public $separated_search;
+    public $label_type_search;
     
     /**
      * Virtual AccessionNumber Attribute which returns a formatted version of the actual accession_number
@@ -81,7 +83,7 @@ class LivingPlant extends ActiveRecord {
             array('culture_notes, cultivation_date, incoming_date_id', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('scientificName_search, organisation_search, accession_number, location_search', 'safe', 'on' => 'search'),
+            array('scientificName_search, organisation_search, accession_number, location_search, separated_search, index_seminum, label_type_search', 'safe', 'on' => 'search'),
         );
     }
 
@@ -121,7 +123,8 @@ class LivingPlant extends ActiveRecord {
             'scientificName_search' => Yii::t('jacq', 'Scientific Name'),
             'organisation_search' => Yii::t('jacq', 'Garden Site'),
             'location_search' => Yii::t('jacq', 'Location'),
-        );
+            'separated_search' => Yii::t('jacq', 'Separated' ),
+            );
     }
 
     /**
@@ -135,7 +138,8 @@ class LivingPlant extends ActiveRecord {
         if( $accession_number_search <= 0 ) $accession_number_search = '';
 
         $criteria = new CDbCriteria;
-        $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location', 'id0.viewTaxon', 'id0.importProperties');
+        $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location', 'id0.viewTaxon', 'id0.importProperties', 'id0.tblLabelTypes');
+        $criteria->together = true;
         
         // search for scientific name
         $criteria->compare('viewTaxon.genus', $scientificName_searchComponents[0], true);
@@ -151,6 +155,17 @@ class LivingPlant extends ActiveRecord {
         $criteria->compare('organisation.description', $this->organisation_search, true);
         $criteria->compare('location.location', $this->location_search, true);
         $criteria->compare('accession_number', $accession_number_search, true);
+        $criteria->compare('id0.separated', $this->separated_search);
+        if( $this->index_seminum == 1 ) {
+            $criteria->compare('index_seminum', $this->index_seminum);
+        }
+        
+        // search for label by their types
+        if( is_array($this->label_type_search) ) {
+            foreach( $this->label_type_search as $label_type ) {
+                $criteria->compare('tblLabelTypes.label_type_id', $label_type);
+            }
+        }
         
         // check if the user is allowed to view plants from the greenhouse
         if( !Yii::app()->user->checkAccess('acs_greenhouse') ) {
