@@ -21,7 +21,7 @@ return array (
   'dead (spontaneous)' => 'Tot (spontant)',
   'dead (unknown cause)' => 'Tot (unbekannte Ursache)',
   'doctoral_candidate' => 'Dissertant',
-  'exhibition' => 'Austellung',
+  'exhibition' => 'Ausstellung',
   'female' => 'weiblich',
   'fixed' => 'Stammpersonal',
   'florid' => 'Blüte',
