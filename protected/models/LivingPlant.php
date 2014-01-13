@@ -78,7 +78,8 @@ class LivingPlant extends ActiveRecord {
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
             array('ipenNumberInstitutionCode', 'length', 'max' => 15),
-            array('culture_notes, cultivation_date, incoming_date_id', 'safe'),
+            array('culture_notes, incoming_date_id', 'safe'),
+            array('cultivation_date', 'default', 'setOnEmpty' => true, 'value' => NULL),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('scientificName_search, organisation_search, accession_number, location_search', 'safe', 'on' => 'search'),
