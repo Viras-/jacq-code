@@ -18,7 +18,7 @@
  */
 return array (
   'dead (eliminated)' => 'Tot (eliminiert)',
-  'dead (spontaneous)' => 'Tot (spontant)',
+  'dead (spontaneous)' => 'Tot (spontan)',
   'dead (unknown cause)' => 'Tot (unbekannte Ursache)',
   'doctoral_candidate' => 'Dissertant',
   'exhibition' => 'Ausstellung',
