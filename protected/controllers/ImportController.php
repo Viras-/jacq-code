@@ -250,6 +250,8 @@ class ImportController extends Controller {
                     throw new Exception('Unable to load Organisation for Revier: ' . $model_akzession->IDRevier);
                 }
                 $model_botanicalObject->organisation_id = $model_organisation->id;
+                // check for "Abgang" and set the flag
+                if( $model_akzession->Abgang > 0 ) $model_botanicalObject->separated = 1;
                 
                 // save botanical object model
                 if( !$model_botanicalObject->save() ) {
