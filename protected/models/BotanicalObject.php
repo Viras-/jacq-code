@@ -36,6 +36,7 @@
  * @property LivingPlant $livingPlant
  * @property Separation[] $separations
  * @property ViewTaxon $viewTaxon
+ * @property TaxSpecies $taxSpecies
  */
 class BotanicalObject extends ActiveRecord {
 
@@ -125,13 +126,31 @@ class BotanicalObject extends ActiveRecord {
             return NULL;
         }
         
-        // try to find the synonymy entry
+        // try to find the a direct synonymy entry
         $model_taxSynonymy = TaxSynonymy::model()->findByAttributes(array(
             'taxonID' => $this->scientific_name_id,
             'source_citationID' => $reference_id
         ));
         
         // check if we found a valid entry
+        if( $model_taxSynonymy == NULL ) {
+            // try to find an entry for the genus in the species table
+            $model_taxSpecies = TaxSpecies::model()->findByAttributes(array(
+                'genID' => $this->taxSpecies->genID,
+                'tax_rankID' => 7,  // genus rank ID
+            ));
+            
+            // check for hit
+            if( $model_taxSpecies != NULL ) {
+                // find an entry in the synonymy for this genus
+                $model_taxSynonymy = TaxSynonymy::model()->findByAttributes(array(
+                    'taxonID' => $model_taxSpecies->taxonID,
+                    'source_citationID' => $reference_id,
+                ));
+            }
+        }
+        
+        // check if we found an entry
         if( $model_taxSynonymy == NULL ) return NULL;
         
         // make sure we have the accepted entry
@@ -152,6 +171,7 @@ class BotanicalObject extends ActiveRecord {
             array('acquisition_event_id, phenology_id, scientific_name_id, determined_by_id, organisation_id, accessible, redetermine, ident_status_id, separated', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
             array('determination_date, annotation', 'safe'),
+            array('determination_date', 'default', 'setOnEmpty' => true, 'value' => NULL),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, acquisition_event_id, phenology_id, scientific_name_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes, redetermine, ident_status_id, separated', 'safe', 'on' => 'search'),
@@ -179,6 +199,7 @@ class BotanicalObject extends ActiveRecord {
             'scientificNameInformation' => array(self::BELONGS_TO, 'ScientificNameInformation', 'scientific_name_id'),
             'separations' => array(self::HAS_MANY, 'Separation', 'botanical_object_id'),
             'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'scientific_name_id'),
+            'taxSpecies' => array(self::BELONGS_TO, 'TaxSpecies', 'scientific_name_id'),
         );
     }
 

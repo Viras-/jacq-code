@@ -666,7 +666,8 @@ class LivingPlantController extends Controller {
                         'id0.organisation.description', 
                         'accessionNumber',
                         'id0.acquisitionEvent.location.location',
-                        'id0.cSVSexes'
+                        'place_number',
+                        'id0.family',
                     )
             );
         }
