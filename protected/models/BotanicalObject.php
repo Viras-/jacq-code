@@ -133,7 +133,7 @@ class BotanicalObject extends ActiveRecord {
         ));
         
         // check if we found a valid entry
-        if( $model_taxSynonymy == NULL ) {
+        if( $model_taxSynonymy == NULL && $this->taxSpecies != NULL ) {
             // try to find an entry for the genus in the species table
             $model_taxSpecies = TaxSpecies::model()->findByAttributes(array(
                 'genID' => $this->taxSpecies->genID,
