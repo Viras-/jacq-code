@@ -15,6 +15,7 @@
  * @property string $cultivation_date
  * @property integer $index_seminum_type_id
  * @property integer $incoming_date_id
+ * @property integer $label_synonym_scientific_name_id
  *
  * The followings are the available model relations:
  * @property AlternativeAccessionNumber[] $alternativeAccessionNumbers
@@ -24,6 +25,7 @@
  * @property AcquisitionDate $incomingDate
  * @property LivingPlantTreeRecordFilePage[] $livingPlantTreeRecordFilePages
  * @property Relevancy[] $relevancies
+ * @property ViewTaxon $labelSynonymViewTaxon
  */
 class LivingPlant extends ActiveRecord {
     /**
@@ -41,6 +43,18 @@ class LivingPlant extends ActiveRecord {
      */
     public function getAccessionNumber() {
         return sprintf('%07d', $this->accession_number);
+    }
+    
+    /**
+     * Get the synonym for label printing
+     * @return string
+     */
+    public function getLabelSynonymScientificName() {
+        // check for a correct scientific name entry
+        if( $this->labelSynonymViewTaxon == NULL ) return NULL;
+        
+        // return the constructed scientific name
+        return $this->labelSynonymViewTaxon->getScientificName();
     }
     
     public function init() {
@@ -75,7 +89,7 @@ class LivingPlant extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('id', 'required'),
-            array('id, ipen_locked, phyto_control, index_seminum, index_seminum_type_id, incoming_date_id', 'numerical', 'integerOnly' => true),
+            array('id, ipen_locked, phyto_control, index_seminum, index_seminum_type_id, incoming_date_id, label_synonym_scientific_name_id', 'numerical', 'integerOnly' => true),
             array('ipen_number, place_number', 'length', 'max' => 20),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
@@ -84,7 +98,7 @@ class LivingPlant extends ActiveRecord {
             array('cultivation_date', 'default', 'setOnEmpty' => true, 'value' => NULL),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('scientificName_search, organisation_search, accession_number, location_search, separated_search, index_seminum, label_type_search', 'safe', 'on' => 'search'),
+            array('scientificName_search, organisation_search, accession_number, location_search, separated_search, index_seminum, label_type_search, label_synonym_scientific_name_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -102,6 +116,7 @@ class LivingPlant extends ActiveRecord {
             'incomingDate' => array(self::BELONGS_TO, 'AcquisitionDate', 'incoming_date_id'),
             'livingPlantTreeRecordFilePages' => array(self::HAS_MANY, 'LivingPlantTreeRecordFilePage', 'living_plant_id'),
             'relevancies' => array(self::HAS_MANY, 'Relevancy', 'living_plant_id'),
+            'labelSynonymViewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'label_synonym_scientific_name_id'),
         );
     }
 
@@ -125,6 +140,7 @@ class LivingPlant extends ActiveRecord {
             'organisation_search' => Yii::t('jacq', 'Garden Site'),
             'location_search' => Yii::t('jacq', 'Location'),
             'separated_search' => Yii::t('jacq', 'Separated' ),
+            'label_synonym_scientific_name_id' => Yii::t('jacq', 'Label Synonym'),
             );
     }
 
