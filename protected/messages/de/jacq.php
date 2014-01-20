@@ -17,7 +17,7 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Change' => 'Ändern',
+  'Label Synonym' => 'Synonym für Etikett',
   'Access for groups' => 'Zugriff für Gruppen',
   'Access for users' => 'Zugriff für Benutzer',
   'Accessible' => 'Accessible',
@@ -39,6 +39,7 @@ return array (
   'Botanical Object' => 'Botanisches Objekt',
   'Certificate Type' => 'Zertifikat-Art',
   'Certificates' => 'Zertifikate',
+  'Change' => 'Ändern',
   'Classification Browser' => 'Klassifikations-Browser',
   'Close' => 'Schließen',
   'Collection' => 'Sammlungsmanagement',

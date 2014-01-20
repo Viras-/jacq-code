@@ -19,9 +19,6 @@
                             }',
                     ),
                     'value' => $model_botanicalObject->scientificName,
-                        /* 'htmlOptions' => array(
-                          'value' => $model_botanicalObject->getScientificName()
-                          ), */
                 ));
                 ?>
                 <?php echo $form->hiddenField($model_botanicalObject, 'scientific_name_id'); ?>
@@ -111,6 +108,34 @@
         <tr>
             <td>
                 <?php echo $form->labelEx(LabelType::model(), 'label_type_id'); ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php echo $form->labelEx($model_livingPlant, 'labelSynonymScientificName'); ?>
+                <?php
+                // Enable auto-completer for taxon field
+                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                    'name' => 'label_synonymName',
+                    'sourceUrl' => 'index.php?r=autoComplete/scientificName',
+                    // additional javascript options for the autocomplete plugin
+                    'options' => array(
+                        'minLength' => '2',
+                        'change' => 'js:function( event, ui ) {
+                                if( typeof ui.item !== "undefined" ) {
+                                    $( "#LivingPlant_label_synonym_scientific_name_id" ).val( ui.item.id );
+                                }
+                            }',
+                    ),
+                    'value' => $model_livingPlant->labelSynonymScientificName,
+                ));
+                ?>
+                <?php echo $form->hiddenField($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
+                <?php echo $form->error($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <?php
                 // display checkbox for label types
                 echo CHtml::checkBoxList(
