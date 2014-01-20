@@ -140,7 +140,7 @@ class LivingPlant extends ActiveRecord {
             'organisation_search' => Yii::t('jacq', 'Garden Site'),
             'location_search' => Yii::t('jacq', 'Location'),
             'separated_search' => Yii::t('jacq', 'Separated' ),
-            'label_synonym_scientific_name_id' => Yii::t('jacq', 'Label Synonym'),
+            'labelSynonymScientificName' => Yii::t('jacq', 'Label Synonym'),
             );
     }
 

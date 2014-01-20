@@ -112,7 +112,7 @@
         </tr>
         <tr>
             <td>
-                <?php echo $form->labelEx($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
+                <?php echo $form->labelEx($model_livingPlant, 'labelSynonymScientificName'); ?>
                 <?php
                 // Enable auto-completer for taxon field
                 $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
