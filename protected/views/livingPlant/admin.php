@@ -7,6 +7,7 @@ $this->breadcrumbs = array(
 $this->menu = array(
 //    array('label' => 'List LivingPlant', 'url' => array('index')),
     array('label' => Yii::t('jacq', 'Create Living Plant'), 'url' => array('create')),
+    array('label' => Yii::t('jacq', 'Download Label-Template'), 'url' => Yii::app()->baseUrl . '/downloads/WU-Freilandetikett.doc'),
 );
 
 Yii::app()->clientScript->registerScript('search', "
