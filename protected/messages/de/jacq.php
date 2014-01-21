@@ -17,7 +17,7 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Label Synonym' => 'Synonym für Etikett',
+  'Download Label-Template' => 'Etiketten-Vorlage',
   'Access for groups' => 'Zugriff für Gruppen',
   'Access for users' => 'Zugriff für Benutzer',
   'Accessible' => 'Accessible',
@@ -87,6 +87,7 @@ return array (
   'Index Seminum Type' => 'Art',
   'Inventory' => 'Inventuren',
   'Ipen Code' => 'IPEN Code',
+  'Label Synonym' => 'Synonym für Etikett',
   'Label Type' => 'Etiketten',
   'Lastname' => 'Nachname',
   'Latitude' => 'Latitude',
