@@ -668,7 +668,9 @@ class LivingPlantController extends Controller {
                         'id0.acquisitionEvent.location.location',
                         'place_number',
                         'id0.family',
-                        'labelSynonymScientificName'
+                        'labelSynonymScientificName',
+                        'id0.scientificNameInformation.common_names',
+                        'id0.scientificNameInformation.spatial_distribution',
                     )
             );
         }
