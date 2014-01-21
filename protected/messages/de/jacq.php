@@ -134,7 +134,7 @@ return array (
   'Sex' => 'Geschlecht',
   'Source Date' => 'Bezugsdatum',
   'Source Name' => 'Bezugsquelle',
-  'Spatial Distribution' => 'Verteilung',
+  'Spatial Distribution' => 'Verbreitung',
   'Successfully saved' => 'Erfolgreich gespeichert',
   'Title Prefix' => 'Titel (vorangestellt)',
   'Title Suffix' => 'Titel (nachgestellt)',
