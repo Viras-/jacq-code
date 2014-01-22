@@ -85,7 +85,7 @@
 <!-- current phenology -->
 <div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'phenology_id'); ?>
-    <?php echo $form->dropDownList($model_botanicalObject, 'phenology_id', CHtml::listData(Phenology::model()->findAll(), 'id', 'phenologyTranslated')); ?>
+    <?php echo $form->dropDownList($model_botanicalObject, 'phenology_id', Html::listDataSorted(Phenology::model()->findAll(), 'id', 'phenologyTranslated')); ?>
     <?php echo $form->error($model_botanicalObject, 'phenology_id'); ?>
 </div>
 

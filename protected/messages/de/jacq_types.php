@@ -55,5 +55,5 @@ return array (
   'trainee' => 'Lehrling',
   'unknown' => 'Unbekannt',
   'working' => 'Arbeit',
-  'none' => 'kein',
+  'none' => 'Kein',
 );

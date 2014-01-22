@@ -42,13 +42,13 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'user_type_id'); ?>
-        <?php echo $form->dropDownList($model, 'user_type_id', CHtml::listData(UserType::model()->findAll(), 'user_type_id', 'typeTranslated')); ?>
+        <?php echo $form->dropDownList($model, 'user_type_id', Html::listDataSorted(UserType::model()->findAll(), 'user_type_id', 'typeTranslated')); ?>
         <?php echo $form->error($model, 'user_type_id'); ?>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'employment_type_id'); ?>
-        <?php echo $form->dropDownList($model, 'employment_type_id', CHtml::listData(EmploymentType::model()->findAll(), 'employment_type_id', 'typeTranslated')); ?>
+        <?php echo $form->dropDownList($model, 'employment_type_id', Html::listDataSorted(EmploymentType::model()->findAll(), 'employment_type_id', 'typeTranslated')); ?>
         <?php echo $form->error($model, 'employment_type_id'); ?>
     </div>
 

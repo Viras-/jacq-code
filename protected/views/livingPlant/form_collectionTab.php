@@ -82,8 +82,20 @@
 
                 // Create checkbox list for all relevancy type entries
                 $models_relevancyType = RelevancyType::model()->findAll();
-                $list_relevancyType = CHtml::listData($models_relevancyType, 'id', 'typeTranslated');
-                echo CHtml::checkBoxList('RelevancyType', $selected_relevancyTypes, $list_relevancyType, array('labelOptions' => array('style' => 'display: inline')));
+                echo CHtml::checkBoxList(
+                        'RelevancyType', 
+                        $selected_relevancyTypes, 
+                        Html::listDataSorted(
+                                $models_relevancyType,
+                                'id',
+                                'typeTranslated'
+                        ), 
+                        array(
+                            'labelOptions' => array(
+                                'style' => 'display: inline'
+                            )
+                        )
+                );
                 ?>
             </td>
         </tr>
