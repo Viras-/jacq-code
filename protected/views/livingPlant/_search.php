@@ -29,7 +29,7 @@
                 echo CHtml::checkBoxList(
                         'LivingPlant[label_type_search]',
                         CHtml::listData($model, 'label_type_search', 'label_type_search'),
-                        CHtml::listData(
+                        Html::listDataSorted(
                                 LabelType::model()->findAll(),
                                 'label_type_id', 
                                 'typeTranslated'

@@ -86,7 +86,7 @@
                 echo CHtml::checkBoxList(
                         'Sex',
                         CHtml::listData($model_botanicalObject->botanicalObjectSexes, 'id', 'id'),
-                        CHtml::listData(
+                        Html::listDataSorted(
                                 Sex::model()->findAll(),
                                 'id', 
                                 'sexTranslated'
@@ -141,7 +141,7 @@
                 echo CHtml::checkBoxList(
                         'LabelTypes',
                         CHtml::listData($model_botanicalObject->tblLabelTypes, 'label_type_id', 'label_type_id'),
-                        CHtml::listData(
+                        Html::listDataSorted(
                                 LabelType::model()->findAll(),
                                 'label_type_id', 
                                 'typeTranslated'
@@ -176,7 +176,7 @@
         <tr>
             <td>
                 <?php
-                $separation_types = CHtml::listData(SeparationType::model()->findAll(), 'id', 'typeTranslated');
+                $separation_types = Html::listDataSorted(SeparationType::model()->findAll(), 'id', 'typeTranslated');
                 
                 // check if we have a valid id already, if not skip the hidden field
                 if( $model_separation->id > 0 ) {
