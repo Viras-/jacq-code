@@ -17,6 +17,8 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
+  'DNA sample' => 'DNA Proben',
+  'cytological fixation' => 'Cytologische Fixierung',
   'dead (eliminated)' => 'Tot (eliminiert)',
   'dead (spontaneous)' => 'Tot (spontan)',
   'dead (unknown cause)' => 'Tot (unbekannte Ursache)',
@@ -35,7 +37,10 @@ return array (
   'historic' => 'Historisch',
   'left_company' => 'Ausgeschieden',
   'male' => 'männlich',
+  'morphological fixation' => 'Morphologische Fixierung',
   'partial extraction' => 'Teilweise Entnahme',
+  'plant parts' => 'Pflanzenteile',
+  'pollen' => 'Pollen',
   'postdoc' => 'Postdoc',
   'protection' => 'Naturschutz',
   'public' => 'Öffentlichkeit',
@@ -43,6 +48,7 @@ return array (
   'sciences' => 'Forschung',
   'scientist' => 'Wissenschaftler',
   'seasonal' => 'Saisonkraft',
+  'seed' => 'Samen',
   'separated' => 'Abgegeben',
   'student' => 'Student',
   'teachings' => 'Lehre',
