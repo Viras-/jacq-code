@@ -102,6 +102,10 @@
     </table>
 </div>
 
+<?php
+// access to label section only if either clearing or assigning is allowed for this user
+if( Yii::app()->user->checkAccess('oprtn_assignLabelType') || Yii::app()->user->checkAccess('oprtn_clearLabelType') ) {
+?>
 <!-- marking for label printing -->
 <div class="row">
     <table style="width: auto;">
@@ -110,6 +114,10 @@
                 <?php echo $form->labelEx(LabelType::model(), 'label_type_id'); ?>
             </td>
         </tr>
+        <?php
+        // synonym editing only if user is allowed to do so
+        if( Yii::app()->user->checkAccess('oprtn_assignLabelType') ) {
+        ?>
         <tr>
             <td>
                 <?php echo $form->labelEx($model_livingPlant, 'labelSynonymScientificName'); ?>
@@ -134,18 +142,26 @@
                 <?php echo $form->error($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
             </td>
         </tr>
+        <?php
+        }
+        
+        // by default only display assigned labels
+        $labelCheckBoxList_data = CHtml::listData($model_botanicalObject->tblLabelTypes, 'label_type_id', 'label_type_id');
+        $labelCheckBoxList_select = Html::listDataSorted($model_botanicalObject->tblLabelTypes, 'label_type_id', 'typeTranslated');
+        
+        // if user is allowed to assign the labels, then it sees all available types
+        if( Yii::app()->user->checkAccess('oprtn_assignLabelType') ) {
+            $labelCheckBoxList_select = Html::listDataSorted(LabelType::model()->findAll(), 'label_type_id', 'typeTranslated');
+        }
+        ?>
         <tr>
             <td>
                 <?php
                 // display checkbox for label types
                 echo CHtml::checkBoxList(
                         'LabelTypes',
-                        CHtml::listData($model_botanicalObject->tblLabelTypes, 'label_type_id', 'label_type_id'),
-                        Html::listDataSorted(
-                                LabelType::model()->findAll(),
-                                'label_type_id', 
-                                'typeTranslated'
-                        ),
+                        $labelCheckBoxList_data,
+                        $labelCheckBoxList_select,
                         array(
                             'labelOptions' => array('style' => 'display: inline'),
                             'separator' => ''
@@ -156,6 +172,9 @@
         </tr>
     </table>
 </div>
+<?php
+}
+?>
 
 <!-- separated (not in collection anymore) -->
 <div class="row">
