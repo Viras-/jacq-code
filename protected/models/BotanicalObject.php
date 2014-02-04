@@ -39,6 +39,23 @@
  * @property TaxSpecies $taxSpecies
  */
 class BotanicalObject extends ActiveRecord {
+    /**
+     * Status indicator for preventing multiple family searches
+     * @var boolean
+     */
+    protected $familySearched = false;
+    
+    /**
+     * Name of family
+     * @var string
+     */
+    protected $family = NULL;
+    
+    /**
+     * Reference used for family searching
+     * @var string
+     */
+    protected $familyReference = NULL;
 
     /**
      * Returns the static model of the specified AR class.
@@ -104,13 +121,62 @@ class BotanicalObject extends ActiveRecord {
      * @return string Name of family
      */
     public function getFamily() {
-        $model_familyTaxSynonymy = $this->getFamilyByReference(Yii::app()->params['familyClassificationId'], 'citation');
+        // trigger searching for family first
+        $this->searchFamily();
         
-        // if no family was found, return 'Unknown'
-        if( $model_familyTaxSynonymy == NULL ) return Yii::t('jacq', 'Unknown');
+        // check if we've found a valid family, if not return Unknown
+        if( $this->family != NULL ) {
+            return $this->family;
+        }
+        else {
+            return Yii::t('jacq', 'Unknown');
+        }
+    }
+    
+    /**
+     * Returns the name of the reference used for family finding
+     * @return type
+     */
+    public function getFamilyReference() {
+        // trigger searching for family first
+        $this->searchFamily();
+
+        // return the found reference
+        return $this->familyReference;
+    }
+    
+    /**
+     * Searches for the family of the current botanical object, uses references as defined by config as a priority list
+     * @return null|string null if no family found, otherwise the family name as string
+     */
+    protected function searchFamily() {
+        // check if we've searched before
+        if( $this->familySearched ) return;
         
-        // Otherwise return the scientific name
-        return $model_familyTaxSynonymy->viewTaxon->getScientificName();
+        // cycle all used references and check them for a family entry
+        $model_familyTaxSynonymy = NULL;
+        $citationID = 0;
+        foreach(Yii::app()->params['familyClassificationIds'] as $familyClassificationId) {
+            $model_familyTaxSynonymy = $this->getFamilyByReference($familyClassificationId, 'citation');
+            if ($model_familyTaxSynonymy != NULL) {
+                $citationID = $familyClassificationId;
+                break;
+            }
+        }
+        
+        // if a family was found, remember scientific name
+        if ($model_familyTaxSynonymy != NULL) {
+            $this->family = $model_familyTaxSynonymy->viewTaxon->getScientificName();
+            
+            // fetch the reference name
+            $dbHerbarView = Yii::app()->dbHerbarView;
+            $command = $dbHerbarView->createCommand("SELECT GetProtolog( '" . $citationID . "' ) AS 'Protolog'");
+            $protolog = $command->queryAll();
+            $this->familyReference = $protolog[0]['Protolog'];
+        }
+
+        // remember that we've search for the family
+        $this->familySearched = true;
     }
     
     /**
@@ -224,6 +290,7 @@ class BotanicalObject extends ActiveRecord {
             'ident_status_id' => Yii::t('jacq', 'Ident Status'),
             'separated' => Yii::t('jacq', 'Separated'),
             'family' => Yii::t('jacq', 'Family'),
+            'familyReference' => Yii::t('jacq', 'Reference for Family'),
         );
     }
 

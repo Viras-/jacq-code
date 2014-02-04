@@ -1,40 +1,42 @@
-<table>
-    <tr>
-        <td>
-            <!-- scientific name -->
-            <div class="row">
-                <?php echo $form->labelEx($model_botanicalObject, 'scientific_name_id'); ?>
-                <?php
-                // Enable auto-completer for taxon field
-                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                    'name' => 'scientificName',
-                    'sourceUrl' => 'index.php?r=autoComplete/scientificName',
-                    // additional javascript options for the autocomplete plugin
-                    'options' => array(
-                        'minLength' => '2',
-                        'change' => 'js:function( event, ui ) {
-                                if( typeof ui.item !== "undefined" ) {
-                                    $( "#BotanicalObject_scientific_name_id" ).val( ui.item.id );
-                                }
-                            }',
-                    ),
-                    'value' => $model_botanicalObject->scientificName,
-                ));
-                ?>
-                <?php echo $form->hiddenField($model_botanicalObject, 'scientific_name_id'); ?>
-                <?php echo $form->error($model_botanicalObject, 'scientific_name_id'); ?>
-            </div>
-        </td>
-        <td>
-            <!-- family name -->
-            <div class="row">
+<!-- scientific name -->
+<div class="row">
+    <?php echo $form->labelEx($model_botanicalObject, 'scientific_name_id'); ?>
+    <?php
+    // Enable auto-completer for taxon field
+    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+        'name' => 'scientificName',
+        'sourceUrl' => 'index.php?r=autoComplete/scientificName',
+        // additional javascript options for the autocomplete plugin
+        'options' => array(
+            'minLength' => '2',
+            'change' => 'js:function( event, ui ) {
+                    if( typeof ui.item !== "undefined" ) {
+                        $( "#BotanicalObject_scientific_name_id" ).val( ui.item.id );
+                    }
+                }',
+        ),
+        'value' => $model_botanicalObject->scientificName,
+    ));
+    ?>
+    <?php echo $form->hiddenField($model_botanicalObject, 'scientific_name_id'); ?>
+    <?php echo $form->error($model_botanicalObject, 'scientific_name_id'); ?>
+</div>
+<!-- family name -->
+<div class="row">
+    <table border="0" width="100%">
+        <tr>
+            <td>
                 <?php echo $form->labelEx($model_botanicalObject, 'family'); ?>
                 <?php echo $form->textField($model_botanicalObject, 'family', array('readonly' => true)); ?>
                 <?php echo $form->error($model_botanicalObject, 'family'); ?>
-            </div>
-        </td>
-    </tr>
-</table>
+            </td>
+            <td>
+                <?php echo $form->labelEx($model_botanicalObject, 'familyReference'); ?>
+                <?php echo CHtml::encode($model_botanicalObject->familyReference); ?>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <!-- organisation -->
 <div class="row">
