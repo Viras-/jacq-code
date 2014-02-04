@@ -141,16 +141,24 @@ class BotanicalObject extends ActiveRecord {
         
         // cycle all used references and check them for a family entry
         $model_familyTaxSynonymy = NULL;
+        $citationID = 0;
         foreach(Yii::app()->params['familyClassificationIds'] as $familyClassificationId) {
             $model_familyTaxSynonymy = $this->getFamilyByReference($familyClassificationId, 'citation');
             if ($model_familyTaxSynonymy != NULL) {
+                $citationID = $familyClassificationId;
                 break;
             }
         }
         
-        // if a family was found, return the scientific name
+        // if a family was found, remember scientific name
         if ($model_familyTaxSynonymy != NULL) {
             $this->family = $model_familyTaxSynonymy->viewTaxon->getScientificName();
+            
+            // fetch the reference name
+            $dbHerbarView = Yii::app()->dbHerbarView;
+            $command = $dbHerbarView->createCommand("SELECT GetProtolog( '" . $citationID . "' ) AS 'Protolog'");
+            $protolog = $command->queryAll();
+            $this->familyReference = $protolog[0]['Protolog'];
         }
 
         // remember that we've search for the family
