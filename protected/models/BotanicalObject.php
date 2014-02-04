@@ -39,8 +39,22 @@
  * @property TaxSpecies $taxSpecies
  */
 class BotanicalObject extends ActiveRecord {
+    /**
+     * Status indicator for preventing multiple family searches
+     * @var boolean
+     */
     protected $familySearched = false;
+    
+    /**
+     * Name of family
+     * @var string
+     */
     protected $family = NULL;
+    
+    /**
+     * Reference used for family searching
+     * @var string
+     */
     protected $familyReference = NULL;
 
     /**
@@ -276,6 +290,7 @@ class BotanicalObject extends ActiveRecord {
             'ident_status_id' => Yii::t('jacq', 'Ident Status'),
             'separated' => Yii::t('jacq', 'Separated'),
             'family' => Yii::t('jacq', 'Family'),
+            'familyReference' => Yii::t('jacq', 'Reference for Family'),
         );
     }
 

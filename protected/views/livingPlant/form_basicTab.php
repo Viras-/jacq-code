@@ -31,6 +31,7 @@
                 <?php echo $form->error($model_botanicalObject, 'family'); ?>
             </td>
             <td>
+                <?php echo $form->labelEx($model_botanicalObject, 'familyReference'); ?>
                 <?php echo CHtml::encode($model_botanicalObject->familyReference); ?>
             </td>
         </tr>

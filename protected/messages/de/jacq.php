@@ -17,7 +17,7 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Download Label-Template' => 'Etiketten-Vorlage',
+  'Reference for Family' => 'Referenz für Familie',
   'Access for groups' => 'Zugriff für Gruppen',
   'Access for users' => 'Zugriff für Benutzer',
   'Accessible' => 'Accessible',
@@ -64,6 +64,7 @@ return array (
   'Determined By' => 'Bestimmt durch',
   'Document Number' => 'Aktennummer',
   'Download CSV' => 'CSV herunterladen',
+  'Download Label-Template' => 'Etiketten-Vorlage',
   'Employment Type' => 'Anstellungsverhältnis',
   'Exactness' => 'Genauigkeit',
   'Family' => 'Familie',
