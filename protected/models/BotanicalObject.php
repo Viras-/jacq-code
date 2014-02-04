@@ -39,6 +39,9 @@
  * @property TaxSpecies $taxSpecies
  */
 class BotanicalObject extends ActiveRecord {
+    protected $familySearched = false;
+    protected $family = NULL;
+    protected $familyReference = NULL;
 
     /**
      * Returns the static model of the specified AR class.
@@ -104,13 +107,54 @@ class BotanicalObject extends ActiveRecord {
      * @return string Name of family
      */
     public function getFamily() {
-        $model_familyTaxSynonymy = $this->getFamilyByReference(Yii::app()->params['familyClassificationId'], 'citation');
+        // trigger searching for family first
+        $this->searchFamily();
         
-        // if no family was found, return 'Unknown'
-        if( $model_familyTaxSynonymy == NULL ) return Yii::t('jacq', 'Unknown');
+        // check if we've found a valid family, if not return Unknown
+        if( $this->family != NULL ) {
+            return $this->family;
+        }
+        else {
+            return Yii::t('jacq', 'Unknown');
+        }
+    }
+    
+    /**
+     * Returns the name of the reference used for family finding
+     * @return type
+     */
+    public function getFamilyReference() {
+        // trigger searching for family first
+        $this->searchFamily();
+
+        // return the found reference
+        return $this->familyReference;
+    }
+    
+    /**
+     * Searches for the family of the current botanical object, uses references as defined by config as a priority list
+     * @return null|string null if no family found, otherwise the family name as string
+     */
+    protected function searchFamily() {
+        // check if we've searched before
+        if( $this->familySearched ) return;
         
-        // Otherwise return the scientific name
-        return $model_familyTaxSynonymy->viewTaxon->getScientificName();
+        // cycle all used references and check them for a family entry
+        $model_familyTaxSynonymy = NULL;
+        foreach(Yii::app()->params['familyClassificationIds'] as $familyClassificationId) {
+            $model_familyTaxSynonymy = $this->getFamilyByReference($familyClassificationId, 'citation');
+            if ($model_familyTaxSynonymy != NULL) {
+                break;
+            }
+        }
+        
+        // if a family was found, return the scientific name
+        if ($model_familyTaxSynonymy != NULL) {
+            $this->family = $model_familyTaxSynonymy->viewTaxon->getScientificName();
+        }
+
+        // remember that we've search for the family
+        $this->familySearched = true;
     }
     
     /**

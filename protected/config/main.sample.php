@@ -139,7 +139,7 @@ return array(
         // this is used in contact page
         'adminEmail' => 'admin@domain.com',
         'groupPrefix' => 'grp_',
-        'familyClassificationId' => 0,      // reference to use for family finding
+        'familyClassificationIds' => array(0),      // reference(s) to use for family finding, order by priority
         'jsonJacqUrl' => null,              // url to get all jacq-json-services, change to a services url
         'indetScientificNameId' => 0,       // scientific_name_id of indet names (for import compatibility)
     ),
