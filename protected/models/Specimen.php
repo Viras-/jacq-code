@@ -12,6 +12,10 @@
  * @property BotanicalObject $botanicalObject
  */
 class Specimen extends CActiveRecord {
+    /**
+     * @var helper attribute for deleting a specimen entry
+     */
+    public $delete = 0;
 
     /**
      * @return string the associated database table name
