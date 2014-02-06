@@ -31,7 +31,7 @@ class Specimen extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id_specimen, botanical_object_id, herbar_number', 'required'),
+            array('botanical_object_id, herbar_number', 'required'),
             array('id_specimen, botanical_object_id', 'numerical', 'integerOnly' => true),
             array('herbar_number', 'length', 'max' => 20),
             // The following rule is used by search().
