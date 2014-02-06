@@ -1,3 +1,8 @@
+<!-- specimens -->
+<div class="row">
+    <?php require("form_specimens.php"); ?>
+</div>
+
 <!-- display images -->
 <div class="row">
     <?php

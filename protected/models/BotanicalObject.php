@@ -37,6 +37,7 @@
  * @property Separation[] $separations
  * @property ViewTaxon $viewTaxon
  * @property TaxSpecies $taxSpecies
+ * @property Specimen[] $specimens
  */
 class BotanicalObject extends ActiveRecord {
     /**
@@ -266,6 +267,7 @@ class BotanicalObject extends ActiveRecord {
             'separations' => array(self::HAS_MANY, 'Separation', 'botanical_object_id'),
             'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'scientific_name_id'),
             'taxSpecies' => array(self::BELONGS_TO, 'TaxSpecies', 'scientific_name_id'),
+            'specimens' => array(self::HAS_MANY, 'Specimen', 'botanical_object_id'),
         );
     }
 
