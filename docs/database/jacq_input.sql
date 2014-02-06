@@ -989,7 +989,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tbl_specimen` ;
 
 CREATE TABLE IF NOT EXISTS `tbl_specimen` (
-  `id_specimen` INT NOT NULL,
+  `id_specimen` INT NOT NULL AUTO_INCREMENT,
   `botanical_object_id` INT NOT NULL,
   `herbar_number` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id_specimen`),
