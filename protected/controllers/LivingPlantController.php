@@ -860,6 +860,14 @@ class LivingPlantController extends Controller {
         }
         
         /**
+         * classification level
+         */
+        $bClassificationAccess = Yii::app()->authorization->classificationAccess($model->id0->scientific_name_id, $user_id);
+        if( $bClassificationAccess !== NULL ) {
+            $bAllowAccess = $bClassificationAccess;
+        }
+        
+        /**
          * Accession (livingplant) level 
          */
         $bAccessionAccess = Yii::app()->authorization->botanicalObjectAccess($model->id, Yii::app()->user->getId());

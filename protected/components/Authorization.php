@@ -86,6 +86,46 @@ class Authorization extends CComponent {
     }
     
     /**
+     * Check access using the classification structure
+     * @param int $taxonID TaxonID of scientific name
+     * @param int $user_id ID of user to check for
+     * @return boolean|null
+     */
+    public function classificationAccess($taxonID, $user_id) {
+        $classificationAccess = NULL;
+        $models_taxSynonymy = TaxSynonymy::model()->findAllByAttributes(array(
+            'taxonID' => $taxonID,
+        ));
+        
+        // cycle through all classification entries for this scientific name
+        foreach( $models_taxSynonymy as $model_taxSynonymy ) {
+            $currentClassificationAccess = NULL;
+            
+            // do checks for classification tree until we reach the top
+            while( $currentClassificationAccess === NULL ) {
+                // check access on current level
+                $currentClassificationAccess = $this->checkAccess($user_id, AccessClassification::model(), $model_taxSynonymy->tax_syn_ID, 'tax_syn_ID');
+                
+                // find parent entry
+                $model_taxSynonymy = $model_taxSynonymy->getParent();
+                if( $model_taxSynonymy == NULL ) break;
+            }
+            
+            // if one entry allows access, take it as granted
+            if( $currentClassificationAccess === true ) {
+                $classificationAccess = true;
+                break;
+            }
+            // otherwise check if access is forbidden and remember it as current choice
+            else if( $currentClassificationAccess === false ) {
+                $classificationAccess = false;
+            }
+        }
+        
+        return $classificationAccess;
+    }
+    
+    /**
      * Checks for group access on classification level
      * @param string $group Name of group to check for
      * @param int $tax_syn_ID ID of classification entry to check
