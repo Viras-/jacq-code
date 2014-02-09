@@ -46,7 +46,23 @@ class Authorization extends CComponent {
      * @return boolean|NULL true / false or NULL if no explicit setting is given
      */
     public function organisationAccess($organisation_id, $user_id) {
-        return $this->checkAccess($user_id, AccessOrganisation::model(), $organisation_id, "organisation_id");
+        $organisationAccess = NULL;
+        $model_organisation = Organisation::model()->findByPk($organisation_id);
+        
+        // sanity check, should never happen
+        if( $model_organisation == NULL ) return NULL;
+        
+        // check access for whole organisation tree until we find an entry
+        while( $organisationAccess === NULL ) {
+            // check access on current level
+            $organisationAccess = $this->checkAccess($user_id, AccessOrganisation::model(), $model_organisation->id, "organisation_id");
+            
+            // load parent organisation, if none found stop searching
+            $model_organisation = $model_organisation->parentOrganisation;
+            if( $model_organisation == NULL ) break;
+        }
+
+        return $organisationAccess;
     }
     
     /**
@@ -90,10 +106,12 @@ class Authorization extends CComponent {
     }
     
     /**
-     * Check access to botanical object
-     * @param int $botanical_object_id ID of botanical object to check
-     * @param int $user_id ID of user for access checking (groups are fetched automatically)
-     * @return boolean|NULL true / false or NULL if no explicit setting is given
+     * Check access for a given model / reference
+     * @param int $user_id ID of user to check access for
+     * @param Object $model
+     * @param int $reference_id
+     * @param string $reference_id_name
+     * @return boolean|NULL
      */
     protected function checkAccess($user_id, $model, $reference_id, $reference_id_name) {
         $bAllowAccess = NULL;
