@@ -123,6 +123,7 @@ class Species extends CActiveRecord
          */
         public function getScientificName() {
             $scientificNameComponents = array();
+            $scientificName = "";
 
             // Find out the Genus
             $model_systematik = Systematik::model()->findByAttributes(array(
@@ -131,39 +132,41 @@ class Species extends CActiveRecord
             if( $model_systematik != NULL ) {
                 $scientificNameComponents[] = $model_systematik->Gattung;
             }
-            
-            
-            $scientificNameComponents[] = $this->Art;
-            
-            if( $this->Autor != NULL ) {
-                $scientificNameComponents[] = $this->Autor;
+
+            // try to clean the names
+            $Art = $this->Art;
+            $Art = preg_replace('/^sp(\.| )(.*)$/i', '$2', $Art);
+            $Art = trim($Art);
+            $UArt = $this->UArt;
+            $UArt = preg_replace('/^ssp(\.| )(.*)$/i', '$2', $UArt);
+            $UArt = preg_replace('/^subsp(\.| )(.*)$/i', '$2', $UArt);
+            $UArt = trim($UArt);
+            $Var = $this->Var;
+            $Var = preg_replace('/^var(\.| )(.*)$/i', '$2', $Var);
+            $Var = trim($Var);
+            $FormCult = $this->FormCult;
+            $FormCult = preg_replace('/^f(\.| )(.*)$/i', '$2', $FormCult);
+            $FormCult = trim($FormCult);
+
+            if( empty($Art) && empty($this->UArt) && empty($this->Var) && empty($this->FormCult) ) {
+                $scientificName = $model_systematik->Gattung;
             }
-            if( $this->UArt != NULL ) {
-                $scientificNameComponents[] = $this->UArt;
+            else {
+                if( !empty($Art) ) {
+                    $scientificName = $model_systematik->Gattung . ' ' . $Art . ' ' . $this->Autor;
+                }
+                if( !empty($UArt) ) {
+                    $scientificName = $model_systematik->Gattung . ' ' . $Art . ' subsp. ' . $UArt . ' ' . $this->UArtAutor;
+                }
+                if( !empty($Var) ) {
+                    $scientificName = $model_systematik->Gattung . ' ' . $Art . ' var. ' . $Var . ' ' . $this->VarAutor;
+                }
+                // check for forma / cult but ignore if it contains invalid characters
+                if( !empty($FormCult) && stripos($FormCult, '`') === FALSE && stripos($FormCult, '\'') === FALSE ) {
+                    $scientificName = $model_systematik->Gattung . ' ' . $Art . ' f. ' . $FormCult . ' ' . $this->FormCultAutor;
+                }
             }
-            if( $this->UArtAutor != NULL ) {
-                $scientificNameComponents[] = $this->UArtAutor;
-            }
-            if( $this->Var != NULL ) {
-                $scientificNameComponents[] = $this->Var;
-            }
-            if( $this->VarAutor != NULL ) {
-                $scientificNameComponents[] = $this->VarAutor;
-            }
-            // check for "invalid" chars in formcult
-            if( $this->FormCult != NULL && stripos($this->FormCult, '`') === FALSE && stripos($this->FormCult, '\'') === FALSE ) {
-                $scientificNameComponents[] = $this->FormCult;
-            }
-            if( $this->FormCultAutor != NULL ) {
-                $scientificNameComponents[] = $this->FormCultAutor;
-            }
-            
-            // construct final scientific name
-            $scientificName = implode(' ', $scientificNameComponents);
-            // remove unused "sp/sp." suffixes
-            $scientificName = preg_replace('/^(.*)sp\.$/i', '$1', $scientificName);
-            $scientificName = preg_replace('/^(.*)sp$/i', '$1', $scientificName);
-            
+
             // return complete scientifc name
             return $scientificName;
         }        
