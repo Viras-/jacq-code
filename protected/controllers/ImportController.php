@@ -6,7 +6,7 @@ require("AutoCompleteController.php");
  */
 class ImportException extends Exception {
     public function __construct($message, $activeRecord) {
-        $message .= ': ' . var_export($activeRecord->getErrors());
+        $message .= ': ' . var_export($activeRecord->getErrors(), true);
         
         parent::__construct($message);
     }
@@ -16,6 +16,8 @@ class ImportException extends Exception {
  * Controller for handling import of old data
  */
 class ImportController extends Controller {
+    public $defaultAction = 'import';
+    
     /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
@@ -372,11 +374,95 @@ class ImportController extends Controller {
             'akzessionCount' => $akzessionCount
         ));
     }
-
-    public function actionIndex() {
-        $this->actionImport();
-    }
     
+    
+    public function actionImportClassification() {
+        // remove all previous entries from classification
+        $db = Yii::app()->dbHerbarInput;
+        $db->createCommand(
+                  "DELETE s, c FROM `tbl_tax_synonymy` AS s LEFT JOIN `tbl_tax_classification` c ON c.`tax_syn_ID` = s.`tax_syn_ID` WHERE s.`source_citationID` = '" . Yii::app()->params['jacqClassificationCitationId'] . "'")
+                ->execute();
+
+        // re-insert the new classification
+        
+        // load all systematic categories
+        /*$models_taxSystematicCategories = TaxSystematicCategories::model()->findAll();
+        foreach($models_taxSystematicCategories as $model_taxSystematicCategories) {
+            $model_taxSystematicCategories = new TaxSystematicCategories();
+            
+            // find species entry for this category
+            
+        }*/
+        
+        // load all families
+        $models_taxFamilies = TaxFamilies::model()->findAll();
+        foreach($models_taxFamilies as $model_taxFamilies) {
+            // find genera entry for family
+            $model_taxFamiliesGenera = TaxGenera::model()->findByAttributes(array(
+                'genus' => $model_taxFamilies->family
+            ));
+            if( $model_taxFamiliesGenera == NULL ) {
+                throw new Exception('Unable to find genus entry for family: ' . $model_taxFamilies->family);
+            }
+            
+            // find the species entry for the genera entry of the family
+            $model_taxFamiliesSpecies = TaxSpecies::model()->findByAttributes(array(
+                'genID' => $model_taxFamiliesGenera->genID,
+                'tax_rankID' => 9
+            ));
+            if( $model_taxFamiliesSpecies == NULL ) {
+                throw new Exception('Unable to find species entry for family: ' . $model_taxFamilies->family);
+            }
+            
+            // add the found species entry as top level element
+            $model_taxSynonymyFamily = new TaxSynonymy();
+            $model_taxSynonymyFamily->taxonID = $model_taxFamiliesSpecies->taxonID;
+            $model_taxSynonymyFamily->userID = 0;
+            $model_taxSynonymyFamily->timestamp = new CDbExpression('NOW()');
+            $model_taxSynonymyFamily->source_citationID = Yii::app()->params['jacqClassificationCitationId'];
+            $model_taxSynonymyFamily->source = 'literature';
+            if( !$model_taxSynonymyFamily->save() ) {
+                throw new Exception('Unable to save synonymy entry for family: ' . $model_taxFamilies->family . ' (' . var_export($model_taxSynonymyFamily->getErrors(), true) . ')');
+            }
+            
+            // find all genus entries for the current family
+            $models_taxGenera = TaxGenera::model()->findAllByAttributes(array(
+                'familyID' => $model_taxFamilies->familyID
+            ));
+            foreach( $models_taxGenera as $model_taxGenera ) {
+                // ignore family entry in genus table
+                if( $model_taxGenera->genID == $model_taxFamiliesGenera->genID ) continue;
+                
+                // find the species entries for this genus
+                $model_taxGeneraSpecies = TaxSpecies::model()->findByAttributes(array(
+                    'genID' => $model_taxGenera->genID,
+                    'tax_rankID' => 7
+                ));
+                if( $model_taxGeneraSpecies == NULL ) {
+                    throw new Exception('Unable to find species entry for genus: ' . $model_taxGenera->genus);
+                }
+                
+                // now add the species entry of the genus as accepted name...
+                $model_taxSynonymyGenus = new TaxSynonymy();
+                $model_taxSynonymyGenus->taxonID = $model_taxGeneraSpecies->taxonID;
+                $model_taxSynonymyGenus->userID = 0;
+                $model_taxSynonymyGenus->timestamp = new CDbExpression('NOW()');
+                $model_taxSynonymyGenus->source_citationID = Yii::app()->params['jacqClassificationCitationId'];
+                $model_taxSynonymyGenus->source = 'literature';
+                if( !$model_taxSynonymyGenus->save() ) {
+                    throw new Exception('Unable to save synonymy entry for genus: ' . $model_taxGenera->genus . ' (' . var_export($model_taxSynonymyGenus->getErrors(), true) . ')');
+                }
+                // ...and add the family as parent
+                $model_taxClassificationGenus = new TaxClassification();
+                $model_taxClassificationGenus->tax_syn_ID = $model_taxSynonymyGenus->tax_syn_ID;
+                $model_taxClassificationGenus->parent_taxonID = $model_taxFamiliesSpecies->taxonID;
+                if( !$model_taxClassificationGenus->save() ) {
+                    throw new Exception('Unable to save classification entry for genus: ' . $model_taxGenera->genus . ' (' . var_export($model_taxClassificationGenus->getErrors(), true) . ')');
+                }
+            }
+        }
+    }
+
     /**
      * Helper function for assigning an accession number
      * @param int $living_plant_id ID of living plant to assign this accession number to
