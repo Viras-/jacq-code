@@ -375,7 +375,10 @@ class ImportController extends Controller {
         ));
     }
     
-    
+    /**
+     * Import the legacy classification from the native JACQ system into the new classification structure
+     * @throws Exception
+     */
     public function actionImportClassification() {
         // remove all previous entries from classification
         $db = Yii::app()->dbHerbarInput;
@@ -383,17 +386,9 @@ class ImportController extends Controller {
                   "DELETE s, c FROM `tbl_tax_synonymy` AS s LEFT JOIN `tbl_tax_classification` c ON c.`tax_syn_ID` = s.`tax_syn_ID` WHERE s.`source_citationID` = '" . Yii::app()->params['jacqClassificationCitationId'] . "'")
                 ->execute();
 
-        // re-insert the new classification
-        
-        // load all systematic categories
-        /*$models_taxSystematicCategories = TaxSystematicCategories::model()->findAll();
-        foreach($models_taxSystematicCategories as $model_taxSystematicCategories) {
-            $model_taxSystematicCategories = new TaxSystematicCategories();
-            
-            // find species entry for this category
-            
-        }*/
-        
+        /*
+         * re-insert the new classification
+         */
         // load all families
         $models_taxFamilies = TaxFamilies::model()->findAll();
         foreach($models_taxFamilies as $model_taxFamilies) {
@@ -439,7 +434,9 @@ class ImportController extends Controller {
                     'tax_rankID' => 7
                 ));
                 if( $model_taxGeneraSpecies == NULL ) {
-                    throw new Exception('Unable to find species entry for genus: ' . $model_taxGenera->genus);
+                    //throw new Exception('Unable to find species entry for genus: ' . $model_taxGenera->genus);
+                    print('Unable to find species entry for genus: ' . $model_taxGenera->genus . " - ignoring\n");
+                    continue;
                 }
                 
                 // now add the species entry of the genus as accepted name...
