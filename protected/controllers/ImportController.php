@@ -397,7 +397,9 @@ class ImportController extends Controller {
                 'genus' => $model_taxFamilies->family
             ));
             if( $model_taxFamiliesGenera == NULL ) {
-                throw new Exception('Unable to find genus entry for family: ' . $model_taxFamilies->family);
+                //throw new Exception('Unable to find genus entry for family: ' . $model_taxFamilies->family);
+                print("Unable to find genus entry for family: '" . $model_taxFamilies->family . "'<br />\n");
+                continue;
             }
             
             // find the species entry for the genera entry of the family
@@ -406,7 +408,9 @@ class ImportController extends Controller {
                 'tax_rankID' => 9
             ));
             if( $model_taxFamiliesSpecies == NULL ) {
-                throw new Exception('Unable to find species entry for family: ' . $model_taxFamilies->family);
+                //throw new Exception('Unable to find species entry for family: ' . $model_taxFamilies->family);
+                print("Unable to find species entry for family: '" . $model_taxFamilies->family . "'<br />\n");
+                continue;
             }
             
             // add the found species entry as top level element
@@ -435,7 +439,7 @@ class ImportController extends Controller {
                 ));
                 if( $model_taxGeneraSpecies == NULL ) {
                     //throw new Exception('Unable to find species entry for genus: ' . $model_taxGenera->genus);
-                    print('Unable to find species entry for genus: ' . $model_taxGenera->genus . " - ignoring\n");
+                    print('Unable to find species entry for genus: ' . $model_taxGenera->genus . " - ignoring <br/>\n");
                     continue;
                 }
                 
@@ -458,6 +462,8 @@ class ImportController extends Controller {
                 }
             }
         }
+        
+        print('Done! <br />');
     }
 
     /**
