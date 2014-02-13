@@ -122,15 +122,16 @@ class Species extends CActiveRecord
          * @return string
          */
         public function getScientificName() {
-            $scientificNameComponents = array();
             $scientificName = "";
 
             // Find out the Genus
             $model_systematik = Systematik::model()->findByAttributes(array(
                 'IDSys' => $this->IDSys
             ));
-            if( $model_systematik != NULL ) {
-                $scientificNameComponents[] = $model_systematik->Gattung;
+            
+            // check for valid systematik entry
+            if( $model_systematik == NULL ) {
+                return "Invalid Systematik reference for '" . $this->IDArt . "'";
             }
 
             // try to clean the names
