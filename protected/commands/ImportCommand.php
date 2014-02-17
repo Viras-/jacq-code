@@ -1,6 +1,4 @@
 <?php
-require("AutoCompleteController.php");
- 
 /**
  * Helper exception class for import errors
  */
@@ -13,31 +11,20 @@ class ImportException extends Exception {
 }
 
 /**
- * Controller for handling import of old data
+ * Command for handling import of old data
  */
-class ImportController extends Controller {
-    public $defaultAction = 'import';
-    
+class ImportCommand extends CConsoleCommand {
     /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
+     * Import data from old HBV database
+     * @param type $start
+     * @throws ImportException
+     * @throws Exception
      */
-    public function accessRules() {
-        return array(
-            array('allow',
-                'users' => array('@'),
-            ),
-            array('deny', // deny all users by default
-                'users' => array('*'),
-            ),
-        );
-    }
-
-
-    public function actionImport($start = 0) {
+    public function actionImportHBV($start = 0) {
         // import import models
         Yii::import('application.models.import.*');
+        // import autocomplete controller
+        Yii::import('application.controllers.AutoCompleteController');
         
         // setup default dbcriteria
         $dbCriteria = new CDbCriteria();
@@ -379,7 +366,9 @@ class ImportController extends Controller {
      * Import the legacy classification from the native JACQ system into the new classification structure
      * @throws Exception
      */
-    public function actionImportClassification() {
+    public function actionJacqLegacyClassification() {
+        print("Deleting old classification entries\n");
+        
         // remove all previous entries from classification
         $db = Yii::app()->dbHerbarInput;
         $db->createCommand(
@@ -391,14 +380,16 @@ class ImportController extends Controller {
          */
         // load all families
         $models_taxFamilies = TaxFamilies::model()->findAll();
-        foreach($models_taxFamilies as $model_taxFamilies) {
+        foreach($models_taxFamilies as $i => $model_taxFamilies) {
+            print("Processing family " . ($i+1) . "/" . count($models_taxFamilies) . "\n");
+            
             // find genera entry for family
             $model_taxFamiliesGenera = TaxGenera::model()->findByAttributes(array(
                 'genus' => $model_taxFamilies->family
             ));
             if( $model_taxFamiliesGenera == NULL ) {
                 //throw new Exception('Unable to find genus entry for family: ' . $model_taxFamilies->family);
-                print("Unable to find genus entry for family: '" . $model_taxFamilies->family . "'<br />\n");
+                print("Unable to find genus entry for family: '" . $model_taxFamilies->family . "'\n");
                 continue;
             }
             
@@ -409,7 +400,7 @@ class ImportController extends Controller {
             ));
             if( $model_taxFamiliesSpecies == NULL ) {
                 //throw new Exception('Unable to find species entry for family: ' . $model_taxFamilies->family);
-                print("Unable to find species entry for family: '" . $model_taxFamilies->family . "'<br />\n");
+                print("Unable to find species entry for family: '" . $model_taxFamilies->family . "'\n");
                 continue;
             }
             
@@ -428,7 +419,9 @@ class ImportController extends Controller {
             $models_taxGenera = TaxGenera::model()->findAllByAttributes(array(
                 'familyID' => $model_taxFamilies->familyID
             ));
-            foreach( $models_taxGenera as $model_taxGenera ) {
+            foreach( $models_taxGenera as $j => $model_taxGenera ) {
+                print("Processing genus " . ($j + 1) . "/" . count($models_taxGenera) . "\r");
+                
                 // ignore family entry in genus table
                 if( $model_taxGenera->genID == $model_taxFamiliesGenera->genID ) continue;
                 
@@ -439,7 +432,7 @@ class ImportController extends Controller {
                 ));
                 if( $model_taxGeneraSpecies == NULL ) {
                     //throw new Exception('Unable to find species entry for genus: ' . $model_taxGenera->genus);
-                    print('Unable to find species entry for genus: ' . $model_taxGenera->genus . " - ignoring <br/>\n");
+                    print('Unable to find species entry for genus: ' . $model_taxGenera->genus . " - ignoring\n");
                     continue;
                 }
                 
@@ -461,9 +454,10 @@ class ImportController extends Controller {
                     throw new Exception('Unable to save classification entry for genus: ' . $model_taxGenera->genus . ' (' . var_export($model_taxClassificationGenus->getErrors(), true) . ')');
                 }
             }
+            print("\n");
         }
         
-        print('Done! <br />');
+        print("Done!\n");
     }
 
     /**
