@@ -36,7 +36,7 @@ class LivingPlantController extends Controller {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxScientifcNameInformation'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -47,6 +47,18 @@ class LivingPlantController extends Controller {
                 'users' => array('*'),
             ),
         );
+    }
+    
+    /**
+     * Return used behaviors
+     */
+    public function behaviors() {
+        return array(
+            'exportableGrid' => array(
+                'class' => 'application.behaviors.ExportableGridBehavior',
+                'filename' => 'LivingPlants.csv',
+                'csvDelimiter' => ';', //i.e. Excel friendly csv delimiter
+        ));
     }
 
     /**
@@ -121,6 +133,29 @@ class LivingPlantController extends Controller {
                             $model_acquisitionEventPerson->save();
                         }
                     }
+                    
+                    // check for acquisition source entries
+                    if( isset($_POST['AcquisitionEventSource']) ) {
+                        foreach($_POST['AcquisitionEventSource'] as $i => $acquisitionSource) {
+                            // check for "deleted" entry
+                            if( $acquisitionSource['delete'] > 0 ) continue;
+                            
+                            // try to find fitting acquisition source entry
+                            $model_acquisitionSource = AcquisitionSource::model()->findByAttributes(array('name' => $acquisitionSource['acquisitionSource']));
+                            if( $model_acquisitionSource == NULL ) {
+                                $model_acquisitionSource = new AcquisitionSource();
+                                $model_acquisitionSource->name = $acquisitionSource['acquisitionSource'];
+                                $model_acquisitionSource->save();
+                            }
+                            
+                            // now add a connection to the acquisition source
+                            $model_acquisitionEventSource = new AcquisitionEventSource();
+                            $model_acquisitionEventSource->acquisition_event_id = $model_acquisitionEvent->id;
+                            $model_acquisitionEventSource->acquisition_source_id = $model_acquisitionSource->acquisition_source_id;
+                            $model_acquisitionEventSource->source_date = $acquisitionSource['source_date'];
+                            $model_acquisitionEventSource->save();
+                        }
+                    }
 
                     // Check if we have a separation selected
                     $determinedByName = trim($_POST['determinedByName']);
@@ -171,6 +206,16 @@ class LivingPlantController extends Controller {
                                         $model_botanicalObjectSex->botanical_object_id = $model_livingPlant->id;
                                         $model_botanicalObjectSex->sex_id = $sex_id;
                                         $model_botanicalObjectSex->save();
+                                    }
+                                }
+                                
+                                // add all label assignments, if user is allowed to do
+                                if( isset($_POST['LabelTypes']) && Yii::app()->user->checkAccess('oprtn_assignLabelType') ) {
+                                    foreach ($_POST['LabelTypes'] as $label_type_id ) {
+                                        $model_botanicalObjectLabel = new BotanicalObjectLabel;
+                                        $model_botanicalObjectLabel->botanical_object_id = $model_livingPlant->id;
+                                        $model_botanicalObjectLabel->label_type_id = $label_type_id;
+                                        $model_botanicalObjectLabel->save();
                                     }
                                 }
 
@@ -225,8 +270,25 @@ class LivingPlantController extends Controller {
                                     }
                                 }
                                 
+                                // Check for alternative acqisition number entries
+                                if( isset($_POST['Specimen']) ) {
+                                    foreach($_POST['Specimen'] as $i => $specimen) {
+                                        // auto-generate id
+                                        unset($specimen['id_specimen']);
+
+                                        // check for "deleted" entry (which means ignore it)
+                                        if( $specimen['delete'] > 0 ) continue;
+
+                                        // create new model and save it
+                                        $model_specimen = new Specimen();
+                                        $model_specimen->attributes = $specimen;
+                                        $model_specimen->botanical_object_id = $model_botanicalObject->id;
+                                        $model_specimen->save();
+                                    }
+                                }
+                                
                                 // Redirect to update page directly
-                                $this->redirect(array('update', 'id' => $model_livingPlant->id));
+                                $this->redirect(array('update', 'id' => $model_livingPlant->id, 'success' => true));
                             }
                         }
                     }
@@ -254,7 +316,7 @@ class LivingPlantController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id, $success = false) {
         $model_livingPlant = $this->loadModel($id);
         $model_botanicalObject = $model_livingPlant->id0;
         $model_acquisitionEvent = $model_botanicalObject->acquisitionEvent;
@@ -324,6 +386,40 @@ class LivingPlantController extends Controller {
                         $model_acquisitionEventPerson->acquisition_event_id = $model_acquisitionEvent->id;
                         $model_acquisitionEventPerson->person_id = $model_person->id;
                         $model_acquisitionEventPerson->save();
+                    }
+                }
+
+                // check for acquisition source entries
+                if( isset($_POST['AcquisitionEventSource']) ) {
+                    foreach($_POST['AcquisitionEventSource'] as $i => $acquisitionSource) {
+                        // make clean id
+                        $acquisitionSource['acquisition_event_source_id'] = intval($acquisitionSource['acquisition_event_source_id']);
+                        
+                        // check for "deleted" entry
+                        if( $acquisitionSource['delete'] > 0 ) {
+                            if( $acquisitionSource['acquisition_event_source_id'] > 0 ) {
+                                AcquisitionEventSource::model()->deleteByPk($acquisitionSource['acquisition_event_source_id']);
+                            }
+                            continue;
+                        }
+
+                        // try to find fitting acquisition source entry
+                        $model_acquisitionSource = AcquisitionSource::model()->findByAttributes(array('name' => $acquisitionSource['acquisitionSource']));
+                        if( $model_acquisitionSource == NULL ) {
+                            $model_acquisitionSource = new AcquisitionSource();
+                            $model_acquisitionSource->name = $acquisitionSource['acquisitionSource'];
+                            $model_acquisitionSource->save();
+                        }
+
+                        // now add a connection to the acquisition source
+                        $model_acquisitionEventSource = AcquisitionEventSource::model()->findByPk($acquisitionSource['acquisition_event_source_id']);
+                        if( $model_acquisitionEventSource == NULL ) {
+                            $model_acquisitionEventSource = new AcquisitionEventSource();
+                        }
+                        $model_acquisitionEventSource->acquisition_event_id = $model_acquisitionEvent->id;
+                        $model_acquisitionEventSource->acquisition_source_id = $model_acquisitionSource->acquisition_source_id;
+                        $model_acquisitionEventSource->source_date = $acquisitionSource['source_date'];
+                        $model_acquisitionEventSource->save();
                     }
                 }
 
@@ -404,6 +500,32 @@ class LivingPlantController extends Controller {
                                 $model_botanicalObjectSex->botanical_object_id = $model_livingPlant->id;
                                 $model_botanicalObjectSex->sex_id = $sex_id;
                                 $model_botanicalObjectSex->save();
+                            }
+                        }
+
+                        // handle assigned label-types
+                        $new_labelTypes = (isset($_POST['LabelTypes']) && is_array($_POST['LabelTypes'])) ? $_POST['LabelTypes'] : array();
+                        // Remove unchecked label assignments, if user is allowed to do so
+                        if( Yii::app()->user->checkAccess('oprtn_clearLabelType') ) {
+                            $models_botanicalObjectLabel = BotanicalObjectLabel::model()->findAllByAttributes(array(
+                                'botanical_object_id' => $model_livingPlant->id,
+                            ));
+                            foreach($models_botanicalObjectLabel as $model_botanicalObjectLabel) {
+                                if(!in_array($model_botanicalObjectLabel->label_type_id, $new_labelTypes)) {
+                                    $model_botanicalObjectLabel->delete();
+                                }
+                                else {
+                                    $new_labelTypes = array_diff($new_labelTypes, array($model_botanicalObjectLabel->label_type_id));
+                                }
+                            }
+                        }
+                        // add all label assignments, if user is allowed to do so
+                        if( count($new_labelTypes) > 0 && Yii::app()->user->checkAccess('oprtn_assignLabelType') ) {
+                            foreach ($new_labelTypes as $label_type_id ) {
+                                $model_botanicalObjectLabel = new BotanicalObjectLabel;
+                                $model_botanicalObjectLabel->botanical_object_id = $model_livingPlant->id;
+                                $model_botanicalObjectLabel->label_type_id = $label_type_id;
+                                $model_botanicalObjectLabel->save();
                             }
                         }
 
@@ -489,12 +611,41 @@ class LivingPlantController extends Controller {
                             }
                         }
                         
+                        // Check for specimen entries
+                        if( isset($_POST['Specimen']) ) {
+                            foreach($_POST['Specimen'] as $i => $specimen) {
+                                // make sure we have a clean integer as id
+                                $specimen['id_specimen'] = intval($specimen['id_specimen']);
+
+                                // check for "deleted" entry
+                                if( $specimen['delete'] > 0 ) {
+                                    if($specimen['id_specimen'] > 0) {
+                                        Specimen::model()->deleteByPk($specimen['id_specimen']);
+                                    }
+                                    continue;
+                                }
+                                
+                                // check if this is an existing entry
+                                if( $specimen['id_specimen'] > 0 ) {
+                                    $model_specimen = Specimen::model()->findByPk($specimen['id_specimen']);
+                                }
+                                else {
+                                    $model_specimen = new Specimen();
+                                }
+
+                                // assign attributes and save it
+                                $model_specimen->attributes = $specimen;
+                                $model_specimen->botanical_object_id = $model_botanicalObject->id;
+                                $model_specimen->save();
+                            }
+                        }
+                        
                         // update incoming date and save it
                         $model_incomingDate->setDate($_POST['IncomingDate']['date']);
                         if( $model_incomingDate->save() ) {
                             // finally save the living plant
                             if ($model_livingPlant->save()) {
-                                $this->redirect(array('update', 'id' => $model_livingPlant->id));
+                                $this->redirect(array('update', 'id' => $model_livingPlant->id, 'success' => true));
                             }
                         }
                     }
@@ -510,6 +661,7 @@ class LivingPlantController extends Controller {
             'model_botanicalObject' => $model_botanicalObject,
             'model_locationCoordinates' => $model_locationCoordinates,
             'model_incomingDate' => $model_incomingDate,
+            'success' => $success
         );
         $data['data'] = &$data;
 
@@ -557,6 +709,26 @@ class LivingPlantController extends Controller {
         // if not try to retrieve from session
         else if( isset(Yii::app()->session['LivingPlant_filter']) ) {
             $model->attributes = Yii::app()->session['LivingPlant_filter'];
+        }
+
+        // Check if a CSV export is requested
+        if( $this->isExportRequest() ) {
+            $this->exportCSV(
+                    $model->search(),
+                    array(
+                        'id',
+                        'id0.scientificName',
+                        'id0.organisation.description', 
+                        'accessionNumber',
+                        'id0.acquisitionEvent.location.location',
+                        'place_number',
+                        'id0.family',
+                        'labelSynonymScientificName',
+                        'id0.scientificNameInformation.common_names',
+                        'id0.scientificNameInformation.spatial_distribution',
+                        'id0.familyReference',
+                    )
+            );
         }
 
         $this->render('admin', array(
@@ -635,26 +807,23 @@ class LivingPlantController extends Controller {
         ), false, true);
     }
     
+    public function actionAjaxAcquisitionEventSource() {
+        $model_acquisitionEventSource = new AcquisitionEventSource();
+        
+        $this->renderPartial('form_acquisitionEventSource', array(
+            'model_acquisitionEventSource' => $model_acquisitionEventSource
+        ), false, true);
+    }
+    
     /**
-     * load additional scientific name information and return it
-     * @param int $scientific_name_id ID of scientific name
+     * Render a new row for entering specimen data
      */
-    public function actionAjaxScientifcNameInformation($scientific_name_id) {
-        $scientific_name_id = intval($scientific_name_id);
-        $scientificNameInformation = array(
-            'spatial_distribution' => '',
-            'variety' => '',
-        );
+    public function actionAjaxSpecimen() {
+        $model_specimen = new Specimen();
         
-        $model_scientificNameInformation = ScientificNameInformation::model()->findByPk($scientific_name_id);
-        if( $model_scientificNameInformation != NULL ) {
-            $scientificNameInformation['spatial_distribution'] = $model_scientificNameInformation->spatial_distribution;
-            $scientificNameInformation['variety'] = $model_scientificNameInformation->variety;
-        }
-        
-        // output scientific name information & exit
-        echo CJSON::encode($scientificNameInformation);
-        exit(0);
+        $this->renderPartial('form_specimen', array(
+            'model_specimen' => $model_specimen
+        ), false, true);
     }
     
     /**
@@ -685,40 +854,24 @@ class LivingPlantController extends Controller {
          * organisation level
          */
         $user_id = Yii::app()->user->getId();
-        $authAssignments = Yii::app()->authManager->getAuthAssignments($user_id);
-        $bNewAllowAccess = false;
-        // check all groups for access
-        foreach( $authAssignments as $itemName => $authAssignment ) {
-            // check if this group has an assignment in the access table
-            $model_accessOrganisation = AccessOrganisation::model()->findByAttributes(
-                    array(
-                        'AuthItem_name' => $itemName,
-                        'organisation_id' => $model->id0->organisation->id
-                    )
-            );
-            
-            $bNewAllowAccess = $this->checkAccessOrganisation($model_accessOrganisation, $bAllowAccess);
-            // check for explicit allowal in this group, if so break and ignore all other settings
-            if( $bNewAllowAccess && !$bAllowAccess ) {
-                $bAllowAccess = true;
-                break;
-            }
-            $bAllowAccess = $bNewAllowAccess;
+        $bOrganisationAccess = Yii::app()->authorization->organisationAccess($model->id0->organisation->id, $user_id);
+        if( $bOrganisationAccess !== NULL ) {
+            $bAllowAccess = $bOrganisationAccess;
         }
-        // now check the organisation access for this user
-        $model_accessOrganisation = AccessOrganisation::model()->findByAttributes(
-                array(
-                    'user_id' => Yii::app()->user->getId(),
-                    'organisation_id' => $model->id0->organisation->id
-                )
-        );
-        $bAllowAccess = $this->checkAccessOrganisation($model_accessOrganisation, $bAllowAccess);
+        
+        /**
+         * classification level
+         */
+        $bClassificationAccess = Yii::app()->authorization->classificationAccess($model->id0->scientific_name_id, $user_id);
+        if( $bClassificationAccess !== NULL ) {
+            $bAllowAccess = $bClassificationAccess;
+        }
         
         /**
          * Accession (livingplant) level 
          */
-        $accessionAccess = Yii::app()->authorization->botanicalObjectAccess($model->id, Yii::app()->user->getId());
-        if( $accessionAccess != NULL ) $bAllowAccess = $accessionAccess;
+        $bAccessionAccess = Yii::app()->authorization->botanicalObjectAccess($model->id, Yii::app()->user->getId());
+        if( $bAccessionAccess !== NULL ) $bAllowAccess = $bAccessionAccess;
         
         // finally check the result of the access checking
         if( !$bAllowAccess ) {

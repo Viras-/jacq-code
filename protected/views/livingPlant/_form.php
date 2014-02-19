@@ -17,7 +17,7 @@
     ?>
 
     <?php
-    if( !$model_botanicalObject->isNewRecord ) {
+    if( !$model_botanicalObject->isNewRecord && Yii::app()->user->checkAccess('oprtn_aclBotanicalObject') ) {
     ?>
     <div style="text-align: right;">
         <a href="#"><img src="images/user.png" border="0" onclick="$('#authorization_management_dialog').dialog('open'); return false;" /></a>
@@ -37,7 +37,7 @@
             Yii::t('jacq', 'Aquisition') => $this->renderPartial('form_acquisitionTab', $data, true),
             Yii::t('jacq', 'Gardening') => $this->renderPartial('form_gardeningTab', $data, true),
             Yii::t('jacq', 'Collection') => $this->renderPartial('form_collectionTab', $data, true),
-            Yii::t('jacq', 'Derivatives') => 'Work in progress',
+            Yii::t('jacq', 'Derivatives') => $this->renderPartial('form_derivativesTab', $data, true),
             Yii::t('jacq', 'Inventory') => 'Work in progress',
         ),
         // additional javascript options for the tabs plugin
@@ -49,13 +49,6 @@
     <?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);  ?>
 
     <br />
-    <h3>Fields to be assigned to tabs:</h3>
-    <fieldset>
-        <legend><?php echo Yii::t('jacq', 'Living Plant'); ?></legend>
-        <?php
-        require('form_botanicalObject.php');
-        ?>
-    </fieldset>
     <?php require('form_importProperties.php'); ?>
 
     <div class="row buttons">
@@ -165,8 +158,27 @@
      * Called when the authorization settings are saved
      */
     function authorizationSave(event,ui) {
-        // close the calling dialog
-        $(this).dialog('close');
+        // keep reference to dialog
+        var self = this;
+        
+        // get all select values for sending to the server
+        var formData = {};
+        $('#authorization_form select').each(function() {
+            formData[$(this).attr('name')] = $(this).val();
+        });
+        
+        // disable the whole form
+        $('#authorization_form select').attr('disabled', 'disabled');
+        
+        // send the request to the server
+        $.post(
+                '<?php echo $this->createUrl('authorization/ajaxBotanicalObjectAccessSave', array('botanical_object_id' => $model_botanicalObject->id)); ?>',
+                formData,
+                function(data, textStatus, jqXHR) {
+                    // close the calling dialog
+                    $(self).dialog('close');
+                }
+        );
     }
     
     // Bind to change event of institution select

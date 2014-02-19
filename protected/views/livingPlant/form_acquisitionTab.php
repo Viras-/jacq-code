@@ -33,7 +33,7 @@
 <!-- acquisition type -->
 <div class="row">
     <?php echo $form->labelEx($model_acquisitionEvent, 'acquisition_type_id'); ?>
-    <?php echo $form->dropDownList($model_acquisitionEvent, 'acquisition_type_id', CHtml::listData(AcquisitionType::model()->findAll(), 'id', 'type')); ?>
+    <?php echo $form->dropDownList($model_acquisitionEvent, 'acquisition_type_id', CHtml::listData(AcquisitionType::model()->findAll(), 'id', 'typeTranslated')); ?>
     <?php echo $form->error($model_acquisitionEvent, 'acquisition_type_id'); ?>
 </div>
 <!-- acqusition persons -->

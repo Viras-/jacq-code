@@ -3,7 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="en" />
-
+        <?php
+        // register jquery & jquery-ui js code
+        Yii::App()->clientScript->registerCoreScript('jquery');
+        Yii::App()->clientScript->registerCoreScript('jquery.ui');
+        Yii::app()->getClientScript()->registerCssFile(Yii::app()->getClientScript()->getCoreScriptUrl() . '/jui/css/base/jquery-ui.css');
+        ?>
         <!-- blueprint CSS framework -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
@@ -25,28 +30,44 @@
          </script>
          <!-- jsTree -->
          <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.jstree/jquery.jstree.js" ></script>
-         
+
          <!-- custom styles -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/custom.css" />
+        
+         <!-- MsgBox -->
+         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/msgbox.js" ></script>
     </head>
 
     <body>
+        <!-- generic ui-dialog which can be used to display errors -->
+        <div id="error-dialog" title="Error" style="display:none;">
+            <p>
+                <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+                <span id="error-dialog_text"></span>
+            </p>
+        </div>
+        <!-- generic ui-dialog which can be used to display infos -->
+        <div id="info-dialog" title="Info" style="display:none;">
+            <p>
+                <span class="ui-icon ui-icon-info" style="float: left; margin: 0 7px 20px 0;"></span>
+                <span id="info-dialog_text"></span>
+            </p>
+        </div>
 
         <div class="container" id="page">
-
-            <div id="header">
-                <div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-            </div><!-- header -->
+            <img id="logo" src="images/jacq_logo.png" width="120" height="60" />
 
             <div id="mainmenu">
                 <?php
                 $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
-                        array('label' => Yii::t('jacq', 'Living Plant'), 'url' => array('/livingPlant'), 'visible' => Yii::app()->user->checkAccess('oprtn_readLivingplant')),
-                        array('label' => Yii::t('jacq', 'Garden Site'), 'url' => array('/organisation'), 'visible' => Yii::app()->user->checkAccess('oprtn_createOrganisation')),
-                        array('label' => Yii::t('jacq', 'Tree Record File'), 'url' => array('/treeRecordFile'), 'visible' => Yii::app()->user->checkAccess('oprtn_createTreeRecordFile')),
-                        array('label' => Yii::t('jacq', 'Login'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                        array('label' => Yii::t('jacq', 'Logout') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
+                        array('label' => Yii::t('jacq', 'Living Plant'), 'url' => array('livingPlant/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_readLivingplant')),
+                        array('label' => Yii::t('jacq', 'Garden Site'), 'url' => array('organisation/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createOrganisation')),
+                        array('label' => Yii::t('jacq', 'Tree Record File'), 'url' => array('treeRecordFile/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createTreeRecordFile')),
+                        array('label' => Yii::t('jacq', 'Classification Browser'), 'url' => array('dataBrowser/classificationBrowser/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_showClassificationBrowser')),
+                        array('label' => Yii::t('jacq', 'User Manager'), 'url' => array('user/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createUser')),
+                        array('label' => Yii::t('jacq', 'Login'), 'url' => array('site/login'), 'visible' => Yii::app()->user->isGuest),
+                        array('label' => Yii::t('jacq', 'Logout') . ' (' . Yii::app()->user->name . ')', 'url' => array('site/logout'), 'visible' => !Yii::app()->user->isGuest)
                     ),
                 ));
                 ?>
@@ -64,7 +85,7 @@
             <div class="clear"></div>
 
             <div id="footer">
-                Copyright &copy; <?php echo date('Y'); ?> Botanischer Garten Universität Wien.<br/>
+                Copyright &copy; <?php echo date('Y'); ?> University Vienna, Museum of Natural History Vienna, Austrian Academy of Sciences.<br/>
                 All Rights Reserved.<br/>
 <?php echo Yii::powered(); ?>
             </div><!-- footer -->

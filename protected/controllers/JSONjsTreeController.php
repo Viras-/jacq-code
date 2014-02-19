@@ -14,7 +14,7 @@ class JSONjsTreeController extends Controller {
      * @param type $referenceId
      * @param type $taxonID
      * @param type $filterId
-     * @return type 
+     * @return type
      */
     public function japiClassificationBrowser($referenceType, $referenceId, $taxonID = 0, $filterId = 0) {
         // check parameters
@@ -23,7 +23,7 @@ class JSONjsTreeController extends Controller {
         $filterId = intval($filterId);
         // only execute code if we have a valid reference ID
         if( $referenceId <= 0 ) return array();
-        
+
         // check if we have a filter set
         if( $filterId > 0 ) {
             return $this->classificationFiltered($referenceType, $referenceId, $filterId);
@@ -38,7 +38,7 @@ class JSONjsTreeController extends Controller {
      * @param type $referenceType
      * @param type $referenceId
      * @param type $taxonID
-     * @return string 
+     * @return string
      */
     private function classificationFiltered($referenceType, $referenceId, $taxonID) {
         $return = array();
@@ -48,11 +48,11 @@ class JSONjsTreeController extends Controller {
         );
         // optional citations which we look for (only for periodicals)
         $citations = null;
-        
+
         // check if we have a periodical, since then we have to fetch all citations first
         if( $referenceType == 'periodical' ) {
             $citations = $this->classificationChildren($referenceType, $referenceId);
-            
+
             // convert all fetched citations to references to look for
             $references = array();
             foreach( $citations as $i => $citation ) {
@@ -63,14 +63,14 @@ class JSONjsTreeController extends Controller {
                 );
             }
         }
-        
+
         // search children for all references
         foreach($references as $refIndex => $reference) {
             // helper variables for handling the structure
             $structure = array();
             $activeChild = null;
             $bParentFound = false;
-            
+
             // virtual first parent
             $currParent = array(
                 'referenceType' => $reference['referenceType'],
@@ -103,8 +103,8 @@ class JSONjsTreeController extends Controller {
                 else {
                     foreach( $currParentChildren as $i => $currParentChild ) {
                         if( $currParentChild['data']['attr']['data-taxon-id'] == $taxonID ) {
-                            $currParentChildren[$i]['data']['title'] = 
-                                    '<img src="images/arrow_right.png">&nbsp;' . 
+                            $currParentChildren[$i]['data']['title'] =
+                                    '<img src="images/arrow_right.png">&nbsp;' .
                                     $currParentChildren[$i]['data']['title'];
                             break;
                         }
@@ -113,12 +113,12 @@ class JSONjsTreeController extends Controller {
 
                 $structure = $currParentChildren;
                 $activeChild = $currParent;
-                
+
                 if( $currParent['taxonID'] == 0 && $citations != null ) break;
-                
+
                 $bParentFound = true;
             }
-            
+
             // check if we found something
             if( $bParentFound ) {
                 // check if we have a periodical structure
@@ -134,27 +134,29 @@ class JSONjsTreeController extends Controller {
                 }
             }
         }
-        
+
         return $return;
     }
-    
+
     /**
      * Returns the next classification-level below a given taxonID
      * @param type $referenceType
      * @param type $referenceID
      * @param type $taxonID
-     * @return string 
+     * @return string
      */
     private function classificationChildren($referenceType, $referenceID, $taxonID = 0) {
         $return = array();
-        
+
+        $infoLink = "&nbsp;<span class='infoBox'><img src='images/information.png'></span>";
+
         // check for synonyms
         $synonyms = JSONClassificationController::japiSynonyms($referenceType, $referenceID, $taxonID);
         if( count($synonyms) > 0 ) {
             foreach( $synonyms as $synonym ) {
                 $return[] = array(
                     "data" => array(
-                        "title" => ($synonym['referenceInfo']['cited']) ? $synonym["referenceName"] : '[' . $synonym["referenceName"] . ']', // uncited synonyms (i.e. basionym) are shown in brackets
+                        "title" => (($synonym['referenceInfo']['cited']) ? $synonym["referenceName"] : '[' . $synonym["referenceName"] . ']') . $infoLink, // uncited synonyms (i.e. basionym) are shown in brackets
                         "attr" => array(
                             "data-taxon-id" => $synonym["taxonID"],
                             "data-reference-id" => $synonym["referenceId"],
@@ -165,12 +167,10 @@ class JSONjsTreeController extends Controller {
                 );
             }
         }
-        
+
         // find all classification children
         $children = JSONClassificationController::japiChildren($referenceType, $referenceID, $taxonID);
         foreach( $children as $child ) {
-            $infoLink = "&nbsp;<span class='infoBox'><img src='images/information.png'></a>";
-            
             $entry = array(
                 "data" => array(
                     "title" => $child["referenceName"],
@@ -181,7 +181,7 @@ class JSONjsTreeController extends Controller {
                     )
                 ),
             );
-            
+
             // change node icon based on various aspects
             switch($child["referenceType"]) {
                 case 'citation':
@@ -192,30 +192,36 @@ class JSONjsTreeController extends Controller {
             }
             // if a taxonID is set, always use no icon
             if( $child["taxonID"] ) {
+                // add ACL icon if user has permission
+                $aclLink = "";
+                if( Yii::app()->user->checkAccess('oprtn_aclClassification') ) {
+                    $aclLink = "&nbsp;<span class='acl' data-tax-syn-id='" . $child['referenceInfo']['tax_syn_ID'] . "'><img src='images/user.png'></span>";
+                }
+
                 $entry["icon"] = "images/spacer.gif";
-                $entry['data']['title'] .= $infoLink;
-                
+                $entry['data']['title'] .= $infoLink . $aclLink;
+
                 // check for rank display
                 if( $child['referenceInfo']['rank_hierarchy'] > 15 && $child['referenceInfo']['rank_hierarchy'] < 21 ) {
                     $entry['data']['title'] = $child['referenceInfo']['rank_abbr'] . ' ' . $entry['data']['title'];
                 }
-                
+
                 // taxon entries do have some additional info
                 if( !empty($child['referenceInfo']['number']) ) {
                     $entry['data']['title'] = '<i><b>' . $child['referenceInfo']['number'] . '</b></i>&nbsp;'. $entry['data']['title'];
                 }
             }
-            
+
             // check if we have further children
             if( $child['hasChildren'] ) $entry['state'] = 'closed';
-            
+
             // save entry for return
             $return[] = $entry;
         }
-        
+
         return $return;
     }
-    
+
     public function actions() {
         return array(
             'japi'=>'JApi',

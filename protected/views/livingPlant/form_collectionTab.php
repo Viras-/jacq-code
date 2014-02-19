@@ -67,6 +67,7 @@
     <table style="width: auto;">
         <tr>
             <td>
+                <?php echo $form->labelEx(Relevancy::model(), 'relevancy_type_id'); ?>
                 <?php
                 // Find all checked relevancy types for this entry
                 $selected_relevancyTypes = array();
@@ -81,8 +82,20 @@
 
                 // Create checkbox list for all relevancy type entries
                 $models_relevancyType = RelevancyType::model()->findAll();
-                $list_relevancyType = CHtml::listData($models_relevancyType, 'id', 'type');
-                echo CHtml::checkBoxList('RelevancyType', $selected_relevancyTypes, $list_relevancyType, array('labelOptions' => array('style' => 'display: inline')));
+                echo CHtml::checkBoxList(
+                        'RelevancyType', 
+                        $selected_relevancyTypes, 
+                        Html::listDataSorted(
+                                $models_relevancyType,
+                                'id',
+                                'typeTranslated'
+                        ), 
+                        array(
+                            'labelOptions' => array(
+                                'style' => 'display: inline'
+                            )
+                        )
+                );
                 ?>
             </td>
         </tr>

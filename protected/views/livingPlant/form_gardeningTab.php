@@ -66,6 +66,13 @@
     <?php echo $form->textArea($model_livingPlant, 'culture_notes', array( 'style' => 'width: 100%;' )); ?>
     <?php echo $form->error($model_livingPlant, 'culture_notes'); ?>
 </div>
+<!-- acqisition event source(s) -->
+<div class="row">
+    <?php
+    // render acquisition event sources form
+    require('form_acquisitionEventSources.php');
+    ?>
+</div>
 <!-- tree record(s) -->
 <?php require('form_treeRecord.php'); ?>
 <!-- general annotations -->
@@ -74,3 +81,11 @@
     <?php echo $form->textField($model_botanicalObject, 'annotation'); ?>
     <?php echo $form->error($model_botanicalObject, 'annotation'); ?>
 </div>
+
+<!-- current phenology -->
+<div class="row">
+    <?php echo $form->labelEx($model_botanicalObject, 'phenology_id'); ?>
+    <?php echo $form->dropDownList($model_botanicalObject, 'phenology_id', Html::listDataSorted(Phenology::model()->findAll(), 'id', 'phenologyTranslated')); ?>
+    <?php echo $form->error($model_botanicalObject, 'phenology_id'); ?>
+</div>
+

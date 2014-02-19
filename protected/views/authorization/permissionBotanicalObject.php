@@ -19,12 +19,12 @@ $form = $this->beginWidget(
             <li>
                 <?php
                 echo CHtml::dropDownList(
-                        'grp_' . $group->name,
+                        'Groups[' . $group->name . ']',
                         Yii::app()->authorization->botanicalObjectAccessGroup($group->name,$botanical_object_id),
                         array(
-                            NULL => Yii::t('jacq', 'auto'),
-                            true => Yii::t('jacq', 'yes'),
-                            false => Yii::t('jacq', 'no')
+                            "" => Yii::t('jacq', 'auto'),
+                            1 => Yii::t('jacq', 'yes'),
+                            0 => Yii::t('jacq', 'no')
                         )
                 );
                 ?>
@@ -44,12 +44,12 @@ $form = $this->beginWidget(
             <li>
                 <?php
                 echo CHtml::dropDownList(
-                        'usr_' . $user->id,
+                        'Users[' . $user->id . ']',
                         Yii::app()->authorization->botanicalObjectAccessUser($user->id,$botanical_object_id),
                         array(
-                            NULL => Yii::t('jacq', 'auto'),
-                            true => Yii::t('jacq', 'yes'),
-                            false => Yii::t('jacq', 'no')
+                            "" => Yii::t('jacq', 'auto'),
+                            1 => Yii::t('jacq', 'yes'),
+                            0 => Yii::t('jacq', 'no')
                         )
                 );
                 ?>

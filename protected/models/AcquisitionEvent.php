@@ -18,6 +18,7 @@
  * @property Location $location
  * @property LocationCoordinates $locationCoordinates
  * @property Person[] $tblPeople
+ * @property AcquisitionEventSource[] $acquisitionEventSources
  * @property BotanicalObject[] $botanicalObjects
  */
 class AcquisitionEvent extends CActiveRecord {
@@ -66,6 +67,7 @@ class AcquisitionEvent extends CActiveRecord {
             'location' => array(self::BELONGS_TO, 'Location', 'location_id'),
             'locationCoordinates' => array(self::BELONGS_TO, 'LocationCoordinates', 'location_coordinates_id'),
             'tblPeople' => array(self::MANY_MANY, 'Person', 'tbl_acquisition_event_person(acquisition_event_id, person_id)'),
+            'acquisitionEventSources' => array(self::HAS_MANY, 'AcquisitionEventSource', 'acquisition_event_id'),
             'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'acquisition_event_id'),
         );
     }
@@ -104,8 +106,7 @@ class AcquisitionEvent extends CActiveRecord {
         $criteria->compare('location_coordinates_id', $this->location_coordinates_id);
 
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
-
 }

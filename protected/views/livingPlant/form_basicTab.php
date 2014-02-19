@@ -1,58 +1,49 @@
-<table>
-    <tr>
-        <td>
-            <!-- scientific name -->
-            <div class="row">
-                <?php echo $form->labelEx($model_botanicalObject, 'scientific_name_id'); ?>
-                <?php
-                // Enable auto-completer for taxon field
-                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                    'name' => 'scientificName',
-                    'sourceUrl' => 'index.php?r=autoComplete/taxon',
-                    // additional javascript options for the autocomplete plugin
-                    'options' => array(
-                        'minLength' => '2',
-                        'change' => 'js:function( event, ui ) {
-                                if( typeof ui.item !== "undefined" ) {
-                                    $( "#BotanicalObject_scientific_name_id" ).val( ui.item.id );
-                                    // load spatial distribution information for selected name
-                                    $.ajax({
-                                        url: "' . $this->createUrl('livingPlant/ajaxScientifcNameInformation', array('scientific_name_id' => 0) ) . '" + ui.item.id,
-                                        success: function(data) {
-                                            $("#ScientificNameInformation_spatial_distribution").val(data.spatial_distribution);
-                                        },
-                                        dataType: "json"
-                                    });
-                                }
-                            }',
-                    ),
-                    'value' => $model_botanicalObject->scientificName,
-                        /* 'htmlOptions' => array(
-                          'value' => $model_botanicalObject->getScientificName()
-                          ), */
-                ));
-                ?>
-                <?php echo $form->hiddenField($model_botanicalObject, 'scientific_name_id'); ?>
-                <?php echo $form->error($model_botanicalObject, 'scientific_name_id'); ?>
-            </div>
-        </td>
-        <td>
-            <!-- family name -->
-            <div class="row">
+<!-- scientific name -->
+<div class="row">
+    <?php echo $form->labelEx($model_botanicalObject, 'scientific_name_id'); ?>
+    <?php
+    // Enable auto-completer for taxon field
+    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+        'name' => 'scientificName',
+        'sourceUrl' => 'index.php?r=autoComplete/scientificName',
+        // additional javascript options for the autocomplete plugin
+        'options' => array(
+            'minLength' => '2',
+            'change' => 'js:function( event, ui ) {
+                    if( typeof ui.item !== "undefined" ) {
+                        $( "#BotanicalObject_scientific_name_id" ).val( ui.item.id );
+                    }
+                }',
+        ),
+        'value' => $model_botanicalObject->scientificName,
+    ));
+    ?>
+    <?php echo $form->hiddenField($model_botanicalObject, 'scientific_name_id'); ?>
+    <?php echo $form->error($model_botanicalObject, 'scientific_name_id'); ?>
+</div>
+<!-- family name -->
+<div class="row">
+    <table border="0" width="100%">
+        <tr>
+            <td>
                 <?php echo $form->labelEx($model_botanicalObject, 'family'); ?>
                 <?php echo $form->textField($model_botanicalObject, 'family', array('readonly' => true)); ?>
                 <?php echo $form->error($model_botanicalObject, 'family'); ?>
-            </div>
-        </td>
-    </tr>
-</table>
+            </td>
+            <td>
+                <?php echo $form->labelEx($model_botanicalObject, 'familyReference'); ?>
+                <?php echo CHtml::encode($model_botanicalObject->familyReference); ?>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <!-- organisation -->
 <div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'organisation_id'); ?>
     <?php echo CHtml::textField('BotanicalObject_organisation_name', $model_botanicalObject->organisation->description, array('readonly' => 'readonly')); ?>
     <?php echo $form->hiddenField($model_botanicalObject, 'organisation_id'); ?>
-    <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;">Change</a>
+    <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq','Change'); ?></a>
 </div>
 
 <!-- place number -->
@@ -93,24 +84,15 @@
             <td>
                 <?php echo $form->labelEx(BotanicalObjectSex::model(), 'sex_id'); ?>
                 <?php
-                // Find all checked sex for this entry
-                $selected_sex = array();
-                if (!$model_livingPlant->isNewRecord) {
-                    $models_botanicalObjectSex = BotanicalObjectSex::model()->findAll('botanical_object_id=:botanical_object_id', array(':botanical_object_id' => $model_livingPlant->id));
-
-                    // Add all selected relevancy types to array
-                    foreach ($models_botanicalObjectSex as $model_botanicalObjectSex) {
-                        $selected_sex[] = $model_botanicalObjectSex->sex_id;
-                    }
-                }
-
-                // Create checkbox list for all relevancy type entries
-                $models_sex = Sex::model()->findAll();
-                $list_sex = CHtml::listData($models_sex, 'id', 'sex');
+                // display checkbox for assigned sexes
                 echo CHtml::checkBoxList(
                         'Sex',
-                        $selected_sex,
-                        $list_sex,
+                        CHtml::listData($model_botanicalObject->botanicalObjectSexes, 'id', 'id'),
+                        Html::listDataSorted(
+                                Sex::model()->findAll(),
+                                'id', 
+                                'sexTranslated'
+                        ),
                         array(
                             'labelOptions' => array('style' => 'display: inline'),
                             'separator' => ''
@@ -121,6 +103,80 @@
         </tr>
     </table>
 </div>
+
+<?php
+// access to label section only if either clearing or assigning is allowed for this user
+if( Yii::app()->user->checkAccess('oprtn_assignLabelType') || Yii::app()->user->checkAccess('oprtn_clearLabelType') ) {
+?>
+<!-- marking for label printing -->
+<div class="row">
+    <table style="width: auto;">
+        <tr>
+            <td>
+                <?php echo $form->labelEx(LabelType::model(), 'label_type_id'); ?>
+            </td>
+        </tr>
+        <?php
+        // synonym editing only if user is allowed to do so
+        if( Yii::app()->user->checkAccess('oprtn_assignLabelType') ) {
+        ?>
+        <tr>
+            <td>
+                <?php echo $form->labelEx($model_livingPlant, 'labelSynonymScientificName'); ?>
+                <?php
+                // Enable auto-completer for taxon field
+                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                    'name' => 'label_synonymName',
+                    'sourceUrl' => 'index.php?r=autoComplete/scientificName',
+                    // additional javascript options for the autocomplete plugin
+                    'options' => array(
+                        'minLength' => '2',
+                        'change' => 'js:function( event, ui ) {
+                                if( typeof ui.item !== "undefined" ) {
+                                    $( "#LivingPlant_label_synonym_scientific_name_id" ).val( ui.item.id );
+                                }
+                            }',
+                    ),
+                    'value' => $model_livingPlant->labelSynonymScientificName,
+                ));
+                ?>
+                <?php echo $form->hiddenField($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
+                <?php echo $form->error($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
+            </td>
+        </tr>
+        <?php
+        }
+        
+        // by default only display assigned labels
+        $labelCheckBoxList_data = CHtml::listData($model_botanicalObject->tblLabelTypes, 'label_type_id', 'label_type_id');
+        $labelCheckBoxList_select = Html::listDataSorted($model_botanicalObject->tblLabelTypes, 'label_type_id', 'typeTranslated');
+        
+        // if user is allowed to assign the labels, then it sees all available types
+        if( Yii::app()->user->checkAccess('oprtn_assignLabelType') ) {
+            $labelCheckBoxList_select = Html::listDataSorted(LabelType::model()->findAll(), 'label_type_id', 'typeTranslated');
+        }
+        ?>
+        <tr>
+            <td>
+                <?php
+                // display checkbox for label types
+                echo CHtml::checkBoxList(
+                        'LabelTypes',
+                        $labelCheckBoxList_data,
+                        $labelCheckBoxList_select,
+                        array(
+                            'labelOptions' => array('style' => 'display: inline'),
+                            'separator' => ''
+                        )
+                );
+                ?>
+            </td>
+        </tr>
+    </table>
+</div>
+<?php
+}
+?>
 
 <!-- separated (not in collection anymore) -->
 <div class="row">
@@ -141,14 +197,14 @@
         <tr>
             <td>
                 <?php
-                $separation_types = CHtml::listData(SeparationType::model()->findAll(), 'id', 'type');
+                $separation_types = Html::listDataSorted(SeparationType::model()->findAll(), 'id', 'typeTranslated');
                 
                 // check if we have a valid id already, if not skip the hidden field
                 if( $model_separation->id > 0 ) {
                     echo $form->hiddenField($model_separation, "[$i]id");
                 }
                 else {
-                    $separation_types = array( '' => 'None' ) + $separation_types;
+                    $separation_types = array( '' => Yii::t('jacq_types', 'none') ) + $separation_types;
                 }
                 
                 echo $form->labelEx($model_separation, 'separation_type_id');

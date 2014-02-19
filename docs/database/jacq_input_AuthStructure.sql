@@ -1,13 +1,16 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.4
+-- version 4.0.5
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2012 at 06:50 PM
--- Server version: 5.1.63-log
--- PHP Version: 5.3.5
+-- Erstellungszeit: 14. Dez 2013 um 07:01
+-- Server Version: 5.5.31
+-- PHP-Version: 5.3.17
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,13 +20,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `jacq_input`
+-- Datenbank: `jacq_input`
 --
 
-SET foreign_key_checks = 0;
-
 --
--- Dumping data for table `frmwrk_AuthAssignment`
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthAssignment`
+--
+
+TRUNCATE TABLE `frmwrk_AuthAssignment`;
+--
+-- Daten für Tabelle `frmwrk_AuthAssignment`
 --
 
 INSERT INTO `frmwrk_AuthAssignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
@@ -31,7 +37,12 @@ INSERT INTO `frmwrk_AuthAssignment` (`itemname`, `userid`, `bizrule`, `data`) VA
 ('grp_admin', 1, NULL, 'N;');
 
 --
--- Dumping data for table `frmwrk_AuthItem`
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthItem`
+--
+
+TRUNCATE TABLE `frmwrk_AuthItem`;
+--
+-- Daten für Tabelle `frmwrk_AuthItem`
 --
 
 INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
@@ -42,58 +53,91 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('managerLivingplant', 2, 'manage living plants', NULL, 'N;'),
 ('managerOrganisation', 2, 'manage organisation entries', NULL, 'N;'),
 ('managerTreeRecordFile', 2, 'manage tree record files', NULL, 'N;'),
+('oprtn_aclBotanicalObject', 0, 'ACL for botanical object level', NULL, 'N;'),
+('oprtn_aclClassification', 0, 'ACL for classification level', NULL, 'N;'),
+('oprtn_aclOrganisation', 0, 'ACL access for organisation level', NULL, 'N;'),
+('oprtn_assignLabelType', 0, 'Assign label for printing', NULL, 'N;'),
+('oprtn_clearLabelType', 0, 'Clear label assignment(s)', NULL, 'N;'),
 ('oprtn_createLivingplant', 0, 'create a living plant', '', 's:0:"";'),
 ('oprtn_createOrganisation', 0, 'create / update an organisation', NULL, 'N;'),
 ('oprtn_createTreeRecordFile', 0, 'create / update a tree record file', '', 's:0:"";'),
+('oprtn_createUser', 0, 'create user', '', 's:0:"";'),
 ('oprtn_deleteLivingplant', 0, 'delete a living plant', '', 's:0:"";'),
 ('oprtn_deleteOrganisation', 0, 'delete an organisation entry', NULL, 'N;'),
 ('oprtn_deleteTreeRecordFile', 0, 'delete a tree record file', NULL, 'N;'),
+('oprtn_deleteUser', 0, 'delete user', NULL, 'N;'),
 ('oprtn_readLivingplant', 0, 'read/show a living plant', '', 's:0:"";'),
+('oprtn_showClassificationBrowser', 0, 'show classification browser', NULL, 'N;'),
 ('rbacManager', 2, 'manage RBAC', NULL, 'N;'),
 ('tsk_createOrganisation', 1, 'create / update an organisation', NULL, 'N;'),
 ('tsk_createTreeRecordFile', 1, 'create / update a tree record file', NULL, 'N;'),
 ('tsk_deleteLivingplant', 1, 'delete a living plant', '', 's:0:"";'),
 ('tsk_deleteOrganisation', 1, 'delete an organisation', NULL, 'N;'),
 ('tsk_deleteTreeRecordFile', 1, 'delete a tree record file', NULL, 'N;'),
-('tsk_editLivingplant', 1, 'Edit a living plant', '', 's:0:"";');
+('tsk_editLivingplant', 1, 'Edit a living plant', '', 's:0:"";'),
+('tsk_manageACL', 1, 'manage ACL access', NULL, 'N;'),
+('tsk_managementLabels', 1, 'Label Manager', NULL, 'N;'),
+('tsk_managerUser', 1, 'manager users', NULL, 'N;');
 
 --
--- Dumping data for table `frmwrk_AuthItemChild`
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthItemChild`
+--
+
+TRUNCATE TABLE `frmwrk_AuthItemChild`;
+--
+-- Daten für Tabelle `frmwrk_AuthItemChild`
 --
 
 INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 ('grp_admin', 'acs_greenhouse'),
 ('grp_admin', 'editorLivingplant'),
 ('managerLivingplant', 'editorLivingplant'),
+('grp_admin', 'grp_guest'),
 ('grp_admin', 'managerLivingplant'),
 ('grp_admin', 'managerOrganisation'),
 ('grp_admin', 'managerTreeRecordFile'),
+('tsk_manageACL', 'oprtn_aclBotanicalObject'),
+('tsk_manageACL', 'oprtn_aclClassification'),
+('tsk_manageACL', 'oprtn_aclOrganisation'),
+('tsk_managementLabels', 'oprtn_assignLabelType'),
+('tsk_managementLabels', 'oprtn_clearLabelType'),
 ('tsk_editLivingplant', 'oprtn_createLivingplant'),
 ('tsk_createOrganisation', 'oprtn_createOrganisation'),
 ('tsk_createTreeRecordFile', 'oprtn_createTreeRecordFile'),
+('tsk_managerUser', 'oprtn_createUser'),
 ('tsk_deleteLivingplant', 'oprtn_deleteLivingplant'),
 ('tsk_deleteOrganisation', 'oprtn_deleteOrganisation'),
 ('tsk_deleteTreeRecordFile', 'oprtn_deleteTreeRecordFile'),
+('tsk_managerUser', 'oprtn_deleteUser'),
 ('grp_guest', 'oprtn_readLivingplant'),
 ('oprtn_createLivingplant', 'oprtn_readLivingplant'),
+('grp_guest', 'oprtn_showClassificationBrowser'),
 ('grp_admin', 'rbacManager'),
 ('managerOrganisation', 'tsk_createOrganisation'),
 ('managerTreeRecordFile', 'tsk_createTreeRecordFile'),
 ('managerLivingplant', 'tsk_deleteLivingplant'),
 ('managerOrganisation', 'tsk_deleteOrganisation'),
 ('managerTreeRecordFile', 'tsk_deleteTreeRecordFile'),
-('editorLivingplant', 'tsk_editLivingplant');
+('editorLivingplant', 'tsk_editLivingplant'),
+('grp_admin', 'tsk_manageACL'),
+('managerLivingplant', 'tsk_managementLabels'),
+('grp_admin', 'tsk_managerUser');
 
 --
--- Dumping data for table `frmwrk_user`
+-- TRUNCATE Tabelle vor dem Einfügen `frmwrk_user`
 --
 
-INSERT INTO `frmwrk_user` (`id`, `username`, `password`, `salt`) VALUES
-(1, 'admin', '9ab6e20b2bb6fc6d5a8140a904af35c88a961f7d', 'hU8I9=ku'),
-(2, 'editor', 'fe759e678a18e0b2d1239fa7ff1c29ae3c206227', 'jUhdia(14');
+TRUNCATE TABLE `frmwrk_user`;
+--
+-- Daten für Tabelle `frmwrk_user`
+--
+
+INSERT INTO `frmwrk_user` (`id`, `username`, `password`, `salt`, `user_type_id`, `employment_type_id`, `title_prefix`, `firstname`, `lastname`, `title_suffix`, `birthdate`, `organisation_id`) VALUES
+(1, 'admin', '7e0ae685a84eedefe091fc1a6ea8388fc5961089', 'WzbA$vhKNh', 2, 1, '', '', '', '', '2013-12-10', 4),
+(2, 'editor', '7bbc1c5812d76078e8b0954afe521dc7bcbcfd59', '=PHazE,4Sc', 1, 1, '', '', '', '', '0000-00-00', 1);
+SET FOREIGN_KEY_CHECKS=1;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-SET foreign_key_checks = 1;

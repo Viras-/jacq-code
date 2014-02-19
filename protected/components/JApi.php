@@ -35,7 +35,7 @@ in ExampleController.php
  *	Request: /?r=example/japi&action=test
  *	Returns: 500 Internal Server Error
  *
- *	
+ *
  * @package Japi
  * @author Kevin Gravier <kevin@mrkmg.com>
  * @license MIT http://www.opensource.org/licenses/mit-license.php
@@ -46,12 +46,12 @@ class JApi extends CAction
 {
 	/**
 	 * Holds the name of the requested action
-	 * 
+	 *
 	 * @access private
 	 * @var string name of function
 	*/
 	private $func;
-	
+
 	/**
 	 * Hold the data returned by requested action
 	 *
@@ -59,7 +59,7 @@ class JApi extends CAction
 	 * @var mixed data to be serialized and returned via json object
 	*/
 	private $returnData = NULL;
-	
+
 	/**
 	 * Runs the requested action
 	 *
@@ -75,19 +75,19 @@ class JApi extends CAction
 		{
 			$_GET['action'] = 'index';
 		}
-		
+
 		$this->makeFunc($_GET['action']);
-		
+
 		if(!method_exists($this->getController(),$this->func))
 		{
 			throw new CHttpException(404,'Action not found: '.$this->func);
 		}
-		
-		
+
+
 		$this->runFunc();
 		$this->send();
 	}
-	
+
 	/**
 	 * Runs the reuested action
 	 *
@@ -107,7 +107,7 @@ class JApi extends CAction
 		{
 			$ps=array();
 			$params = $_GET;
-			
+
 			foreach($method->getParameters() as $i=>$param)
 			{
 				$name=$param->getName();
@@ -128,7 +128,7 @@ class JApi extends CAction
   			  $this->returnData = $method->invokeArgs($this->getController(),$ps);
 		}
 	}
-	
+
 	/**
 	 * Returns the function name needed to be run in the controller to respond to the request
 	 *
@@ -138,7 +138,7 @@ class JApi extends CAction
 	{
 		$this->func = 'japi'.ucfirst(strtolower($action));
 	}
-	
+
 	/**
 	 * Sends the result of the request to the client in JSON
 	 *
@@ -149,10 +149,14 @@ class JApi extends CAction
 	private function send()
 	{
 		header('Content-Type: application/json');
-		echo CJavaScript::jsonEncode($this->returnData);
+        if (!empty($_GET['callback'])) {    // is the call JSONP?
+            echo $_GET['callback'] . '(' . CJavaScript::jsonEncode($this->returnData) . ')';
+        } else {
+            echo CJavaScript::jsonEncode($this->returnData);
+        }
 	}
-	
-	
+
+
 }
 
 ?>

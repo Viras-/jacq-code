@@ -34,9 +34,9 @@ class AutoCompleteController extends JSONServiceController {
     }
 
     /**
-     * Search for fitting taxon names and return them 
+     * Search for fitting scientific names and return them 
      */
-    public function actionTaxon($term) {
+    public function actionScientificName($term) {
         $pieces = explode(' ', $term);
 
         // Check for valid input
@@ -194,6 +194,31 @@ class AutoCompleteController extends JSONServiceController {
         // Output results as service response
         $this->serviceOutput($results);
     }
+    
+    /**
+     * Autocompleter function for Acquisition-Source entries
+     * @param string $term name of acquisition source entry to search for
+     */
+    public function actionAcquisitionSource($term) {
+        $results = array();
+        
+        // search for entries containing the search term as name
+        $dbCriteria = new CDbCriteria();
+        $dbCriteria->addSearchCondition('name', $term);
+        $models_acquisitionSource = AcquisitionSource::model()->findAll($dbCriteria);
+
+        // add all found entries to the result
+        foreach( $models_acquisitionSource as $model_acquisitionSource ) {
+            $results[] = array(
+                'label' => $model_acquisitionSource->name,
+                'value' => $model_acquisitionSource->name,
+                'id' => $model_acquisitionSource->acquisition_source_id,
+            );
+        }
+        
+        // Output results as service response
+        $this->serviceOutput($results);
+    }
 
     /**
      * @return array action filters
@@ -213,11 +238,11 @@ class AutoCompleteController extends JSONServiceController {
         return array(
             array(
                 'allow',
-                'actions' => array('taxon'),
+                'actions' => array('scientificName'),
                 'users' => array('*'),
             ),
             array('allow',
-                'actions' => array('location', 'person'),
+                'actions' => array('location', 'person', 'acquisitionSource'),
                 'users' => array('@'),
             ),
             array('deny', // deny all users by default

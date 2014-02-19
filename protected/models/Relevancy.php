@@ -63,7 +63,7 @@ class Relevancy extends ActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => Yii::t('jacq', 'ID'),
-            'relevancy_type_id' => Yii::t('jacq', 'Relevancy Type'),
+            'relevancy_type_id' => Yii::t('jacq', 'Relevancy'),
             'living_plant_id' => Yii::t('jacq', 'Living Plant'),
         );
     }

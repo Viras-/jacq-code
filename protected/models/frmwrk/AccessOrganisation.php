@@ -83,8 +83,8 @@ class AccessOrganisation extends CActiveRecord {
         $criteria->compare('organisation_id', $this->organisation_id);
 
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
 
 }

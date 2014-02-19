@@ -1,46 +1,36 @@
 <?php
-require("AutoCompleteController.php");
- 
 /**
  * Helper exception class for import errors
  */
 class ImportException extends Exception {
     public function __construct($message, $activeRecord) {
-        $message .= ': ' . var_export($activeRecord->getErrors());
+        $message .= ': ' . var_export($activeRecord->getErrors(), true);
         
         parent::__construct($message);
     }
 }
 
 /**
- * Controller for handling import of old data
+ * Command for handling import of old data
  */
-class ImportController extends Controller {
+class ImportCommand extends CConsoleCommand {
     /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
+     * Import data from old HBV database
+     * @param type $start
+     * @throws ImportException
+     * @throws Exception
      */
-    public function accessRules() {
-        return array(
-            array('allow',
-                'users' => array('@'),
-            ),
-            array('deny', // deny all users by default
-                'users' => array('*'),
-            ),
-        );
-    }
-
-
-    public function actionImport($start = 0) {
+    public function actionImportHBV($start = 0) {
         // import import models
         Yii::import('application.models.import.*');
+        // import autocomplete controller
+        Yii::import('application.controllers.AutoCompleteController');
         
         // setup default dbcriteria
         $dbCriteria = new CDbCriteria();
         $dbCriteria->limit = 10;
         $dbCriteria->offset = $start;
+        $dbCriteria->order = 'IDPflanze ASC';
         
         // fetch number of akzession entries
         $akzessionCount = Akzession::model()->count($dbCriteria);
@@ -222,7 +212,7 @@ class ImportController extends Controller {
                 }
                 // if no match was found, assign default name
                 if( $model_botanicalObject->scientific_name_id == 0 ) {
-                    $model_botanicalObject->scientific_name_id = 46996;
+                    $model_botanicalObject->scientific_name_id = Yii::app()->params['indetScientificNameId'];
                 }
                 
                 // Add addition scientific name information
@@ -242,25 +232,15 @@ class ImportController extends Controller {
                         throw new ImportException('Unable to save scientificNameInformation', $model_scientificNameInformation);
                     }
                 }
-
+                
                 // Try to find a matching entry for the revier
-                $model_botanicalObject->organisation_id = 1;
-                $model_importRevier = Revier::model()->findByAttributes(array('IDRevier' => $model_akzession->IDRevier));
-                if( $model_importRevier != NULL ) {
-                    // use either unterabteilung or revierbezeichnung for finding a fitting organisation
-                    $revierName = $model_importRevier->Unterabteilung;
-                    if($revierName == NULL) $revierName = $model_importRevier->Revierbezeichnung;
-                    
-                    // create criteria for searching the organisation data
-                    $dbRevierCriteria = new CDbCriteria();
-                    $dbRevierCriteria->addSearchCondition('description', $revierName);
-                    $model_organisation = Organisation::model()->find($dbRevierCriteria);
-                    
-                    // if we find a fitting organisation, assign it to the botanical object
-                    if( $model_organisation != NULL ) {
-                        $model_botanicalObject->organisation_id = $model_organisation->id;
-                    }
+                $model_organisation = Organisation::getFromIDRevier($model_akzession->IDRevier, intval(substr($model_akzession->FreilandNr,0,2)));
+                if( $model_organisation == NULL ) {
+                    throw new Exception('Unable to load Organisation for Revier: ' . $model_akzession->IDRevier);
                 }
+                $model_botanicalObject->organisation_id = $model_organisation->id;
+                // check for "Abgang" and set the flag
+                if( $model_akzession->Abgang > 0 ) $model_botanicalObject->separated = 1;
                 
                 // save botanical object model
                 if( !$model_botanicalObject->save() ) {
@@ -272,9 +252,6 @@ class ImportController extends Controller {
                 $model_importProperties->botanical_object_id = $model_botanicalObject->id;
                 $model_importProperties->species_name = $model_importSpecies->getScientificName();
                 $model_importProperties->IDPflanze = $model_akzession->IDPflanze;
-                if( $model_importRevier != NULL ) {
-                    $model_importProperties->Revier = $model_importRevier->Revierbezeichnung . ', ' . $model_importRevier->Unterabteilung;
-                }
                 if( $model_importSysDiverses != NULL ) {
                     $model_importProperties->Verbreitung = $model_importSysDiverses->Verbreitung;
                 }
@@ -296,13 +273,36 @@ class ImportController extends Controller {
                     $model_livingPlant->ipen_number = $model_akzession->IPENNr;
                     $model_livingPlant->ipen_locked = 1;
                 }
+                else {
+                    $countryCode = "XX";
+                    $ipenState = $model_organisation->greenhouse;
+                    
+                    // try to find the country-code through the acquisition country
+                    if( $model_importHerkunft->CollLand != NULL ) {
+                        $results = Yii::app()->geoNameService->search(array(
+                            'name' => $model_importHerkunft->CollLand,  // search for the collection country
+                            'adminCode1' => '00',                       // find only countries
+                        ));
+                        
+                        // if we have a valid result, use the first countryCode found
+                        if( $results['totalResultsCount'] > 0 ) {
+                            $countryCode = $results['geonames'][0]['countryCode'];
+                        }
+                    }
+                    
+                    // generate new IPEN numbers
+                    $model_livingPlant->ipen_number = $countryCode . '-' . $ipenState . '-' . 'WU';
+                }
                 $model_livingPlant->culture_notes = $model_akzession->Kulturhinweise;
                 $model_livingPlant->cultivation_date = $model_akzession->Anbaudatum;
                 $model_livingPlant->incoming_date_id = $model_incomingDate->id;
+                // use old "FreilandNr" as place_number
+                $model_livingPlant->place_number = $model_akzession->FreilandNr;
+
+                // save the living plant
                 if( !$model_livingPlant->save() ) {
                     throw new ImportException('Unable to save livingPlant', $model_livingPlant);
                 }
-                
                 // import old accession numbers
                 if( $model_akzession->AkzessNr != NULL ) {
                     $this->assignAccessionNumber($model_livingPlant->id, $model_akzession->AkzessNr);
@@ -361,11 +361,105 @@ class ImportController extends Controller {
             'akzessionCount' => $akzessionCount
         ));
     }
-
-    public function actionIndex() {
-        $this->actionImport();
-    }
     
+    /**
+     * Import the legacy classification from the native JACQ system into the new classification structure
+     * @throws Exception
+     */
+    public function actionJacqLegacyClassification() {
+        print("Deleting old classification entries\n");
+        
+        // remove all previous entries from classification
+        $db = Yii::app()->dbHerbarInput;
+        $db->createCommand(
+                  "DELETE s, c FROM `tbl_tax_synonymy` AS s LEFT JOIN `tbl_tax_classification` c ON c.`tax_syn_ID` = s.`tax_syn_ID` WHERE s.`source_citationID` = '" . Yii::app()->params['jacqClassificationCitationId'] . "'")
+                ->execute();
+
+        /*
+         * re-insert the new classification
+         */
+        // load all families
+        $models_taxFamilies = TaxFamilies::model()->findAll();
+        foreach($models_taxFamilies as $i => $model_taxFamilies) {
+            print("Processing family " . ($i+1) . "/" . count($models_taxFamilies) . "\n");
+            
+            // find genera entry for family
+            $model_taxFamiliesGenera = TaxGenera::model()->findByAttributes(array(
+                'genus' => $model_taxFamilies->family
+            ));
+            if( $model_taxFamiliesGenera == NULL ) {
+                //throw new Exception('Unable to find genus entry for family: ' . $model_taxFamilies->family);
+                print("Unable to find genus entry for family: '" . $model_taxFamilies->family . "'\n");
+                continue;
+            }
+            
+            // find the species entry for the genera entry of the family
+            $model_taxFamiliesSpecies = TaxSpecies::model()->findByAttributes(array(
+                'genID' => $model_taxFamiliesGenera->genID,
+                'tax_rankID' => 9
+            ));
+            if( $model_taxFamiliesSpecies == NULL ) {
+                //throw new Exception('Unable to find species entry for family: ' . $model_taxFamilies->family);
+                print("Unable to find species entry for family: '" . $model_taxFamilies->family . "'\n");
+                continue;
+            }
+            
+            // add the found species entry as top level element
+            $model_taxSynonymyFamily = new TaxSynonymy();
+            $model_taxSynonymyFamily->taxonID = $model_taxFamiliesSpecies->taxonID;
+            $model_taxSynonymyFamily->userID = 0;
+            $model_taxSynonymyFamily->timestamp = new CDbExpression('NOW()');
+            $model_taxSynonymyFamily->source_citationID = Yii::app()->params['jacqClassificationCitationId'];
+            $model_taxSynonymyFamily->source = 'literature';
+            if( !$model_taxSynonymyFamily->save() ) {
+                throw new Exception('Unable to save synonymy entry for family: ' . $model_taxFamilies->family . ' (' . var_export($model_taxSynonymyFamily->getErrors(), true) . ')');
+            }
+            
+            // find all genus entries for the current family
+            $models_taxGenera = TaxGenera::model()->findAllByAttributes(array(
+                'familyID' => $model_taxFamilies->familyID
+            ));
+            foreach( $models_taxGenera as $j => $model_taxGenera ) {
+                print("Processing genus " . ($j + 1) . "/" . count($models_taxGenera) . "\r");
+                
+                // ignore family entry in genus table
+                if( $model_taxGenera->genID == $model_taxFamiliesGenera->genID ) continue;
+                
+                // find the species entries for this genus
+                $model_taxGeneraSpecies = TaxSpecies::model()->findByAttributes(array(
+                    'genID' => $model_taxGenera->genID,
+                    'tax_rankID' => 7
+                ));
+                if( $model_taxGeneraSpecies == NULL ) {
+                    //throw new Exception('Unable to find species entry for genus: ' . $model_taxGenera->genus);
+                    print('Unable to find species entry for genus: ' . $model_taxGenera->genus . " - ignoring\n");
+                    continue;
+                }
+                
+                // now add the species entry of the genus as accepted name...
+                $model_taxSynonymyGenus = new TaxSynonymy();
+                $model_taxSynonymyGenus->taxonID = $model_taxGeneraSpecies->taxonID;
+                $model_taxSynonymyGenus->userID = 0;
+                $model_taxSynonymyGenus->timestamp = new CDbExpression('NOW()');
+                $model_taxSynonymyGenus->source_citationID = Yii::app()->params['jacqClassificationCitationId'];
+                $model_taxSynonymyGenus->source = 'literature';
+                if( !$model_taxSynonymyGenus->save() ) {
+                    throw new Exception('Unable to save synonymy entry for genus: ' . $model_taxGenera->genus . ' (' . var_export($model_taxSynonymyGenus->getErrors(), true) . ')');
+                }
+                // ...and add the family as parent
+                $model_taxClassificationGenus = new TaxClassification();
+                $model_taxClassificationGenus->tax_syn_ID = $model_taxSynonymyGenus->tax_syn_ID;
+                $model_taxClassificationGenus->parent_taxonID = $model_taxFamiliesSpecies->taxonID;
+                if( !$model_taxClassificationGenus->save() ) {
+                    throw new Exception('Unable to save classification entry for genus: ' . $model_taxGenera->genus . ' (' . var_export($model_taxClassificationGenus->getErrors(), true) . ')');
+                }
+            }
+            print("\n");
+        }
+        
+        print("Done!\n");
+    }
+
     /**
      * Helper function for assigning an accession number
      * @param int $living_plant_id ID of living plant to assign this accession number to

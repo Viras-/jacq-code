@@ -74,6 +74,7 @@ class Certificate extends ActiveRecord {
             'certificate_type_id' => Yii::t('jacq', 'Certificate Type'),
             'number' => Yii::t('jacq', 'Number'),
             'annotation' => Yii::t('jacq', 'Annotation'),
+            'actions' => Yii::t('jacq', 'Actions'),
         );
     }
 

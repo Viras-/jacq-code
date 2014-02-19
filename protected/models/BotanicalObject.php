@@ -27,6 +27,7 @@
  * @property Person $determinedBy
  * @property Organisation $organisation
  * @property IdentStatus $identStatus
+ * @property LabelType[] $tblLabelTypes
  * @property ScientificNameInformation $scientificNameInformation
  * @property BotanicalObjectSex[] $botanicalObjectSexes
  * @property Diaspora $diaspora
@@ -35,8 +36,27 @@
  * @property LivingPlant $livingPlant
  * @property Separation[] $separations
  * @property ViewTaxon $viewTaxon
+ * @property TaxSpecies $taxSpecies
+ * @property Specimen[] $specimens
  */
 class BotanicalObject extends ActiveRecord {
+    /**
+     * Status indicator for preventing multiple family searches
+     * @var boolean
+     */
+    protected $familySearched = false;
+    
+    /**
+     * Name of family
+     * @var string
+     */
+    protected $family = NULL;
+    
+    /**
+     * Reference used for family searching
+     * @var string
+     */
+    protected $familyReference = NULL;
 
     /**
      * Returns the static model of the specified AR class.
@@ -63,12 +83,37 @@ class BotanicalObject extends ActiveRecord {
     }
 
     /**
+     * Virtual attribute for CSV export
+     * @return string
+     */
+    public function getCSVSexes() {
+        $csvSexes = array();
+        
+        if( is_array($this->botanicalObjectSexes) ) {
+            foreach( $this->botanicalObjectSexes as $BotanicalObjectSex ) {
+                $csvSexes[] = Yii::t('jacq', $BotanicalObjectSex->sex);
+            }
+        }
+        
+        return join(',', $csvSexes);
+    }
+
+    /**
      * Fetch the scientific name for the given botanical object
      * @return string 
      */
     public function getScientificName() {
+        // replace indet name with originally imported name
+        if( $this->scientific_name_id == Yii::app()->params['indetScientificNameId'] ) {
+            if( $this->importProperties != NULL ) {
+                return $this->importProperties->species_name . "*";
+            }
+        }
+        
+        // check for a correct scientific name entry
         if( $this->viewTaxon == NULL ) return NULL;
         
+        // return the constructed scientific name
         return $this->viewTaxon->getScientificName();
     }
     
@@ -77,13 +122,62 @@ class BotanicalObject extends ActiveRecord {
      * @return string Name of family
      */
     public function getFamily() {
-        $model_familyTaxSynonymy = $this->getFamilyByReference(10400, 'citation');
+        // trigger searching for family first
+        $this->searchFamily();
         
-        // if no family was found, return 'Unknown'
-        if( $model_familyTaxSynonymy == NULL ) return Yii::t('jacq', 'Unknown');
+        // check if we've found a valid family, if not return Unknown
+        if( $this->family != NULL ) {
+            return $this->family;
+        }
+        else {
+            return Yii::t('jacq', 'Unknown');
+        }
+    }
+    
+    /**
+     * Returns the name of the reference used for family finding
+     * @return type
+     */
+    public function getFamilyReference() {
+        // trigger searching for family first
+        $this->searchFamily();
+
+        // return the found reference
+        return $this->familyReference;
+    }
+    
+    /**
+     * Searches for the family of the current botanical object, uses references as defined by config as a priority list
+     * @return null|string null if no family found, otherwise the family name as string
+     */
+    protected function searchFamily() {
+        // check if we've searched before
+        if( $this->familySearched ) return;
         
-        // Otherwise return the scientific name
-        return $model_familyTaxSynonymy->viewTaxon->getScientificName();
+        // cycle all used references and check them for a family entry
+        $model_familyTaxSynonymy = NULL;
+        $citationID = 0;
+        foreach(Yii::app()->params['familyClassificationIds'] as $familyClassificationId) {
+            $model_familyTaxSynonymy = $this->getFamilyByReference($familyClassificationId, 'citation');
+            if ($model_familyTaxSynonymy != NULL) {
+                $citationID = $familyClassificationId;
+                break;
+            }
+        }
+        
+        // if a family was found, remember scientific name
+        if ($model_familyTaxSynonymy != NULL) {
+            $this->family = $model_familyTaxSynonymy->viewTaxon->getScientificName();
+            
+            // fetch the reference name
+            $dbHerbarView = Yii::app()->dbHerbarView;
+            $command = $dbHerbarView->createCommand("SELECT GetProtolog( '" . $citationID . "' ) AS 'Protolog'");
+            $protolog = $command->queryAll();
+            $this->familyReference = $protolog[0]['Protolog'];
+        }
+
+        // remember that we've search for the family
+        $this->familySearched = true;
     }
     
     /**
@@ -99,13 +193,31 @@ class BotanicalObject extends ActiveRecord {
             return NULL;
         }
         
-        // try to find the synonymy entry
+        // try to find the a direct synonymy entry
         $model_taxSynonymy = TaxSynonymy::model()->findByAttributes(array(
             'taxonID' => $this->scientific_name_id,
             'source_citationID' => $reference_id
         ));
         
         // check if we found a valid entry
+        if( $model_taxSynonymy == NULL && $this->taxSpecies != NULL ) {
+            // try to find an entry for the genus in the species table
+            $model_taxSpecies = TaxSpecies::model()->findByAttributes(array(
+                'genID' => $this->taxSpecies->genID,
+                'tax_rankID' => 7,  // genus rank ID
+            ));
+            
+            // check for hit
+            if( $model_taxSpecies != NULL ) {
+                // find an entry in the synonymy for this genus
+                $model_taxSynonymy = TaxSynonymy::model()->findByAttributes(array(
+                    'taxonID' => $model_taxSpecies->taxonID,
+                    'source_citationID' => $reference_id,
+                ));
+            }
+        }
+        
+        // check if we found an entry
         if( $model_taxSynonymy == NULL ) return NULL;
         
         // make sure we have the accepted entry
@@ -126,6 +238,7 @@ class BotanicalObject extends ActiveRecord {
             array('acquisition_event_id, phenology_id, scientific_name_id, determined_by_id, organisation_id, accessible, redetermine, ident_status_id, separated', 'numerical', 'integerOnly' => true),
             array('habitat, habitus', 'length', 'max' => 45),
             array('determination_date, annotation', 'safe'),
+            array('determination_date', 'default', 'setOnEmpty' => true, 'value' => NULL),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, acquisition_event_id, phenology_id, scientific_name_id, habitat, habitus, determined_by_id, annotation, botanicalObjectSexes, redetermine, ident_status_id, separated', 'safe', 'on' => 'search'),
@@ -149,9 +262,12 @@ class BotanicalObject extends ActiveRecord {
             'livingPlant' => array(self::HAS_ONE, 'LivingPlant', 'id'),
             'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
             'identStatus' => array(self::BELONGS_TO, 'IdentStatus', 'ident_status_id'),
+            'tblLabelTypes' => array(self::MANY_MANY, 'LabelType', 'tbl_botanical_object_label(botanical_object_id, label_type_id)'),
             'scientificNameInformation' => array(self::BELONGS_TO, 'ScientificNameInformation', 'scientific_name_id'),
             'separations' => array(self::HAS_MANY, 'Separation', 'botanical_object_id'),
             'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'scientific_name_id'),
+            'taxSpecies' => array(self::BELONGS_TO, 'TaxSpecies', 'scientific_name_id'),
+            'specimens' => array(self::HAS_MANY, 'Specimen', 'botanical_object_id'),
         );
     }
 
@@ -175,6 +291,8 @@ class BotanicalObject extends ActiveRecord {
             'redetermine' => Yii::t('jacq', 'Redetermine'),
             'ident_status_id' => Yii::t('jacq', 'Ident Status'),
             'separated' => Yii::t('jacq', 'Separated'),
+            'family' => Yii::t('jacq', 'Family'),
+            'familyReference' => Yii::t('jacq', 'Reference for Family'),
         );
     }
 

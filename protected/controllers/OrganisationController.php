@@ -46,7 +46,7 @@ class OrganisationController extends Controller {
         if (isset($_POST['Organisation'])) {
             $model->attributes = $_POST['Organisation'];
             if ($model->save())
-                $this->redirect(array('update', 'id' => $model->id));
+                $this->redirect(array('update', 'id' => $model->id, 'success' => true));
         }
 
         $this->render('create', array(
@@ -59,7 +59,7 @@ class OrganisationController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id, $success = false) {
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
@@ -68,11 +68,12 @@ class OrganisationController extends Controller {
         if (isset($_POST['Organisation'])) {
             $model->attributes = $_POST['Organisation'];
             if ($model->save())
-                $this->redirect(array('update', 'id' => $model->id));
+                $this->redirect(array('update', 'id' => $model->id, 'success' => true));
         }
 
         $this->render('update', array(
             'model' => $model,
+            'success' => $success,
         ));
     }
 
