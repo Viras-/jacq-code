@@ -312,6 +312,57 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `tbl_habitus_type`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_habitus_type` ;
+
+CREATE TABLE IF NOT EXISTS `tbl_habitus_type` (
+  `habitus_type_id` INT NOT NULL,
+  `habitus` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`habitus_type_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tbl_scientific_name_information`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_scientific_name_information` ;
+
+CREATE TABLE IF NOT EXISTS `tbl_scientific_name_information` (
+  `scientific_name_id` INT NOT NULL AUTO_INCREMENT COMMENT 'Pointer to taxonID in old system',
+  `spatial_distribution` VARCHAR(255) NULL DEFAULT NULL,
+  `common_names` VARCHAR(255) NULL DEFAULT NULL COMMENT 'text field for common names relevant to the garden',
+  `habitus_type_id` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`scientific_name_id`),
+  INDEX `fk_tbl_scientific_name_information_tbl_habitus_type1_idx` (`habitus_type_id` ASC),
+  CONSTRAINT `fk_tbl_scientific_name_information_tbl_habitus_type1`
+    FOREIGN KEY (`habitus_type_id`)
+    REFERENCES `tbl_habitus_type` (`habitus_type_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tbl_cultivar`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_cultivar` ;
+
+CREATE TABLE IF NOT EXISTS `tbl_cultivar` (
+  `cultivar_id` INT NOT NULL,
+  `scientific_name_id` INT NOT NULL,
+  `cultivar` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`cultivar_id`),
+  INDEX `fk_tbl_cultivar_tbl_scientific_name_information1_idx` (`scientific_name_id` ASC),
+  CONSTRAINT `fk_tbl_cultivar_tbl_scientific_name_information1`
+    FOREIGN KEY (`scientific_name_id`)
+    REFERENCES `tbl_scientific_name_information` (`scientific_name_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `tbl_living_plant`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `tbl_living_plant` ;
@@ -329,10 +380,12 @@ CREATE TABLE IF NOT EXISTS `tbl_living_plant` (
   `index_seminum_type_id` INT NULL DEFAULT NULL,
   `incoming_date_id` INT NULL DEFAULT NULL,
   `label_synonym_scientific_name_id` INT NULL DEFAULT NULL COMMENT 'pointer to a taxonID for label printing (virtual synonym)',
+  `cultivar_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_tbl_living_plant_tbl_index_seminum_type1_idx` (`index_seminum_type_id` ASC),
   UNIQUE INDEX `accession_number_UNIQUE` (`accession_number` ASC),
   INDEX `fk_tbl_living_plant_tbl_acquisition_date1_idx` (`incoming_date_id` ASC),
+  INDEX `fk_tbl_living_plant_tbl_cultivar1_idx` (`cultivar_id` ASC),
   CONSTRAINT `fk_livingplant_object1`
     FOREIGN KEY (`id`)
     REFERENCES `tbl_botanical_object` (`id`)
@@ -346,6 +399,11 @@ CREATE TABLE IF NOT EXISTS `tbl_living_plant` (
   CONSTRAINT `fk_tbl_living_plant_tbl_acquisition_date1`
     FOREIGN KEY (`incoming_date_id`)
     REFERENCES `tbl_acquisition_date` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tbl_living_plant_tbl_cultivar1`
+    FOREIGN KEY (`cultivar_id`)
+    REFERENCES `tbl_cultivar` (`cultivar_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -848,21 +906,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tbl_scientific_name_information`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_scientific_name_information` ;
-
-CREATE TABLE IF NOT EXISTS `tbl_scientific_name_information` (
-  `scientific_name_id` INT NOT NULL AUTO_INCREMENT COMMENT 'Pointer to taxonID in old system',
-  `spatial_distribution` VARCHAR(255) NULL DEFAULT NULL,
-  `variety` VARCHAR(255) NULL DEFAULT NULL,
-  `common_names` VARCHAR(255) NULL DEFAULT NULL COMMENT 'text field for common names relevant to the garden',
-  `growth_form` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`scientific_name_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `tbl_acquisition_source`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `tbl_acquisition_source` ;
@@ -1016,6 +1059,10 @@ DROP TABLE IF EXISTS `view_taxon`;
 USE `jacq_input`;
 CREATE  OR REPLACE VIEW `view_taxon` AS select `ts`.`taxonID` AS `taxonID`,`ts`.`synID` AS `synID`,`ts`.`basID` AS `basID`,`ts`.`genID` AS `genID`,`ts`.`annotation` AS `annotation`,`ts`.`external` AS `external`,`tg`.`genus` AS `genus`,`tg`.`DallaTorreIDs` AS `DallaTorreIDs`,`tg`.`DallaTorreZusatzIDs` AS `DallaTorreZusatzIDs`,`tag`.`author` AS `author_g`,`tf`.`family` AS `family`,`tsc`.`category` AS `category`,`tst`.`status` AS `status`,`tst`.`statusID` AS `statusID`,`tr`.`rank` AS `rank`,`tr`.`tax_rankID` AS `tax_rankID`,`tr`.`rank_abbr` AS `rank_abbr`,`ta`.`author` AS `author`,`ta`.`authorID` AS `authorID`,`ta`.`Brummit_Powell_full` AS `Brummit_Powell_full`,`ta1`.`author` AS `author1`,`ta1`.`authorID` AS `authorID1`,`ta1`.`Brummit_Powell_full` AS `bpf1`,`ta2`.`author` AS `author2`,`ta2`.`authorID` AS `authorID2`,`ta2`.`Brummit_Powell_full` AS `bpf2`,`ta3`.`author` AS `author3`,`ta3`.`authorID` AS `authorID3`,`ta3`.`Brummit_Powell_full` AS `bpf3`,`ta4`.`author` AS `author4`,`ta4`.`authorID` AS `authorID4`,`ta4`.`Brummit_Powell_full` AS `bpf4`,`ta5`.`author` AS `author5`,`ta5`.`authorID` AS `authorID5`,`ta5`.`Brummit_Powell_full` AS `bpf5`,`te`.`epithet` AS `epithet`,`te`.`epithetID` AS `epithetID`,`te1`.`epithet` AS `epithet1`,`te1`.`epithetID` AS `epithetID1`,`te2`.`epithet` AS `epithet2`,`te2`.`epithetID` AS `epithetID2`,`te3`.`epithet` AS `epithet3`,`te3`.`epithetID` AS `epithetID3`,`te4`.`epithet` AS `epithet4`,`te4`.`epithetID` AS `epithetID4`,`te5`.`epithet` AS `epithet5`,`te5`.`epithetID` AS `epithetID5` from ((((((((((((((((((`herbarinput`.`tbl_tax_species` `ts` left join `herbarinput`.`tbl_tax_authors` `ta` on((`ta`.`authorID` = `ts`.`authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta1` on((`ta1`.`authorID` = `ts`.`subspecies_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta2` on((`ta2`.`authorID` = `ts`.`variety_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta3` on((`ta3`.`authorID` = `ts`.`subvariety_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta4` on((`ta4`.`authorID` = `ts`.`forma_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta5` on((`ta5`.`authorID` = `ts`.`subforma_authorID`))) left join `herbarinput`.`tbl_tax_epithets` `te` on((`te`.`epithetID` = `ts`.`speciesID`))) left join `herbarinput`.`tbl_tax_epithets` `te1` on((`te1`.`epithetID` = `ts`.`subspeciesID`))) left join `herbarinput`.`tbl_tax_epithets` `te2` on((`te2`.`epithetID` = `ts`.`varietyID`))) left join `herbarinput`.`tbl_tax_epithets` `te3` on((`te3`.`epithetID` = `ts`.`subvarietyID`))) left join `herbarinput`.`tbl_tax_epithets` `te4` on((`te4`.`epithetID` = `ts`.`formaID`))) left join `herbarinput`.`tbl_tax_epithets` `te5` on((`te5`.`epithetID` = `ts`.`subformaID`))) left join `herbarinput`.`tbl_tax_status` `tst` on((`tst`.`statusID` = `ts`.`statusID`))) left join `herbarinput`.`tbl_tax_rank` `tr` on((`tr`.`tax_rankID` = `ts`.`tax_rankID`))) left join `herbarinput`.`tbl_tax_genera` `tg` on((`tg`.`genID` = `ts`.`genID`))) left join `herbarinput`.`tbl_tax_authors` `tag` on((`tag`.`authorID` = `tg`.`authorID`))) left join `herbarinput`.`tbl_tax_families` `tf` on((`tf`.`familyID` = `tg`.`familyID`))) left join `herbarinput`.`tbl_tax_systematic_categories` `tsc` on((`tf`.`categoryID` = `tsc`.`categoryID`)));
 
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
 -- Data for table `frmwrk_user_type`
@@ -1188,7 +1235,3 @@ INSERT INTO `tbl_label_type` (`label_type_id`, `type`) VALUES (2, 'working');
 
 COMMIT;
 
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
