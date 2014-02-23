@@ -22,7 +22,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model_scientificNameInformation, 'habitus_type_id'); ?>
-        <?php echo $form->dropDownList($model_scientificNameInformation, 'habitus_type_id', CHtml::listData(HabitusType::model()->findAll(), 'habitus_type_id', 'habitusTranslated')); ?>
+        <?php echo $form->dropDownList($model_scientificNameInformation, 'habitus_type_id', CHtml::listData(HabitusType::model()->findAll(), 'habitus_type_id', 'habitusTranslated', true)); ?>
         <?php echo $form->error($model_scientificNameInformation, 'habitus_type_id'); ?>
     </div>
 
