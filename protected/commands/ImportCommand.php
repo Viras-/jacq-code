@@ -20,16 +20,23 @@ class ImportCommand extends CConsoleCommand {
      * @throws ImportException
      * @throws Exception
      */
-    public function actionHBV() {
+    public function actionHBV($IDPflanze = 0) {
         // import import models
         Yii::import('application.models.import.*');
         // import autocomplete controller
         Yii::import('application.controllers.AutoCompleteController');
         
+        // secure input parameters
+        $IDPflanze = intval($IDPflanze);
+        
         // setup default dbcriteria
         $dbCriteria = new CDbCriteria();
         $dbCriteria->limit = 10;
         $dbCriteria->order = 'IDPflanze ASC';
+        
+        if( $IDPflanze > 0 ) {
+            $dbCriteria->compare('IDPflanze', $IDPflanze);
+        }
         
         // fetch number of akzession entries
         $akzessionCount = Akzession::model()->count($dbCriteria);
@@ -162,8 +169,8 @@ class ImportCommand extends CConsoleCommand {
                                 array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
                                 $Erstelldatum);
                         $Erstelldatum = str_replace(
-                                array('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'),
-                                array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
+                                array('Januar', 'Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'),
+                                array('January', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
                                 $Erstelldatum);
 
                         $recording_date = strtotime($Erstelldatum);
