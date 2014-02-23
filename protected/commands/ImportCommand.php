@@ -220,8 +220,9 @@ class ImportCommand extends CConsoleCommand {
                         $model_botanicalObject->scientific_name_id = Yii::app()->params['indetScientificNameId'];
                     }
 
-                    // Add addition scientific name information
+                    // Add addition scientific name information & prepare cultivar info
                     $model_scientificNameInformation = ScientificNameInformation::model()->findByPk($model_botanicalObject->scientific_name_id);
+                    $model_cultivar = NULL;
                     // create new entry if necessary
                     if( $model_scientificNameInformation == NULL ) {
                         $model_scientificNameInformation = new ScientificNameInformation();
@@ -230,7 +231,31 @@ class ImportCommand extends CConsoleCommand {
                         if( $model_importSysDiverses != NULL ) {
                             $model_scientificNameInformation->spatial_distribution = $model_importSysDiverses->Verbreitung;
                             $model_scientificNameInformation->common_names = $model_importSysDiverses->DtName;
-                            $model_scientificNameInformation->growth_form = $model_importSysDiverses->Wuchsform;
+                            
+                            // find the habitus type
+                            $model_habitusType = HabitusType::model()->findByAttributes(array('habitus' => $model_importSysDiverses->Wuchsform));
+                            if( $model_habitusType == NULL ) {
+                                throw new Exception("Unable to load HabitusType for '" . $model_importSysDiverses->Wuchsform . "'");
+                            }
+                            $model_scientificNameInformation->habitus_type_id = $model_habitusType->habitus_type_id;
+                            
+                            // check for fitting cultivar
+                            if( !empty($model_importSpecies->getCleanFormCult()) ) {
+                                $model_cultivar = Cultivar::model()->findByAttributes(array(
+                                    'scientific_name_id' => $model_scientificNameInformation->scientific_name_id,
+                                    'cultivar' => $model_importSpecies->getCleanFormCult(),
+                                ));
+
+                                // create new cultivar entry if it does not exist yet
+                                if( $model_cultivar == NULL ) {
+                                    $model_cultivar = new Cultivar();
+                                    $model_cultivar->scientific_name_id = $model_scientificNameInformation->scientific_name_id;
+                                    $model_cultivar->cultivar = $model_importSpecies->getCleanFormCult();
+                                    if( $model_cultivar->save() ) {
+                                        throw new ImportException('Unable to save cultivar', $model_cultivar);
+                                    }
+                                }
+                            }
                         }
                         // finally save the model
                         if(!$model_scientificNameInformation->save()) {
@@ -303,6 +328,8 @@ class ImportCommand extends CConsoleCommand {
                     $model_livingPlant->incoming_date_id = $model_incomingDate->id;
                     // use old "FreilandNr" as place_number
                     $model_livingPlant->place_number = $model_akzession->FreilandNr;
+                    // assign cultivar if set
+                    if( $model_cultivar != NULL ) $model_livingPlant->cultivar_id = $model_cultivar->cultivar_id;
 
                     // save the living plant
                     if( !$model_livingPlant->save() ) {
