@@ -234,11 +234,28 @@ class ImportCommand extends CConsoleCommand {
                             
                             // find the habitus type if set
                             if( !empty($model_importSysDiverses->Wuchsform) ) {
-                                $model_habitusType = HabitusType::model()->findByAttributes(array('habitus' => $model_importSysDiverses->Wuchsform));
-                                if( $model_habitusType == NULL ) {
-                                    throw new Exception("Unable to load HabitusType for '" . $model_importSysDiverses->Wuchsform . "'");
+                                $habitus_type_id = 0;
+                                switch($model_importSysDiverses->Wuchsform) {
+                                    case 'Baum':
+                                        $habitus_type_id = 1;
+                                        break;
+                                    case 'Strauch':
+                                        $habitus_type_id = 2;
+                                        break;
+                                    case 'Kraut':
+                                        $habitus_type_id = 3;
+                                        break;
+                                    case 'Rhizomgeophyt':
+                                        $habitus_type_id = 4;
+                                        break;
+                                    case 'Zwiebelgeophyt':
+                                        $habitus_type_id = 5;
+                                        break;
+                                    default:
+                                        print("Unable to find HabitusType for '" . $model_importSysDiverses->Wuchsform . "' assigned to '" . $model_importSpecies->getScientificName() . "'");
+                                        break;
                                 }
-                                $model_scientificNameInformation->habitus_type_id = $model_habitusType->habitus_type_id;
+                                $model_scientificNameInformation->habitus_type_id = $habitus_type_id;
                             }
                             
                             // check for fitting cultivar

@@ -527,7 +527,7 @@ class EGeoNameService extends CComponent {
 			curl_setopt($ch, CURLOPT_URL, $uri);
 			curl_setopt($ch, CURLOPT_HEADER, 0);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
+			//curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, implode('&', $pairs));
 			$raw_data = $this->_curl_exec_follow($ch);
 			curl_close($ch);
