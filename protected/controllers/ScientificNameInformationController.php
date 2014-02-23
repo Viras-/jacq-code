@@ -29,7 +29,7 @@ class ScientificNameInformationController extends Controller {
         // render the update form
         $this->renderPartial('update', array(
             'model_scientificNameInformation' => $model_scientificNameInformation,
-        ), false, true);
+        ));
     }
 
     /**

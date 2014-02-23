@@ -18,6 +18,7 @@
         'value' => $model_botanicalObject->scientificName,
     ));
     ?>
+    <a href="#" onclick="$('#scientific_name_information_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq','Update'); ?></a>
     <?php echo $form->hiddenField($model_botanicalObject, 'scientific_name_id'); ?>
     <?php echo $form->error($model_botanicalObject, 'scientific_name_id'); ?>
 </div>

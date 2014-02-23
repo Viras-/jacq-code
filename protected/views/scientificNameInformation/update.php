@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form" id="form_scientificNameInformation">
+<div class="form">
 
     <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -35,11 +35,6 @@
         <?php echo $form->labelEx($model_scientificNameInformation, 'common_names'); ?>
         <?php echo $form->textField($model_scientificNameInformation, 'common_names'); ?>
         <?php echo $form->error($model_scientificNameInformation, 'common_names'); ?>
-    </div>
-
-
-    <div class="row buttons">
-        <?php echo CHtml::ajaxSubmitButton('Update', '', array('replace' => '#form_scientificNameInformation')); ?>
     </div>
 
     <?php $this->endWidget(); ?>
