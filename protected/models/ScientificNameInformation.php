@@ -12,6 +12,8 @@
  * The followings are the available model relations:
  * @property Cultivar[] $cultivars
  * @property HabitusType $habitusType
+ * @property BotanicalObject[] $botanicalObjects
+ * @property ViewTaxon $viewTaxon
  */
 class ScientificNameInformation extends ActiveRecord {
 
@@ -47,6 +49,7 @@ class ScientificNameInformation extends ActiveRecord {
             'cultivars' => array(self::HAS_MANY, 'Cultivar', 'scientific_name_id'),
             'habitusType' => array(self::BELONGS_TO, 'HabitusType', 'habitus_type_id'),
             'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'scientific_name_id'),
+            'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'scientific_name_id'),
         );
     }
 

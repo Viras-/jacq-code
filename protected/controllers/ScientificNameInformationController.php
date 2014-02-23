@@ -24,14 +24,52 @@ class ScientificNameInformationController extends Controller {
             // check for successfull saving
             if( $model_scientificNameInformation->save() ) {
             }
+            
+            // create / update associated cultivar entries
+            if( isset($_POST['Cultivar']) ) {
+                foreach($_POST['Cultivar'] as $i => $cultivar) {
+                    // make sure we have a clean integer as id
+                    $cultivar['cultivar_id'] = intval($cultivar['cultivar_id']);
+
+                    // check for "deleted" entry
+                    if( $cultivar['delete'] > 0 ) {
+                        if($cultivar['cultivar_id'] > 0) {
+                            Cultivar::model()->deleteByPk($cultivar['cultivar_id']);
+                        }
+                        continue;
+                    }
+
+                    // check if this is an existing entry
+                    $model_cultivar = Cultivar::model()->findByPk($cultivar['cultivar_id']);
+                    if( $model_cultivar == NULL ) {
+                        $model_cultivar = new Cultivar();
+                    }
+
+                    // assign attributes and save it
+                    $model_cultivar->attributes = $cultivar;
+                    $model_cultivar->scientific_name_id = $scientific_name_id;
+                    $model_cultivar->save();
+                }
+            }
         }
         
         // render the update form
         $this->renderPartial('update', array(
             'model_scientificNameInformation' => $model_scientificNameInformation,
-        ), false, true);
+        ));
     }
 
+    /**
+     * renders form for entering a new cultivar
+     */
+    public function actionAjaxCultivar() {
+        $model_cultivar = new Cultivar();
+        
+        $this->renderPartial('form_cultivar', array(
+            'model_cultivar' => $model_cultivar
+        ), false, true);
+    }
+    
     /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
@@ -40,7 +78,7 @@ class ScientificNameInformationController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // updating
-                'actions' => array('ajaxUpdate'),
+                'actions' => array('ajaxUpdate', 'ajaxCultivar'),
                 'roles' => array('oprtn_createScientificNameInformation'),
             ),
             array('deny', // deny all users by default

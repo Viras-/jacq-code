@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form" id="form_scientificNameInformation">
+<div class="form">
 
     <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -16,6 +16,7 @@
         'enableAjaxValidation' => false,
     ));
     ?>
+    <strong><?php echo $model_scientificNameInformation->viewTaxon->getScientificName(); ?></strong>
 
     <?php echo $form->errorSummary($model_scientificNameInformation); ?>
 
@@ -36,10 +37,9 @@
         <?php echo $form->textField($model_scientificNameInformation, 'common_names'); ?>
         <?php echo $form->error($model_scientificNameInformation, 'common_names'); ?>
     </div>
-
-
-    <div class="row buttons">
-        <?php echo CHtml::ajaxSubmitButton('Update', '', array('replace' => '#form_scientificNameInformation')); ?>
+    
+    <div class="row">
+        <?php require('form_cultivars.php'); ?>
     </div>
 
     <?php $this->endWidget(); ?>
