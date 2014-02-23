@@ -240,17 +240,18 @@ class ImportCommand extends CConsoleCommand {
                             $model_scientificNameInformation->habitus_type_id = $model_habitusType->habitus_type_id;
                             
                             // check for fitting cultivar
-                            if( !empty($model_importSpecies->getCleanFormCult()) ) {
+                            $FormCult = $model_importSpecies->getCleanFormCult();
+                            if( !empty($FormCult) ) {
                                 $model_cultivar = Cultivar::model()->findByAttributes(array(
                                     'scientific_name_id' => $model_scientificNameInformation->scientific_name_id,
-                                    'cultivar' => $model_importSpecies->getCleanFormCult(),
+                                    'cultivar' => $FormCult,
                                 ));
 
                                 // create new cultivar entry if it does not exist yet
                                 if( $model_cultivar == NULL ) {
                                     $model_cultivar = new Cultivar();
                                     $model_cultivar->scientific_name_id = $model_scientificNameInformation->scientific_name_id;
-                                    $model_cultivar->cultivar = $model_importSpecies->getCleanFormCult();
+                                    $model_cultivar->cultivar = $FormCult;
                                     if( $model_cultivar->save() ) {
                                         throw new ImportException('Unable to save cultivar', $model_cultivar);
                                     }
