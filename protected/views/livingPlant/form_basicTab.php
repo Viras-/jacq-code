@@ -1,26 +1,37 @@
 <!-- scientific name -->
 <div class="row">
-    <?php echo $form->labelEx($model_botanicalObject, 'scientific_name_id'); ?>
-    <?php
-    // Enable auto-completer for taxon field
-    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-        'name' => 'scientificName',
-        'sourceUrl' => 'index.php?r=autoComplete/scientificName',
-        // additional javascript options for the autocomplete plugin
-        'options' => array(
-            'minLength' => '2',
-            'change' => 'js:function( event, ui ) {
-                    if( typeof ui.item !== "undefined" ) {
-                        $( "#BotanicalObject_scientific_name_id" ).val( ui.item.id );
-                    }
-                }',
-        ),
-        'value' => $model_botanicalObject->scientificName,
-    ));
-    ?>
-    <a href="#" onclick="$('#scientific_name_information_dialog').dialog('open'); return false;"><img src="images/page_white_edit.png" ></a>
-    <?php echo $form->hiddenField($model_botanicalObject, 'scientific_name_id'); ?>
-    <?php echo $form->error($model_botanicalObject, 'scientific_name_id'); ?>
+    <table border="0" width="100%">
+        <tr>
+            <td>
+                <?php echo $form->labelEx($model_botanicalObject, 'scientific_name_id'); ?>
+                <?php
+                // Enable auto-completer for taxon field
+                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                    'name' => 'scientificName',
+                    'sourceUrl' => 'index.php?r=autoComplete/scientificName',
+                    // additional javascript options for the autocomplete plugin
+                    'options' => array(
+                        'minLength' => '2',
+                        'change' => 'js:function( event, ui ) {
+                                if( typeof ui.item !== "undefined" ) {
+                                    $( "#BotanicalObject_scientific_name_id" ).val( ui.item.id );
+                                }
+                            }',
+                    ),
+                    'value' => $model_botanicalObject->scientificName,
+                ));
+                ?>
+                <a href="#" onclick="$('#scientific_name_information_dialog').dialog('open'); return false;"><img src="images/page_white_edit.png" ></a>
+                <?php echo $form->hiddenField($model_botanicalObject, 'scientific_name_id'); ?>
+                <?php echo $form->error($model_botanicalObject, 'scientific_name_id'); ?>
+            </td>
+            <td>
+                <?php echo $form->labelEx($model_livingPlant, 'cultivar_id'); ?>
+                <?php echo $form->dropDownList($model_livingPlant, 'cultivar_id', Html::listDataSorted(Cultivar::model()->findAllByAttributes(array('scientific_name_id' => $model_botanicalObject->scientific_name_id)), 'cultivar_id', 'cultivar', true)); ?>
+                <?php echo $form->error($model_livingPlant, 'cultivar_id'); ?>
+            </td>
+        </tr>
+    </table>
 </div>
 <!-- family name -->
 <div class="row">
