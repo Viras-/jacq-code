@@ -124,6 +124,36 @@
     <?php
     $this->endWidget('zii.widgets.jui.CJuiDialog');
     ?>
+
+    <?php
+    // widget for scientific name information editing
+    $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+        'id' => 'scientific_name_information_dialog',
+        // additional javascript options for the dialog plugin
+        'options' => array(
+            'title' => Yii::t('jacq', 'Scientific Name Information'),
+            'autoOpen' => false,
+            'resizable' => false,
+            'width' => 630,
+            'buttons' => array(
+                array(
+                    'text' => Yii::t('jacq', 'Close'),
+                    'click' => new CJavaScriptExpression("function() { $(this).dialog('close'); }")
+                ),
+                array(
+                    'text' => Yii::t('jacq', 'Save'),
+                    'click' => new CJavaScriptExpression('scientificNameInformationSave')
+                ),
+            ),
+            'open' => new CJavaScriptExpression('scientificNameInformationOpen'),
+            'close' => new CJavaScriptExpression('scientificNameInformationClose'),
+        ),
+    ));
+    ?>
+    <div id="scientific_name_information_view" style="height: 300px;"></div>
+    <?php
+    $this->endWidget('zii.widgets.jui.CJuiDialog');
+    ?>
 </div><!-- form -->
 
 
@@ -138,6 +168,45 @@
         ?>
         '0': ''
     };
+    
+    /**
+     * Called when the scientific name information dialog is opened (for reloading)
+     */
+    function scientificNameInformationOpen(event,ui) {
+        // load authorization view and assign it to div
+        $('#scientific_name_information_view').load('<?php echo $this->createUrl('scientificNameInformation/ajaxUpdate', array('scientific_name_id' => '')); ?>' + $('#BotanicalObject_scientific_name_id').val() );
+    }
+    
+    /**
+     * Called when the scientific name information dialog is closed (empty content)
+     */
+    function scientificNameInformationClose(event,ui) {
+        $('#scientific_name_information_view').html('');
+    }
+    
+    /**
+     * Called when the scientific name informations are saved
+     */
+    function scientificNameInformationSave(event,ui) {
+        // keep reference to dialog
+        var self = this;
+        
+        // get all select values for sending to the server
+        var formData = $('#scientific-name-information-update-form').serialize();
+        
+        // disable the whole form
+        $('#scientific-name-information-update-form').attr('disabled', 'disabled');
+        
+        // send the request to the server
+        $.post(
+                $('#scientific-name-information-update-form').attr('action'),
+                formData,
+                function(data, textStatus, jqXHR) {
+                    // close the calling dialog
+                    $(self).dialog('close');
+                }
+        );
+    }
     
     /**
      * Called when the authorization dialog is opened (for reloading)

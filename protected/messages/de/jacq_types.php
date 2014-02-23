@@ -56,4 +56,8 @@ return array (
   'unknown' => 'Unbekannt',
   'working' => 'Arbeit',
   'none' => 'Kein',
+    'tree' => 'Baum',
+    'shrub' => 'Strauch',
+    'herb' => 'Kraut',
+    
 );

@@ -786,7 +786,7 @@ class LivingPlantController extends Controller {
     }
     
     /**
-     * renders form for entering a new certificate 
+     * renders form for entering a new person
      */
     public function actionAjaxAcquisitionPerson() {
         $model_acquisitionPerson = new Person();
@@ -797,7 +797,7 @@ class LivingPlantController extends Controller {
     }
     
     /**
-     * renders form for entering a new certificate 
+     * renders form for entering a new alternative accession number 
      */
     public function actionAjaxAlternativeAccessionNumber() {
         $model_alternativeAccessionNumber = new AlternativeAccessionNumber();
@@ -807,6 +807,9 @@ class LivingPlantController extends Controller {
         ), false, true);
     }
     
+    /**
+     * renders form for entering a new acquisition event source
+     */
     public function actionAjaxAcquisitionEventSource() {
         $model_acquisitionEventSource = new AcquisitionEventSource();
         

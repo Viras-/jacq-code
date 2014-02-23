@@ -145,9 +145,7 @@ class Species extends CActiveRecord
             $Var = $this->Var;
             $Var = preg_replace('/^var(\.| )(.*)$/i', '$2', $Var);
             $Var = trim($Var);
-            $FormCult = $this->FormCult;
-            $FormCult = preg_replace('/^f(\.| )(.*)$/i', '$2', $FormCult);
-            $FormCult = trim($FormCult);
+            //$FormCult = $this->getCleanFormCult();
 
             if( empty($Art) && empty($this->UArt) && empty($this->Var) && empty($this->FormCult) ) {
                 $scientificName = $model_systematik->Gattung;
@@ -162,13 +160,29 @@ class Species extends CActiveRecord
                 if( !empty($Var) ) {
                     $scientificName = $model_systematik->Gattung . ' ' . $Art . ' var. ' . $Var . ' ' . $this->VarAutor;
                 }
-                // check for forma / cult but ignore if it contains invalid characters
-                if( !empty($FormCult) && stripos($FormCult, '`') === FALSE && stripos($FormCult, '\'') === FALSE ) {
+                // check for forma but ignore if it contains invalid characters
+                /*if( !empty($FormCult) ) {
                     $scientificName = $model_systematik->Gattung . ' ' . $Art . ' f. ' . $FormCult . ' ' . $this->FormCultAutor;
-                }
+                }*/
             }
 
             // return complete scientifc name
             return $scientificName;
-        }        
+        }
+        
+        /**
+         * Clean the Form/Cult field by removing invalid characters
+         * @return string
+         */
+        public function getCleanFormCult() {
+            $FormCult = $this->FormCult;
+            $FormCult = preg_replace('/^f(\.| )(.*)$/i', '$2', $FormCult);
+            $FormCult = preg_replace('/^forma(\.| )(.*)$/i', '$2', $FormCult);
+            $FormCult = str_replace('`', '', $FormCult);
+            $FormCult = str_replace('´', '', $FormCult);
+            $FormCult = str_replace("'", '', $FormCult);
+            $FormCult = trim($FormCult);
+            
+            return $FormCult;
+        }
 }
