@@ -232,12 +232,14 @@ class ImportCommand extends CConsoleCommand {
                             $model_scientificNameInformation->spatial_distribution = $model_importSysDiverses->Verbreitung;
                             $model_scientificNameInformation->common_names = $model_importSysDiverses->DtName;
                             
-                            // find the habitus type
-                            $model_habitusType = HabitusType::model()->findByAttributes(array('habitus' => $model_importSysDiverses->Wuchsform));
-                            if( $model_habitusType == NULL ) {
-                                throw new Exception("Unable to load HabitusType for '" . $model_importSysDiverses->Wuchsform . "'");
+                            // find the habitus type if set
+                            if( !empty($model_importSysDiverses->Wuchsform) ) {
+                                $model_habitusType = HabitusType::model()->findByAttributes(array('habitus' => $model_importSysDiverses->Wuchsform));
+                                if( $model_habitusType == NULL ) {
+                                    throw new Exception("Unable to load HabitusType for '" . $model_importSysDiverses->Wuchsform . "'");
+                                }
+                                $model_scientificNameInformation->habitus_type_id = $model_habitusType->habitus_type_id;
                             }
-                            $model_scientificNameInformation->habitus_type_id = $model_habitusType->habitus_type_id;
                             
                             // check for fitting cultivar
                             $FormCult = $model_importSpecies->getCleanFormCult();
