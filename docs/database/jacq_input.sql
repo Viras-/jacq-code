@@ -1153,6 +1153,20 @@ COMMIT;
 
 
 -- -----------------------------------------------------
+-- Data for table `tbl_habitus_type`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `jacq_input`;
+INSERT INTO `tbl_habitus_type` (`habitus_type_id`, `habitus`) VALUES (1, 'tree');
+INSERT INTO `tbl_habitus_type` (`habitus_type_id`, `habitus`) VALUES (2, 'shrub');
+INSERT INTO `tbl_habitus_type` (`habitus_type_id`, `habitus`) VALUES (3, 'herb');
+INSERT INTO `tbl_habitus_type` (`habitus_type_id`, `habitus`) VALUES (4, 'Rhizomgeophyt');
+INSERT INTO `tbl_habitus_type` (`habitus_type_id`, `habitus`) VALUES (5, 'Zwiebelgeophyt');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
 -- Data for table `tbl_sex`
 -- -----------------------------------------------------
 START TRANSACTION;
