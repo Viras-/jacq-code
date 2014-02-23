@@ -1,25 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "tbl_scientific_name_information".
+ * This is the model class for table "tbl_cultivar".
  *
- * The followings are the available columns in table 'tbl_scientific_name_information':
+ * The followings are the available columns in table 'tbl_cultivar':
+ * @property integer $cultivar_id
  * @property integer $scientific_name_id
- * @property string $spatial_distribution
- * @property string $common_names
- * @property integer $habitus_type_id
+ * @property string $cultivar
  *
  * The followings are the available model relations:
- * @property Cultivar[] $cultivars
- * @property HabitusType $habitusType
+ * @property ScientificNameInformation $scientificName
+ * @property LivingPlant[] $livingPlants
  */
-class ScientificNameInformation extends CActiveRecord {
+class Cultivar extends CActiveRecord {
 
     /**
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'tbl_scientific_name_information';
+        return 'tbl_cultivar';
     }
 
     /**
@@ -29,11 +28,12 @@ class ScientificNameInformation extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('habitus_type_id', 'numerical', 'integerOnly' => true),
-            array('spatial_distribution, common_names', 'length', 'max' => 255),
+            array('cultivar_id, scientific_name_id, cultivar', 'required'),
+            array('cultivar_id, scientific_name_id', 'numerical', 'integerOnly' => true),
+            array('cultivar', 'length', 'max' => 255),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('scientific_name_id, spatial_distribution, common_names, habitus_type_id', 'safe', 'on' => 'search'),
+            array('cultivar_id, scientific_name_id, cultivar', 'safe', 'on' => 'search'),
         );
     }
 
@@ -44,9 +44,8 @@ class ScientificNameInformation extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'cultivars' => array(self::HAS_MANY, 'Cultivar', 'scientific_name_id'),
-            'habitusType' => array(self::BELONGS_TO, 'HabitusType', 'habitus_type_id'),
-            'botanicalObjects' => array(self::HAS_MANY, 'BotanicalObject', 'scientific_name_id'),
+            'scientificName' => array(self::BELONGS_TO, 'ScientificNameInformation', 'scientific_name_id'),
+            'livingPlants' => array(self::HAS_MANY, 'LivingPlant', 'cultivar_id'),
         );
     }
 
@@ -55,10 +54,9 @@ class ScientificNameInformation extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
+            'cultivar_id' => Yii::t('jacq', 'Cultivar'),
             'scientific_name_id' => Yii::t('jacq', 'Scientific Name'),
-            'spatial_distribution' => Yii::t('jacq', 'Spatial Distribution'),
-            'common_names' => Yii::t('jacq', 'Common Names'),
-            'habitus_type_id' => Yii::t('jacq', 'Habitus Type'),
+            'cultivar' => Yii::t('jacq', 'Cultivar'),
         );
     }
 
@@ -79,10 +77,9 @@ class ScientificNameInformation extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
+        $criteria->compare('cultivar_id', $this->cultivar_id);
         $criteria->compare('scientific_name_id', $this->scientific_name_id);
-        $criteria->compare('spatial_distribution', $this->spatial_distribution, true);
-        $criteria->compare('common_names', $this->common_names, true);
-        $criteria->compare('habitus_type_id', $this->habitus_type_id);
+        $criteria->compare('cultivar', $this->cultivar, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -93,7 +90,7 @@ class ScientificNameInformation extends CActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return ScientificNameInformation the static model class
+     * @return Cultivar the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
