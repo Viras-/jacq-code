@@ -10,7 +10,7 @@
  * The followings are the available model relations:
  * @property ScientificNameInformation[] $scientificNameInformations
  */
-class HabitusType extends CActiveRecord {
+class HabitusType extends ActiveRecord {
 
     /**
      * @return string the associated database table name

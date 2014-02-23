@@ -12,7 +12,7 @@
  * @property ScientificNameInformation $scientificName
  * @property LivingPlant[] $livingPlants
  */
-class Cultivar extends CActiveRecord {
+class Cultivar extends ActiveRecord {
 
     /**
      * @return string the associated database table name

@@ -13,7 +13,7 @@
  * @property Cultivar[] $cultivars
  * @property HabitusType $habitusType
  */
-class ScientificNameInformation extends CActiveRecord {
+class ScientificNameInformation extends ActiveRecord {
 
     /**
      * @return string the associated database table name
