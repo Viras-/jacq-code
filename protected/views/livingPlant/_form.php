@@ -150,7 +150,7 @@
         ),
     ));
     ?>
-    <div id="scientific_name_information_view" style="height: 400px;"></div>
+    <div id="scientific_name_information_view" style="height: 300px;"></div>
     <?php
     $this->endWidget('zii.widgets.jui.CJuiDialog');
     ?>

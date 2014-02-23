@@ -13,6 +13,10 @@
  * @property LivingPlant[] $livingPlants
  */
 class Cultivar extends ActiveRecord {
+    /**
+     * @var helper attribute for deleting a cultivar entry
+     */
+    public $delete = 0;
 
     /**
      * @return string the associated database table name

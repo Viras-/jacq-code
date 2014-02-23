@@ -18,7 +18,7 @@
         'value' => $model_botanicalObject->scientificName,
     ));
     ?>
-    <a href="#" onclick="$('#scientific_name_information_dialog').dialog('open'); return false;"><img src="images/page_white_edit.png"></a>
+    <a href="#" onclick="$('#scientific_name_information_dialog').dialog('open'); return false;"><img src="images/page_white_edit.png" ></a>
     <?php echo $form->hiddenField($model_botanicalObject, 'scientific_name_id'); ?>
     <?php echo $form->error($model_botanicalObject, 'scientific_name_id'); ?>
 </div>
@@ -44,7 +44,7 @@
     <?php echo $form->labelEx($model_botanicalObject, 'organisation_id'); ?>
     <?php echo CHtml::textField('BotanicalObject_organisation_name', $model_botanicalObject->organisation->description, array('readonly' => 'readonly')); ?>
     <?php echo $form->hiddenField($model_botanicalObject, 'organisation_id'); ?>
-    <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;"><?php echo Yii::t('jacq','Change'); ?></a>
+    <a href="#" onclick="$('#organisation_select_dialog').dialog('open'); return false;"><img src="images/magnifier.png" ></a>
 </div>
 
 <!-- place number -->

@@ -317,7 +317,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tbl_habitus_type` ;
 
 CREATE TABLE IF NOT EXISTS `tbl_habitus_type` (
-  `habitus_type_id` INT NOT NULL,
+  `habitus_type_id` INT NOT NULL AUTO_INCREMENT,
   `habitus` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`habitus_type_id`))
 ENGINE = InnoDB;
@@ -349,7 +349,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `tbl_cultivar` ;
 
 CREATE TABLE IF NOT EXISTS `tbl_cultivar` (
-  `cultivar_id` INT NOT NULL,
+  `cultivar_id` INT NOT NULL AUTO_INCREMENT,
   `scientific_name_id` INT NOT NULL,
   `cultivar` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`cultivar_id`),
