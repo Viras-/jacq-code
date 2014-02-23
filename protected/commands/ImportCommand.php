@@ -234,7 +234,7 @@ class ImportCommand extends CConsoleCommand {
                             
                             // find the habitus type if set
                             if( !empty($model_importSysDiverses->Wuchsform) ) {
-                                $habitus_type_id = 0;
+                                $habitus_type_id = NULL;
                                 switch($model_importSysDiverses->Wuchsform) {
                                     case 'Baum':
                                         $habitus_type_id = 1;
