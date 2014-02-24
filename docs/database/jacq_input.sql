@@ -370,7 +370,7 @@ DROP TABLE IF EXISTS `tbl_living_plant` ;
 CREATE TABLE IF NOT EXISTS `tbl_living_plant` (
   `id` INT NOT NULL,
   `accession_number` INT NOT NULL AUTO_INCREMENT,
-  `ipen_number` VARCHAR(20) NULL,
+  `ipen_number` VARCHAR(50) NULL,
   `ipen_locked` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'No further editing possible',
   `phyto_control` TINYINT(1) NOT NULL DEFAULT 0,
   `place_number` VARCHAR(20) NULL DEFAULT NULL,
