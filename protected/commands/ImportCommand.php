@@ -340,15 +340,19 @@ class ImportCommand extends CConsoleCommand {
 
                         // try to find the country-code through the acquisition country
                         if( $model_importHerkunft->CollLand != NULL ) {
-                            $results = Yii::app()->geoNameService->search(array(
-                                'name' => $model_importHerkunft->CollLand,  // search for the collection country
-                                'adminCode1' => '00',                       // find only countries
-                            ));
+                            // ignore any errors caused by geonames
+                            try {
+                                $results = Yii::app()->geoNameService->search(array(
+                                    'name' => $model_importHerkunft->CollLand,  // search for the collection country
+                                    'adminCode1' => '00',                       // find only countries
+                                ));
 
-                            // if we have a valid result, use the first countryCode found
-                            if( $results['totalResultsCount'] > 0 ) {
-                                $countryCode = $results['geonames'][0]['countryCode'];
+                                // if we have a valid result, use the first countryCode found
+                                if( $results['totalResultsCount'] > 0 ) {
+                                    $countryCode = $results['geonames'][0]['countryCode'];
+                                }
                             }
+                            catch(Exception $e) {};
                         }
 
                         // generate new IPEN numbers
