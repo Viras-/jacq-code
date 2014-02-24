@@ -290,10 +290,14 @@ class ImportCommand extends CConsoleCommand {
                         }
                     }
 
+                    // use the top-level entry for HBV by default
+                    $model_organisation = Organisation::model()->findByPk(6);
                     // Try to find a matching entry for the revier
-                    $model_organisation = Organisation::getFromIDRevier($model_akzession->IDRevier, intval(substr($model_akzession->FreilandNr,0,2)));
-                    if( $model_organisation == NULL ) {
-                        throw new Exception('Unable to load Organisation for Revier: ' . $model_akzession->IDRevier);
+                    if( $model_akzession->IDRevier != NULL ) {
+                        $model_organisation = Organisation::getFromIDRevier($model_akzession->IDRevier, intval(substr($model_akzession->FreilandNr,0,2)));
+                        if( $model_organisation == NULL ) {
+                            throw new Exception('Unable to load Organisation for Revier: ' . $model_akzession->IDRevier);
+                        }
                     }
                     $model_botanicalObject->organisation_id = $model_organisation->id;
                     // check for "Abgang" and set the flag

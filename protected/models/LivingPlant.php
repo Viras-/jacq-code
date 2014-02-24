@@ -92,10 +92,10 @@ class LivingPlant extends ActiveRecord {
         return array(
             array('id', 'required'),
             array('id, ipen_locked, phyto_control, index_seminum, index_seminum_type_id, incoming_date_id, label_synonym_scientific_name_id, cultivar_id', 'numerical', 'integerOnly' => true),
-            array('ipen_number, place_number', 'length', 'max' => 20),
+            array('ipen_number, place_number', 'length', 'max' => 50),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
-            array('ipenNumberInstitutionCode', 'length', 'max' => 15),
+            array('ipenNumberInstitutionCode', 'length', 'max' => 45),
             array('culture_notes, incoming_date_id', 'safe'),
             array('cultivation_date', 'default', 'setOnEmpty' => true, 'value' => NULL),
             // The following rule is used by search().
