@@ -72,6 +72,14 @@ return array(
             'charset' => 'utf8',
             'class' => 'CDbConnection'
         ),
+        'dbHerbarInputLog' => array(
+            'connectionString' => 'mysql:host=localhost;dbname=herbarinput_log',
+            'emulatePrepare' => true,
+            'username' => '',
+            'password' => '',
+            'charset' => 'utf8',
+            'class' => 'CDbConnection'
+        ),
         'dbHerbarView' => array(
             'connectionString' => 'mysql:host=localhost;dbname=herbar_view',
             'emulatePrepare' => true,
