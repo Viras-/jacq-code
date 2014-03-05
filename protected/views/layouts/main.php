@@ -36,6 +36,9 @@
 
          <!-- MsgBox -->
          <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/msgbox.js" ></script>
+
+         <!-- flot -->
+         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.flot/jquery.flot.js" ></script>
     </head>
 
     <body>
