@@ -36,11 +36,10 @@ class JSONStatisticsController extends Controller
                      ->from('herbarinput.meta')
                      ->order('source_code')
                      ->queryAll();
-        $order = array();
+        $institutionOrder = array();
         foreach ($dbRows as $dbRow) {
-            $order[] = array('source_id'   => $dbRow['source_id'],
-                             'source_code' => $dbRow['source_code']);
-            $institutionTotal[$dbRow['source_id']] = 0;
+            $institutionOrder[] = array('source_id'   => $dbRow['source_id'],
+                                        'source_code' => $dbRow['source_code']);
         }
 
         try {
@@ -144,10 +143,9 @@ class JSONStatisticsController extends Controller
                 $periodMin = ($dbRow['period'] < $periodMin) ? $dbRow['period'] : $periodMin;
                 $periodMax = ($dbRow['period'] > $periodMin) ? $dbRow['period'] : $periodMax;
                 $result[$dbRow['source_id']][$dbRow['period']] = $dbRow['cnt'];
-                $institutionTotal[$dbRow['source_id']] += $dbRow['cnt'];
             }
             for ($i = $periodMin; $i <= $periodMax; $i++) {
-                foreach ($order as $institution) {
+                foreach ($institutionOrder as $institution) {
                     if (!isset($result[$institution['source_id']][$i])) {
                         $result[$institution['source_id']][$i] = 0;
                     }
@@ -164,8 +162,8 @@ class JSONStatisticsController extends Controller
                 $periodSum[$i] = 0;
             }
             $ret .= "</tr>";
-            foreach ($order as $institution) {
-                if ($institutionTotal[$institution['source_id']] > 0) {
+            foreach ($institutionOrder as $institution) {
+                if (isset($result[$institution['source_id']]) && array_sum($result[$institution['source_id']]) > 0) {
                     $ret .= "<tr>"
                           . "<td>" . $institution['source_code'] . "</td>"
                           . "<td style='text-align:center; border-left:1px solid'>" . min($result[$institution['source_id']]) . "</td>"
