@@ -36,15 +36,15 @@ class JSONStatisticsController extends Controller
                      ->from('herbarinput.meta')
                      ->order('source_code')
                      ->queryAll();
-        $order = array();
+        $institutionOrder = array();
         foreach ($dbRows as $dbRow) {
-            $order[] = array('source_id'   => $dbRow['source_id'],
-                             'source_code' => $dbRow['source_code']);
-            $institutionTotal[$dbRow['source_id']] = 0;
+            $institutionOrder[] = array('source_id'   => $dbRow['source_id'],
+                                        'source_code' => $dbRow['source_code']);
         }
 
         try {
             switch ($type) {
+                // New names per [interval] -> log_tax_species
                 case 'new_names':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp) AS period',
@@ -66,6 +66,7 @@ class JSONStatisticsController extends Controller
                                  ->order('period')
                                  ->queryAll();
                     break;
+                // New Citations per [Interval] -> log_lit
                 case 'new_citations':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp) AS period',
@@ -87,6 +88,29 @@ class JSONStatisticsController extends Controller
                                  ->order('period')
                                  ->queryAll();
                     break;
+                // New Names used in Citations per [Interval] -> log_tax_index
+                case 'new_names_citations':
+                    $dbRows = $db->createCommand()
+                                 ->select(array($interval . '(l.timestamp) AS period',
+                                                'count(l.taxindID) AS cnt',
+                                                'u.source_id'))
+                                 ->from(array('log_tax_index l',
+                                              'tbl_herbardb_users u',
+                                              'herbarinput.meta m'))
+                                 ->where(array('AND',
+                                               'l.userID = u.userID',
+                                               'u.source_id = m.source_id',
+                                               'l.updated = 0',
+                                               'l.timestamp >= :period_start',
+                                               'l.timestamp <= :period_end'),
+                                         array(':period_start' => $periodStart,
+                                               ':period_end' => $periodEnd))
+                                 ->group(array('period',
+                                               'u.source_id'))
+                                 ->order('period')
+                                 ->queryAll();
+                    break;
+                // New Specimens per [Interval] -> log_specimens
                 case 'new_specimens':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp) AS period',
@@ -108,6 +132,7 @@ class JSONStatisticsController extends Controller
                                  ->order('period')
                                  ->queryAll();
                     break;
+                // New Type-Specimens per [Interval] -> log_specimens_types
                 case 'new_type_specimens':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp) AS period',
@@ -129,6 +154,18 @@ class JSONStatisticsController extends Controller
                                  ->order('period')
                                  ->queryAll();
                     break;
+                // New use of names for Type-Specimens per [Interval]
+                case 'new_names_type_specimens':
+                    break;
+                // New Types per Name per [Interval]
+                case 'new_types_name':
+                    break;
+                // New Synonyms per [Interval]
+                case 'new_synonyms':
+                    break;
+                // New Classification entries per [Interval]
+                case 'new_classifications':
+                    break;
             }
             $error = '';
         }
@@ -144,10 +181,9 @@ class JSONStatisticsController extends Controller
                 $periodMin = ($dbRow['period'] < $periodMin) ? $dbRow['period'] : $periodMin;
                 $periodMax = ($dbRow['period'] > $periodMin) ? $dbRow['period'] : $periodMax;
                 $result[$dbRow['source_id']][$dbRow['period']] = $dbRow['cnt'];
-                $institutionTotal[$dbRow['source_id']] += $dbRow['cnt'];
             }
             for ($i = $periodMin; $i <= $periodMax; $i++) {
-                foreach ($order as $institution) {
+                foreach ($institutionOrder as $institution) {
                     if (!isset($result[$institution['source_id']][$i])) {
                         $result[$institution['source_id']][$i] = 0;
                     }
@@ -164,8 +200,8 @@ class JSONStatisticsController extends Controller
                 $periodSum[$i] = 0;
             }
             $ret .= "</tr>";
-            foreach ($order as $institution) {
-                if ($institutionTotal[$institution['source_id']] > 0) {
+            foreach ($institutionOrder as $institution) {
+                if (isset($result[$institution['source_id']]) && array_sum($result[$institution['source_id']]) > 0) {
                     $ret .= "<tr>"
                           . "<td>" . $institution['source_code'] . "</td>"
                           . "<td style='text-align:center; border-left:1px solid'>" . min($result[$institution['source_id']]) . "</td>"
@@ -190,7 +226,7 @@ class JSONStatisticsController extends Controller
                 $ret .= "<td style='text-align:center; border-top:1px solid'>" . $periodSum[$i] . "</td>";
             }
             $ret .= "</tr></table>";
-            return array('display' => $ret); //var_export($result, true));
+            return array('display' => $ret);
         } else {
             return array('display' => 'nothing found');
         }
@@ -214,11 +250,21 @@ class JSONStatisticsController extends Controller
         return Yii::app()->dbHerbarInputLog;
     }
 
+    /**
+     * Return average of given data
+     * @param array $data
+     * @return float
+     */
     private function avg($data)
     {
         return array_sum($data) / count($data);
     }
 
+    /**
+     * Return median of given data
+     * @param array $data
+     * @return float
+     */
     private function median($data)
     {
         $anzahl = count($data);
@@ -227,10 +273,10 @@ class JSONStatisticsController extends Controller
         }
         sort($data);
         if($anzahl % 2 == 0) {
-            // gerade Anzahl => der Median ist das arithmetische Mittel der beiden mittleren Zahlen
+            // even number => median is average of the two middle values
             return ($data[($anzahl / 2) - 1] + $data[$anzahl / 2]) / 2 ;
         } else {
-            // ungerade Anzahl => der mittlere Wert ist der Median
+            // odd number => median is the middle value
             return $data[$anzahl / 2];
         }
     }
