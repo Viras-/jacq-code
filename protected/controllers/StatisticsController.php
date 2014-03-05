@@ -12,11 +12,6 @@ class StatisticsController extends Controller
      */
 	public function actionIndex()
 	{
-        // get all parameters
-        $filterId      = isset($_GET['filterId'])      ? intval($_GET['filterId'])    : 0;
-        $referenceType = isset($_GET['referenceType']) ? $_GET['referenceType']       : '';
-        $referenceId   = isset($_GET['referenceId'])   ? intval($_GET['referenceId']) : 0;
-
         $jsonJacqUrl = (Yii::app()->params['jsonJacqUrl']) ? Yii::app()->params['jsonJacqUrl'] : Yii::app()->getBaseUrl() . '/';
 
         $pathToViews = 'protected/views/statistics/';
@@ -25,8 +20,8 @@ class StatisticsController extends Controller
 
         Yii::app()->clientScript->registerScript('var1', 'var jacq_url = ' . CJavaScript::encode($jsonJacqUrl) . ';', CClientScript::POS_HEAD);
 
-        //$this->render('index', array('periodStart' => date('Y') . '-01-01', 'periodEnd' => date('Y') . '-12-31'));
-        $this->render('index', array('periodStart' => '2005-01-01', 'periodEnd' => '2005-12-31'));
+        $this->render('index', array('periodStart' => date('Y') . '-01-01', 'periodEnd' => date('Y') . '-12-31'));
+        //$this->render('index', array('periodStart' => '2005-01-01', 'periodEnd' => '2005-12-31'));
 
 	// Uncomment the following methods and override them if needed
 	/*

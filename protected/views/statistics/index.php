@@ -14,6 +14,7 @@ $this->breadcrumbs=array(
         <select id="statistics_type">
             <option value="new_names">New Names</option>
             <option value="new_citations" selected="selected">New Citations</option>
+            <option value="new_names_citations">New Names used in Citations</option>
             <option value="new_specimens">New Specimens</option>
             <option value="new_type_specimens">New Type-Specimens</option>
         </select>
