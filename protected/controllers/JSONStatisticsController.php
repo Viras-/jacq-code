@@ -20,9 +20,11 @@ class JSONStatisticsController extends Controller
      * @param string $interval
      * @return array
      */
-    public function japiShowResults($periodStart, $periodEnd, $type, $interval) {
+    public function japiShowResults($periodStart, $periodEnd, $updated, $type, $interval) {
 
         $db = $this->getDbHerbarInputLog();
+
+        $updated = intval($updated);
 
         switch ($interval) {
             case 'day':   $interval = 'dayofyear'; break;
@@ -44,8 +46,8 @@ class JSONStatisticsController extends Controller
 
         try {
             switch ($type) {
-                // New names per [interval] -> log_tax_species
-                case 'new_names':
+                // New/Updated names per [interval] -> log_tax_species
+                case 'names':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp) AS period',
                                                 'count(l.taxonID) AS cnt',
@@ -56,7 +58,7 @@ class JSONStatisticsController extends Controller
                                  ->where(array('AND',
                                                'l.userID = u.userID',
                                                'u.source_id = m.source_id',
-                                               'l.updated = 0',
+                                               'l.updated = ' . $updated,
                                                'l.timestamp >= :period_start',
                                                'l.timestamp <= :period_end'),
                                          array(':period_start' => $periodStart,
@@ -66,8 +68,8 @@ class JSONStatisticsController extends Controller
                                  ->order('period')
                                  ->queryAll();
                     break;
-                // New Citations per [Interval] -> log_lit
-                case 'new_citations':
+                // New/Updated Citations per [Interval] -> log_lit
+                case 'citations':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp) AS period',
                                                 'count(l.citationID) AS cnt',
@@ -78,7 +80,7 @@ class JSONStatisticsController extends Controller
                                  ->where(array('AND',
                                                'l.userID = u.userID',
                                                'u.source_id = m.source_id',
-                                               'l.updated = 0',
+                                               'l.updated = ' . $updated,
                                                'l.timestamp >= :period_start',
                                                'l.timestamp <= :period_end'),
                                          array(':period_start' => $periodStart,
@@ -88,8 +90,8 @@ class JSONStatisticsController extends Controller
                                  ->order('period')
                                  ->queryAll();
                     break;
-                // New Names used in Citations per [Interval] -> log_tax_index
-                case 'new_names_citations':
+                // New/Updated Names used in Citations per [Interval] -> log_tax_index
+                case 'names_citations':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp) AS period',
                                                 'count(l.taxindID) AS cnt',
@@ -100,7 +102,7 @@ class JSONStatisticsController extends Controller
                                  ->where(array('AND',
                                                'l.userID = u.userID',
                                                'u.source_id = m.source_id',
-                                               'l.updated = 0',
+                                               'l.updated = ' . $updated,
                                                'l.timestamp >= :period_start',
                                                'l.timestamp <= :period_end'),
                                          array(':period_start' => $periodStart,
@@ -110,8 +112,8 @@ class JSONStatisticsController extends Controller
                                  ->order('period')
                                  ->queryAll();
                     break;
-                // New Specimens per [Interval] -> log_specimens
-                case 'new_specimens':
+                // New/Updated Specimens per [Interval] -> log_specimens
+                case 'specimens':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp) AS period',
                                                 'count(l.specimenID) AS cnt',
@@ -122,7 +124,7 @@ class JSONStatisticsController extends Controller
                                  ->where(array('AND',
                                                'l.userID = u.userID',
                                                'u.source_id = m.source_id',
-                                               'l.updated = 0',
+                                               'l.updated = ' . $updated,
                                                'l.timestamp >= :period_start',
                                                'l.timestamp <= :period_end'),
                                          array(':period_start' => $periodStart,
@@ -132,8 +134,11 @@ class JSONStatisticsController extends Controller
                                  ->order('period')
                                  ->queryAll();
                     break;
-                // New Type-Specimens per [Interval] -> log_specimens_types
-                case 'new_type_specimens':
+                // New/Updated Type-Specimens per [Interval] -> log_specimens + (straight join) tbl_specimens where typusID is not null and checked = 1
+                case 'type_specimens':
+                    break;
+                // New/Updated use of names for Type-Specimens per [Interval] -> log_specimens_types
+                case 'names_type_specimens':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp) AS period',
                                                 'count(l.specimens_types_ID) AS cnt',
@@ -144,7 +149,7 @@ class JSONStatisticsController extends Controller
                                  ->where(array('AND',
                                                'l.userID = u.userID',
                                                'u.source_id = m.source_id',
-                                               'l.updated = 0',
+                                               'l.updated = ' . $updated,
                                                'l.timestamp >= :period_start',
                                                'l.timestamp <= :period_end'),
                                          array(':period_start' => $periodStart,
@@ -154,17 +159,33 @@ class JSONStatisticsController extends Controller
                                  ->order('period')
                                  ->queryAll();
                     break;
-                // New use of names for Type-Specimens per [Interval]
-                case 'new_names_type_specimens':
+                // New/Updated Types per Name per [Interval] -> log_tax_typecollections
+                case 'types_name':
+                    $dbRows = $db->createCommand()
+                                 ->select(array($interval . '(l.timestamp) AS period',
+                                                'count(l.typecollID) AS cnt',
+                                                'u.source_id'))
+                                 ->from(array('log_tax_typecollections l',
+                                              'tbl_herbardb_users u',
+                                              'herbarinput.meta m'))
+                                 ->where(array('AND',
+                                               'l.userID = u.userID',
+                                               'u.source_id = m.source_id',
+                                               'l.updated = ' . $updated,
+                                               'l.timestamp >= :period_start',
+                                               'l.timestamp <= :period_end'),
+                                         array(':period_start' => $periodStart,
+                                               ':period_end' => $periodEnd))
+                                 ->group(array('period',
+                                               'u.source_id'))
+                                 ->order('period')
+                                 ->queryAll();
                     break;
-                // New Types per Name per [Interval]
-                case 'new_types_name':
+                // New/Updated Synonyms per [Interval] -> log_tbl_tax_synonymy
+                case 'synonyms':
                     break;
-                // New Synonyms per [Interval]
-                case 'new_synonyms':
-                    break;
-                // New Classification entries per [Interval]
-                case 'new_classifications':
+                // New/Updated Classification entries per [Interval] -> table missing
+                case 'classifications':
                     break;
             }
             $error = '';
@@ -226,9 +247,14 @@ class JSONStatisticsController extends Controller
                 $ret .= "<td style='text-align:center; border-top:1px solid'>" . $periodSum[$i] . "</td>";
             }
             $ret .= "</tr></table>";
-            return array('display' => $ret);
+            return array('display' => $ret, 'plot' => array(array(1,1),array(2,2),array(3,4),array(4,8)));
         } else {
-            return array('display' => 'nothing found');
+            return array('display' => 'nothing found', 'plot' => array(array(1,1),
+                    array(2,7),
+                    array(3,12),
+                    array(4,32),
+                    array(5,62),
+                    array(6,89),));
         }
     }
 

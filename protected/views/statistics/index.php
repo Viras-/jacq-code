@@ -11,12 +11,17 @@ $this->breadcrumbs=array(
         &mdash;
         <input id="statistics_period_end" type="text" value="<?php echo $periodEnd; ?>" maxlength="10" size="10">
         &rightarrow;
+        <select id="statistics_updated">
+            <option value="0" selected="selected">New</option>
+            <option value="1">Updated</option>
+        </select>
         <select id="statistics_type">
-            <option value="new_names">New Names</option>
-            <option value="new_citations" selected="selected">New Citations</option>
-            <option value="new_names_citations">New Names used in Citations</option>
-            <option value="new_specimens">New Specimens</option>
-            <option value="new_type_specimens">New Type-Specimens</option>
+            <option value="names">Names</option>
+            <option value="citations" selected="selected">Citations</option>
+            <option value="names_citations">Names used in Citations</option>
+            <option value="specimens">Specimens</option>
+            <option value="names_type_specimens">use of names for Type-Specimens</option>
+            <option value="types_name">Types per Name</option>
         </select>
         /
         <select id="statistics_interval">
@@ -30,4 +35,5 @@ $this->breadcrumbs=array(
         <br />
     </form>
     <div id="statistics_result" style="padding-top: 10px; padding-bottom: 10px; overflow:auto;"></div>
+<!--    <div id="statistics_plot" style="width:600px;height:300px"></div>-->
 </div>
