@@ -52,19 +52,19 @@ class JSONStatisticsController extends Controller
                                  ->select(array($interval . '(l.timestamp) AS period',
                                                 'count(l.taxonID) AS cnt',
                                                 'u.source_id'))
-                                 ->from(array('log_tax_species l',
-                                              'tbl_herbardb_users u',
-                                              'herbarinput.meta m'))
-                                 ->where(array('AND',
-                                               'l.userID = u.userID',
-                                               'u.source_id = m.source_id',
-                                               'l.updated = ' . $updated,
-                                               'l.timestamp >= :period_start',
-                                               'l.timestamp <= :period_end'),
-                                         array(':period_start' => $periodStart,
-                                               ':period_end' => $periodEnd))
-                                 ->group(array('period',
-                                               'u.source_id'))
+                                 ->from(array(  'log_tax_species l',
+                                                'tbl_herbardb_users u',
+                                                'herbarinput.meta m'))
+                                 ->where(array( 'AND',
+                                                'l.userID = u.userID',
+                                                'u.source_id = m.source_id',
+                                                'l.updated = ' . $updated,
+                                                'l.timestamp >= :period_start',
+                                                'l.timestamp <= :period_end'),
+                                         array( ':period_start' => $periodStart,
+                                                ':period_end' => $periodEnd))
+                                 ->group(array( 'period',
+                                                'u.source_id'))
                                  ->order('period')
                                  ->queryAll();
                     break;
@@ -74,19 +74,19 @@ class JSONStatisticsController extends Controller
                                  ->select(array($interval . '(l.timestamp) AS period',
                                                 'count(l.citationID) AS cnt',
                                                 'u.source_id'))
-                                 ->from(array('log_lit l',
-                                              'tbl_herbardb_users u',
-                                              'herbarinput.meta m'))
-                                 ->where(array('AND',
-                                               'l.userID = u.userID',
-                                               'u.source_id = m.source_id',
-                                               'l.updated = ' . $updated,
-                                               'l.timestamp >= :period_start',
-                                               'l.timestamp <= :period_end'),
-                                         array(':period_start' => $periodStart,
-                                               ':period_end' => $periodEnd))
-                                 ->group(array('period',
-                                               'u.source_id'))
+                                 ->from(array(  'log_lit l',
+                                                'tbl_herbardb_users u',
+                                                'herbarinput.meta m'))
+                                 ->where(array( 'AND',
+                                                'l.userID = u.userID',
+                                                'u.source_id = m.source_id',
+                                                'l.updated = ' . $updated,
+                                                'l.timestamp >= :period_start',
+                                                'l.timestamp <= :period_end'),
+                                         array( ':period_start' => $periodStart,
+                                                ':period_end' => $periodEnd))
+                                 ->group(array( 'period',
+                                                'u.source_id'))
                                  ->order('period')
                                  ->queryAll();
                     break;
@@ -96,19 +96,19 @@ class JSONStatisticsController extends Controller
                                  ->select(array($interval . '(l.timestamp) AS period',
                                                 'count(l.taxindID) AS cnt',
                                                 'u.source_id'))
-                                 ->from(array('log_tax_index l',
-                                              'tbl_herbardb_users u',
-                                              'herbarinput.meta m'))
-                                 ->where(array('AND',
-                                               'l.userID = u.userID',
-                                               'u.source_id = m.source_id',
-                                               'l.updated = ' . $updated,
-                                               'l.timestamp >= :period_start',
-                                               'l.timestamp <= :period_end'),
-                                         array(':period_start' => $periodStart,
-                                               ':period_end' => $periodEnd))
-                                 ->group(array('period',
-                                               'u.source_id'))
+                                 ->from(array(  'log_tax_index l',
+                                                'tbl_herbardb_users u',
+                                                'herbarinput.meta m'))
+                                 ->where(array( 'AND',
+                                                'l.userID = u.userID',
+                                                'u.source_id = m.source_id',
+                                                'l.updated = ' . $updated,
+                                                'l.timestamp >= :period_start',
+                                                'l.timestamp <= :period_end'),
+                                         array( ':period_start' => $periodStart,
+                                                ':period_end' => $periodEnd))
+                                 ->group(array( 'period',
+                                                'u.source_id'))
                                  ->order('period')
                                  ->queryAll();
                     break;
@@ -118,19 +118,19 @@ class JSONStatisticsController extends Controller
                                  ->select(array($interval . '(l.timestamp) AS period',
                                                 'count(l.specimenID) AS cnt',
                                                 'u.source_id'))
-                                 ->from(array('log_specimens l',
-                                              'tbl_herbardb_users u',
-                                              'herbarinput.meta m'))
-                                 ->where(array('AND',
-                                               'l.userID = u.userID',
-                                               'u.source_id = m.source_id',
-                                               'l.updated = ' . $updated,
-                                               'l.timestamp >= :period_start',
-                                               'l.timestamp <= :period_end'),
-                                         array(':period_start' => $periodStart,
-                                               ':period_end' => $periodEnd))
-                                 ->group(array('period',
-                                               'u.source_id'))
+                                 ->from(array(  'log_specimens l',
+                                                'tbl_herbardb_users u',
+                                                'herbarinput.meta m'))
+                                 ->where(array( 'AND',
+                                                'l.userID = u.userID',
+                                                'u.source_id = m.source_id',
+                                                'l.updated = ' . $updated,
+                                                'l.timestamp >= :period_start',
+                                                'l.timestamp <= :period_end'),
+                                         array( ':period_start' => $periodStart,
+                                                ':period_end' => $periodEnd))
+                                 ->group(array( 'period',
+                                                'u.source_id'))
                                  ->order('period')
                                  ->queryAll();
                     break;
@@ -143,19 +143,19 @@ class JSONStatisticsController extends Controller
                                  ->select(array($interval . '(l.timestamp) AS period',
                                                 'count(l.specimens_types_ID) AS cnt',
                                                 'u.source_id'))
-                                 ->from(array('log_specimens_types l',
-                                              'tbl_herbardb_users u',
-                                              'herbarinput.meta m'))
-                                 ->where(array('AND',
-                                               'l.userID = u.userID',
-                                               'u.source_id = m.source_id',
-                                               'l.updated = ' . $updated,
-                                               'l.timestamp >= :period_start',
-                                               'l.timestamp <= :period_end'),
-                                         array(':period_start' => $periodStart,
-                                               ':period_end' => $periodEnd))
-                                 ->group(array('period',
-                                               'u.source_id'))
+                                 ->from(array(  'log_specimens_types l',
+                                                'tbl_herbardb_users u',
+                                                'herbarinput.meta m'))
+                                 ->where(array( 'AND',
+                                                'l.userID = u.userID',
+                                                'u.source_id = m.source_id',
+                                                'l.updated = ' . $updated,
+                                                'l.timestamp >= :period_start',
+                                                'l.timestamp <= :period_end'),
+                                         array( ':period_start' => $periodStart,
+                                                ':period_end' => $periodEnd))
+                                 ->group(array( 'period',
+                                                'u.source_id'))
                                  ->order('period')
                                  ->queryAll();
                     break;
@@ -165,19 +165,19 @@ class JSONStatisticsController extends Controller
                                  ->select(array($interval . '(l.timestamp) AS period',
                                                 'count(l.typecollID) AS cnt',
                                                 'u.source_id'))
-                                 ->from(array('log_tax_typecollections l',
-                                              'tbl_herbardb_users u',
-                                              'herbarinput.meta m'))
-                                 ->where(array('AND',
-                                               'l.userID = u.userID',
-                                               'u.source_id = m.source_id',
-                                               'l.updated = ' . $updated,
-                                               'l.timestamp >= :period_start',
-                                               'l.timestamp <= :period_end'),
-                                         array(':period_start' => $periodStart,
-                                               ':period_end' => $periodEnd))
-                                 ->group(array('period',
-                                               'u.source_id'))
+                                 ->from(array(  'log_tax_typecollections l',
+                                                'tbl_herbardb_users u',
+                                                'herbarinput.meta m'))
+                                 ->where(array( 'AND',
+                                                'l.userID = u.userID',
+                                                'u.source_id = m.source_id',
+                                                'l.updated = ' . $updated,
+                                                'l.timestamp >= :period_start',
+                                                'l.timestamp <= :period_end'),
+                                         array( ':period_start' => $periodStart,
+                                                ':period_end' => $periodEnd))
+                                 ->group(array( 'period',
+                                                'u.source_id'))
                                  ->order('period')
                                  ->queryAll();
                     break;
@@ -188,7 +188,7 @@ class JSONStatisticsController extends Controller
                 case 'classifications':
                     break;
             }
-            $error = '';
+//            $error = '';
         }
         catch (Exception $e) {
             $error = $e->getMessage();
@@ -197,10 +197,18 @@ class JSONStatisticsController extends Controller
         if ($error) {
             return array('display' => $error);
         } elseif (count($dbRows) > 0) {
-            $periodMin = $periodMax = $dbRows[0]['period'];
+            $dbRow = $db->createCommand()
+                        ->select("$interval(:period_start) AS start, $interval(:period_end) AS end")
+                        ->from('tbl_herbardb_users')
+                        ->bindValues(array(':period_start' => $periodStart, ':period_end' => $periodEnd))
+                        ->queryRow();
+            $periodMin = $dbRow['start'];
+            $periodMax = $dbRow['end'];
+
+//            $periodMin = $periodMax = $dbRows[0]['period'];
             foreach ($dbRows as $dbRow) {
-                $periodMin = ($dbRow['period'] < $periodMin) ? $dbRow['period'] : $periodMin;
-                $periodMax = ($dbRow['period'] > $periodMin) ? $dbRow['period'] : $periodMax;
+//                $periodMin = ($dbRow['period'] < $periodMin) ? $dbRow['period'] : $periodMin;
+//                $periodMax = ($dbRow['period'] > $periodMin) ? $dbRow['period'] : $periodMax;
                 $result[$dbRow['source_id']][$dbRow['period']] = $dbRow['cnt'];
             }
             for ($i = $periodMin; $i <= $periodMax; $i++) {

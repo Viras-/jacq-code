@@ -1,4 +1,6 @@
 // called once jquery is ready
+$('#statistics_period_start').datepicker({ dateFormat: "yy-mm-dd", changeYear: true });
+$('#statistics_period_end').datepicker({ dateFormat: "yy-mm-dd", changeYear: true });
 
 // bind to click handler for submission
 $('#statistics_send').bind('click', function() {
