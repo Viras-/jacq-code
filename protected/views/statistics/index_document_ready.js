@@ -35,6 +35,7 @@ $('#statistics_send').bind('click', function() {
         success: function(data) {
             $('#statistics_result').html(data.display);
             plotData = data.plot;
+//            alert(data.plot[0].data.toSource());
             if (data.plotMaxIndex > 2) {
                 plotInstitution(data.plotMaxIndex - 1);
             } else if (data.plotMaxIndex > 0) {

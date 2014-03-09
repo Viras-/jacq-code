@@ -27,10 +27,10 @@ class JSONStatisticsController extends Controller
         $updated = intval($updated);
 
         switch ($interval) {
-            case 'day':   $interval = 'dayofyear'; $intervalOption = ''; break;
-            case 'year':  $interval = 'year'; $intervalOption = '';      break;
-            case 'month': $interval = 'month'; $intervalOption = '';     break;
-            default :     $interval = 'week'; $intervalOption = ', 1';   break;
+            case 'day':   $interval = 'dayofyear'; $intervalOption = '';    break;
+            case 'year':  $interval = 'year';      $intervalOption = '';    break;
+            case 'month': $interval = 'month';     $intervalOption = '';    break;
+            default :     $interval = 'week';      $intervalOption = ', 1'; break;
         }
 
         $dbRows = $db->createCommand()
@@ -136,6 +136,29 @@ class JSONStatisticsController extends Controller
                     break;
                 // New/Updated Type-Specimens per [Interval] -> log_specimens + (straight join) tbl_specimens where typusID is not null and checked = 1
                 case 'type_specimens':
+                    $dbRows = $db->createCommand()
+                                 ->select(array($interval . '(l.timestamp' . $intervalOption . ') AS period',
+                                                'count(l.specimenID) AS cnt',
+                                                'u.source_id'))
+                                 ->from(array(  'log_specimens l',
+                                                'herbarinput.tbl_specimens s',
+                                                'tbl_herbardb_users u',
+                                                'herbarinput.meta m'))
+                                 ->where(array( 'AND',
+                                                'l.specimenID = s.specimen_ID',
+                                                'l.userID = u.userID',
+                                                'u.source_id = m.source_id',
+                                                's.typusID IS NOT NULL',
+                                                's.checked = 1',
+                                                'l.updated = ' . $updated,
+                                                'l.timestamp >= :period_start',
+                                                'l.timestamp <= :period_end'),
+                                         array( ':period_start' => $periodStart,
+                                                ':period_end' => $periodEnd))
+                                 ->group(array( 'period',
+                                                'u.source_id'))
+                                 ->order('period')
+                                 ->queryAll();
                     break;
                 // New/Updated use of names for Type-Specimens per [Interval] -> log_specimens_types
                 case 'names_type_specimens':
@@ -183,12 +206,31 @@ class JSONStatisticsController extends Controller
                     break;
                 // New/Updated Synonyms per [Interval] -> log_tbl_tax_synonymy
                 case 'synonyms':
+                    $dbRows = $db->createCommand()
+                                 ->select(array($interval . '(l.timestamp' . $intervalOption . ') AS period',
+                                                'count(l.tax_syn_ID) AS cnt',
+                                                'u.source_id'))
+                                 ->from(array(  'log_tbl_tax_synonymy l',
+                                                'tbl_herbardb_users u',
+                                                'herbarinput.meta m'))
+                                 ->where(array( 'AND',
+                                                'l.userID = u.userID',
+                                                'u.source_id = m.source_id',
+                                                'l.updated = ' . $updated,
+                                                'l.timestamp >= :period_start',
+                                                'l.timestamp <= :period_end'),
+                                         array( ':period_start' => $periodStart,
+                                                ':period_end' => $periodEnd))
+                                 ->group(array( 'period',
+                                                'u.source_id'))
+                                 ->order('period')
+                                 ->queryAll();
                     break;
                 // New/Updated Classification entries per [Interval] -> table missing
                 case 'classifications':
                     break;
             }
-//            $error = '';
+            $error = '';
         }
         catch (Exception $e) {
             $error = $e->getMessage();
@@ -243,7 +285,7 @@ class JSONStatisticsController extends Controller
                     for ($i = $periodMin; $i <= $periodMax; $i++) {
                         $ret .= "<td style='text-align:center'>" . $result[$institution['source_id']][$i] . "</td>";
                         $periodSum[$i] += $result[$institution['source_id']][$i];
-                        $plot[$plotIndex]['data'][$i] = array($i, $result[$institution['source_id']][$i]);
+                        $plot[$plotIndex]['data'][] = array($i, $result[$institution['source_id']][$i]);
                     }
                     $ret .= "</tr>";
                     $plotIndex++;
@@ -258,7 +300,7 @@ class JSONStatisticsController extends Controller
             $plot[$plotIndex]['label'] = '&sum;';
             for ($i = $periodMin; $i <= $periodMax; $i++) {
                 $ret .= "<td style='text-align:center; border-top:1px solid'>" . $periodSum[$i] . "</td>";
-                $plot[$plotIndex]['data'][$i] = array($i, $periodSum[$i]);
+                $plot[$plotIndex]['data'][] = array($i, $periodSum[$i]);
             }
             $ret .= "</tr></table>";
             $plotIndex++;

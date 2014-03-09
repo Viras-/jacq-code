@@ -17,11 +17,13 @@ $this->breadcrumbs=array(
         </select>
         <select id="statistics_type">
             <option value="names">Names</option>
-            <option value="citations" selected="selected">Citations</option>
+            <option value="citations">Citations</option>
             <option value="names_citations">Names used in Citations</option>
-            <option value="specimens">Specimens</option>
+            <option value="specimens" selected="selected">Specimens</option>
+            <option value="type_specimens">Type-Specimens</option>
             <option value="names_type_specimens">use of names for Type-Specimens</option>
             <option value="types_name">Types per Name</option>
+            <option value="synonyms">Synonyms</option>
         </select>
         /
         <select id="statistics_interval">
