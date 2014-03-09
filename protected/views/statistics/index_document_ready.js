@@ -1,4 +1,18 @@
 // called once jquery is ready
+$('#statistics_period_start').datepicker({
+    dateFormat: "yy-mm-dd",
+    changeMonth: true,
+    changeYear: true,
+    showWeek: true,
+    firstDay: 1
+});
+$('#statistics_period_end').datepicker({
+    dateFormat: "yy-mm-dd",
+    changeMonth: true,
+    changeYear: true,
+    showWeek: true,
+    firstDay: 1
+});
 
 // bind to click handler for submission
 $('#statistics_send').bind('click', function() {
@@ -20,7 +34,13 @@ $('#statistics_send').bind('click', function() {
         dataType: "jsonp",
         success: function(data) {
             $('#statistics_result').html(data.display);
-            //$.plot('#statistics_plot', [data.plot], {bars: { show: true, barWidth: 0.6, align: "center"}});
+            plotData = data.plot;
+//            alert(data.plot[0].data.toSource());
+            if (data.plotMaxIndex > 2) {
+                plotInstitution(data.plotMaxIndex - 1);
+            } else if (data.plotMaxIndex > 0) {
+                plotInstitution(0);
+            }
         }
     });
 });
