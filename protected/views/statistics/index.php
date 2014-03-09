@@ -35,5 +35,5 @@ $this->breadcrumbs=array(
         <br />
     </form>
     <div id="statistics_result" style="padding-top: 10px; padding-bottom: 10px; overflow:auto;"></div>
-<!--    <div id="statistics_plot" style="width:600px;height:300px"></div>-->
+    <div id="statistics_plot" style="width:100%;height:300px"></div>
 </div>

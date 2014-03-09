@@ -27,10 +27,10 @@ class JSONStatisticsController extends Controller
         $updated = intval($updated);
 
         switch ($interval) {
-            case 'day':   $interval = 'dayofyear'; break;
-            case 'year':  $interval = 'year';      break;
-            case 'month': $interval = 'month';     break;
-            default :     $interval = 'week';      break;
+            case 'day':   $interval = 'dayofyear'; $intervalOption = ''; break;
+            case 'year':  $interval = 'year'; $intervalOption = '';      break;
+            case 'month': $interval = 'month'; $intervalOption = '';     break;
+            default :     $interval = 'week'; $intervalOption = ', 1';   break;
         }
 
         $dbRows = $db->createCommand()
@@ -49,7 +49,7 @@ class JSONStatisticsController extends Controller
                 // New/Updated names per [interval] -> log_tax_species
                 case 'names':
                     $dbRows = $db->createCommand()
-                                 ->select(array($interval . '(l.timestamp) AS period',
+                                 ->select(array($interval . '(l.timestamp' . $intervalOption . ') AS period',
                                                 'count(l.taxonID) AS cnt',
                                                 'u.source_id'))
                                  ->from(array(  'log_tax_species l',
@@ -71,7 +71,7 @@ class JSONStatisticsController extends Controller
                 // New/Updated Citations per [Interval] -> log_lit
                 case 'citations':
                     $dbRows = $db->createCommand()
-                                 ->select(array($interval . '(l.timestamp) AS period',
+                                 ->select(array($interval . '(l.timestamp' . $intervalOption . ') AS period',
                                                 'count(l.citationID) AS cnt',
                                                 'u.source_id'))
                                  ->from(array(  'log_lit l',
@@ -93,7 +93,7 @@ class JSONStatisticsController extends Controller
                 // New/Updated Names used in Citations per [Interval] -> log_tax_index
                 case 'names_citations':
                     $dbRows = $db->createCommand()
-                                 ->select(array($interval . '(l.timestamp) AS period',
+                                 ->select(array($interval . '(l.timestamp' . $intervalOption . ') AS period',
                                                 'count(l.taxindID) AS cnt',
                                                 'u.source_id'))
                                  ->from(array(  'log_tax_index l',
@@ -115,7 +115,7 @@ class JSONStatisticsController extends Controller
                 // New/Updated Specimens per [Interval] -> log_specimens
                 case 'specimens':
                     $dbRows = $db->createCommand()
-                                 ->select(array($interval . '(l.timestamp) AS period',
+                                 ->select(array($interval . '(l.timestamp' . $intervalOption . ') AS period',
                                                 'count(l.specimenID) AS cnt',
                                                 'u.source_id'))
                                  ->from(array(  'log_specimens l',
@@ -140,7 +140,7 @@ class JSONStatisticsController extends Controller
                 // New/Updated use of names for Type-Specimens per [Interval] -> log_specimens_types
                 case 'names_type_specimens':
                     $dbRows = $db->createCommand()
-                                 ->select(array($interval . '(l.timestamp) AS period',
+                                 ->select(array($interval . '(l.timestamp' . $intervalOption . ') AS period',
                                                 'count(l.specimens_types_ID) AS cnt',
                                                 'u.source_id'))
                                  ->from(array(  'log_specimens_types l',
@@ -162,7 +162,7 @@ class JSONStatisticsController extends Controller
                 // New/Updated Types per Name per [Interval] -> log_tax_typecollections
                 case 'types_name':
                     $dbRows = $db->createCommand()
-                                 ->select(array($interval . '(l.timestamp) AS period',
+                                 ->select(array($interval . '(l.timestamp' . $intervalOption . ') AS period',
                                                 'count(l.typecollID) AS cnt',
                                                 'u.source_id'))
                                  ->from(array(  'log_tax_typecollections l',
@@ -195,10 +195,10 @@ class JSONStatisticsController extends Controller
         }
 
         if ($error) {
-            return array('display' => $error);
+            return array('display' => $error, 'plot' => array(), 'plotMaxIndex' => 0);
         } elseif (count($dbRows) > 0) {
             $dbRow = $db->createCommand()
-                        ->select("$interval(:period_start) AS start, $interval(:period_end) AS end")
+                        ->select("$interval(:period_start$intervalOption) AS start, $interval(:period_end$intervalOption) AS end")
                         ->from('tbl_herbardb_users')
                         ->bindValues(array(':period_start' => $periodStart, ':period_end' => $periodEnd))
                         ->queryRow();
@@ -229,40 +229,42 @@ class JSONStatisticsController extends Controller
                 $periodSum[$i] = 0;
             }
             $ret .= "</tr>";
+            $plotIndex = 0;
+            $plot = array();
             foreach ($institutionOrder as $institution) {
                 if (isset($result[$institution['source_id']]) && array_sum($result[$institution['source_id']]) > 0) {
                     $ret .= "<tr>"
-                          . "<td>" . $institution['source_code'] . "</td>"
+                          . "<td><a href='#' onclick='plotInstitution($plotIndex);' style='text-decoration:none;'>" . $institution['source_code'] . "</a></td>"
                           . "<td style='text-align:center; border-left:1px solid'>" . min($result[$institution['source_id']]) . "</td>"
                           . "<td style='text-align:center'>" . max($result[$institution['source_id']]) . "</td>"
                           . "<td style='text-align:center'>" . round($this->avg($result[$institution['source_id']]), 1) . "</td>"
                           . "<td style='text-align:center; border-right:1px solid'>" . $this->median($result[$institution['source_id']]) . "</td>";
+                    $plot[$plotIndex]['label'] = $institution['source_code'];
                     for ($i = $periodMin; $i <= $periodMax; $i++) {
                         $ret .= "<td style='text-align:center'>" . $result[$institution['source_id']][$i] . "</td>";
                         $periodSum[$i] += $result[$institution['source_id']][$i];
+                        $plot[$plotIndex]['data'][$i] = array($i, $result[$institution['source_id']][$i]);
                     }
                     $ret .= "</tr>";
-
+                    $plotIndex++;
                 }
             }
             $ret .= "<tr>"
-                  . "<td style='border-top:1px solid'>&sum;</td>"
+                  . "<td style='border-top:1px solid'><a href='#' onclick='plotInstitution($plotIndex);' style='text-decoration:none;'>&sum;</a></td>"
                   . "<td style='text-align:center; border-top:1px solid; border-left:1px solid'>" . min($periodSum) . "</td>"
                   . "<td style='text-align:center; border-top:1px solid'>" . max($periodSum) . "</td>"
                   . "<td style='text-align:center; border-top:1px solid'>" . round($this->avg($periodSum), 1) . "</td>"
                   . "<td style='text-align:center; border-top:1px solid; border-right:1px solid'>" . $this->median($periodSum) . "</td>";
+            $plot[$plotIndex]['label'] = '&sum;';
             for ($i = $periodMin; $i <= $periodMax; $i++) {
                 $ret .= "<td style='text-align:center; border-top:1px solid'>" . $periodSum[$i] . "</td>";
+                $plot[$plotIndex]['data'][$i] = array($i, $periodSum[$i]);
             }
             $ret .= "</tr></table>";
-            return array('display' => $ret, 'plot' => array(array(1,1),array(2,2),array(3,4),array(4,8)));
+            $plotIndex++;
+            return array('display' => $ret, 'plot' => $plot, 'plotMaxIndex' => $plotIndex);
         } else {
-            return array('display' => 'nothing found', 'plot' => array(array(1,1),
-                    array(2,7),
-                    array(3,12),
-                    array(4,32),
-                    array(5,62),
-                    array(6,89),));
+            return array('display' => 'nothing found', 'plot' => array(), 'plotMaxIndex' => 0);
         }
     }
 

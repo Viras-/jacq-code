@@ -228,3 +228,8 @@ div.search-form
 {
     background: #80CFFF;
 }
+
+.legend table
+{
+    width: auto;
+}
