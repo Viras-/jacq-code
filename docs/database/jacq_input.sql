@@ -760,7 +760,7 @@ CREATE TABLE IF NOT EXISTS `frmwrk_AuthAssignment` (
   `userid` INT NOT NULL,
   `bizrule` TEXT NULL DEFAULT NULL,
   `data` TEXT NULL DEFAULT NULL,
-  PRIMARY KEY (`itemname`),
+  PRIMARY KEY (`itemname`, `userid`),
   INDEX `fk_frmwrk_AuthAssignment_frmwrk_user1_idx` (`userid` ASC),
   CONSTRAINT `frmwrk_AuthAssignment_ibfk_1`
     FOREIGN KEY (`itemname`)

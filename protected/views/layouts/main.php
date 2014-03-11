@@ -33,9 +33,12 @@
 
          <!-- custom styles -->
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/custom.css" />
-        
+
          <!-- MsgBox -->
          <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/msgbox.js" ></script>
+
+         <!-- flot -->
+         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.flot/jquery.flot.js" ></script>
     </head>
 
     <body>
@@ -65,6 +68,7 @@
                         array('label' => Yii::t('jacq', 'Garden Site'), 'url' => array('organisation/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createOrganisation')),
                         array('label' => Yii::t('jacq', 'Tree Record File'), 'url' => array('treeRecordFile/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createTreeRecordFile')),
                         array('label' => Yii::t('jacq', 'Classification Browser'), 'url' => array('dataBrowser/classificationBrowser/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_showClassificationBrowser')),
+                        array('label' => Yii::t('jacq', 'Statistics'), 'url' => array('statistics/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_showStatistics')),
                         array('label' => Yii::t('jacq', 'User Manager'), 'url' => array('user/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createUser')),
                         array('label' => Yii::t('jacq', 'Login'), 'url' => array('site/login'), 'visible' => Yii::app()->user->isGuest),
                         array('label' => Yii::t('jacq', 'Logout') . ' (' . Yii::app()->user->name . ')', 'url' => array('site/logout'), 'visible' => !Yii::app()->user->isGuest)

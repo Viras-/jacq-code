@@ -137,6 +137,7 @@ return array (
   'Source Date' => 'Bezugsdatum',
   'Source Name' => 'Bezugsquelle',
   'Spatial Distribution' => 'Verbreitung',
+  'Statistics' => 'Statistik',
   'Successfully saved' => 'Erfolgreich gespeichert',
   'Title Prefix' => 'Titel (vorangestellt)',
   'Title Suffix' => 'Titel (nachgestellt)',
