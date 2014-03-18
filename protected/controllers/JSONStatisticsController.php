@@ -149,7 +149,6 @@ class JSONStatisticsController extends Controller
                                                 'l.userID = u.userID',
                                                 'u.source_id = m.source_id',
                                                 's.typusID IS NOT NULL',
-                                                's.checked = 1',
                                                 'l.updated = ' . $updated,
                                                 'l.timestamp >= :period_start',
                                                 'l.timestamp <= :period_end'),

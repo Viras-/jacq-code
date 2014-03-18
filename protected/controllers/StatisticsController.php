@@ -22,7 +22,7 @@ class StatisticsController extends Controller
         Yii::app()->clientScript->registerScript('var1', 'var jacq_url = ' . CJavaScript::encode($jsonJacqUrl) . ';', CClientScript::POS_HEAD);
         Yii::app()->clientScript->registerScript('var2', 'var plotData;', CClientScript::POS_HEAD);
 
-        $this->render('index', array('periodStart' => date('Y') . '-01-01', 'periodEnd' => date('Y') . '-12-31'));
+        $this->render('index', array('periodStart' => date('Y') . '-01-01', 'periodEnd' => date('Y-m-d')));
 //        $this->render('index', array('periodStart' => '2008-01-01', 'periodEnd' => '2008-12-31'));
 
 	// Uncomment the following methods and override them if needed
