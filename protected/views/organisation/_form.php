@@ -37,7 +37,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'parent_organisation_id'); ?>
-		<?php echo $form->dropDownList($model,'parent_organisation_id', CHtml::listData(Organisation::model()->findAll(), 'id', 'description')); ?>
+		<?php echo $form->dropDownList($model,'parent_organisation_id', Html::listDataSorted(Organisation::model()->findAll(), 'id', 'description', true)); ?>
 		<?php echo $form->error($model,'parent_organisation_id'); ?>
 	</div>
 
