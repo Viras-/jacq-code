@@ -47,6 +47,8 @@ class Organisation extends ActiveRecord {
             array('greenhouse, parent_organisation_id, gardener_id', 'numerical', 'integerOnly' => true),
             array('description, department', 'length', 'max' => 255),
             array('ipen_code', 'length', 'max' => 5),
+            // prevent parent organisation to be ourself
+            array('parent_organisation_id', 'compare', 'compareAttribute' => 'id', 'operator' => '!='),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, description, department, greenhouse, parent_organisation_id, gardener_id, ipen_code', 'safe', 'on' => 'search'),
