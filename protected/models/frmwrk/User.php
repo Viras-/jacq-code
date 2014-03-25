@@ -26,16 +26,24 @@
  * @property Organisation $organisation
  */
 class User extends ActiveRecord {
+
     /**
      * characters used for salt generating
      */
     private $saltCharset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!§$%&/()=?-_.:,;<>';
-    
+
     /**
-     *length of salt hash
+     * length of salt hash
      * @var type 
      */
     private $saltLength = 10;
+
+    /**
+     * Temporary state variable for groups
+     * saved after the user has been saved
+     * @var array 
+     */
+    protected $groups = array();
 
     /**
      * @return string the associated database table name
@@ -58,6 +66,7 @@ class User extends ActiveRecord {
             array('title_prefix, firstname, lastname, title_suffix', 'length', 'max' => 45),
             array('groups', 'type', 'type' => 'array'),
             array('birthdate', 'type', 'type' => 'date', 'dateFormat' => 'yyyy-MM-dd'),
+            array('birthdate', 'default', 'setOnEmpty' => true, 'value' => null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, username, password, salt, user_type_id, employment_type_id, title_prefix, firstname, lastname, title_suffix, birthdate, organisation_id, groups', 'safe', 'on' => 'search'),
@@ -154,13 +163,14 @@ class User extends ActiveRecord {
     public function checkPassword($password) {
         // generate password hash
         $password = sha1($password . sha1($this->salt));
-        
+
         // check for valid password
-        if( $password == $this->password ) return true;
-        
+        if ($password == $this->password)
+            return true;
+
         return false;
     }
-    
+
     /**
      * set a new password
      * @param string $password new password (plaintext)
@@ -168,32 +178,41 @@ class User extends ActiveRecord {
     public function setNewPassword($password) {
         // generate new salt
         $this->updateSalt();
-        
+
         // update password
         $this->password = sha1($password . sha1($this->salt));
     }
-    
+
     public function getNewPassword() {
         return '';
     }
-    
+
     /**
      * Set groups for assignment to this user
      * @param type $groups
      */
     public function setGroups($groups) {
+        $this->groups = $groups;
+    }
+
+    /**
+     * Invoked after the user has been saved, the group assignments are handled here
+     */
+    public function onAfterSave($event) {
+        parent::onAfterSave($event);
+
         // first of all remove all old assignments
         $groupItems = Yii::app()->authManager->getAuthItems(2);
-        foreach($groupItems as $groupName => $groupItem) {
+        foreach ($groupItems as $groupName => $groupItem) {
             Yii::app()->authManager->revoke($groupName, $this->id);
         }
-        
+
         // now add new ones
-        foreach( $groups as $group ) {
+        foreach ($this->groups as $group) {
             Yii::app()->authManager->assign($group, $this->id);
         }
     }
-    
+
     /**
      * Receive assigned groups
      * @return type
@@ -201,7 +220,7 @@ class User extends ActiveRecord {
     public function getGroups() {
         return Yii::app()->authManager->getAuthItems(2, $this->id);
     }
-    
+
     /**
      * generate a new salt
      */
@@ -211,10 +230,12 @@ class User extends ActiveRecord {
         // prepare variables
         $count = strlen($this->saltCharset);
         $length = $this->saltLength;
-        
+
         // generate the new hash
         while ($length--) {
-            $this->salt .= $this->saltCharset[mt_rand(0, $count-1)];
+            $this->salt .= $this->saltCharset[mt_rand(0, $count - 1)];
         }
+
+        $this->salt = mb_convert_encoding($this->salt, "utf-8");
     }
 }
