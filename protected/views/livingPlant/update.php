@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs = array(
     Yii::t('jacq', 'Living Plants') => array('index'),
-    $model_livingPlant->id => array('update', 'id' => $model_livingPlant->id),
+    $model_livingPlant->accession_number => array('update', 'id' => $model_livingPlant->id),
     Yii::t('jacq', 'Update'),
 );
 
@@ -11,7 +11,7 @@ $this->menu = array(
 );
 ?>
 
-<h1><?php echo Yii::t('jacq', 'Update Living Plant'); ?> <?php echo $model_livingPlant->id; ?></h1>
+<h1><?php echo Yii::t('jacq', 'Update Living Plant'); ?> <?php echo $model_livingPlant->accession_number; ?></h1>
 
 <?php
 // check if saving was successfull

@@ -5,7 +5,6 @@
  *
  * The followings are the available columns in table 'tbl_living_plant':
  * @property integer $id
- * @property integer $accession_number
  * @property string $ipen_number
  * @property integer $ipen_locked
  * @property integer $phyto_control
@@ -38,13 +37,16 @@ class LivingPlant extends ActiveRecord {
     public $location_search;
     public $separated_search;
     public $label_type_search;
+    public $accessionNumber_search;
     
     /**
-     * Virtual AccessionNumber Attribute which returns a formatted version of the actual accession_number
+     * Virtual AccessionNumber Attribute which returns a formatted version of the id
      * @return string
      */
-    public function getAccessionNumber() {
-        return sprintf('%07d', $this->accession_number);
+    public function getAccession_number() {
+        if( $this->id <= 0 ) return '';
+        
+        return sprintf('%07d', $this->id);
     }
     
     /**
@@ -100,7 +102,7 @@ class LivingPlant extends ActiveRecord {
             array('cultivation_date', 'default', 'setOnEmpty' => true, 'value' => NULL),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('scientificName_search, organisation_search, accession_number, location_search, separated_search, index_seminum, label_type_search, label_synonym_scientific_name_id', 'safe', 'on' => 'search'),
+            array('accessionNumber_search, scientificName_search, organisation_search, location_search, separated_search, index_seminum, label_type_search, label_synonym_scientific_name_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -133,6 +135,7 @@ class LivingPlant extends ActiveRecord {
             'ipen_locked' => Yii::t('jacq', 'IPEN Locked'),
             'phyto_control' => Yii::t('jacq', 'Phyto Control'),
             'accession_number' => Yii::t('jacq', 'Accession Number'),
+            'accessionNumber_search' => Yii::t('jacq', 'Accession Number'),
             'place_number' => Yii::t('jacq', 'Place Number'),
             'index_seminum' => Yii::t('jacq', 'Index Seminum'),
             'culture_notes' => Yii::t('jacq', 'Culture Notes'),
@@ -175,11 +178,11 @@ class LivingPlant extends ActiveRecord {
         $criteria->compare('location.location', $this->location_search, true);
         
         // prepare searching for (alternative) accession numbers
-        if( !empty($this->accession_number) ) {
+        if( !empty($this->accessionNumber_search) ) {
             $accessionNumberCriteria = new CDbCriteria();
             $accessionNumberCriteria->with = array('alternativeAccessionNumbers');
-            $accessionNumberCriteria->compare('accession_number', $this->accession_number, true, 'OR');
-            $accessionNumberCriteria->compare('alternativeAccessionNumbers.number', $this->accession_number, true, 'OR');
+            $accessionNumberCriteria->compare('t.id', $this->accessionNumber_search, true, 'OR');
+            $accessionNumberCriteria->compare('alternativeAccessionNumbers.number', $this->accessionNumber_search, true, 'OR');
 
             // add accession number searching to main criteria
             $criteria->with[] = 'alternativeAccessionNumbers';
