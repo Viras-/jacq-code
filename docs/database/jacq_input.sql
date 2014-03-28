@@ -369,7 +369,6 @@ DROP TABLE IF EXISTS `tbl_living_plant` ;
 
 CREATE TABLE IF NOT EXISTS `tbl_living_plant` (
   `id` INT NOT NULL,
-  `accession_number` INT NOT NULL AUTO_INCREMENT,
   `ipen_number` VARCHAR(50) NULL,
   `ipen_locked` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'No further editing possible',
   `phyto_control` TINYINT(1) NOT NULL DEFAULT 0,
@@ -383,7 +382,6 @@ CREATE TABLE IF NOT EXISTS `tbl_living_plant` (
   `cultivar_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_tbl_living_plant_tbl_index_seminum_type1_idx` (`index_seminum_type_id` ASC),
-  UNIQUE INDEX `accession_number_UNIQUE` (`accession_number` ASC),
   INDEX `fk_tbl_living_plant_tbl_acquisition_date1_idx` (`incoming_date_id` ASC),
   INDEX `fk_tbl_living_plant_tbl_cultivar1_idx` (`cultivar_id` ASC),
   CONSTRAINT `fk_livingplant_object1`
