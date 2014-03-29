@@ -28,13 +28,13 @@
 
     <div class="row">
         <?php echo $form->labelEx($model_scientificNameInformation, 'spatial_distribution'); ?>
-        <?php echo $form->textField($model_scientificNameInformation, 'spatial_distribution'); ?>
+        <?php echo $form->textField($model_scientificNameInformation, 'spatial_distribution', array('style' => 'width: 100%;')); ?>
         <?php echo $form->error($model_scientificNameInformation, 'spatial_distribution'); ?>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($model_scientificNameInformation, 'common_names'); ?>
-        <?php echo $form->textField($model_scientificNameInformation, 'common_names'); ?>
+        <?php echo $form->textField($model_scientificNameInformation, 'common_names', array('style' => 'width: 100%;')); ?>
         <?php echo $form->error($model_scientificNameInformation, 'common_names'); ?>
     </div>
     
