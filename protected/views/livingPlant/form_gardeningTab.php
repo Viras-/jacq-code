@@ -78,7 +78,7 @@
 <!-- general annotations -->
 <div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'annotation'); ?>
-    <?php echo $form->textField($model_botanicalObject, 'annotation'); ?>
+    <?php echo $form->textArea($model_botanicalObject, 'annotation', array( 'style' => 'width: 100%;' )); ?>
     <?php echo $form->error($model_botanicalObject, 'annotation'); ?>
 </div>
 
