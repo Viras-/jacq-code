@@ -17,7 +17,7 @@
         $jacqImageServer = new JacqImageServer($imageServer->base_url, $imageServer->key);
         
         $resources = $jacqImageServer->listResources(array(
-            $model_livingPlant->accession_number . '_%'
+            $model_livingPlant->accessionNumber . '_%'
         ));
         
         foreach( $resources as $resource ) {
