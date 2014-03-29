@@ -191,6 +191,7 @@ class LivingPlant extends ActiveRecord {
         }
         
         // search for separated entries
+        if( $this->separated_search == null ) $this->separated_search = 0;
         $criteria->compare('id0.separated', $this->separated_search);
         
         // search for index seminum entries
