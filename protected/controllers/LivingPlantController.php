@@ -105,6 +105,9 @@ class LivingPlantController extends Controller {
                 $model_locationCoordinates->save();
                 $model_acquisitionEvent->location_coordinates_id = $model_locationCoordinates->id;
 
+                // living plants do not use the required acquisition type relation, that's why we set it to unknown by default
+                $model_acquisitionEvent->acquisition_type_id = 1;
+
                 // Save acquisition-event and procede
                 if ($model_acquisitionEvent->save()) {
                     $model_botanicalObject->acquisition_event_id = $model_acquisitionEvent->id;
