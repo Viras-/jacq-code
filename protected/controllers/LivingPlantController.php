@@ -719,7 +719,7 @@ class LivingPlantController extends Controller {
                         'id',
                         'id0.scientificName',
                         'id0.organisation.description', 
-                        'accession_number',
+                        'accessionNumber',
                         'id0.acquisitionEvent.location.location',
                         'place_number',
                         'id0.family',

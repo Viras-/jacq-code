@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'tbl_living_plant':
  * @property integer $id
+ * @property integer $accession_number
  * @property string $ipen_number
  * @property integer $ipen_locked
  * @property integer $phyto_control
@@ -43,10 +44,10 @@ class LivingPlant extends ActiveRecord {
      * Virtual AccessionNumber Attribute which returns a formatted version of the id
      * @return string
      */
-    public function getAccession_number() {
+    public function getAccessionNumber() {
         if( $this->id <= 0 ) return '';
         
-        return sprintf('%07d', $this->id);
+        return sprintf('%07d', $this->accession_number);
     }
     
     /**
@@ -93,7 +94,7 @@ class LivingPlant extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('id', 'required'),
-            array('id, ipen_locked, phyto_control, index_seminum, index_seminum_type_id, incoming_date_id, label_synonym_scientific_name_id, cultivar_id', 'numerical', 'integerOnly' => true),
+            array('id, accession_number, ipen_locked, phyto_control, index_seminum, index_seminum_type_id, incoming_date_id, label_synonym_scientific_name_id, cultivar_id', 'numerical', 'integerOnly' => true),
             array('ipen_number, place_number', 'length', 'max' => 50),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),

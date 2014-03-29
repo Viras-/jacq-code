@@ -2,17 +2,13 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-DROP SCHEMA IF EXISTS `jacq_input` ;
 CREATE SCHEMA IF NOT EXISTS `jacq_input` DEFAULT CHARACTER SET utf8 ;
-DROP SCHEMA IF EXISTS `jacq_log` ;
 CREATE SCHEMA IF NOT EXISTS `jacq_log` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `jacq_input` ;
 
 -- -----------------------------------------------------
 -- Table `frmwrk_user_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmwrk_user_type` ;
-
 CREATE TABLE IF NOT EXISTS `frmwrk_user_type` (
   `user_type_id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(45) NOT NULL,
@@ -23,8 +19,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `frmwrk_employment_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmwrk_employment_type` ;
-
 CREATE TABLE IF NOT EXISTS `frmwrk_employment_type` (
   `employment_type_id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(45) NOT NULL,
@@ -35,8 +29,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `frmwrk_user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmwrk_user` ;
-
 CREATE TABLE IF NOT EXISTS `frmwrk_user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(128) NOT NULL,
@@ -75,8 +67,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_organisation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_organisation` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_organisation` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(255) NULL,
@@ -105,8 +95,6 @@ COMMENT = 'Table for maintaining garden-places';
 -- -----------------------------------------------------
 -- Table `tbl_acquisition_date`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_acquisition_date` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_acquisition_date` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `year` VARCHAR(4) NULL,
@@ -121,8 +109,6 @@ COMMENT = 'Date table for entering even incomplete information';
 -- -----------------------------------------------------
 -- Table `tbl_acquisition_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_acquisition_type` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_acquisition_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(45) NULL,
@@ -133,8 +119,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_location`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_location` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_location` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `location` TEXT NOT NULL,
@@ -145,8 +129,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_location_coordinates`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_location_coordinates` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_location_coordinates` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `altitude_min` INT NULL,
@@ -167,8 +149,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_acquisition_event`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_acquisition_event` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_acquisition_event` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `acquisition_date_id` INT NOT NULL,
@@ -208,8 +188,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_phenology`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_phenology` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_phenology` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `phenology` VARCHAR(45) NULL,
@@ -221,8 +199,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_person`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_person` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_person` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
@@ -235,8 +211,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_ident_status`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_ident_status` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_ident_status` (
   `ident_status_id` INT NOT NULL AUTO_INCREMENT,
   `status` VARCHAR(10) NOT NULL,
@@ -247,8 +221,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_botanical_object`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_botanical_object` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_botanical_object` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `acquisition_event_id` INT NOT NULL,
@@ -302,8 +274,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_index_seminum_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_index_seminum_type` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_index_seminum_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(3) NOT NULL,
@@ -314,8 +284,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_habitus_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_habitus_type` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_habitus_type` (
   `habitus_type_id` INT NOT NULL AUTO_INCREMENT,
   `habitus` VARCHAR(255) NOT NULL,
@@ -326,8 +294,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_scientific_name_information`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_scientific_name_information` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_scientific_name_information` (
   `scientific_name_id` INT NOT NULL AUTO_INCREMENT COMMENT 'Pointer to taxonID in old system',
   `spatial_distribution` VARCHAR(255) NULL DEFAULT NULL,
@@ -346,8 +312,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_cultivar`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_cultivar` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_cultivar` (
   `cultivar_id` INT NOT NULL AUTO_INCREMENT,
   `scientific_name_id` INT NOT NULL,
@@ -365,10 +329,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_living_plant`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_living_plant` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_living_plant` (
   `id` INT NOT NULL,
+  `accession_number` INT NOT NULL AUTO_INCREMENT,
   `ipen_number` VARCHAR(50) NULL,
   `ipen_locked` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'No further editing possible',
   `phyto_control` TINYINT(1) NOT NULL DEFAULT 0,
@@ -384,6 +347,7 @@ CREATE TABLE IF NOT EXISTS `tbl_living_plant` (
   INDEX `fk_tbl_living_plant_tbl_index_seminum_type1_idx` (`index_seminum_type_id` ASC),
   INDEX `fk_tbl_living_plant_tbl_acquisition_date1_idx` (`incoming_date_id` ASC),
   INDEX `fk_tbl_living_plant_tbl_cultivar1_idx` (`cultivar_id` ASC),
+  UNIQUE INDEX `accession_number_UNIQUE` (`accession_number` ASC),
   CONSTRAINT `fk_livingplant_object1`
     FOREIGN KEY (`id`)
     REFERENCES `tbl_botanical_object` (`id`)
@@ -410,8 +374,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_sex`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_sex` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_sex` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `sex` VARCHAR(30) NOT NULL,
@@ -423,8 +385,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_botanical_object_sex`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_botanical_object_sex` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_botanical_object_sex` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `sex_id` INT NOT NULL,
@@ -449,8 +409,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_diaspora_bank`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_diaspora_bank` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_diaspora_bank` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
@@ -461,8 +419,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_diaspora`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_diaspora` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_diaspora` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `diaspora_bank_id` INT NOT NULL,
@@ -484,8 +440,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_separation_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_separation_type` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_separation_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(25) NULL,
@@ -496,8 +450,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_separation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_separation` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_separation` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `botanical_object_id` INT NOT NULL,
@@ -523,8 +475,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_relevancy_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_relevancy_type` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_relevancy_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(25) NULL,
@@ -535,8 +485,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_relevancy`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_relevancy` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_relevancy` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `relevancy_type_id` INT NOT NULL,
@@ -561,8 +509,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_tree_record_file`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_tree_record_file` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_tree_record_file` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `year` YEAR NULL,
@@ -575,8 +521,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_tree_record_file_page`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_tree_record_file_page` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_tree_record_file_page` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `tree_record_file_id` INT NOT NULL,
@@ -594,8 +538,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_living_plant_tree_record_file_page`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_living_plant_tree_record_file_page` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_living_plant_tree_record_file_page` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `living_plant_id` INT NOT NULL,
@@ -621,8 +563,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_sequence`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_sequence` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_sequence` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`))
@@ -632,8 +572,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_alternative_accession_number`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_alternative_accession_number` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_alternative_accession_number` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `living_plant_id` INT NOT NULL,
@@ -652,8 +590,6 @@ COMMENT = 'counter for ipen number';
 -- -----------------------------------------------------
 -- Table `tbl_location_geonames`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_location_geonames` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_location_geonames` (
   `id` INT NOT NULL,
   `service_data` TEXT NOT NULL,
@@ -672,8 +608,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_acquisition_event_person`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_acquisition_event_person` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_acquisition_event_person` (
   `acquisition_event_id` INT NOT NULL,
   `person_id` INT NOT NULL,
@@ -695,8 +629,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_certificate_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_certificate_type` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_certificate_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(15) NOT NULL,
@@ -708,8 +640,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_certificate`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_certificate` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_certificate` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `living_plant_id` INT NOT NULL,
@@ -735,8 +665,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `frmwrk_AuthItem`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmwrk_AuthItem` ;
-
 CREATE TABLE IF NOT EXISTS `frmwrk_AuthItem` (
   `name` VARCHAR(64) NOT NULL,
   `type` INT(11) NOT NULL,
@@ -751,8 +679,6 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `frmwrk_AuthAssignment`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmwrk_AuthAssignment` ;
-
 CREATE TABLE IF NOT EXISTS `frmwrk_AuthAssignment` (
   `itemname` VARCHAR(64) NOT NULL,
   `userid` INT NOT NULL,
@@ -777,8 +703,6 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `frmwrk_AuthItemChild`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmwrk_AuthItemChild` ;
-
 CREATE TABLE IF NOT EXISTS `frmwrk_AuthItemChild` (
   `parent` VARCHAR(64) NOT NULL,
   `child` VARCHAR(64) NOT NULL,
@@ -801,8 +725,6 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `frmwrk_accessOrganisation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmwrk_accessOrganisation` ;
-
 CREATE TABLE IF NOT EXISTS `frmwrk_accessOrganisation` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `AuthItem_name` VARCHAR(64) NULL DEFAULT NULL,
@@ -837,8 +759,6 @@ COMMENT = 'access assignment for organisation level';
 -- -----------------------------------------------------
 -- Table `frmwrk_accessBotanicalObject`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmwrk_accessBotanicalObject` ;
-
 CREATE TABLE IF NOT EXISTS `frmwrk_accessBotanicalObject` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `AuthItem_name` VARCHAR(64) NULL,
@@ -872,8 +792,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_import_properties`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_import_properties` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_import_properties` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `botanical_object_id` INT NOT NULL,
@@ -893,8 +811,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_import_error`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_import_error` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_import_error` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `IDPflanze` INT NOT NULL,
@@ -906,8 +822,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_acquisition_source`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_acquisition_source` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_acquisition_source` (
   `acquisition_source_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
@@ -919,8 +833,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_acquisition_event_source`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_acquisition_event_source` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_acquisition_event_source` (
   `acquisition_event_source_id` INT NOT NULL AUTO_INCREMENT,
   `acquisition_event_id` INT NOT NULL,
@@ -945,8 +857,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_label_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_label_type` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_label_type` (
   `label_type_id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(25) NOT NULL,
@@ -958,8 +868,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_botanical_object_label`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_botanical_object_label` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_botanical_object_label` (
   `botanical_object_id` INT NOT NULL,
   `label_type_id` INT NOT NULL,
@@ -982,8 +890,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_image_server`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_image_server` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_image_server` (
   `organisation_id` INT NOT NULL,
   `base_url` TEXT NOT NULL,
@@ -1000,8 +906,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `frmwrk_accessClassification`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `frmwrk_accessClassification` ;
-
 CREATE TABLE IF NOT EXISTS `frmwrk_accessClassification` (
   `access_classification_id` INT NOT NULL AUTO_INCREMENT,
   `AuthItem_name` VARCHAR(64) NULL,
@@ -1027,8 +931,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `tbl_specimen`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tbl_specimen` ;
-
 CREATE TABLE IF NOT EXISTS `tbl_specimen` (
   `id_specimen` INT NOT NULL AUTO_INCREMENT,
   `botanical_object_id` INT NOT NULL,
@@ -1052,7 +954,6 @@ CREATE TABLE IF NOT EXISTS `view_taxon` (`taxonID` INT, `synID` INT, `basID` INT
 -- -----------------------------------------------------
 -- View `view_taxon`
 -- -----------------------------------------------------
-DROP VIEW IF EXISTS `view_taxon` ;
 DROP TABLE IF EXISTS `view_taxon`;
 USE `jacq_input`;
 CREATE  OR REPLACE VIEW `view_taxon` AS select `ts`.`taxonID` AS `taxonID`,`ts`.`synID` AS `synID`,`ts`.`basID` AS `basID`,`ts`.`genID` AS `genID`,`ts`.`annotation` AS `annotation`,`ts`.`external` AS `external`,`tg`.`genus` AS `genus`,`tg`.`DallaTorreIDs` AS `DallaTorreIDs`,`tg`.`DallaTorreZusatzIDs` AS `DallaTorreZusatzIDs`,`tag`.`author` AS `author_g`,`tf`.`family` AS `family`,`tsc`.`category` AS `category`,`tst`.`status` AS `status`,`tst`.`statusID` AS `statusID`,`tr`.`rank` AS `rank`,`tr`.`tax_rankID` AS `tax_rankID`,`tr`.`rank_abbr` AS `rank_abbr`,`ta`.`author` AS `author`,`ta`.`authorID` AS `authorID`,`ta`.`Brummit_Powell_full` AS `Brummit_Powell_full`,`ta1`.`author` AS `author1`,`ta1`.`authorID` AS `authorID1`,`ta1`.`Brummit_Powell_full` AS `bpf1`,`ta2`.`author` AS `author2`,`ta2`.`authorID` AS `authorID2`,`ta2`.`Brummit_Powell_full` AS `bpf2`,`ta3`.`author` AS `author3`,`ta3`.`authorID` AS `authorID3`,`ta3`.`Brummit_Powell_full` AS `bpf3`,`ta4`.`author` AS `author4`,`ta4`.`authorID` AS `authorID4`,`ta4`.`Brummit_Powell_full` AS `bpf4`,`ta5`.`author` AS `author5`,`ta5`.`authorID` AS `authorID5`,`ta5`.`Brummit_Powell_full` AS `bpf5`,`te`.`epithet` AS `epithet`,`te`.`epithetID` AS `epithetID`,`te1`.`epithet` AS `epithet1`,`te1`.`epithetID` AS `epithetID1`,`te2`.`epithet` AS `epithet2`,`te2`.`epithetID` AS `epithetID2`,`te3`.`epithet` AS `epithet3`,`te3`.`epithetID` AS `epithetID3`,`te4`.`epithet` AS `epithet4`,`te4`.`epithetID` AS `epithetID4`,`te5`.`epithet` AS `epithet5`,`te5`.`epithetID` AS `epithetID5` from ((((((((((((((((((`herbarinput`.`tbl_tax_species` `ts` left join `herbarinput`.`tbl_tax_authors` `ta` on((`ta`.`authorID` = `ts`.`authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta1` on((`ta1`.`authorID` = `ts`.`subspecies_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta2` on((`ta2`.`authorID` = `ts`.`variety_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta3` on((`ta3`.`authorID` = `ts`.`subvariety_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta4` on((`ta4`.`authorID` = `ts`.`forma_authorID`))) left join `herbarinput`.`tbl_tax_authors` `ta5` on((`ta5`.`authorID` = `ts`.`subforma_authorID`))) left join `herbarinput`.`tbl_tax_epithets` `te` on((`te`.`epithetID` = `ts`.`speciesID`))) left join `herbarinput`.`tbl_tax_epithets` `te1` on((`te1`.`epithetID` = `ts`.`subspeciesID`))) left join `herbarinput`.`tbl_tax_epithets` `te2` on((`te2`.`epithetID` = `ts`.`varietyID`))) left join `herbarinput`.`tbl_tax_epithets` `te3` on((`te3`.`epithetID` = `ts`.`subvarietyID`))) left join `herbarinput`.`tbl_tax_epithets` `te4` on((`te4`.`epithetID` = `ts`.`formaID`))) left join `herbarinput`.`tbl_tax_epithets` `te5` on((`te5`.`epithetID` = `ts`.`subformaID`))) left join `herbarinput`.`tbl_tax_status` `tst` on((`tst`.`statusID` = `ts`.`statusID`))) left join `herbarinput`.`tbl_tax_rank` `tr` on((`tr`.`tax_rankID` = `ts`.`tax_rankID`))) left join `herbarinput`.`tbl_tax_genera` `tg` on((`tg`.`genID` = `ts`.`genID`))) left join `herbarinput`.`tbl_tax_authors` `tag` on((`tag`.`authorID` = `tg`.`authorID`))) left join `herbarinput`.`tbl_tax_families` `tf` on((`tf`.`familyID` = `tg`.`familyID`))) left join `herbarinput`.`tbl_tax_systematic_categories` `tsc` on((`tf`.`categoryID` = `tsc`.`categoryID`)));
