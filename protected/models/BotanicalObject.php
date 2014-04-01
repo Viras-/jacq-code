@@ -53,6 +53,12 @@ class BotanicalObject extends ActiveRecord {
     protected $family = NULL;
     
     /**
+     * Name of family without author
+     * @var string
+     */
+    protected $familyWithoutAuthor = NULL;
+    
+    /**
      * Reference used for family searching
      * @var string
      */
@@ -102,7 +108,7 @@ class BotanicalObject extends ActiveRecord {
      * Fetch the scientific name for the given botanical object
      * @return string 
      */
-    public function getScientificName() {
+    public function getScientificName($bNoAuthor = false) {
         // replace indet name with originally imported name
         if( $this->scientific_name_id == Yii::app()->params['indetScientificNameId'] ) {
             if( $this->importProperties != NULL ) {
@@ -114,7 +120,15 @@ class BotanicalObject extends ActiveRecord {
         if( $this->viewTaxon == NULL ) return NULL;
         
         // return the constructed scientific name
-        return $this->viewTaxon->getScientificName();
+        return $this->viewTaxon->getScientificName($bNoAuthor);
+    }
+    
+    /**
+     * Returns the scientific name without an author, only possible if entry has a valid, assigned name
+     * @return null
+     */
+    public function getScientificNameWithoutAuthor() {
+        return $this->getScientificName(true);
     }
     
     /**
@@ -128,6 +142,23 @@ class BotanicalObject extends ActiveRecord {
         // check if we've found a valid family, if not return Unknown
         if( $this->family != NULL ) {
             return $this->family;
+        }
+        else {
+            return Yii::t('jacq', 'Unknown');
+        }
+    }
+    
+    /**
+     * Getter function for the family of the currently assigned scientific name
+     * @return string Name of family
+     */
+    public function getFamilyWithoutAuthor() {
+        // trigger searching for family first
+        $this->searchFamily();
+        
+        // check if we've found a valid family, if not return Unknown
+        if( $this->familyWithoutAuthor != NULL ) {
+            return $this->familyWithoutAuthor;
         }
         else {
             return Yii::t('jacq', 'Unknown');
@@ -168,6 +199,7 @@ class BotanicalObject extends ActiveRecord {
         // if a family was found, remember scientific name
         if ($model_familyTaxSynonymy != NULL) {
             $this->family = $model_familyTaxSynonymy->viewTaxon->getScientificName();
+            $this->familyWithoutAuthor = $model_familyTaxSynonymy->viewTaxon->getScientificName(true);
             
             // fetch the reference name
             $dbHerbarView = Yii::app()->dbHerbarView;

@@ -162,6 +162,14 @@ if( Yii::app()->user->checkAccess('oprtn_assignLabelType') || Yii::app()->user->
                 <?php echo $form->error($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
             </td>
         </tr>
+        <!-- display annotation field for labels, if user is allowed to assign label printing -->
+        <tr>
+            <td>
+                <?php echo $form->labelEx($model_livingPlant, 'label_annotation'); ?>
+                <?php echo $form->textField($model_livingPlant, 'label_annotation', array('style' => 'width: 80%;')); ?>
+                <?php echo $form->error($model_livingPlant, 'label_annotation'); ?>
+            </td>
+        </tr>
         <?php
         }
         
