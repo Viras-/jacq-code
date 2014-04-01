@@ -1,6 +1,6 @@
 <!-- scientific name -->
 <div class="row">
-    <table border="0" width="100%">
+    <table width="100%">
         <tr>
             <td>
                 <?php echo $form->labelEx($model_botanicalObject, 'scientific_name_id'); ?>
@@ -19,6 +19,9 @@
                             }',
                     ),
                     'value' => $model_botanicalObject->scientificName,
+                    'htmlOptions' => array(
+                        'style' => 'width: 80%;'
+                    ),
                 ));
                 ?>
                 <a href="#" onclick="$('#scientific_name_information_dialog').dialog('open'); return false;"><img src="images/page_white_edit.png" ></a>
@@ -122,7 +125,7 @@ if( Yii::app()->user->checkAccess('oprtn_assignLabelType') || Yii::app()->user->
 ?>
 <!-- marking for label printing -->
 <div class="row">
-    <table style="width: auto;">
+    <table style="width: 100%;">
         <tr>
             <td>
                 <?php echo $form->labelEx(LabelType::model(), 'label_type_id'); ?>
@@ -150,10 +153,21 @@ if( Yii::app()->user->checkAccess('oprtn_assignLabelType') || Yii::app()->user->
                             }',
                     ),
                     'value' => $model_livingPlant->labelSynonymScientificName,
+                    'htmlOptions' => array(
+                        'style' => 'width: 80%;'
+                    ),
                 ));
                 ?>
                 <?php echo $form->hiddenField($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
                 <?php echo $form->error($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
+            </td>
+        </tr>
+        <!-- display annotation field for labels, if user is allowed to assign label printing -->
+        <tr>
+            <td>
+                <?php echo $form->labelEx($model_livingPlant, 'label_annotation'); ?>
+                <?php echo $form->textField($model_livingPlant, 'label_annotation', array('style' => 'width: 80%;')); ?>
+                <?php echo $form->error($model_livingPlant, 'label_annotation'); ?>
             </td>
         </tr>
         <?php

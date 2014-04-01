@@ -5,5 +5,5 @@
     }
     else {
     ?>
-    <?php echo CHtml::encode($model_livingPlant->accession_number); ?>
+    <?php echo CHtml::encode($model_livingPlant->accessionNumber); ?>
     <?php } ?>

@@ -17,7 +17,12 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Reference for Family' => 'Referenz für Familie',
+  'Cultivar' => 'Sorte',
+  'Habitus Type' => 'Lebensform',
+  'Herbar Number' => 'Herbarnummer',
+  'Id Specimen' => 'Beleg-Id',
+  'Label Annotation' => 'Anmerkung für Etikett',
+  'Scientific Name Information' => '',
   'Access for groups' => 'Zugriff für Gruppen',
   'Access for users' => 'Zugriff für Benutzer',
   'Accessible' => 'Accessible',
@@ -75,7 +80,6 @@ return array (
   'Gardening' => 'Gärtnerische Daten',
   'Geoname' => 'Geoname',
   'Greenhouse' => 'Gewächshaus',
-  'Growth Form' => 'Wuchsform',
   'Habitat' => 'Habitat',
   'Habitus' => 'Habitus',
   'ID' => 'ID',
@@ -123,6 +127,7 @@ return array (
   'Recording' => 'Aufnahme',
   'Recording Date' => 'Aufnahmedatum',
   'Redetermine' => 'Neu bestimmen',
+  'Reference for Family' => 'Referenz für Familie',
   'Relevancy' => 'Relevanz',
   'Relevancy Type' => 'Relevanz',
   'Remember me next time' => 'Login merken',
@@ -155,7 +160,6 @@ return array (
   'User Type' => 'Benutzertyp',
   'Username' => 'Benutzername',
   'Users' => 'Benutzer',
-  'Variety' => 'Sorte',
   'View' => 'Anzeigen',
   'View Living Plant' => 'Lebendpflanze anzeigen',
   'Year' => 'Jahr',
