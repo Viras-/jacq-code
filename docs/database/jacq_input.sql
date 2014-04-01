@@ -343,6 +343,7 @@ CREATE TABLE IF NOT EXISTS `tbl_living_plant` (
   `incoming_date_id` INT NULL DEFAULT NULL,
   `label_synonym_scientific_name_id` INT NULL DEFAULT NULL COMMENT 'pointer to a taxonID for label printing (virtual synonym)',
   `cultivar_id` INT NULL DEFAULT NULL,
+  `label_annotation` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_tbl_living_plant_tbl_index_seminum_type1_idx` (`index_seminum_type_id` ASC),
   INDEX `fk_tbl_living_plant_tbl_acquisition_date1_idx` (`incoming_date_id` ASC),

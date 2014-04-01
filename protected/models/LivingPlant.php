@@ -17,6 +17,7 @@
  * @property integer $incoming_date_id
  * @property integer $label_synonym_scientific_name_id
  * @property integer $cultivar_id
+ * @property string $label_annotation
  *
  * The followings are the available model relations:
  * @property AlternativeAccessionNumber[] $alternativeAccessionNumbers
@@ -99,7 +100,7 @@ class LivingPlant extends ActiveRecord {
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
             array('ipenNumberInstitutionCode', 'length', 'max' => 45),
-            array('culture_notes, incoming_date_id', 'safe'),
+            array('culture_notes, incoming_date_id, label_annotation', 'safe'),
             array('cultivation_date', 'default', 'setOnEmpty' => true, 'value' => NULL),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
@@ -149,6 +150,7 @@ class LivingPlant extends ActiveRecord {
             'separated_search' => Yii::t('jacq', 'Separated' ),
             'labelSynonymScientificName' => Yii::t('jacq', 'Label Synonym'),
             'cultivar_id' => Yii::t('jacq', 'Cultivar'),
+            'label_annotation' => Yii::t('jacq', 'Label Annotation'),
             );
     }
 

@@ -730,6 +730,7 @@ class LivingPlantController extends Controller {
                         'id0.scientificNameInformation.common_names',
                         'id0.scientificNameInformation.spatial_distribution',
                         'id0.familyReference',
+                        'label_annotation',
                     )
             );
         }
