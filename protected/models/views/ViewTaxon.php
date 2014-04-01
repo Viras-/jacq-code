@@ -75,12 +75,17 @@ class ViewTaxon extends CActiveRecord {
      * Fetch the scientific name for the given botanical object
      * @return string 
      */
-    public function getScientificName() {
+    public function getScientificName($bNoAuthor = false) {
         if ($this->taxonID <= 0)
             return NULL;
+        
+        $noAuthor = 0;
+        if( $bNoAuthor ) {
+            $noAuthor = 1;
+        }
 
         $dbHerbarView = Yii::app()->dbHerbarView;
-        $command = $dbHerbarView->createCommand("SELECT GetScientificName( " . $this->taxonID . ", 0 ) AS 'ScientificName'");
+        $command = $dbHerbarView->createCommand("SELECT GetScientificNameString( " . $this->taxonID . ", 0, $noAuthor ) AS 'ScientificName'");
         $scientificNames = $command->queryAll();
 
         return $scientificNames[0]['ScientificName'];
