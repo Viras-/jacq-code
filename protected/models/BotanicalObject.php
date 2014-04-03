@@ -59,6 +59,12 @@ class BotanicalObject extends ActiveRecord {
     protected $familyWithoutAuthor = NULL;
     
     /**
+     * Name of the author of the family name
+     * @var string
+     */
+    protected $familyAuthor = NULL;
+    
+    /**
      * Reference used for family searching
      * @var string
      */
@@ -132,6 +138,14 @@ class BotanicalObject extends ActiveRecord {
     }
     
     /**
+     * Returns the name of the author of the scientific name
+     * @return string
+     */
+    public function getScientificNameAuthor() {
+        return $this->viewTaxon->getScientificNameAuthor();
+    }
+    
+    /**
      * Getter function for the family of the currently assigned scientific name
      * @return string Name of family
      */
@@ -163,6 +177,17 @@ class BotanicalObject extends ActiveRecord {
         else {
             return Yii::t('jacq', 'Unknown');
         }
+    }
+    
+    /**
+     * Return the name of the author of the family name
+     * @return string
+     */
+    public function getFamilyAuthor() {
+        // trigger searching for family first
+        $this->searchFamily();
+        
+        return $this->familyAuthor;
     }
     
     /**
@@ -200,6 +225,7 @@ class BotanicalObject extends ActiveRecord {
         if ($model_familyTaxSynonymy != NULL) {
             $this->family = $model_familyTaxSynonymy->viewTaxon->getScientificName();
             $this->familyWithoutAuthor = $model_familyTaxSynonymy->viewTaxon->getScientificName(true);
+            $this->familyAuthor = $model_familyTaxSynonymy->viewTaxon->getScientificNameAuthor();
             
             // fetch the reference name
             $dbHerbarView = Yii::app()->dbHerbarView;

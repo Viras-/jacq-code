@@ -54,6 +54,9 @@
  */
 class ViewTaxon extends CActiveRecord {
     const C_FAMILY_RANK = 9;
+    
+    protected $scientificName = null;
+    protected $scientificNameAuthor = null;
 
     /**
      * Returns the static model of the specified AR class.
@@ -73,22 +76,63 @@ class ViewTaxon extends CActiveRecord {
 
     /**
      * Fetch the scientific name for the given botanical object
+     * @param boolean $bNoAuthor set to true to return the name without author
      * @return string 
      */
     public function getScientificName($bNoAuthor = false) {
-        if ($this->taxonID <= 0)
+        if ($this->taxonID <= 0) {
             return NULL;
+        }
         
-        $noAuthor = 0;
-        if( $bNoAuthor ) {
-            $noAuthor = 1;
+        // make sure we have the scientific name info
+        $this->getScientificNameComponents();
+        
+        // fetch basic scientific name
+        $scientificName = $this->scientificName;
+        
+        // check if a author is needed
+        if( !$bNoAuthor ) {
+            $scientificName .= ' ' . $this->scientificNameAuthor;
         }
 
+        return $scientificName;
+    }
+    
+    /**
+     * Return the name of the author of the scientific name
+     * @return string
+     */
+    public function getScientificNameAuthor() {
+        $this->getScientificNameComponents();
+        
+        return $this->scientificNameAuthor;
+    }
+    
+    /**
+     * Fetch the scientific name components from the database, if required
+     */
+    protected function getScientificNameComponents() {
+        // only query database if we did not do it before
+        if( $this->scientificName != NULL && $this->scientificNameAuthor != NULL )  {
+            return;
+        }
+        
+        // query the database for the scientific name
         $dbHerbarView = Yii::app()->dbHerbarView;
-        $command = $dbHerbarView->createCommand("SELECT GetScientificNameString( " . $this->taxonID . ", 0, $noAuthor ) AS 'ScientificName'");
-        $scientificNames = $command->queryAll();
-
-        return $scientificNames[0]['ScientificName'];
+        $dbHerbarView->createCommand("CALL  _buildScientificNameComponents(" . $this->taxonID . ", @scientificName, @author);")->execute();
+        $scientificNameComponents = $dbHerbarView->createCommand("SELECT @scientificName AS 'ScientificName', @author AS 'Author'")->queryAll();
+        
+        // should actually never happen
+        if( count($scientificNameComponents) <= 0 ) {
+            $this->scientificName = "";
+            $this->scientificNameAuthor = "";
+            
+            return;
+        }
+        
+        // remember the actual components
+        $this->scientificName = $scientificNameComponents[0]['ScientificName'];
+        $this->scientificNameAuthor = $scientificNameComponents[0]['Author'];
     }
     
     /**
