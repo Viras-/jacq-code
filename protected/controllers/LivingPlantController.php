@@ -732,7 +732,9 @@ class LivingPlantController extends Controller {
                         'id0.familyReference',
                         'label_annotation',
                         'id0.scientificNameWithoutAuthor',
+                        'id0.scientificNameAuthor',
                         'id0.familyWithoutAuthor',
+                        'id0.familyAuthor',
                     )
             );
         }
