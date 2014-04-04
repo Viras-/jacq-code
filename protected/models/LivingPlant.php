@@ -136,7 +136,7 @@ class LivingPlant extends ActiveRecord {
             'ipen_number' => Yii::t('jacq', 'IPEN Number'),
             'ipen_locked' => Yii::t('jacq', 'IPEN Locked'),
             'phyto_control' => Yii::t('jacq', 'Phyto Control'),
-            'accession_number' => Yii::t('jacq', 'Accession Number'),
+            'accessionNumber' => Yii::t('jacq', 'Accession Number'),
             'accessionNumber_search' => Yii::t('jacq', 'Accession Number'),
             'place_number' => Yii::t('jacq', 'Place Number'),
             'index_seminum' => Yii::t('jacq', 'Index Seminum'),

@@ -1,4 +1,4 @@
-    <?php echo $form->labelEx($model_livingPlant, 'accession_number'); ?>
+    <?php echo $form->labelEx($model_livingPlant, 'accessionNumber'); ?>
     <?php if($model_livingPlant->isNewRecord) { ?>
     auto
     <?php
