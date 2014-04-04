@@ -20,6 +20,12 @@
  * @property integer $ident_status_id
  * @property integer $separated
  * @property string $scientificName
+ * @property string $scientificNameAuthor
+ * @property string $scientificNameWithoutAuthor
+ * @property string $family
+ * @property string $familyAuthor
+ * @property string $familyReference
+ * @property string $familyWithoutAuthor
  *
  * The followings are the available model relations:
  * @property AcquisitionEvent $acquisitionEvent
@@ -349,8 +355,13 @@ class BotanicalObject extends ActiveRecord {
             'redetermine' => Yii::t('jacq', 'Redetermine'),
             'ident_status_id' => Yii::t('jacq', 'Ident Status'),
             'separated' => Yii::t('jacq', 'Separated'),
+            'scientificName' => Yii::t('jacq', 'Scientific Name'),
+            'scientificNameAuthor' => Yii::t('jacq', 'Scientific Name Author'),
+            'scientificNameWithoutAuthor' => Yii::t('jacq', 'Scientific Name Without Author'),
             'family' => Yii::t('jacq', 'Family'),
+            'familyAuthor' => Yii::t('jacq', 'Family Author'),
             'familyReference' => Yii::t('jacq', 'Reference for Family'),
+            'familyWithoutAuthor' => Yii::t('jacq', 'Family Without Author'),
         );
     }
 
