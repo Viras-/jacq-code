@@ -112,42 +112,44 @@ class JSONStatisticsController extends Controller
                                  ->order('period')
                                  ->queryAll();
                     break;
-                // New/Updated Specimens per [Interval] -> log_specimens
+                // New/Updated Specimens per [Interval] -> log_specimens + (straight join) tbl_specimens + (straight join) tbl_management_collections
                 case 'specimens':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp' . $intervalOption . ') AS period',
                                                 'count(l.specimenID) AS cnt',
-                                                'u.source_id'))
+                                                'mc.source_id'))
                                  ->from(array(  'log_specimens l',
-                                                'tbl_herbardb_users u',
+                                                'herbarinput.tbl_specimens s',
+                                                'herbarinput.tbl_management_collections mc',
                                                 'herbarinput.meta m'))
                                  ->where(array( 'AND',
-                                                'l.userID = u.userID',
-                                                'u.source_id = m.source_id',
+                                                'l.specimenID = s.specimen_ID',
+                                                's.collectionID = mc.collectionID',
+                                                'mc.source_id = m.source_id',
                                                 'l.updated = ' . $updated,
                                                 'l.timestamp >= :period_start',
                                                 'l.timestamp <= :period_end'),
                                          array( ':period_start' => $periodStart,
                                                 ':period_end' => $periodEnd))
                                  ->group(array( 'period',
-                                                'u.source_id'))
+                                                'mc.source_id'))
                                  ->order('period')
                                  ->queryAll();
                     break;
-                // New/Updated Type-Specimens per [Interval] -> log_specimens + (straight join) tbl_specimens where typusID is not null and checked = 1
+                // New/Updated Type-Specimens per [Interval] -> log_specimens + (straight join) tbl_specimens where typusID is not null + (straight join) tbl_management_collections
                 case 'type_specimens':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp' . $intervalOption . ') AS period',
                                                 'count(l.specimenID) AS cnt',
-                                                'u.source_id'))
+                                                'mc.source_id'))
                                  ->from(array(  'log_specimens l',
                                                 'herbarinput.tbl_specimens s',
-                                                'tbl_herbardb_users u',
+                                                'herbarinput.tbl_management_collections mc',
                                                 'herbarinput.meta m'))
                                  ->where(array( 'AND',
                                                 'l.specimenID = s.specimen_ID',
-                                                'l.userID = u.userID',
-                                                'u.source_id = m.source_id',
+                                                's.collectionID = mc.collectionID',
+                                                'mc.source_id = m.source_id',
                                                 's.typusID IS NOT NULL',
                                                 'l.updated = ' . $updated,
                                                 'l.timestamp >= :period_start',
@@ -155,29 +157,31 @@ class JSONStatisticsController extends Controller
                                          array( ':period_start' => $periodStart,
                                                 ':period_end' => $periodEnd))
                                  ->group(array( 'period',
-                                                'u.source_id'))
+                                                'mc.source_id'))
                                  ->order('period')
                                  ->queryAll();
                     break;
-                // New/Updated use of names for Type-Specimens per [Interval] -> log_specimens_types
+                // New/Updated use of names for Type-Specimens per [Interval] -> log_specimens_types + (straight join) tbl_specimens + (straight join) tbl_management_collections
                 case 'names_type_specimens':
                     $dbRows = $db->createCommand()
                                  ->select(array($interval . '(l.timestamp' . $intervalOption . ') AS period',
                                                 'count(l.specimens_types_ID) AS cnt',
-                                                'u.source_id'))
+                                                'mc.source_id'))
                                  ->from(array(  'log_specimens_types l',
-                                                'tbl_herbardb_users u',
+                                                'herbarinput.tbl_specimens s',
+                                                'herbarinput.tbl_management_collections mc',
                                                 'herbarinput.meta m'))
                                  ->where(array( 'AND',
-                                                'l.userID = u.userID',
-                                                'u.source_id = m.source_id',
+                                                'l.specimenID = s.specimen_ID',
+                                                's.collectionID = mc.collectionID',
+                                                'mc.source_id = m.source_id',
                                                 'l.updated = ' . $updated,
                                                 'l.timestamp >= :period_start',
                                                 'l.timestamp <= :period_end'),
                                          array( ':period_start' => $periodStart,
                                                 ':period_end' => $periodEnd))
                                  ->group(array( 'period',
-                                                'u.source_id'))
+                                                'mc.source_id'))
                                  ->order('period')
                                  ->queryAll();
                     break;
