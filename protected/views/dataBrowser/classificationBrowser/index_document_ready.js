@@ -36,8 +36,15 @@ $('#classificationBrowser_referenceID').bind('change', function() {
     init_jstree();
 });
 
-// add click handlers for jsTree nodes (since they should do nothing)
-$('#jstree_classificationBrowser a').live('click', function() {return false;});
+// add click handlers for jsTree nodes
+$('#jstree_classificationBrowser a').live('click', function() {
+    if ($('#open_all')[0].checked) {
+        $('#jstree_classificationBrowser').jstree('true').open_all(jQuery(this), 1);
+    } else {
+        $('#jstree_classificationBrowser').jstree('true').toggle_node(jQuery(this));
+    }
+    return false;
+});
 
 // add hover handler for all info links
 $('#jstree_classificationBrowser .infoBox').live({

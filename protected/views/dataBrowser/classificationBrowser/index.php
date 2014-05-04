@@ -23,6 +23,8 @@ $this->breadcrumbs=array(
         <br />
         Filter: <input id="scientificName" type="text" />
         <input id="filter_button" type="image" src="images/magnifier.png" alt="filter" />
+        &nbsp;&nbsp;&nbsp;
+        <label><input type="checkbox" id="open_all"> Link opens all subtrees (CAUTION: very slow)</label>
         <br />
     </form>
     <div id="jstree_classificationBrowser" style="padding-top: 10px; padding-bottom: 10px;"></div>
