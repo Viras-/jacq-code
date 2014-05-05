@@ -21,6 +21,8 @@
  * 
  * The followings are the available model relations:
  * @property ViewTaxon $viewTaxon
+ * @property TaxClassification $taxClassification
+ * @property TaxSynonymy $taxSynonymyAccepted
  */
 class TaxSynonymy extends CActiveRecord {
     /**

@@ -44,16 +44,30 @@ class ClassificationBrowserController extends Controller {
     }
     
     public function actionDownloadAsCsv($referenceType, $referenceId, $scientificNameId = 0) {
-        $scientificNameIds = array();
+        $models_taxSynonymy = array();
         $scientificNameId = intval($scientificNameId);
         
-        // check if a certain scientific name id is specified
+        // check if a certain scientific name id is specified & load the fitting synonymy entry
         if( $scientificNameId > 0 ) {
-            $scientificNameIds[] = $scientificNameId;
+            $models_taxSynonymy[] = TaxSynonymy::model()->findByAttributes(array(
+                'source_citationID' => $referenceId,
+                'acc_taxon_ID' => NULL,
+                'taxonID' => $scientificNameId,
+            ));
         }
         // if not, fetch all top-level entries for this reference
         else {
+            // prepare criteria for fetching top level entries
+            $dbCriteria = new CDbCriteria();
+            $dbCriteria->with = array('taxClassification');
+            $dbCriteria->addColumnCondition(array(
+                'source_citationID' => $referenceId,
+                'acc_taxon_ID' => NULL,
+                'classification_id' => NULL,
+            ));
             
+            // load all matching synonymy entries
+            $models_taxSynonymy = TaxSynonymy::model()->findAll($dbCriteria);
         }
 
     }
