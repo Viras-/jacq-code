@@ -56,13 +56,34 @@ class TaxSynonymy extends CActiveRecord {
         $model_parentTaxSynonymy = TaxSynonymy::model()->findByAttributes(array(
             'taxonID' => $this->taxClassification->parent_taxonID,
             'source_citationID' => $this->source_citationID,
-            
         ));
         
         if( $model_parentTaxSynonymy == NULL ) return NULL;
         
         // return the parent
         return $model_parentTaxSynonymy;
+    }
+    
+    /**
+     * Fetches all children for the current synonymy entry
+     * NOTE: this function does not take care of checking for accepted entry
+     * @return array
+     */
+    public function getChildren() {
+        // fetch all classification entries containing ourself as parent entry
+        $models_childrenTaxClassification = TaxClassification::model()->findAllByAttributes(array(
+            'parent_taxonID' => $this->taxonID,
+            'source_citationID' => $this->source_citationID,
+        ));
+        
+        // fetch all fitting synonymy entries
+        $models_childrenTaxSynonymy = array();
+        foreach( $models_childrenTaxClassification as $model_childTaxClassification ) {
+            $models_childrenTaxSynonymy[] = $model_childTaxClassification->taxSynonymy;
+        }
+        
+        // return list of synonymy entries
+        return $models_childrenTaxClassification;
     }
     
     /**

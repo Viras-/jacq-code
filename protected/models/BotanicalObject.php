@@ -257,7 +257,7 @@ class BotanicalObject extends ActiveRecord {
             return NULL;
         }
         
-        // try to find the a direct synonymy entry
+        // try to find a direct synonymy entry
         $model_taxSynonymy = TaxSynonymy::model()->findByAttributes(array(
             'taxonID' => $this->scientific_name_id,
             'source_citationID' => $reference_id
