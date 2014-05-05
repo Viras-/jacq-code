@@ -176,6 +176,12 @@ class User extends ActiveRecord {
      * @param string $password new password (plaintext)
      */
     public function setNewPassword($password) {
+        // clean password & check for validity
+        $password = trim($password);
+        if( empty($password) ) {
+            return;
+        }
+        
         // generate new salt
         $this->updateSalt();
 
