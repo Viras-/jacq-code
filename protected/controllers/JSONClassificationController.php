@@ -42,7 +42,7 @@ class JSONClassificationController extends Controller {
                     ->from('tbl_lit l')
                     ->leftJoin('tbl_tax_synonymy ts', 'ts.source_citationID = l.citationID')
                     ->leftJoin('tbl_tax_classification tc', 'tc.tax_syn_ID = ts.tax_syn_ID')
-                    ->where('ts.tax_syn_ID IS NOT NULL AND tc.classification_id IS NOT NULL')
+                    ->where("l.category LIKE '%classification%' AND ts.tax_syn_ID IS NOT NULL AND tc.classification_id IS NOT NULL")
                     ->group('ts.source_citationID')
                     ->order('referenceName')
                     ->queryAll();
@@ -54,7 +54,7 @@ class JSONClassificationController extends Controller {
                     ->leftJoin('tbl_lit l', 'l.periodicalID = lp.periodicalID')
                     ->leftJoin('tbl_tax_synonymy ts', 'ts.source_citationID = l.citationID')
                     ->leftJoin('tbl_tax_classification tc', 'tc.tax_syn_ID = ts.tax_syn_ID')
-                    ->where('ts.tax_syn_ID IS NOT NULL AND tc.classification_id IS NOT NULL')
+                    ->where("l.category LIKE '%classification%' AND ts.tax_syn_ID IS NOT NULL AND tc.classification_id IS NOT NULL")
                     ->group('l.periodicalID')
                     ->order('referenceName')
                     ->queryAll();
