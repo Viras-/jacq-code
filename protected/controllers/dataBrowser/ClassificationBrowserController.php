@@ -43,7 +43,9 @@ class ClassificationBrowserController extends Controller {
         $this->render('index', array('referenceType' => $referenceType, 'referenceId' => $referenceId));
     }
     
-    public function actionDownloadAsCsv($referenceType, $referenceId, $scientificNameId = 0) {
+    public function actionDownload($referenceType, $referenceId, $scientificNameId = 0) {
+        // require phpexcel for CSV / Excel download
+        Yii::import('ext.phpexcel.XPHPExcel');
         $models_taxSynonymy = array();
         $scientificNameId = intval($scientificNameId);
         
@@ -69,7 +71,22 @@ class ClassificationBrowserController extends Controller {
             // load all matching synonymy entries
             $models_taxSynonymy = TaxSynonymy::model()->findAll($dbCriteria);
         }
-
+        
+        // create the spreadsheet
+        $objPHPExcel = XPHPExcel::createPHPExcel();
+        
+        // fetch all ranks, sorted by hierarchy for creating the headings of the download
+        $dbCriteria = new CDbCriteria();
+        $dbCriteria->order = 'rank_hierarchy ASC';
+        $models_taxRank = TaxRank::model()->findAll($dbCriteria);
+        foreach($models_taxRank as $model_taxRank) {
+            $objPHPExcel->getActiveSheet()->setCellValue("A" . $model_taxRank->rank_hierarchy, $model_taxRank->rank);
+        }
+        
+        // prepare excel sheet for download
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+        $objWriter->save('php://output');
+        exit(0);
     }
 
     // Uncomment the following methods and override them if needed

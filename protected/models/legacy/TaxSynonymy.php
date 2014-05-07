@@ -23,49 +23,55 @@
  * @property ViewTaxon $viewTaxon
  * @property TaxClassification $taxClassification
  * @property TaxSynonymy $taxSynonymyAccepted
+ * @property TaxSpecies $taxSpecies
+ * @property TaxSpecies $acceptedTaxSpecies
  */
 class TaxSynonymy extends CActiveRecord {
+
     /**
      * Reference to classification entry
      * @var TaxClassification
      */
     public $taxClassification = NULL;
-    
+
     /**
      * Reference to accepted entry (if current is not accepted)
      * @var TaxSynonymy 
      */
     public $taxSynonymyAccepted = NULL;
-    
+
     /**
      * Helper function for fetching the accepted entry
      * @return \TaxSynonymy TaxSynonymy entry which is accepted
      */
     public function getAccepted() {
-        if( $this->taxSynonymyAccepted == NULL ) return $this;
-        
+        if ($this->taxSynonymyAccepted == NULL)
+            return $this;
+
         // return the accepted name for our accepted taxon
         return $this->taxSynonymyAccepted->getAccepted();
     }
-    
+
     /**
      * Helper function for fetching the parent of a given TaxSynonymy entry
      * @return null|\TaxSynonymy null if no classification found or parent entry not found, else the TaxSynonymy model
      */
     public function getParent() {
-        if( $this->taxClassification === NULL || $this->taxClassification->parent_taxonID === NULL ) return NULL;
-        
+        if ($this->taxClassification === NULL || $this->taxClassification->parent_taxonID === NULL)
+            return NULL;
+
         $model_parentTaxSynonymy = TaxSynonymy::model()->findByAttributes(array(
             'taxonID' => $this->taxClassification->parent_taxonID,
             'source_citationID' => $this->source_citationID,
         ));
-        
-        if( $model_parentTaxSynonymy == NULL ) return NULL;
-        
+
+        if ($model_parentTaxSynonymy == NULL)
+            return NULL;
+
         // return the parent
         return $model_parentTaxSynonymy;
     }
-    
+
     /**
      * Fetches all children for the current synonymy entry
      * NOTE: this function does not take care of checking for accepted entry
@@ -77,46 +83,48 @@ class TaxSynonymy extends CActiveRecord {
             'parent_taxonID' => $this->taxonID,
             'source_citationID' => $this->source_citationID,
         ));
-        
+
         // fetch all fitting synonymy entries
         $models_childrenTaxSynonymy = array();
-        foreach( $models_childrenTaxClassification as $model_childTaxClassification ) {
+        foreach ($models_childrenTaxClassification as $model_childTaxClassification) {
             $models_childrenTaxSynonymy[] = $model_childTaxClassification->taxSynonymy;
         }
-        
+
         // return list of synonymy entries
         return $models_childrenTaxClassification;
     }
-    
+
     /**
      * Find the family entry
      * @return \TaxSynonymy
      */
     public function getFamily() {
         // check if this entry is family level
-        if( $this->viewTaxon->isFamily() ) return $this;
-        
+        if ($this->viewTaxon->isFamily())
+            return $this;
+
         // if not fetch the parent and check if we have one
         $model_parentTaxSynonymy = $this->getParent();
-        if( $model_parentTaxSynonymy == NULL ) return NULL;
-        
+        if ($model_parentTaxSynonymy == NULL)
+            return NULL;
+
         // finally find the family of the parent entry
         return $this->getParent()->getFamily();
     }
-    
+
     protected function afterFind() {
         parent::afterFind();
 
         $this->taxClassification = TaxClassification::model()->findByAttributes(array(
             'tax_syn_ID' => $this->tax_syn_ID
         ));
-        
+
         $this->taxSynonymyAccepted = TaxSynonymy::model()->findByAttributes(array(
             'taxonID' => $this->acc_taxon_ID,
             'source_citationID' => $this->source_citationID
         ));
     }
-    
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -167,6 +175,8 @@ class TaxSynonymy extends CActiveRecord {
             'taxClassification' => array(self::HAS_ONE, 'TaxClassification', array('tax_syn_ID' => 'tax_syn_ID')),
             'taxSynonymyAccepted' => array(self::HAS_ONE, 'TaxSynonymy', array('acc_taxon_ID' => 'taxonID', 'source_citationID' => 'source_citationID')),
             'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'taxonID'),
+            'taxSpecies' => array(self::BELONGS_TO, 'TaxSpecies', 'taxonID'),
+            'acceptedTaxSpecies' => array(self::BELONGS_TO, 'TaxSpecies', array('acc_taxon_ID' => 'taxonID')),
         );
     }
 
