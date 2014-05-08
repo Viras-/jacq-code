@@ -80,13 +80,55 @@ class ClassificationBrowserController extends Controller {
         $dbCriteria->order = 'rank_hierarchy ASC';
         $models_taxRank = TaxRank::model()->findAll($dbCriteria);
         foreach($models_taxRank as $model_taxRank) {
-            $objPHPExcel->getActiveSheet()->setCellValue("A" . $model_taxRank->rank_hierarchy, $model_taxRank->rank);
+            // fill in the header information, hierarchy starts with 1, but column "A" is 0
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($model_taxRank->rank_hierarchy - 1, 1, $model_taxRank->rank);
+        }
+        
+        // cycle through top-level elements and continue exporting their children
+        $rowIndex = 2;
+        foreach($models_taxSynonymy as $model_taxSynonymy) {
+            $this->exportClassificationToPHPExcel($objPHPExcel->getActiveSheet(), array(), $model_taxSynonymy, $rowIndex);
         }
         
         // prepare excel sheet for download
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
         $objWriter->save('php://output');
         exit(0);
+    }
+    
+    /**
+     * Map a given tax synonymy entry to a phpexcel object, including all children recursively
+     * @param PHPExcel_Worksheet $pHPExcelWorksheet The worksheet to add the information to
+     * @param array $models_parentTaxSynonymy An array of all parent tax-synonymy entries
+     * @param TaxSynonymy $model_taxSynonymy The currently active tax-synonym entry
+     * @param int $rowIndex The row-index to add the information to
+     */
+    protected function exportClassificationToPHPExcel($pHPExcelWorksheet, $models_parentTaxSynonymy, $model_taxSynonymy, &$rowIndex) {
+        // add parent information
+        foreach( $models_parentTaxSynonymy as $model_parentTaxSynonymy ) {
+            $pHPExcelWorksheet->setCellValueByColumnAndRow($model_parentTaxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_parentTaxSynonymy->viewTaxon->getScientificName());
+        }
+        
+        // add the currently active information
+        $pHPExcelWorksheet->setCellValueByColumnAndRow($model_taxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_taxSynonymy->viewTaxon->getScientificName());
+        $rowIndex++;
+        
+        // create search criteria for fetching all children
+        $dbCriteria = new CDbCriteria();
+        $dbCriteria->with = array("taxClassification");
+        $dbCriteria->addColumnCondition(array(
+            'source_citationID' => $model_taxSynonymy->source_citationID,
+            'parent_taxonID' => $model_taxSynonymy->taxonID,
+        ));
+        
+        // add current entry as parent
+        $models_parentTaxSynonymy[] = $model_taxSynonymy;
+        
+        // fetch all children
+        $models_taxSynonymyChildren = TaxSynonymy::model()->findAll($dbCriteria);
+        foreach($models_taxSynonymyChildren as $model_taxSynonymyChild) {
+            $this->exportClassificationToPHPExcel($pHPExcelWorksheet, $models_parentTaxSynonymy, $model_taxSynonymyChild, $rowIndex);
+        }
     }
 
     // Uncomment the following methods and override them if needed

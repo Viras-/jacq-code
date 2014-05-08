@@ -67,7 +67,7 @@ class TaxSpecies extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'taxRank' => array(self::HAS_ONE, 'TaxRank', 'tax_rankID'),
+            'taxRank' => array(self::BELONGS_TO, 'TaxRank', 'tax_rankID'),
         );
     }
 
