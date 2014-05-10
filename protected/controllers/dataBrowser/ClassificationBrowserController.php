@@ -43,6 +43,12 @@ class ClassificationBrowserController extends Controller {
         $this->render('index', array('referenceType' => $referenceType, 'referenceId' => $referenceId));
     }
     
+    /**
+     * Download a given classification as CSV file for excel
+     * @param string $referenceType Type of reference ('citation', etc.)
+     * @param int $referenceId ID of reference
+     * @param int $scientificNameId Optional id of scientific name used as top-level entry
+     */
     public function actionDownload($referenceType, $referenceId, $scientificNameId = 0) {
         // require phpexcel for CSV / Excel download
         Yii::import('ext.phpexcel.XPHPExcel');
@@ -92,6 +98,12 @@ class ClassificationBrowserController extends Controller {
         
         // prepare excel sheet for download
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+        
+        // send header information
+        header('Content-type: text/csv');
+        header('Content-disposition: attachment;filename=classification.csv');        
+
+        // provide output
         $objWriter->save('php://output');
         exit(0);
     }
@@ -120,6 +132,7 @@ class ClassificationBrowserController extends Controller {
             'source_citationID' => $model_taxSynonymy->source_citationID,
             'parent_taxonID' => $model_taxSynonymy->taxonID,
         ));
+        $dbCriteria->order = 'taxClassification.order ASC';
         
         // add current entry as parent
         $models_parentTaxSynonymy[] = $model_taxSynonymy;
