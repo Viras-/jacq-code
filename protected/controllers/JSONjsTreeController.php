@@ -186,11 +186,23 @@ class JSONjsTreeController extends Controller {
             switch($child["referenceType"]) {
                 case 'citation':
                     $entry["icon"] = "images/book_open.png";
+                    
+                    if( !$child["taxonID"] ) {
+                        // append download link for non scientific name entries
+                        $entry['data']['title'] .= ' <span onclick="window.location=\'' .
+                                $this->createUrl(
+                                        "dataBrowser/classificationBrowser/download",
+                                        array(
+                                            'referenceType' => $child["referenceType"],
+                                            'referenceId' => $child["referenceId"],
+                                        )
+                                ) . '\'; return false;"><img src="images/disk.png"></span>';
+                    }
                     break;
                 default:
                     break;
             }
-            // if a taxonID is set, always use no icon
+            // if entry has a taxon id, it is a scientific name entry
             if( $child["taxonID"] ) {
                 // add ACL icon if user has permission
                 $aclLink = "";

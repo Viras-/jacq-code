@@ -30,6 +30,8 @@ function init_jstree ()
 {
     // delete any old instance
     $('#jstree_classificationBrowser').jstree( 'destroy' );
+    // hide info box
+    $('#infoBox').hide();
 
     // initialize jsTree for organisation
     $('#jstree_classificationBrowser').jstree({
