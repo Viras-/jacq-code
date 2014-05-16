@@ -90,16 +90,17 @@ $('#jstree_classificationBrowser .infoBox').live({
                         referenceInfos.push(referenceInfo);
                     }
                     $('#infoBox').html($('#infoBox').html() + referenceInfos.join("<br/>"));
-                    
-                    // add download link
-                    $('#infoBox').html($('#infoBox').html() + '<br /><b>actions</b><br />');
-                    $('#infoBox').html($('#infoBox').html() + '<span style="cursor: pointer;" onclick="download(\'citation\', ' + referenceId + ',' + taxonID + '); return false;"><img src="images/disk.png"></span>');
                 }
                 // if not display notification
                 else {
-                    $('#infoBox').html('no other references');
+                    $('#infoBox').html('<i>no other references</i>');
                 }
 
+                // add download link
+                $('#infoBox').html($('#infoBox').html() + '<br /><b>actions</b><br />');
+                $('#infoBox').html($('#infoBox').html() + '<span style="cursor: pointer;" onclick="download(\'citation\', ' + referenceId + ',' + taxonID + '); return false;"><img src="images/disk.png"></span>');
+
+                // finally show the info box
                 $('#infoBox').show();
             }
         });
