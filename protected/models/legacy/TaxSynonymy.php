@@ -25,6 +25,7 @@
  * @property TaxSynonymy $taxSynonymyAccepted
  * @property TaxSpecies $taxSpecies
  * @property TaxSpecies $acceptedTaxSpecies
+ * @property Lit $sourceCitation Citation entry which is used as source
  */
 class TaxSynonymy extends CActiveRecord {
 
@@ -177,6 +178,7 @@ class TaxSynonymy extends CActiveRecord {
             'viewTaxon' => array(self::BELONGS_TO, 'ViewTaxon', 'taxonID'),
             'taxSpecies' => array(self::BELONGS_TO, 'TaxSpecies', 'taxonID'),
             'acceptedTaxSpecies' => array(self::BELONGS_TO, 'TaxSpecies', array('acc_taxon_ID' => 'taxonID')),
+            'sourceCitation' => array(self::BELONGS_TO, 'Lit', array('source_citationID' => 'citationID')),
         );
     }
 

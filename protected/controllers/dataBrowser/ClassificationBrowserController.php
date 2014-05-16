@@ -1,6 +1,10 @@
 <?php
 
 class ClassificationBrowserController extends Controller {
+    /**
+     * column offset for dynamically created hierarchy structure of the download sheet
+     */
+    const HIERARCHY_OFFSET = 8;
 
     /**
      * display the base view
@@ -81,13 +85,23 @@ class ClassificationBrowserController extends Controller {
         // create the spreadsheet
         $objPHPExcel = XPHPExcel::createPHPExcel();
         
+        // fill in the static column headings
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, 1, "reference");
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, 1, "license");
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(2, 1, "downloaded");
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, 1, "modified");
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(4, 1, "scientific_name_id");
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, 1, "parent_scientific_name_id");
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(6, 1, "accepted_scientific_name_id");
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(7, 1, "taxonomic_status");
+        
         // fetch all ranks, sorted by hierarchy for creating the headings of the download
         $dbCriteria = new CDbCriteria();
         $dbCriteria->order = 'rank_hierarchy ASC';
         $models_taxRank = TaxRank::model()->findAll($dbCriteria);
         foreach($models_taxRank as $model_taxRank) {
             // fill in the header information, hierarchy starts with 1, but column "A" is 0
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($model_taxRank->rank_hierarchy - 1, 1, $model_taxRank->rank);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_taxRank->rank_hierarchy - 1, 1, $model_taxRank->rank);
         }
         
         // cycle through top-level elements and continue exporting their children
@@ -116,13 +130,23 @@ class ClassificationBrowserController extends Controller {
      * @param int $rowIndex The row-index to add the information to
      */
     protected function exportClassificationToPHPExcel($pHPExcelWorksheet, $models_parentTaxSynonymy, $model_taxSynonymy, &$rowIndex) {
+        // add basic information
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(0, $rowIndex, $model_taxSynonymy->sourceCitation->getCitation());
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(1, $rowIndex, Yii::app()->params['classifications_license']);
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(2, $rowIndex, date("Y-m-d H:i:s"));
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(3, $rowIndex, "");
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(4, $rowIndex, $model_taxSynonymy->taxonID);
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(5, $rowIndex, $model_taxSynonymy->taxClassification->parent_taxonID);
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(6, $rowIndex, $model_taxSynonymy->acc_taxon_ID);
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(7, $rowIndex, ($model_taxSynonymy->acc_taxon_ID) ? 'synonym' : 'accepted');
+        
         // add parent information
         foreach( $models_parentTaxSynonymy as $model_parentTaxSynonymy ) {
-            $pHPExcelWorksheet->setCellValueByColumnAndRow($model_parentTaxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_parentTaxSynonymy->viewTaxon->getScientificName());
+            $pHPExcelWorksheet->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_parentTaxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_parentTaxSynonymy->viewTaxon->getScientificName());
         }
         
         // add the currently active information
-        $pHPExcelWorksheet->setCellValueByColumnAndRow($model_taxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_taxSynonymy->viewTaxon->getScientificName());
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_taxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_taxSynonymy->viewTaxon->getScientificName());
         $rowIndex++;
         
         // create search criteria for fetching all children
@@ -143,31 +167,4 @@ class ClassificationBrowserController extends Controller {
             $this->exportClassificationToPHPExcel($pHPExcelWorksheet, $models_parentTaxSynonymy, $model_taxSynonymyChild, $rowIndex);
         }
     }
-
-    // Uncomment the following methods and override them if needed
-    /*
-      public function filters()
-      {
-      // return the filter configuration for this controller, e.g.:
-      return array(
-      'inlineFilterName',
-      array(
-      'class'=>'path.to.FilterClass',
-      'propertyName'=>'propertyValue',
-      ),
-      );
-      }
-
-      public function actions()
-      {
-      // return external action classes, e.g.:
-      return array(
-      'action1'=>'path.to.ActionClass',
-      'action2'=>array(
-      'class'=>'path.to.AnotherActionClass',
-      'propertyName'=>'propertyValue',
-      ),
-      );
-      }
-     */
 }
