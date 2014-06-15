@@ -203,6 +203,87 @@ class JSONClassificationController extends Controller {
     }
 
     /**
+     * Get number of classification children who have children themselves of a given taxonID according to a given reference of type citation
+     * NOTE: the function is static so that it can be called from other controllers as well
+     * @param int $referenceID ID of reference (citation)
+     * @param int $taxonID ID of taxon
+     * @return int
+     */
+    public static function japiNumberOfChildrenWithChildrenCitation ($referenceID, $taxonID = 0) {
+        $resultNumber = 0;
+        $stack = array();
+
+        // setup db query
+        $db = JSONClassificationController::getDbHerbarInput();
+
+        $stack[] = $taxonID;
+        do {
+            $taxonID = array_pop($stack);
+
+            $dbCommand = $db->createCommand();
+            // basic query
+            $dbCommand->select(
+                            array(
+                                "ts.taxonID",
+                                "max(`has_children`.`tax_syn_ID` IS NOT NULL) AS `hasChildren`",
+                                "max(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`",
+                                "max(`has_basionym`.`basID` IS NOT NULL) AS `hasBasionym`",
+                            )
+                    )
+                    ->from('tbl_tax_synonymy ts')
+                    ->leftJoin('tbl_tax_species tsp', 'ts.taxonID = tsp.taxonID')
+                    ->leftJoin('tbl_tax_rank tr', 'tsp.tax_rankID = tr.tax_rankID')
+                    ->leftJoin('tbl_tax_classification tc', 'ts.tax_syn_ID = tc.tax_syn_ID')
+                    ->leftJoin(
+                            'tbl_tax_synonymy has_synonyms',
+                            array(
+                                'AND',
+                                'has_synonyms.acc_taxon_ID = ts.taxonID',
+                                'has_synonyms.source_citationID = ts.source_citationID'
+                            )
+                    )
+                    ->leftJoin('tbl_tax_classification has_children_clas', 'has_children_clas.parent_taxonID = ts.taxonID')
+                    ->leftJoin(
+                            'tbl_tax_synonymy has_children',
+                            array(
+                                'AND',
+                                'has_children.tax_syn_ID = has_children_clas.tax_syn_ID',
+                                'has_children.source_citationID = ts.source_citationID'
+                            )
+                    )
+                    ->leftJoin('tbl_tax_species has_basionym', 'ts.taxonID = has_basionym.taxonID')
+                    ->group('ts.taxonID');
+
+            $where_cond = array('AND', 'ts.source_citationID = :source_citationID', 'ts.acc_taxon_ID IS NULL');
+            $where_cond_values = array( ':source_citationID' => $referenceID );
+
+            // check if we search for children of a specific taxon
+            if( $taxonID > 0 ) {
+                $where_cond[] = 'tc.parent_taxonID = :parent_taxonID';
+                $where_cond_values[':parent_taxonID'] = $taxonID;
+            }
+            // .. if not make sure we only return entries which have at least one child
+            else {
+                $where_cond[] = 'tc.parent_taxonID IS NULL';
+                $where_cond[] = 'has_children.tax_syn_ID IS NOT NULL';
+            }
+            // apply where conditions and return all rows
+            $dbRows = $dbCommand->where($where_cond,$where_cond_values)
+                    ->queryAll();
+
+            // process all results and create JSON-response from it
+            foreach( $dbRows as $dbRow ) {
+                if ($dbRow['hasChildren'] > 0 || $dbRow['hasSynonyms'] > 0 || $dbRow['hasBasionym']) {
+                    $stack[] = $dbRow['taxonID'];
+                    $resultNumber++;
+                }
+            }
+        } while (!empty($stack));
+
+        return $resultNumber;
+    }
+
+    /**
      * fetch synonyms (and basionym) for a given taxonID, according to a given reference
      * @param string $referenceType type of reference
      * @param int $referenceID ID of reference
