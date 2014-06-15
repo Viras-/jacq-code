@@ -136,7 +136,9 @@ class ClassificationBrowserController extends Controller {
         $pHPExcelWorksheet->setCellValueByColumnAndRow(2, $rowIndex, date("Y-m-d H:i:s"));
         $pHPExcelWorksheet->setCellValueByColumnAndRow(3, $rowIndex, "");
         $pHPExcelWorksheet->setCellValueByColumnAndRow(4, $rowIndex, $model_taxSynonymy->taxonID);
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(5, $rowIndex, $model_taxSynonymy->taxClassification->parent_taxonID);
+        if( $model_taxSynonymy->taxClassification != null ) {
+            $pHPExcelWorksheet->setCellValueByColumnAndRow(5, $rowIndex, $model_taxSynonymy->taxClassification->parent_taxonID);
+        }
         $pHPExcelWorksheet->setCellValueByColumnAndRow(6, $rowIndex, $model_taxSynonymy->acc_taxon_ID);
         $pHPExcelWorksheet->setCellValueByColumnAndRow(7, $rowIndex, ($model_taxSynonymy->acc_taxon_ID) ? 'synonym' : 'accepted');
         
