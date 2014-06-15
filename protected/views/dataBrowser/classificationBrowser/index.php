@@ -25,6 +25,7 @@ $this->breadcrumbs=array(
         <input id="filter_button" type="image" src="images/magnifier.png" alt="filter" />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <label><input type="checkbox" id="open_all"> expand Subhierarchies</label>
+        <div id="progressbar"></div>
         <br />
     </form>
     <div id="jstree_classificationBrowser" style="padding-top: 10px; padding-bottom: 10px;"></div>

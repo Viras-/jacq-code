@@ -1,5 +1,8 @@
 // called once jquery is ready
 
+classificationProgressbarMax = 0;
+classificationProgressbarCurr = 0;
+
 // initialize the jsTree
 init_jstree();
 
@@ -39,10 +42,40 @@ $('#classificationBrowser_referenceID').bind('change', function() {
 // add click handlers for jsTree nodes
 $('#jstree_classificationBrowser a').live('click', function() {
     if ($('#open_all')[0].checked) {
-        $('#jstree_classificationBrowser').jstree('true').open_all(jQuery(this), 1);
+        var taxonID = $(this).attr('data-taxon-id');
+        var referenceId = $(this).attr('data-reference-id');
+        var clickTarget = jQuery(this);
+        $.ajax({
+            url: jacq_url + "index.php?r=jSONClassification/japi&action=numberOfChildrenWithChildrenCitation",
+            data: {
+                referenceID: referenceId,
+                taxonID: taxonID
+            },
+            dataType: "jsonp",
+            success: function(data) {
+                var decision = false;
+                if (data < 20) {
+                    decision = true;
+                } else if (confirm("This will take some time.")) {
+                    decision = true;
+                }
+                if (decision) {
+                    classificationProgressbarMax = data;
+                    classificationProgressbarCurr = 0;
+                    $("#progressbar").progressbar({
+                        value: 0
+                    });
+                    $('#jstree_classificationBrowser').jstree('true').open_all(clickTarget, 1);
+                }
+            }
+        });
     } else {
         $('#jstree_classificationBrowser').jstree('true').toggle_node(jQuery(this));
     }
+    return false;
+});
+
+$('#jstree_classificationBrowser a span').live('click', function() {
     return false;
 });
 
