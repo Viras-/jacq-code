@@ -203,11 +203,16 @@ class LivingPlant extends ActiveRecord {
         
         // search for label by their types
         if( is_array($this->label_type_search) ) {
-            $criteria->with[] = 'id0.tblLabelTypes';
-            
+            // criteria separate criteria for label searching
+            $labelCriteria = new CDbCriteria();
+            $labelCriteria->with = array('id0.tblLabelTypes');
             foreach( $this->label_type_search as $label_type ) {
-                $criteria->compare('tblLabelTypes.label_type_id', $label_type);
+                $labelCriteria->compare('tblLabelTypes.label_type_id', $label_type, false, 'OR');
             }
+            
+            // add label search to main criteria
+            $criteria->with[] = 'id0.tblLabelTypes';
+            $criteria->mergeWith($labelCriteria, 'AND');
         }
         
         // check if the user is allowed to view plants from the greenhouse
