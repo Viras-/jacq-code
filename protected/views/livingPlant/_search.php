@@ -11,6 +11,21 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'organisation_search'); ?>
+		<?php echo $form->textField($model,'organisation_search'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'accessionNumber_search'); ?>
+		<?php echo $form->textField($model,'accessionNumber_search'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'location_search'); ?>
+		<?php echo $form->textField($model,'location_search'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->label($model,'separated_search'); ?>
 		<?php echo $form->checkBox($model,'separated_search'); ?>
 	</div>
