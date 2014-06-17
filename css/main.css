@@ -233,3 +233,8 @@ div.search-form
 {
     width: auto;
 }
+
+html.waiting, html.waiting *
+{
+    cursor: wait !important;
+}
