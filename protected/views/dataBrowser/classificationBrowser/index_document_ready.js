@@ -42,6 +42,7 @@ $('#classificationBrowser_referenceID').bind('change', function() {
 // add click handlers for jsTree nodes
 $('#jstree_classificationBrowser a').live('click', function() {
     if ($('#open_all')[0].checked) {
+        $('html').addClass('waiting');
         var taxonID = $(this).attr('data-taxon-id');
         var referenceId = $(this).attr('data-reference-id');
         var clickTarget = jQuery(this);
@@ -53,10 +54,15 @@ $('#jstree_classificationBrowser a').live('click', function() {
             },
             dataType: "jsonp",
             success: function(data) {
+                $('html').removeClass('waiting');
                 var decision = false;
                 if (data < 20) {
                     decision = true;
-                } else if (confirm("This will take some time.")) {
+                } else if (data >= 20 && data < 100) {
+                    if (confirm("Caution!\n\nThis will take some time.\n(" + data + " nodes)")) {
+                        decision = true;
+                    }
+                } else if (confirm("Caution!\n\nThis will a long time.\n(" + data + " nodes)")) {
                     decision = true;
                 }
                 if (decision) {
@@ -65,6 +71,7 @@ $('#jstree_classificationBrowser a').live('click', function() {
                     $("#progressbar").progressbar({
                         value: 0
                     });
+                    $('#jstree_classificationBrowser').jstree('true').close_all(clickTarget);
                     $('#jstree_classificationBrowser').jstree('true').open_all(clickTarget, 1);
                 }
             }

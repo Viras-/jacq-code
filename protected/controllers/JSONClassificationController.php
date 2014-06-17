@@ -107,12 +107,40 @@ class JSONClassificationController extends Controller {
                     ->queryAll();
 
                 foreach( $dbRows as $dbRow ) {
+                    $dbRow2 = $db->createCommand()
+                        ->select('count(*) AS number')
+                        ->from('tbl_tax_synonymy')
+                        ->where(
+                            array(
+                                'AND',
+                                'source_citationID = :source_citationID',
+                                'acc_taxon_ID IS NULL'
+                            ),
+                            array(
+                                ':source_citationID' => $dbRow['referenceID']
+                            ))
+                        ->queryRow();
+                    $dbRow3 = $db->createCommand()
+                        ->select('count(*) AS number')
+                        ->from('tbl_tax_synonymy')
+                        ->where(
+                            array(
+                                'AND',
+                                'source_citationID = :source_citationID',
+                                'acc_taxon_ID IS NOT NULL'
+                            ),
+                            array(
+                                ':source_citationID' => $dbRow['referenceID']
+                            ))
+                        ->queryRow();
                     $results[] = array(
                         "taxonID" => 0,
                         "referenceId" => $dbRow['referenceID'],
                         "referenceName" => $dbRow['referenceName'],
                         "referenceType" => "citation",
-                        "hasChildren" => true
+                        "hasChildren" => true,
+                        "nrAccTaxa" => $dbRow2['number'],
+                        "nrSynonyms" => $dbRow3['number']
                     );
                 }
                 break;

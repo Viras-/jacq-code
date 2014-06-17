@@ -178,6 +178,7 @@ class JSONjsTreeController extends Controller {
                         "data-taxon-id" => $child["taxonID"],
                         "data-reference-id" => $child["referenceId"],
                         "data-reference-type" => $child["referenceType"],
+                        "title" => $child['nrAccTaxa'] . " accepted Taxa / " . $child['nrSynonyms'] . " Synonyms.",
                     )
                 ),
             );
@@ -186,7 +187,7 @@ class JSONjsTreeController extends Controller {
             switch($child["referenceType"]) {
                 case 'citation':
                     $entry["icon"] = "images/book_open.png";
-                    
+
                     if( !$child["taxonID"] ) {
                         // append download link for non scientific name entries
                         $entry['data']['title'] .= ' <span onclick="window.location=\'' .
