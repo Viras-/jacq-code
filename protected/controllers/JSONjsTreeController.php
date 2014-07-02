@@ -178,10 +178,12 @@ class JSONjsTreeController extends Controller {
                         "data-taxon-id" => $child["taxonID"],
                         "data-reference-id" => $child["referenceId"],
                         "data-reference-type" => $child["referenceType"],
-                        "title" => $child['nrAccTaxa'] . " accepted Taxa / " . $child['nrSynonyms'] . " Synonyms.",
                     )
                 ),
             );
+            if ($referenceType == 'periodical') {
+                $entry['data']['attr']['title'] = $child['nrAccTaxa'] . " accepted Taxa / " . $child['nrSynonyms'] . " Synonyms.";
+            }
 
             // change node icon based on various aspects
             switch($child["referenceType"]) {
