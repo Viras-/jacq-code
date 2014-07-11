@@ -16,6 +16,7 @@
  * @property string $title_suffix
  * @property string $birthdate
  * @property integer $organisation_id
+ * @property integer $force_password_change
  *
  * The followings are the available model relations:
  * @property AuthAssignment[] $authAssignments
@@ -60,7 +61,7 @@ class User extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('username, password, salt, user_type_id, employment_type_id, organisation_id', 'required'),
-            array('user_type_id, employment_type_id, organisation_id', 'numerical', 'integerOnly' => true),
+            array('user_type_id, employment_type_id, organisation_id, force_password_change', 'numerical', 'integerOnly' => true),
             array('username', 'length', 'max' => 128),
             array('newPassword, salt', 'length', 'max' => 64),
             array('title_prefix, firstname, lastname, title_suffix', 'length', 'max' => 45),
@@ -69,7 +70,7 @@ class User extends ActiveRecord {
             array('birthdate', 'default', 'setOnEmpty' => true, 'value' => null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, username, password, salt, user_type_id, employment_type_id, title_prefix, firstname, lastname, title_suffix, birthdate, organisation_id, groups', 'safe', 'on' => 'search'),
+            array('id, username, password, salt, user_type_id, employment_type_id, title_prefix, firstname, lastname, title_suffix, birthdate, organisation_id, groups, force_password_change', 'safe', 'on' => 'search'),
         );
     }
 
