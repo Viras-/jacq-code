@@ -1,6 +1,7 @@
 <?php
 
 class UserController extends Controller {
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -29,11 +30,11 @@ class UserController extends Controller {
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
+                'actions' => array('profile'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete'),
+                'actions' => array('admin', 'delete', 'create', 'update'),
                 'users' => array('admin'),
             ),
             array('deny', // deny all users
@@ -76,12 +77,31 @@ class UserController extends Controller {
             unset($_POST['User']['username']);
             unset($_POST['User']['salt']);
             unset($_POST['User']['password']);
-            
+
             $model->attributes = $_POST['User'];
             $model->save();
         }
 
         $this->render('update', array(
+            'model' => $model,
+        ));
+    }
+    
+    /**
+     * Provides limited editing functionality available for the owning user
+     */
+    public function actionProfile() {
+        $model = $this->loadModel(Yii::app()->user->getId());
+        
+        if (isset($_POST['User'])) {
+            // only allow specific attribute updated
+            $model->setNewPassword($_POST['newPassword']);
+            
+            // save the updated user profile
+            $model->save();
+        }
+        
+        $this->render('profile', array(
             'model' => $model,
         ));
     }
