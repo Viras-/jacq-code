@@ -151,6 +151,19 @@ class ClassificationBrowserController extends Controller {
         $pHPExcelWorksheet->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_taxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_taxSynonymy->viewTaxon->getScientificName());
         $rowIndex++;
         
+        // create criteria for searching for synonyms
+        $dbSynonymCriteria = new CDbCriteria();
+        $dbSynonymCriteria->addColumnCondition(array(
+            'source_citationID' => $model_taxSynonymy->source_citationID,
+            'acc_taxon_ID' => $model_taxSynonymy->taxonID
+        ));
+        
+        // fetch all synonyms
+        $models_taxSynonymySynonyms = TaxSynonymy::model()->findAll($dbSynonymCriteria);
+        foreach($models_taxSynonymySynonyms as $model_taxSynonymySynonym) {
+            $this->exportClassificationToPHPExcel($pHPExcelWorksheet, $models_parentTaxSynonymy, $model_taxSynonymySynonym, $rowIndex);
+        }
+        
         // create search criteria for fetching all children
         $dbCriteria = new CDbCriteria();
         $dbCriteria->with = array("taxClassification");
