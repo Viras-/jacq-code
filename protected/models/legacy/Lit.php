@@ -26,6 +26,7 @@
  * @property string $signature
  * @property string $publ
  * @property string $category
+ * @property integer $hideScientificNameAuthors
  * @property integer $locked
  */
 class Lit extends CActiveRecord {
@@ -44,7 +45,7 @@ class Lit extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('autorID, editorsID, periodicalID, publisherID, locked', 'numerical', 'integerOnly' => true),
+            array('autorID, editorsID, periodicalID, publisherID, hideScientificNameAuthors, locked', 'numerical', 'integerOnly' => true),
             array('lit_url, ppSort', 'length', 'max' => 255),
             array('jahr, part, bestand, signature, category', 'length', 'max' => 50),
             array('code', 'length', 'max' => 25),
@@ -56,7 +57,7 @@ class Lit extends CActiveRecord {
             array('titel, annotation, additions', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('citationID, lit_url, autorID, jahr, code, titel, suptitel, editorsID, periodicalID, vol, part, pp, ppSort, publisherID, verlagsort, keywords, annotation, additions, bestand, signature, publ, category, locked', 'safe', 'on' => 'search'),
+            array('citationID, lit_url, autorID, jahr, code, titel, suptitel, editorsID, periodicalID, vol, part, pp, ppSort, publisherID, verlagsort, keywords, annotation, additions, bestand, signature, publ, category, hideScientificNameAuthors, locked', 'safe', 'on' => 'search'),
         );
     }
 
@@ -97,6 +98,7 @@ class Lit extends CActiveRecord {
             'signature' => 'Signature',
             'publ' => 'Publ',
             'category' => 'Category',
+            'hideScientificNameAuthors' => 'Hide Scientific Name Authors',
             'locked' => 'Locked',
         );
     }
