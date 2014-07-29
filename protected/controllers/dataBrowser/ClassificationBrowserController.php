@@ -58,6 +58,10 @@ class ClassificationBrowserController extends Controller {
         Yii::import('ext.phpexcel.XPHPExcel');
         $models_taxSynonymy = array();
         $scientificNameId = intval($scientificNameId);
+        $referenceId = intval($referenceId);
+        
+        // check for a valid reference id
+        if( $referenceId <= 0 ) return;
         
         // check if a certain scientific name id is specified & load the fitting synonymy entry
         if( $scientificNameId > 0 ) {
@@ -144,11 +148,11 @@ class ClassificationBrowserController extends Controller {
         
         // add parent information
         foreach( $models_parentTaxSynonymy as $model_parentTaxSynonymy ) {
-            $pHPExcelWorksheet->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_parentTaxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_parentTaxSynonymy->viewTaxon->getScientificName());
+            $pHPExcelWorksheet->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_parentTaxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_parentTaxSynonymy->viewTaxon->getScientificName($model_taxSynonymy->sourceCitation->hideScientificNameAuthors));
         }
         
         // add the currently active information
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_taxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_taxSynonymy->viewTaxon->getScientificName());
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_taxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_taxSynonymy->viewTaxon->getScientificName($model_taxSynonymy->sourceCitation->hideScientificNameAuthors));
         $rowIndex++;
         
         // create criteria for searching for synonyms
