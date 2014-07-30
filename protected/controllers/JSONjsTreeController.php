@@ -173,7 +173,7 @@ class JSONjsTreeController extends Controller {
         foreach( $children as $child ) {
             $entry = array(
                 "data" => array(
-                    "title" => $child["referenceName"],
+                    "title" => $child["referenceName"] . $infoLink,
                     "attr" => array(
                         "data-taxon-id" => $child["taxonID"],
                         "data-reference-id" => $child["referenceId"],
@@ -181,26 +181,26 @@ class JSONjsTreeController extends Controller {
                     )
                 ),
             );
-            if ($referenceType == 'periodical') {
-                $entry['data']['attr']['title'] = $child['nrAccTaxa'] . " accepted Taxa / " . $child['nrSynonyms'] . " Synonyms.";
-            }
+//            if ($referenceType == 'periodical') {
+//                $entry['data']['attr']['title'] = $child['nrAccTaxa'] . " accepted Taxa / " . $child['nrSynonyms'] . " Synonyms.";
+//            }
 
             // change node icon based on various aspects
             switch($child["referenceType"]) {
                 case 'citation':
                     $entry["icon"] = "images/book_open.png";
 
-                    if( !$child["taxonID"] ) {
-                        // append download link for non scientific name entries
-                        $entry['data']['title'] .= ' <span onclick="window.location=\'' .
-                                $this->createUrl(
-                                        "dataBrowser/classificationBrowser/download",
-                                        array(
-                                            'referenceType' => $child["referenceType"],
-                                            'referenceId' => $child["referenceId"],
-                                        )
-                                ) . '\'; return false;"><img src="images/disk.png"></span>';
-                    }
+//                    if( !$child["taxonID"] ) {
+//                        // append download link for non scientific name entries
+//                        $entry['data']['title'] .= ' <span onclick="window.location=\'' .
+//                                $this->createUrl(
+//                                        "dataBrowser/classificationBrowser/download",
+//                                        array(
+//                                            'referenceType' => $child["referenceType"],
+//                                            'referenceId' => $child["referenceId"],
+//                                        )
+//                                ) . '\'; return false;"><img src="images/disk.png"></span>';
+//                    }
                     break;
                 default:
                     break;
@@ -214,7 +214,7 @@ class JSONjsTreeController extends Controller {
                 }
 
                 $entry["icon"] = "images/spacer.gif";
-                $entry['data']['title'] .= $infoLink . $aclLink;
+                $entry['data']['title'] .= $aclLink;
 
                 // check for rank display
                 if( $child['referenceInfo']['rank_hierarchy'] > 15 && $child['referenceInfo']['rank_hierarchy'] < 21 ) {
