@@ -58,17 +58,18 @@
         </div>
 
         <div class="container" id="page">
-            <img id="logo" src="images/jacq_logo.png" width="120" height="60" />
-
-            <div id="mainmenu">
+            <div id="cssmenu">
                 <?php
                 $this->widget('zii.widgets.CMenu', array(
+                    'activateParents' => true,
                     'items' => array(
                         array('label' => Yii::t('jacq', 'Living Plant'), 'url' => array('livingPlant/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_readLivingplant')),
                         array('label' => Yii::t('jacq', 'Garden Site'), 'url' => array('organisation/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createOrganisation')),
                         array('label' => Yii::t('jacq', 'Tree Record File'), 'url' => array('treeRecordFile/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createTreeRecordFile')),
-                        array('label' => Yii::t('jacq', 'Classification Browser'), 'url' => array('dataBrowser/classificationBrowser/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_showClassificationBrowser')),
-                        array('label' => Yii::t('jacq', 'Statistics'), 'url' => array('statistics/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_showStatistics')),
+                        array('label' => Yii::t('jacq', 'Data Browser'), 'visible' => Yii::app()->user->checkAccess('oprtn_showClassificationBrowser'), 'url' => array('#'), 'itemOptions'=>array('class'=>'has-sub'), 'items' => array(
+                            array('label' => Yii::t('jacq', 'Classification Browser'), 'url' => array('dataBrowser/classificationBrowser/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_showClassificationBrowser')),
+                            array('label' => Yii::t('jacq', 'Statistics'), 'url' => array('statistics/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_showStatistics')),
+                        )),
                         array('label' => Yii::t('jacq', 'User Manager'), 'url' => array('user/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createUser')),
                         array('label' => Yii::t('jacq', 'Login'), 'url' => array('site/login'), 'visible' => Yii::app()->user->isGuest),
                         array('label' => Yii::t('jacq', 'Logout') . ' (' . Yii::app()->user->name . ')', 'url' => array('site/logout'), 'visible' => !Yii::app()->user->isGuest)
@@ -76,6 +77,9 @@
                 ));
                 ?>
             </div><!-- mainmenu -->
+
+            <img id="logo" src="images/jacq_logo.png" width="120" height="60" />
+
             <?php if (isset($this->breadcrumbs)): ?>
                 <?php
                 $this->widget('zii.widgets.CBreadcrumbs', array(

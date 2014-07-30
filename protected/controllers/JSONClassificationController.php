@@ -107,40 +107,40 @@ class JSONClassificationController extends JacqController {
                     ->queryAll();
 
                 foreach( $dbRows as $dbRow ) {
-                    $dbRow2 = $db->createCommand()
-                        ->select('count(*) AS number')
-                        ->from('tbl_tax_synonymy')
-                        ->where(
-                            array(
-                                'AND',
-                                'source_citationID = :source_citationID',
-                                'acc_taxon_ID IS NULL'
-                            ),
-                            array(
-                                ':source_citationID' => $dbRow['referenceID']
-                            ))
-                        ->queryRow();
-                    $dbRow3 = $db->createCommand()
-                        ->select('count(*) AS number')
-                        ->from('tbl_tax_synonymy')
-                        ->where(
-                            array(
-                                'AND',
-                                'source_citationID = :source_citationID',
-                                'acc_taxon_ID IS NOT NULL'
-                            ),
-                            array(
-                                ':source_citationID' => $dbRow['referenceID']
-                            ))
-                        ->queryRow();
+//                    $dbRow2 = $db->createCommand()
+//                        ->select('count(*) AS number')
+//                        ->from('tbl_tax_synonymy')
+//                        ->where(
+//                            array(
+//                                'AND',
+//                                'source_citationID = :source_citationID',
+//                                'acc_taxon_ID IS NULL'
+//                            ),
+//                            array(
+//                                ':source_citationID' => $dbRow['referenceID']
+//                            ))
+//                        ->queryRow();
+//                    $dbRow3 = $db->createCommand()
+//                        ->select('count(*) AS number')
+//                        ->from('tbl_tax_synonymy')
+//                        ->where(
+//                            array(
+//                                'AND',
+//                                'source_citationID = :source_citationID',
+//                                'acc_taxon_ID IS NOT NULL'
+//                            ),
+//                            array(
+//                                ':source_citationID' => $dbRow['referenceID']
+//                            ))
+//                        ->queryRow();
                     $results[] = array(
                         "taxonID" => 0,
                         "referenceId" => $dbRow['referenceID'],
                         "referenceName" => $dbRow['referenceName'],
                         "referenceType" => "citation",
                         "hasChildren" => true,
-                        "nrAccTaxa" => $dbRow2['number'],
-                        "nrSynonyms" => $dbRow3['number']
+//                        "nrAccTaxa" => $dbRow2['number'],
+//                        "nrSynonyms" => $dbRow3['number']
                     );
                 }
                 break;
@@ -829,6 +829,68 @@ class JSONClassificationController extends JacqController {
         }
 
         return true;
+    }
+
+    /**
+     * Get statistics information of a given reference
+     * NOTE: the function is static so that it can be called from other controllers as well
+     * @param int $referenceID ID of reference
+     * @return array structured array with statistics information
+     */
+    public static function japiGetPeriodicalStatistics($referenceID) {
+        $referenceID = intval($referenceID);
+        $results = array();
+
+        // setup db query
+        $db = JSONClassificationController::getDbHerbarInput();
+
+        $dbRow = $db->createCommand()
+            ->select('count(*) AS number')
+            ->from('tbl_tax_synonymy')
+            ->where(
+                array(
+                    'AND',
+                    'source_citationID = :source_citationID',
+                    'acc_taxon_ID IS NULL'
+                ),
+                array(
+                    ':source_citationID' => $referenceID
+                ))
+            ->queryRow();
+        $results["nrAccTaxa"] = $dbRow['number'];
+
+        $dbRow = $db->createCommand()
+            ->select('count(*) AS number')
+            ->from('tbl_tax_synonymy')
+            ->where(
+                array(
+                    'AND',
+                    'source_citationID = :source_citationID',
+                    'acc_taxon_ID IS NOT NULL'
+                ),
+                array(
+                    ':source_citationID' => $referenceID
+                ))
+            ->queryRow();
+        $results["nrSynonyms"] = $dbRow['number'];
+
+        $results["ranks"] = array();
+        $dbRows = $db->createCommand()
+            ->select('tr.rank, count(tr.tax_rankID) AS number')
+            ->from('tbl_tax_synonymy ts')
+            ->leftJoin('tbl_tax_species tsp', 'ts.taxonID = tsp.taxonID')
+            ->leftJoin('tbl_tax_rank tr', 'tsp.tax_rankID = tr.tax_rankID')
+            ->where('source_citationID = :source_citationID',
+                    array(':source_citationID' => $referenceID))
+            ->group('tr.tax_rankID')
+            ->order('tr.rank_hierarchy')
+            ->queryAll();
+        foreach( $dbRows as $dbRow ) {
+            $results["ranks"][] = array("rank" => $dbRow['rank'], "number" => $dbRow['number']);
+        }
+
+        // return results
+        return $results;
     }
 
     public function actions() {

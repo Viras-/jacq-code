@@ -105,45 +105,76 @@ $('#jstree_classificationBrowser .infoBox').live({
         $('#infoBox').html( "loading..." );
         $('#infoBox').fadeIn(100);
 
-        // query the JSON-services for detail information
-        $.ajax({
-            url: jacq_url + "index.php?r=jSONClassification/japi&action=nameReferences",
-            data: {
-                taxonID: taxonID,
-                excludeReferenceId: referenceId
-            },
-            dataType: "jsonp",
-            success: function(data) {
-                // check if we found additional references
-                if( data && data.length && data.length > 0 ) {
-                    $('#infoBox').html('<b>also used in:</b><br/>');
+        if (taxonID > 0) {
+            // query the JSON-services for detail information
+            $.ajax({
+                url: jacq_url + "index.php?r=jSONClassification/japi&action=nameReferences",
+                data: {
+                    taxonID: taxonID,
+                    excludeReferenceId: referenceId
+                },
+                dataType: "jsonp",
+                success: function(data) {
+                    // check if we found additional references
+                    if( data && data.length && data.length > 0 ) {
+                        $('#infoBox').html('<b>also used in:</b><br/>');
+
+                        // remember return reference-data
+                        $('#infoBox').data('referenceData', data);
+
+                        // add all found references to infobox
+                        var referenceInfos = new Array();
+                        for( var i = 0; i < data.length; i++ ) {
+                            var referenceInfo = data[i].referenceName +
+                                '&nbsp;<span id="arrow_down_' + i + '" style="cursor: pointer;" onclick="arrow_down(' + i + '); return false;"><img src="images/arrow_down.png"></span>' +
+                                '&nbsp;<span id="world_link_' + i + '" style="cursor: pointer;" onclick="world_link(' + i + '); return false;"><img src="images/world_link.png"></span>';
+                            referenceInfos.push(referenceInfo);
+                        }
+                        $('#infoBox').html($('#infoBox').html() + referenceInfos.join("<br/>"));
+                    }
+                    // if not display notification
+                    else {
+                        $('#infoBox').html('<i>no other references</i>');
+                    }
+
+                    // add download link
+                    $('#infoBox').html($('#infoBox').html() + '<br /><b>actions</b><br />');
+                    $('#infoBox').html($('#infoBox').html() + '<span style="cursor: pointer;" onclick="download(\'citation\', ' + referenceId + ',' + taxonID + '); return false;"><img src="images/disk.png"></span>');
+
+                    // finally show the info box
+                    $('#infoBox').show();
+                }
+            });
+        } else {
+            // query the JSON-services for detail information
+            $.ajax({
+                url: jacq_url + "index.php?r=jSONClassification/japi&action=getPeriodicalStatistics",
+                data: {
+                    referenceID: referenceId
+                },
+                dataType: "jsonp",
+                success: function(data) {
+                    // check if we found additional references
+                    $('#infoBox').html(data.nrAccTaxa + ' accepted Taxa<br/>' + data.nrSynonyms + ' Synonyms.<br/>');
 
                     // remember return reference-data
-                    $('#infoBox').data('referenceData', data);
+                    $('#infoBox').data('statisticsData', data);
 
-                    // add all found references to infobox
-                    var referenceInfos = new Array();
-                    for( var i = 0; i < data.length; i++ ) {
-                        var referenceInfo = data[i].referenceName +
-                            '&nbsp;<span id="arrow_down_' + i + '" style="cursor: pointer;" onclick="arrow_down(' + i + '); return false;"><img src="images/arrow_down.png"></span>' +
-                            '&nbsp;<span id="world_link_' + i + '" style="cursor: pointer;" onclick="world_link(' + i + '); return false;"><img src="images/world_link.png"></span>';
-                        referenceInfos.push(referenceInfo);
+                    if( data.ranks && data.ranks.length && data.ranks.length > 0 ) {
+                        for( var i = 0; i < data.ranks.length; i++ ) {
+                            $('#infoBox').html($('#infoBox').html() + data.ranks[i].number + " " + data.ranks[i].rank + "<br/>");
+                        }
                     }
-                    $('#infoBox').html($('#infoBox').html() + referenceInfos.join("<br/>"));
-                }
-                // if not display notification
-                else {
-                    $('#infoBox').html('<i>no other references</i>');
-                }
 
-                // add download link
-                $('#infoBox').html($('#infoBox').html() + '<br /><b>actions</b><br />');
-                $('#infoBox').html($('#infoBox').html() + '<span style="cursor: pointer;" onclick="download(\'citation\', ' + referenceId + ',' + taxonID + '); return false;"><img src="images/disk.png"></span>');
+                    // add download link
+                    $('#infoBox').html($('#infoBox').html() + '<b>actions</b><br />');
+                    $('#infoBox').html($('#infoBox').html() + '<span style="cursor: pointer;" onclick="download(\'citation\', ' + referenceId + ',' + taxonID + '); return false;"><img src="images/disk.png"></span>');
 
-                // finally show the info box
-                $('#infoBox').show();
-            }
-        });
+                    // finally show the info box
+                    $('#infoBox').show();
+                }
+            });
+        }
 
         return false;
     }
