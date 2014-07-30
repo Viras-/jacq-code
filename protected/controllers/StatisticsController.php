@@ -5,7 +5,7 @@
  *
  * @author aragon112358
  */
-class StatisticsController extends Controller
+class StatisticsController extends JacqController
 {
     /**
      * display the base view

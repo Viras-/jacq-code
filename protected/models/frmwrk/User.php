@@ -44,7 +44,7 @@ class User extends ActiveRecord {
      * saved after the user has been saved
      * @var array 
      */
-    protected $groups = array();
+    protected $groups = null;
 
     /**
      * @return string the associated database table name
@@ -108,6 +108,7 @@ class User extends ActiveRecord {
             'title_suffix' => Yii::t('jacq', 'Title Suffix'),
             'birthdate' => Yii::t('jacq', 'Birthdate'),
             'organisation_id' => Yii::t('jacq', 'Organisation'),
+            'force_password_change' => Yii::t('jacq', 'Force Password Change'),
         );
     }
 
@@ -207,16 +208,19 @@ class User extends ActiveRecord {
      */
     public function onAfterSave($event) {
         parent::onAfterSave($event);
+        
+        // check if groups should be modified
+        if( is_array($this->groups) ) {
+            // first of all remove all old assignments
+            $groupItems = Yii::app()->authManager->getAuthItems(2);
+            foreach ($groupItems as $groupName => $groupItem) {
+                Yii::app()->authManager->revoke($groupName, $this->id);
+            }
 
-        // first of all remove all old assignments
-        $groupItems = Yii::app()->authManager->getAuthItems(2);
-        foreach ($groupItems as $groupName => $groupItem) {
-            Yii::app()->authManager->revoke($groupName, $this->id);
-        }
-
-        // now add new ones
-        foreach ($this->groups as $group) {
-            Yii::app()->authManager->assign($group, $this->id);
+            // now add new ones
+            foreach ($this->groups as $group) {
+                Yii::app()->authManager->assign($group, $this->id);
+            }
         }
     }
 

@@ -4,7 +4,7 @@
  *
  * @author aragon112358
  */
-class JSONStatisticsController extends Controller
+class JSONStatisticsController extends JacqController
 {
     public function actions() {
         return array(

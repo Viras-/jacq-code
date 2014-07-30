@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 $this->menu = array();
 ?>
 
-<h1><?php echo Yii::t('jacq', 'Update Profile'); ?> <?php echo $model->id; ?></h1>
+<h1><?php echo Yii::t('jacq', 'Update Profile'); ?> "<?php echo $model->username; ?>"</h1>
 
 
 <div class="form">
