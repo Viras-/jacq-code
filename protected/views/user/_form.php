@@ -35,9 +35,15 @@
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'newPassword'); ?>
-        <?php echo $form->passwordField($model, 'newPassword', array('size' => 60, 'maxlength' => 64)); ?>
-        <?php echo $form->error($model, 'newPassword'); ?>
+        <?php echo $form->labelEx($model, 'new_password'); ?>
+        <?php echo $form->passwordField($model, 'new_password', array('size' => 60, 'maxlength' => 64)); ?>
+        <?php echo $form->error($model, 'new_password'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'new_password_confirm'); ?>
+        <?php echo $form->passwordField($model, 'new_password_confirm', array('size' => 60, 'maxlength' => 64)); ?>
+        <?php echo $form->error($model, 'new_password_confirm'); ?>
     </div>
 
     <div class="row">
