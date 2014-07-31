@@ -151,5 +151,6 @@ return array(
         'jsonJacqUrl' => null,              // url to get all jacq-json-services, change to a services url
         'indetScientificNameId' => 0,       // scientific_name_id of indet names (for import compatibility)
         'jacqClassificationCitationId' => 0,    // citation ID which is used for importing the jacq-legacy classification
+        'classifications_license' => '',    // license string which is added to downloaded classifications
     ),
 );

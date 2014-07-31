@@ -42,7 +42,7 @@ class JSONClassificationController extends Controller {
                     ->from('tbl_lit l')
                     ->leftJoin('tbl_tax_synonymy ts', 'ts.source_citationID = l.citationID')
                     ->leftJoin('tbl_tax_classification tc', 'tc.tax_syn_ID = ts.tax_syn_ID')
-                    ->where('ts.tax_syn_ID IS NOT NULL AND tc.classification_id IS NOT NULL')
+                    ->where("l.category LIKE '%classification%' AND ts.tax_syn_ID IS NOT NULL AND tc.classification_id IS NOT NULL")
                     ->group('ts.source_citationID')
                     ->order('referenceName')
                     ->queryAll();
@@ -54,7 +54,7 @@ class JSONClassificationController extends Controller {
                     ->leftJoin('tbl_lit l', 'l.periodicalID = lp.periodicalID')
                     ->leftJoin('tbl_tax_synonymy ts', 'ts.source_citationID = l.citationID')
                     ->leftJoin('tbl_tax_classification tc', 'tc.tax_syn_ID = ts.tax_syn_ID')
-                    ->where('ts.tax_syn_ID IS NOT NULL AND tc.classification_id IS NOT NULL')
+                    ->where("l.category LIKE '%classification%' AND ts.tax_syn_ID IS NOT NULL AND tc.classification_id IS NOT NULL")
                     ->group('l.periodicalID')
                     ->order('referenceName')
                     ->queryAll();
@@ -107,12 +107,40 @@ class JSONClassificationController extends Controller {
                     ->queryAll();
 
                 foreach( $dbRows as $dbRow ) {
+//                    $dbRow2 = $db->createCommand()
+//                        ->select('count(*) AS number')
+//                        ->from('tbl_tax_synonymy')
+//                        ->where(
+//                            array(
+//                                'AND',
+//                                'source_citationID = :source_citationID',
+//                                'acc_taxon_ID IS NULL'
+//                            ),
+//                            array(
+//                                ':source_citationID' => $dbRow['referenceID']
+//                            ))
+//                        ->queryRow();
+//                    $dbRow3 = $db->createCommand()
+//                        ->select('count(*) AS number')
+//                        ->from('tbl_tax_synonymy')
+//                        ->where(
+//                            array(
+//                                'AND',
+//                                'source_citationID = :source_citationID',
+//                                'acc_taxon_ID IS NOT NULL'
+//                            ),
+//                            array(
+//                                ':source_citationID' => $dbRow['referenceID']
+//                            ))
+//                        ->queryRow();
                     $results[] = array(
                         "taxonID" => 0,
                         "referenceId" => $dbRow['referenceID'],
                         "referenceName" => $dbRow['referenceName'],
                         "referenceType" => "citation",
-                        "hasChildren" => true
+                        "hasChildren" => true,
+//                        "nrAccTaxa" => $dbRow2['number'],
+//                        "nrSynonyms" => $dbRow3['number']
                     );
                 }
                 break;
@@ -200,6 +228,87 @@ class JSONClassificationController extends Controller {
 
         // return results
         return $results;
+    }
+
+    /**
+     * Get number of classification children who have children themselves of a given taxonID according to a given reference of type citation
+     * NOTE: the function is static so that it can be called from other controllers as well
+     * @param int $referenceID ID of reference (citation)
+     * @param int $taxonID ID of taxon
+     * @return int
+     */
+    public static function japiNumberOfChildrenWithChildrenCitation ($referenceID, $taxonID = 0) {
+        $resultNumber = 0;
+        $stack = array();
+
+        // setup db query
+        $db = JSONClassificationController::getDbHerbarInput();
+
+        $stack[] = $taxonID;
+        do {
+            $taxonID = array_pop($stack);
+
+            $dbCommand = $db->createCommand();
+            // basic query
+            $dbCommand->select(
+                            array(
+                                "ts.taxonID",
+                                "max(`has_children`.`tax_syn_ID` IS NOT NULL) AS `hasChildren`",
+                                "max(`has_synonyms`.`tax_syn_ID` IS NOT NULL) AS `hasSynonyms`",
+                                "max(`has_basionym`.`basID` IS NOT NULL) AS `hasBasionym`",
+                            )
+                    )
+                    ->from('tbl_tax_synonymy ts')
+                    ->leftJoin('tbl_tax_species tsp', 'ts.taxonID = tsp.taxonID')
+                    ->leftJoin('tbl_tax_rank tr', 'tsp.tax_rankID = tr.tax_rankID')
+                    ->leftJoin('tbl_tax_classification tc', 'ts.tax_syn_ID = tc.tax_syn_ID')
+                    ->leftJoin(
+                            'tbl_tax_synonymy has_synonyms',
+                            array(
+                                'AND',
+                                'has_synonyms.acc_taxon_ID = ts.taxonID',
+                                'has_synonyms.source_citationID = ts.source_citationID'
+                            )
+                    )
+                    ->leftJoin('tbl_tax_classification has_children_clas', 'has_children_clas.parent_taxonID = ts.taxonID')
+                    ->leftJoin(
+                            'tbl_tax_synonymy has_children',
+                            array(
+                                'AND',
+                                'has_children.tax_syn_ID = has_children_clas.tax_syn_ID',
+                                'has_children.source_citationID = ts.source_citationID'
+                            )
+                    )
+                    ->leftJoin('tbl_tax_species has_basionym', 'ts.taxonID = has_basionym.taxonID')
+                    ->group('ts.taxonID');
+
+            $where_cond = array('AND', 'ts.source_citationID = :source_citationID', 'ts.acc_taxon_ID IS NULL');
+            $where_cond_values = array( ':source_citationID' => $referenceID );
+
+            // check if we search for children of a specific taxon
+            if( $taxonID > 0 ) {
+                $where_cond[] = 'tc.parent_taxonID = :parent_taxonID';
+                $where_cond_values[':parent_taxonID'] = $taxonID;
+            }
+            // .. if not make sure we only return entries which have at least one child
+            else {
+                $where_cond[] = 'tc.parent_taxonID IS NULL';
+                $where_cond[] = 'has_children.tax_syn_ID IS NOT NULL';
+            }
+            // apply where conditions and return all rows
+            $dbRows = $dbCommand->where($where_cond,$where_cond_values)
+                    ->queryAll();
+
+            // process all results and create JSON-response from it
+            foreach( $dbRows as $dbRow ) {
+                if ($dbRow['hasChildren'] > 0 || $dbRow['hasSynonyms'] > 0 || $dbRow['hasBasionym']) {
+                    $stack[] = $dbRow['taxonID'];
+                    $resultNumber++;
+                }
+            }
+        } while (!empty($stack));
+
+        return $resultNumber;
     }
 
     /**
@@ -720,6 +829,68 @@ class JSONClassificationController extends Controller {
         }
 
         return true;
+    }
+
+    /**
+     * Get statistics information of a given reference
+     * NOTE: the function is static so that it can be called from other controllers as well
+     * @param int $referenceID ID of reference
+     * @return array structured array with statistics information
+     */
+    public static function japiGetPeriodicalStatistics($referenceID) {
+        $referenceID = intval($referenceID);
+        $results = array();
+
+        // setup db query
+        $db = JSONClassificationController::getDbHerbarInput();
+
+        $dbRow = $db->createCommand()
+            ->select('count(*) AS number')
+            ->from('tbl_tax_synonymy')
+            ->where(
+                array(
+                    'AND',
+                    'source_citationID = :source_citationID',
+                    'acc_taxon_ID IS NULL'
+                ),
+                array(
+                    ':source_citationID' => $referenceID
+                ))
+            ->queryRow();
+        $results["nrAccTaxa"] = $dbRow['number'];
+
+        $dbRow = $db->createCommand()
+            ->select('count(*) AS number')
+            ->from('tbl_tax_synonymy')
+            ->where(
+                array(
+                    'AND',
+                    'source_citationID = :source_citationID',
+                    'acc_taxon_ID IS NOT NULL'
+                ),
+                array(
+                    ':source_citationID' => $referenceID
+                ))
+            ->queryRow();
+        $results["nrSynonyms"] = $dbRow['number'];
+
+        $results["ranks"] = array();
+        $dbRows = $db->createCommand()
+            ->select('tr.rank, count(tr.tax_rankID) AS number')
+            ->from('tbl_tax_synonymy ts')
+            ->leftJoin('tbl_tax_species tsp', 'ts.taxonID = tsp.taxonID')
+            ->leftJoin('tbl_tax_rank tr', 'tsp.tax_rankID = tr.tax_rankID')
+            ->where('source_citationID = :source_citationID',
+                    array(':source_citationID' => $referenceID))
+            ->group('tr.tax_rankID')
+            ->order('tr.rank_hierarchy')
+            ->queryAll();
+        foreach( $dbRows as $dbRow ) {
+            $results["ranks"][] = array("rank" => $dbRow['rank'], "number" => $dbRow['number']);
+        }
+
+        // return results
+        return $results;
     }
 
     public function actions() {

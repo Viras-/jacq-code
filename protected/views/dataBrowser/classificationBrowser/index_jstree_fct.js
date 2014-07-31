@@ -30,6 +30,8 @@ function init_jstree ()
 {
     // delete any old instance
     $('#jstree_classificationBrowser').jstree( 'destroy' );
+    // hide info box
+    $('#infoBox').hide();
 
     // initialize jsTree for organisation
     $('#jstree_classificationBrowser').jstree({
@@ -43,5 +45,16 @@ function init_jstree ()
         },
         "plugins" : [ "themes", "json_data" ],
         "core": {"html_titles": true}
+    });
+
+    $('#jstree_classificationBrowser').on('after_open.jstree', function(e, data) {
+        if ($('#open_all')[0].checked) {
+            classificationProgressbarCurr++;
+            if (classificationProgressbarCurr < classificationProgressbarMax) {
+                $("#progressbar").progressbar("option", "value", classificationProgressbarCurr / classificationProgressbarMax * 100);
+            } else {
+                $("#progressbar").progressbar("destroy");
+            }
+        }
     });
 }

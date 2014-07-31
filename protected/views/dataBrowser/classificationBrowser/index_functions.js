@@ -60,6 +60,13 @@ function arrow_down (p_i)
     liElement.data(referenceData.referenceType, addedReferences);
 }
 
+function download(referenceType, referenceId, scientificNameId) {
+    var url = classBrowser + '/download' + '&referenceType=' + referenceType +
+        '&referenceId=' + referenceId + "&scientificNameId=" + scientificNameId;
+
+    window.location = url;
+}
+
 /**
  * Called when the authorization dialog is closed (empty content)
  */
