@@ -1,6 +1,7 @@
 <?php
 
-class UserController extends Controller {
+class UserController extends JacqController {
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -11,7 +12,7 @@ class UserController extends Controller {
      * @return array action filters
      */
     public function filters() {
-        return array(
+        return parent::filters() + array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
         );
@@ -24,19 +25,15 @@ class UserController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view'),
-                'users' => array('*'),
+            array('allow', // allow user with createUser role to access management functionality
+                'actions' => array('admin', 'create', 'delete', 'index', 'update'),
+                'roles' => array('oprtn_createUser'),
             ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
+            array('allow', // allow authenticated user to update their profile
+                'actions' => array('profile'),
                 'users' => array('@'),
             ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete'),
-                'users' => array('admin'),
-            ),
-            array('deny', // deny all users
+            array('deny', // deny everything by default
                 'users' => array('*'),
             ),
         );
@@ -76,12 +73,33 @@ class UserController extends Controller {
             unset($_POST['User']['username']);
             unset($_POST['User']['salt']);
             unset($_POST['User']['password']);
-            
+
             $model->attributes = $_POST['User'];
             $model->save();
         }
 
         $this->render('update', array(
+            'model' => $model,
+        ));
+    }
+    
+    /**
+     * Provides limited editing functionality available for the owning user
+     */
+    public function actionProfile() {
+        $model = $this->loadModel(Yii::app()->user->getId());
+        
+        if (isset($_POST['User'])) {
+            // only allow specific attribute to be updated
+            $model->setNewPassword($_POST['User']['newPassword']);
+            // clear the forced password change
+            $model->force_password_change = 0;
+            
+            // save the updated user profile
+            $model->save();
+        }
+        
+        $this->render('profile', array(
             'model' => $model,
         ));
     }

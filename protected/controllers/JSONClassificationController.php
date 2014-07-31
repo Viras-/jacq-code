@@ -3,7 +3,7 @@
  * Controller class for providing classification related informations using a JSON interface
  * NOTE: functions are static so that they can be accessed by other Controllers directly
  */
-class JSONClassificationController extends Controller {
+class JSONClassificationController extends JacqController {
     /**
      * Return connection to herbarinput database
      * @return CDbConnection

@@ -7,7 +7,7 @@ require("JSONClassificationController.php");
  *
  * @author wkoller
  */
-class JSONjsTreeController extends Controller {
+class JSONjsTreeController extends JacqController {
     /**
      * Main entry function for JSON service based classification-brower requests
      * @param type $referenceType

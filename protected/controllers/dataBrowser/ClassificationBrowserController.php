@@ -1,6 +1,6 @@
 <?php
 
-class ClassificationBrowserController extends Controller {
+class ClassificationBrowserController extends JacqController {
     /**
      * column offset for dynamically created hierarchy structure of the download sheet
      */

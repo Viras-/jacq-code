@@ -2,7 +2,7 @@
 /**
  * Provides interface functions for authorization control
  */
-class AuthorizationController extends Controller {
+class AuthorizationController extends JacqController {
     /**
      * Action for rendering permission mask for botanical object level
      * @param int $botanical_object_id ID of botanical object to check

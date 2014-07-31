@@ -72,7 +72,9 @@
                         )),
                         array('label' => Yii::t('jacq', 'User Manager'), 'url' => array('user/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createUser')),
                         array('label' => Yii::t('jacq', 'Login'), 'url' => array('site/login'), 'visible' => Yii::app()->user->isGuest),
-                        array('label' => Yii::t('jacq', 'Logout') . ' (' . Yii::app()->user->name . ')', 'url' => array('site/logout'), 'visible' => !Yii::app()->user->isGuest)
+                        array('label' => Yii::t('jacq', 'Logout') . ' (' . Yii::app()->user->name . ')', 'visible' => !Yii::app()->user->isGuest, 'url' => array('site/logout'), 'itemOptions'=>array('class'=>'has-sub'), 'items' => array(
+                            array('label' => Yii::t('jacq', 'Update Profile'), 'url' => array('user/profile'), 'visible' => !Yii::app()->user->isGuest),
+                        ))
                     ),
                 ));
                 ?>

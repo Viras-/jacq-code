@@ -41,6 +41,12 @@
     </div>
 
     <div class="row">
+        <?php echo $form->labelEx($model, 'force_password_change'); ?>
+        <?php echo $form->checkBox($model, 'force_password_change'); ?>
+        <?php echo $form->error($model, 'force_password_change'); ?>
+    </div>
+
+    <div class="row">
         <?php echo $form->labelEx($model, 'user_type_id'); ?>
         <?php echo $form->dropDownList($model, 'user_type_id', Html::listDataSorted(UserType::model()->findAll(), 'user_type_id', 'typeTranslated')); ?>
         <?php echo $form->error($model, 'user_type_id'); ?>
