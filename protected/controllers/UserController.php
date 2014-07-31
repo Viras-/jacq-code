@@ -88,10 +88,12 @@ class UserController extends JacqController {
      */
     public function actionProfile() {
         $model = $this->loadModel(Yii::app()->user->getId());
+        $model->scenario = 'profile';
         
         if (isset($_POST['User'])) {
-            // only allow specific attribute to be updated
-            $model->setNewPassword($_POST['User']['newPassword']);
+            // only allow specific attributes to be updated
+            $model->new_password = $_POST['User']['new_password'];
+            $model->new_password_confirm = $_POST['User']['new_password_confirm'];
             // clear the forced password change
             $model->force_password_change = 0;
             
