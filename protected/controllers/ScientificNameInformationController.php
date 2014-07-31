@@ -1,6 +1,6 @@
 <?php
 
-class ScientificNameInformationController extends Controller {
+class ScientificNameInformationController extends JacqController {
     /**
      * Update / Create a scientific name information entry
      * @param int $scientific_name_id

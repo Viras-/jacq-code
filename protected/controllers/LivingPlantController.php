@@ -1,6 +1,6 @@
 <?php
 
-class LivingPlantController extends Controller {
+class LivingPlantController extends JacqController {
     /**
      * Return connection to herbarinput database
      * @return CDbConnection
@@ -19,7 +19,7 @@ class LivingPlantController extends Controller {
      * @return array action filters
      */
     public function filters() {
-        return array(
+        return parent::filters() + array(
             'accessControl', // perform access control for CRUD operations
         );
     }
