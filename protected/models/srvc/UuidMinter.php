@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'srvc_uuid_minter':
  * @property integer $uuid_minter_id
  * @property integer $uuid_minter_type_id
+ * @property integer $internal_id
  * @property string $uuid
  * @property string $timestamp
  *
@@ -28,12 +29,12 @@ class UuidMinter extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('uuid_minter_type_id, uuid, timestamp', 'required'),
-            array('uuid_minter_type_id', 'numerical', 'integerOnly' => true),
+            array('uuid_minter_type_id, internal_id, uuid, timestamp', 'required'),
+            array('uuid_minter_type_id, internal_id', 'numerical', 'integerOnly' => true),
             array('uuid', 'length', 'max' => 36),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('uuid_minter_id, uuid_minter_type_id, uuid, timestamp', 'safe', 'on' => 'search'),
+            array('uuid_minter_id, uuid_minter_type_id, internal_id, uuid, timestamp', 'safe', 'on' => 'search'),
         );
     }
 
@@ -55,6 +56,7 @@ class UuidMinter extends CActiveRecord {
         return array(
             'uuid_minter_id' => 'Uuid Minter',
             'uuid_minter_type_id' => 'Uuid Minter Type',
+            'internal_id' => 'Internal Id',
             'uuid' => 'Uuid',
             'timestamp' => 'Timestamp',
         );
@@ -79,6 +81,7 @@ class UuidMinter extends CActiveRecord {
 
         $criteria->compare('uuid_minter_id', $this->uuid_minter_id);
         $criteria->compare('uuid_minter_type_id', $this->uuid_minter_type_id);
+        $criteria->compare('internal_id',$this->internal_id);
         $criteria->compare('uuid', $this->uuid, true);
         $criteria->compare('timestamp', $this->timestamp, true);
 
