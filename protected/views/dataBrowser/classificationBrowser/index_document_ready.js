@@ -88,7 +88,7 @@ $('#jstree_classificationBrowser a span').live('click', function() {
 
 // add hover handler for all info links
 $('#jstree_classificationBrowser .infoBox').live({
-    mouseover: function() {
+    click: function() {
         var position = $(this).position();
         var taxonID = $(this).parent().attr('data-taxon-id');
         var referenceId = $(this).parent().attr('data-reference-id');
@@ -155,19 +155,32 @@ $('#jstree_classificationBrowser .infoBox').live({
                 dataType: "jsonp",
                 success: function(data) {
                     // check if we found additional references
-                    $('#infoBox').html(data.nrAccTaxa + ' accepted Taxa<br/>' + data.nrSynonyms + ' Synonyms.<br/>');
+                    var iBoxData = '<table class="infoBox">'
+                                 + '<tr>'
+                                 + '<td style="text-align:right; border-bottom: 1px solid black;">' + data.nrAccTaxa + '</td>'
+                                 + '<td colspan="2" style="border-bottom: 1px solid black;">accepted Taxa</td>'
+                                 + '<td style="text-align:right; border-left:1px solid black; border-bottom: 1px solid black;">' + data.nrSynonyms + '</td>'
+                                 + '<td style="border-bottom: 1px solid black;">Synonyms.</td>'
+                                 + '</tr>';
 
                     // remember return reference-data
                     $('#infoBox').data('statisticsData', data);
 
                     if( data.ranks && data.ranks.length && data.ranks.length > 0 ) {
                         for( var i = 0; i < data.ranks.length; i++ ) {
-                            $('#infoBox').html($('#infoBox').html() + data.ranks[i].number + " " + data.ranks[i].rank + "<br/>");
+                            iBoxData += '<tr>'
+                                      + '<td>' + data.ranks[i].rank + '</td>'
+                                      + '<td style="text-align:right;">' + data.ranks[i].nrAccTaxa + '</td>'
+                                      + '<td>acc.</td>'
+                                      + '<td style="text-align:right; border-left:1px solid black;">' + data.ranks[i].nrSynTaxa + '</td>'
+                                      + '<td>syn.</td>'
+                                      + '</tr>';
                         }
                     }
+                    $('#infoBox').html(iBoxData + "</table>");
 
                     // add download link
-                    $('#infoBox').html($('#infoBox').html() + '<b>actions</b><br />');
+                    $('#infoBox').html($('#infoBox').html() + '</td></tr></table><b>actions</b><br />');
                     $('#infoBox').html($('#infoBox').html() + '<span style="cursor: pointer;" onclick="download(\'citation\', ' + referenceId + ',' + taxonID + '); return false;"><img src="images/disk.png"></span>');
 
                     // finally show the info box

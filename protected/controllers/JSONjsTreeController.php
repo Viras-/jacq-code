@@ -171,8 +171,8 @@ class JSONjsTreeController extends Controller {
         // find all classification children
         $children = JSONClassificationController::japiChildren($referenceType, $referenceID, $taxonID);
         foreach( $children as $child ) {
-            if (mb_strlen($child["referenceName"]) > 130) {
-                $title = mb_substr($child["referenceName"], 0, 50) . ' ... ' . mb_substr($child["referenceName"], -80);
+            if (mb_strlen($child["referenceName"]) > 120) {
+                $title = mb_substr($child["referenceName"], 0, 50) . ' ... ' . mb_substr($child["referenceName"], -70);
                 $titleFull = $child["referenceName"];
             } else {
                 $title = $child["referenceName"];
