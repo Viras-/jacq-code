@@ -1,5 +1,5 @@
 <?php
-class JSONOrganisationController extends Controller {
+class JSONOrganisationController extends JacqController {
     public function japiGetChildren($organisation_id) {
         $organisation_id = intval($organisation_id);
         $result = array();

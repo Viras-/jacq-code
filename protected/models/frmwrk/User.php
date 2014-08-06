@@ -16,6 +16,7 @@
  * @property string $title_suffix
  * @property string $birthdate
  * @property integer $organisation_id
+ * @property integer $force_password_change
  *
  * The followings are the available model relations:
  * @property AuthAssignment[] $authAssignments
@@ -34,7 +35,7 @@ class User extends ActiveRecord {
 
     /**
      * length of salt hash
-     * @var type 
+     * @var int 
      */
     private $saltLength = 10;
 
@@ -43,7 +44,14 @@ class User extends ActiveRecord {
      * saved after the user has been saved
      * @var array 
      */
-    protected $groups = array();
+    protected $groups = null;
+    
+    /**
+     * Virtual attributes which are used for comparing & setting a new password
+     * @var string
+     */
+    public $new_password = null;
+    public $new_password_confirm = null;
 
     /**
      * @return string the associated database table name
@@ -60,16 +68,20 @@ class User extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('username, password, salt, user_type_id, employment_type_id, organisation_id', 'required'),
-            array('user_type_id, employment_type_id, organisation_id', 'numerical', 'integerOnly' => true),
+            array('user_type_id, employment_type_id, organisation_id, force_password_change', 'numerical', 'integerOnly' => true),
             array('username', 'length', 'max' => 128),
-            array('newPassword, salt', 'length', 'max' => 64),
+            array('new_password, new_password_confirm, salt', 'length', 'max' => 64, 'min' => 8),
             array('title_prefix, firstname, lastname, title_suffix', 'length', 'max' => 45),
             array('groups', 'type', 'type' => 'array'),
             array('birthdate', 'type', 'type' => 'date', 'dateFormat' => 'yyyy-MM-dd'),
             array('birthdate', 'default', 'setOnEmpty' => true, 'value' => null),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, username, password, salt, user_type_id, employment_type_id, title_prefix, firstname, lastname, title_suffix, birthdate, organisation_id, groups', 'safe', 'on' => 'search'),
+            array('id, username, password, salt, user_type_id, employment_type_id, title_prefix, firstname, lastname, title_suffix, birthdate, organisation_id, groups, force_password_change', 'safe', 'on' => 'search'),
+            // compare new password inputs
+            array('new_password', 'compare', 'compareAttribute' => 'new_password_confirm'),
+            // no empty passwords on profile page
+            array('new_password, new_password_confirm, salt', 'length', 'max' => 64, 'min' => 8, 'allowEmpty' => false, 'on' => 'profile'),
         );
     }
 
@@ -97,7 +109,6 @@ class User extends ActiveRecord {
             'id' => Yii::t('jacq', 'ID'),
             'username' => Yii::t('jacq', 'Username'),
             'password' => Yii::t('jacq', 'Password'),
-            'newPassword' => Yii::t('jacq', 'New Password'),
             'salt' => Yii::t('jacq', 'Salt'),
             'user_type_id' => Yii::t('jacq', 'User Type'),
             'employment_type_id' => Yii::t('jacq', 'Employment Type'),
@@ -107,6 +118,9 @@ class User extends ActiveRecord {
             'title_suffix' => Yii::t('jacq', 'Title Suffix'),
             'birthdate' => Yii::t('jacq', 'Birthdate'),
             'organisation_id' => Yii::t('jacq', 'Organisation'),
+            'force_password_change' => Yii::t('jacq', 'Force Password Change'),
+            'new_password' => Yii::t('jacq', 'New Password'),
+            'new_password_confirm' => Yii::t('jacq', 'Confirm New Password'),
         );
     }
 
@@ -172,25 +186,40 @@ class User extends ActiveRecord {
     }
 
     /**
-     * set a new password
-     * @param string $password new password (plaintext)
+     * Invoked before the user model is saved, we convert any new password input to the actual hash in here
      */
-    public function setNewPassword($password) {
-        // clean password & check for validity
-        $password = trim($password);
-        if( empty($password) ) {
-            return;
+    protected function beforeSave() {
+        // convert the password inputs to the actual password, since here everything was validated
+        if( !empty($this->new_password) ) {
+            $this->updateSalt();
+            $this->password = sha1($this->new_password . sha1($this->salt));
+            
+            $this->new_password = null;
+            $this->new_password_confirm = null;
         }
-        
-        // generate new salt
-        $this->updateSalt();
 
-        // update password
-        $this->password = sha1($password . sha1($this->salt));
+        return parent::beforeSave();
     }
 
-    public function getNewPassword() {
-        return '';
+    /**
+     * Invoked after the user has been saved, the group assignments are handled here
+     */
+    public function onAfterSave($event) {
+        parent::onAfterSave($event);
+        
+        // check if groups should be modified
+        if( is_array($this->groups) ) {
+            // first of all remove all old assignments
+            $groupItems = Yii::app()->authManager->getAuthItems(2);
+            foreach ($groupItems as $groupName => $groupItem) {
+                Yii::app()->authManager->revoke($groupName, $this->id);
+            }
+
+            // now add new ones
+            foreach ($this->groups as $group) {
+                Yii::app()->authManager->assign($group, $this->id);
+            }
+        }
     }
 
     /**
@@ -200,25 +229,7 @@ class User extends ActiveRecord {
     public function setGroups($groups) {
         $this->groups = $groups;
     }
-
-    /**
-     * Invoked after the user has been saved, the group assignments are handled here
-     */
-    public function onAfterSave($event) {
-        parent::onAfterSave($event);
-
-        // first of all remove all old assignments
-        $groupItems = Yii::app()->authManager->getAuthItems(2);
-        foreach ($groupItems as $groupName => $groupItem) {
-            Yii::app()->authManager->revoke($groupName, $this->id);
-        }
-
-        // now add new ones
-        foreach ($this->groups as $group) {
-            Yii::app()->authManager->assign($group, $this->id);
-        }
-    }
-
+    
     /**
      * Receive assigned groups
      * @return type
@@ -227,7 +238,7 @@ class User extends ActiveRecord {
         return Yii::app()->authManager->getAuthItems(2, $this->id);
     }
 
-    /**
+   /**
      * generate a new salt
      */
     private function updateSalt() {

@@ -2,7 +2,7 @@
 /**
  * Helper class for designing JSON services
  */
-class JSONServiceController extends Controller {
+class JSONServiceController extends JacqController {
     /**
      * Helper function for printing JSON conform output
      * @param string $output
