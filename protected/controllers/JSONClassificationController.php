@@ -874,19 +874,63 @@ class JSONClassificationController extends JacqController {
             ->queryRow();
         $results["nrSynonyms"] = $dbRow['number'];
 
-        $results["ranks"] = array();
+        $rows = array();
         $dbRows = $db->createCommand()
-            ->select('tr.rank, count(tr.tax_rankID) AS number')
+            ->select('tr.rank_plural, tr.rank_hierarchy, count(tr.tax_rankID) AS number')
             ->from('tbl_tax_synonymy ts')
             ->leftJoin('tbl_tax_species tsp', 'ts.taxonID = tsp.taxonID')
             ->leftJoin('tbl_tax_rank tr', 'tsp.tax_rankID = tr.tax_rankID')
-            ->where('source_citationID = :source_citationID',
-                    array(':source_citationID' => $referenceID))
+            ->where(
+                array(
+                    'AND',
+                    'source_citationID = :source_citationID',
+                    'acc_taxon_ID IS NULL'
+                ),
+                array(
+                    ':source_citationID' => $referenceID
+                ))
             ->group('tr.tax_rankID')
             ->order('tr.rank_hierarchy')
             ->queryAll();
         foreach( $dbRows as $dbRow ) {
-            $results["ranks"][] = array("rank" => $dbRow['rank'], "number" => $dbRow['number']);
+            $rows[$dbRow['rank_hierarchy']]['acc'] = array("rank" => $dbRow['rank_plural'], "number" => $dbRow['number']);
+        }
+
+        $dbRows = $db->createCommand()
+            ->select('tr.rank_plural, tr.rank_hierarchy, count(tr.tax_rankID) AS number')
+            ->from('tbl_tax_synonymy ts')
+            ->leftJoin('tbl_tax_species tsp', 'ts.taxonID = tsp.taxonID')
+            ->leftJoin('tbl_tax_rank tr', 'tsp.tax_rankID = tr.tax_rankID')
+            ->where(
+                array(
+                    'AND',
+                    'source_citationID = :source_citationID',
+                    'acc_taxon_ID IS NOT NULL'
+                ),
+                array(
+                    ':source_citationID' => $referenceID
+                ))
+            ->group('tr.tax_rankID')
+            ->order('tr.rank_hierarchy')
+            ->queryAll();
+        foreach( $dbRows as $dbRow ) {
+            $rows[$dbRow['rank_hierarchy']]['syn'] = array("rank" => $dbRow['rank_plural'], "number" => $dbRow['number']);
+        }
+        $results["ranks"] = array();
+        foreach ($rows as $row) {
+            if (isset($row['acc'])) {
+                $buffer['rank'] = $row['acc']['rank'];
+                $buffer['nrAccTaxa'] = $row['acc']['number'];
+            } else {
+                $buffer['nrAccTaxa'] = 0;
+            }
+            if (isset($row['syn'])) {
+                $buffer['rank'] = $row['syn']['rank'];
+                $buffer['nrSynTaxa'] = $row['syn']['number'];
+            } else {
+                $buffer['nrSynTaxa'] = 0;
+            }
+            $results["ranks"][] = $buffer;
         }
 
         // return results
