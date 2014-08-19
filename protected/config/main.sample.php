@@ -16,6 +16,7 @@ return array(
         'application.models.frmwrk.*',
         'application.models.views.*',
         'application.models.legacy.*',
+        'application.models.srvc.*',
         'application.components.*',
         'application.controllers.JSONServiceController',
     ),
@@ -142,7 +143,7 @@ return array(
         ),
         // uuid minter component
         'uuidMinter' => array(
-            'class' => 'UuidMinter'
+            'class' => 'application.components.services.UuidMinterComponent'
         ),
     ),
     // application-level parameters that can be accessed

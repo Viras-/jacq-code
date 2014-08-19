@@ -2,10 +2,11 @@
 
 class ClassificationBrowserController extends JacqController {
     /**
-     * column offset for dynamically created hierarchy structure of the download sheet
+     * List of prefix headers for export
+     * @var array 
      */
-    const HIERARCHY_OFFSET = 8;
-
+    private static $EXPORT_HEADERS = array("reference", "license", "downloaded", "modified", "scientific_name_guid", "scientific_name_id", "parent_scientific_name_id", "accepted_scientific_name_id", "taxonomic_status" );
+    
     /**
      * display the base view
      */
@@ -90,14 +91,9 @@ class ClassificationBrowserController extends JacqController {
         $objPHPExcel = XPHPExcel::createPHPExcel();
         
         // fill in the static column headings
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, 1, "reference");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, 1, "license");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(2, 1, "downloaded");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, 1, "modified");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(4, 1, "scientific_name_id");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, 1, "parent_scientific_name_id");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(6, 1, "accepted_scientific_name_id");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(7, 1, "taxonomic_status");
+        foreach(self::$EXPORT_HEADERS as $index => $header) {
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($index, 1, $header);
+        }
         
         // fetch all ranks, sorted by hierarchy for creating the headings of the download
         $dbCriteria = new CDbCriteria();
@@ -105,7 +101,7 @@ class ClassificationBrowserController extends JacqController {
         $models_taxRank = TaxRank::model()->findAll($dbCriteria);
         foreach($models_taxRank as $model_taxRank) {
             // fill in the header information, hierarchy starts with 1, but column "A" is 0
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_taxRank->rank_hierarchy - 1, 1, $model_taxRank->rank);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(count(self::$EXPORT_HEADERS) + $model_taxRank->rank_hierarchy - 1, 1, $model_taxRank->rank);
         }
         
         // cycle through top-level elements and continue exporting their children
@@ -139,20 +135,21 @@ class ClassificationBrowserController extends JacqController {
         $pHPExcelWorksheet->setCellValueByColumnAndRow(1, $rowIndex, Yii::app()->params['classifications_license']);
         $pHPExcelWorksheet->setCellValueByColumnAndRow(2, $rowIndex, date("Y-m-d H:i:s"));
         $pHPExcelWorksheet->setCellValueByColumnAndRow(3, $rowIndex, "");
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(4, $rowIndex, $model_taxSynonymy->taxonID);
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(4, $rowIndex, Yii::app()->uuidMinter->scientificName($model_taxSynonymy->taxonID));
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(5, $rowIndex, $model_taxSynonymy->taxonID);
         if( $model_taxSynonymy->taxClassification != null ) {
-            $pHPExcelWorksheet->setCellValueByColumnAndRow(5, $rowIndex, $model_taxSynonymy->taxClassification->parent_taxonID);
+            $pHPExcelWorksheet->setCellValueByColumnAndRow(6, $rowIndex, $model_taxSynonymy->taxClassification->parent_taxonID);
         }
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(6, $rowIndex, $model_taxSynonymy->acc_taxon_ID);
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(7, $rowIndex, ($model_taxSynonymy->acc_taxon_ID) ? 'synonym' : 'accepted');
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(7, $rowIndex, $model_taxSynonymy->acc_taxon_ID);
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(8, $rowIndex, ($model_taxSynonymy->acc_taxon_ID) ? 'synonym' : 'accepted');
         
         // add parent information
         foreach( $models_parentTaxSynonymy as $model_parentTaxSynonymy ) {
-            $pHPExcelWorksheet->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_parentTaxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_parentTaxSynonymy->viewTaxon->getScientificName($model_taxSynonymy->sourceCitation->hideScientificNameAuthors));
+            $pHPExcelWorksheet->setCellValueByColumnAndRow(count(self::$EXPORT_HEADERS) + $model_parentTaxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_parentTaxSynonymy->viewTaxon->getScientificName($model_taxSynonymy->sourceCitation->hideScientificNameAuthors));
         }
         
         // add the currently active information
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_taxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_taxSynonymy->viewTaxon->getScientificName($model_taxSynonymy->sourceCitation->hideScientificNameAuthors));
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(count(self::$EXPORT_HEADERS) + $model_taxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_taxSynonymy->viewTaxon->getScientificName($model_taxSynonymy->sourceCitation->hideScientificNameAuthors));
         $rowIndex++;
         
         // create criteria for searching for synonyms

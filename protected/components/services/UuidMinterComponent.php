@@ -4,12 +4,18 @@
  *
  * @author wkoller
  */
-class UuidMinter extends CComponent {
+class UuidMinterComponent extends CComponent {
     /**
      * Static definition of type-ids for minting process
      * speeds up the minting
      */
     const SCIENTIFIC_NAME_TYPE_ID = 1;
+    
+    /**
+     * Init scope for component startup
+     */
+    public function init() {
+    }
     
     /**
      * Mint an id for a given scientific name
@@ -18,7 +24,7 @@ class UuidMinter extends CComponent {
      * @throws Exception
      */
     public function scientificName($scientific_name_id) {
-        return $this->mint(self::SCIENTIFIC_NAME_TYPE_ID, $scientific_name_id);
+        return $this->mint(self::SCIENTIFIC_NAME_TYPE_ID, $scientific_name_id)->uuid;
     }
     
     /**
@@ -29,7 +35,6 @@ class UuidMinter extends CComponent {
      * @throws Exception
      */
     protected function mint($type, $internal_id) {
-        $type = trim($type);
         $internal_id = intval($internal_id);
         
         // check internal id for validity
