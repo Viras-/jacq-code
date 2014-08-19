@@ -29,12 +29,12 @@ class UuidMinter extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('uuid_minter_type_id, internal_id, uuid, timestamp', 'required'),
+            array('uuid_minter_type_id, internal_id, uuid', 'required'),
             array('uuid_minter_type_id, internal_id', 'numerical', 'integerOnly' => true),
-            array('uuid', 'length', 'max' => 36),
+            array('uuid, timestamp', 'length', 'max' => 36),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('uuid_minter_id, uuid_minter_type_id, internal_id, uuid, timestamp', 'safe', 'on' => 'search'),
+            array('uuid_minter_id, uuid_minter_type_id, internal_id, uuid', 'safe', 'on' => 'search'),
         );
     }
 
