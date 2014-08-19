@@ -15,6 +15,7 @@ class UuidMinterController extends JacqController {
      * Mint an id for a given scientific name
      * @param int $scientific_name_id ID of scientific name in internal system
      * @return string UUID for scientific name id
+     * @throws Exception
      */
     public function scientificName($scientific_name_id) {
         return $this->mint(self::SCIENTIFIC_NAME_TYPE_ID, $scientific_name_id);
@@ -66,6 +67,8 @@ class UuidMinterController extends JacqController {
         $model_uuidMinter->internal_id = $internal_id;
         $model_uuidMinter->uuid = new CDbExpression("UUID()");
         $model_uuidMinter->save();
+        // we need to refresh this record, since the UUID is generated in the database
+        $model_uuidMinter->refresh();
         
         return $model_uuidMinter;
     }
