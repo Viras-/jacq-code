@@ -4,7 +4,7 @@
  *
  * @author wkoller
  */
-class UuidMinterController extends JacqController {
+class UuidMinter extends CComponent {
     /**
      * Static definition of type-ids for minting process
      * speeds up the minting

@@ -139,7 +139,11 @@ return array(
         // authorization helper component (access level checking)
         'authorization' => array(
             'class' => 'Authorization'
-        )
+        ),
+        // uuid minter component
+        'uuidMinter' => array(
+            'class' => 'UuidMinter'
+        ),
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
