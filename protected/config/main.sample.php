@@ -16,6 +16,7 @@ return array(
         'application.models.frmwrk.*',
         'application.models.views.*',
         'application.models.legacy.*',
+        'application.models.srvc.*',
         'application.components.*',
         'application.controllers.JSONServiceController',
     ),
@@ -139,7 +140,11 @@ return array(
         // authorization helper component (access level checking)
         'authorization' => array(
             'class' => 'Authorization'
-        )
+        ),
+        // uuid minter component
+        'uuidMinter' => array(
+            'class' => 'application.components.services.UuidMinterComponent'
+        ),
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
