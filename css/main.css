@@ -239,6 +239,17 @@ html.waiting, html.waiting *
     cursor: wait !important;
 }
 
+table.infoBox {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+}
+
+table.infoBox td {
+    margin: 0;
+    padding: 2px;
+}
+
 /* Starter CSS for Menu */
 #cssmenu {
   padding: 0;
