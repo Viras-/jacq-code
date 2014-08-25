@@ -135,7 +135,7 @@ class ClassificationBrowserController extends JacqController {
         $pHPExcelWorksheet->setCellValueByColumnAndRow(1, $rowIndex, Yii::app()->params['classifications_license']);
         $pHPExcelWorksheet->setCellValueByColumnAndRow(2, $rowIndex, date("Y-m-d H:i:s"));
         $pHPExcelWorksheet->setCellValueByColumnAndRow(3, $rowIndex, "");
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(4, $rowIndex, Yii::app()->uuidMinter->scientificName($model_taxSynonymy->taxonID));
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(4, $rowIndex, Yii::app()->uuidMinter->scientificNameUrl($model_taxSynonymy->taxonID));
         $pHPExcelWorksheet->setCellValueByColumnAndRow(5, $rowIndex, $model_taxSynonymy->taxonID);
         if( $model_taxSynonymy->taxClassification != null ) {
             $pHPExcelWorksheet->setCellValueByColumnAndRow(6, $rowIndex, $model_taxSynonymy->taxClassification->parent_taxonID);

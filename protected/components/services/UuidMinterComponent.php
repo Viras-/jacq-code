@@ -18,13 +18,23 @@ class UuidMinterComponent extends CComponent {
     }
     
     /**
-     * Mint an id for a given scientific name
+     * Mint an uuid for a given scientific name
      * @param int $scientific_name_id ID of scientific name in internal system
      * @return string UUID for scientific name id
      * @throws Exception
      */
     public function scientificName($scientific_name_id) {
         return $this->mint(self::SCIENTIFIC_NAME_TYPE_ID, $scientific_name_id)->uuid;
+    }
+    
+    /**
+     * Return the uuid for a given scientific name, prefixed for URL referencing
+     * @param int $scientific_name_id ID of scientific name in internal system
+     * @return string URL including the UUID for resolving
+     * @throws Exception
+     */
+    public function scientificNameUrl($scientific_name_id) {
+        return Yii::app()->params['guidUrlPrefix'] . $this->scientificName($scientific_name_id);
     }
     
     /**
