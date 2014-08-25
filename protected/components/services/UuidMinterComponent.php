@@ -10,6 +10,7 @@ class UuidMinterComponent extends CComponent {
      * speeds up the minting
      */
     const SCIENTIFIC_NAME_TYPE_ID = 1;
+    const CITATION_TYPE_ID = 2;
     
     /**
      * Init scope for component startup
@@ -35,6 +36,26 @@ class UuidMinterComponent extends CComponent {
      */
     public function scientificNameUrl($scientific_name_id) {
         return Yii::app()->params['guidUrlPrefix'] . $this->scientificName($scientific_name_id);
+    }
+    
+    /**
+     * Mint an uuid for a given citation
+     * @param int $citation_id ID of citation name in internal system
+     * @return string UUID for citation id
+     * @throws Exception
+     */
+    public function citation($citation_id) {
+        return $this->mint(self::CITATION_TYPE_ID, $citation_id)->uuid;
+    }
+    
+    /**
+     * Return the uuid for a given citation, prefixed for URL referencing
+     * @param int $citation_id ID of citation in internal system
+     * @return string URL including the UUID for resolving
+     * @throws Exception
+     */
+    public function citationUrl($citation_id) {
+        return Yii::app()->params['guidUrlPrefix'] . $this->citation($citation_id);
     }
     
     /**
