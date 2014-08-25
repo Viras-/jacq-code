@@ -5,7 +5,7 @@ class ClassificationBrowserController extends JacqController {
      * List of prefix headers for export
      * @var array 
      */
-    private static $EXPORT_HEADERS = array("reference", "license", "downloaded", "modified", "scientific_name_guid", "scientific_name_id", "parent_scientific_name_id", "accepted_scientific_name_id", "taxonomic_status" );
+    private static $EXPORT_HEADERS = array("reference_guid", "reference", "license", "downloaded", "modified", "scientific_name_guid", "scientific_name_id", "parent_scientific_name_id", "accepted_scientific_name_id", "taxonomic_status" );
     
     /**
      * display the base view
@@ -131,17 +131,18 @@ class ClassificationBrowserController extends JacqController {
      */
     protected function exportClassificationToPHPExcel($pHPExcelWorksheet, $models_parentTaxSynonymy, $model_taxSynonymy, &$rowIndex) {
         // add basic information
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(0, $rowIndex, $model_taxSynonymy->sourceCitation->getCitation());
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(1, $rowIndex, Yii::app()->params['classifications_license']);
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(2, $rowIndex, date("Y-m-d H:i:s"));
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(3, $rowIndex, "");
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(4, $rowIndex, Yii::app()->uuidMinter->scientificName($model_taxSynonymy->taxonID));
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(5, $rowIndex, $model_taxSynonymy->taxonID);
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(0, $rowIndex, Yii::app()->uuidMinter->citationUrl($model_taxSynonymy->source_citationID));
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(1, $rowIndex, $model_taxSynonymy->sourceCitation->getCitation());
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(2, $rowIndex, Yii::app()->params['classifications_license']);
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(3, $rowIndex, date("Y-m-d H:i:s"));
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(4, $rowIndex, "");
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(5, $rowIndex, Yii::app()->uuidMinter->scientificNameUrl($model_taxSynonymy->taxonID));
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(6, $rowIndex, $model_taxSynonymy->taxonID);
         if( $model_taxSynonymy->taxClassification != null ) {
-            $pHPExcelWorksheet->setCellValueByColumnAndRow(6, $rowIndex, $model_taxSynonymy->taxClassification->parent_taxonID);
+            $pHPExcelWorksheet->setCellValueByColumnAndRow(7, $rowIndex, $model_taxSynonymy->taxClassification->parent_taxonID);
         }
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(7, $rowIndex, $model_taxSynonymy->acc_taxon_ID);
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(8, $rowIndex, ($model_taxSynonymy->acc_taxon_ID) ? 'synonym' : 'accepted');
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(8, $rowIndex, $model_taxSynonymy->acc_taxon_ID);
+        $pHPExcelWorksheet->setCellValueByColumnAndRow(9, $rowIndex, ($model_taxSynonymy->acc_taxon_ID) ? 'synonym' : 'accepted');
         
         // add parent information
         foreach( $models_parentTaxSynonymy as $model_parentTaxSynonymy ) {
