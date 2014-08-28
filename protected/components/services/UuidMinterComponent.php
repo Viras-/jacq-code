@@ -4,19 +4,13 @@
  *
  * @author wkoller
  */
-class UuidMinterComponent extends CComponent {
+class UuidMinterComponent extends CApplicationComponent {
     /**
      * Static definition of type-ids for minting process
      * speeds up the minting
      */
     const SCIENTIFIC_NAME_TYPE_ID = 1;
     const CITATION_TYPE_ID = 2;
-    
-    /**
-     * Init scope for component startup
-     */
-    public function init() {
-    }
     
     /**
      * Mint an uuid for a given scientific name

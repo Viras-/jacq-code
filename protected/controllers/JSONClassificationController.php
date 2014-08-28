@@ -63,9 +63,10 @@ class JSONClassificationController extends JacqController {
 
         // fetch all available references
         foreach( $dbRows as $dbRow ) {
+            // add current reference to return statement
             $return[] = array(
                 'name' => $dbRow['referenceName'],
-                'id' => $dbRow['referenceID']
+                'id' => $dbRow['referenceID'],
             );
         }
 
