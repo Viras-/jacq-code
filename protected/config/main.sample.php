@@ -16,6 +16,7 @@ return array(
         'application.models.frmwrk.*',
         'application.models.views.*',
         'application.models.legacy.*',
+        'application.models.srvc.*',
         'application.components.*',
         'application.controllers.JSONServiceController',
     ),
@@ -139,7 +140,11 @@ return array(
         // authorization helper component (access level checking)
         'authorization' => array(
             'class' => 'Authorization'
-        )
+        ),
+        // uuid minter component
+        'uuidMinter' => array(
+            'class' => 'application.components.services.UuidMinterComponent'
+        ),
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
@@ -147,10 +152,11 @@ return array(
         // this is used in contact page
         'adminEmail' => 'admin@domain.com',
         'groupPrefix' => 'grp_',
-        'familyClassificationIds' => array(0),      // reference(s) to use for family finding, order by priority
-        'jsonJacqUrl' => null,              // url to get all jacq-json-services, change to a services url
-        'indetScientificNameId' => 0,       // scientific_name_id of indet names (for import compatibility)
+        'familyClassificationIds' => array(0),  // reference(s) to use for family finding, order by priority
+        'jsonJacqUrl' => null,                  // url to get all jacq-json-services, change to a services url
+        'indetScientificNameId' => 0,           // scientific_name_id of indet names (for import compatibility)
         'jacqClassificationCitationId' => 0,    // citation ID which is used for importing the jacq-legacy classification
-        'classifications_license' => '',    // license string which is added to downloaded classifications
+        'classifications_license' => '',        // license string which is added to downloaded classifications
+        'guidUrlPrefix' => '',                  // URL-Prefix for GUIDs passed to outside world
     ),
 );

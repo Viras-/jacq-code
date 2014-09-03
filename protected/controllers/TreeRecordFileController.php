@@ -1,5 +1,5 @@
 <?php
-class TreeRecordFileController extends Controller {
+class TreeRecordFileController extends JacqController {
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -11,7 +11,7 @@ class TreeRecordFileController extends Controller {
      * @return array action filters
      */
     public function filters() {
-        return array(
+        return parent::filters() + array(
             'accessControl', // perform access control for CRUD operations
         );
     }

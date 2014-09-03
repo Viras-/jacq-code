@@ -62,7 +62,8 @@ function arrow_down (p_i)
 
 function download(referenceType, referenceId, scientificNameId) {
     var url = classBrowser + '/download' + '&referenceType=' + referenceType +
-        '&referenceId=' + referenceId + "&scientificNameId=" + scientificNameId;
+        '&referenceId=' + referenceId + "&scientificNameId=" + scientificNameId +
+        '&hideScientificNameAuthors=' + $('#hide-scientific-name-authors').val();
 
     window.location = url;
 }

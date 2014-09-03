@@ -1,11 +1,11 @@
 <?php
+// require classification download component
+Yii::import('application.components.dataBrowser.ClassificationDownloadComponent');
 
-class ClassificationBrowserController extends Controller {
-    /**
-     * column offset for dynamically created hierarchy structure of the download sheet
-     */
-    const HIERARCHY_OFFSET = 8;
-
+/**
+ * Controller for all classification browser functions
+ */
+class ClassificationBrowserController extends JacqController {
     /**
      * display the base view
      */
@@ -52,16 +52,43 @@ class ClassificationBrowserController extends Controller {
      * @param string $referenceType Type of reference ('citation', etc.)
      * @param int $referenceId ID of reference
      * @param int $scientificNameId Optional id of scientific name used as top-level entry
+     * @param string $hideScientificNameAuthors hide the scientific name authors in the download file
      */
-    public function actionDownload($referenceType, $referenceId, $scientificNameId = 0) {
-        // require phpexcel for CSV / Excel download
-        Yii::import('ext.phpexcel.XPHPExcel');
+    public function actionDownload($referenceType, $referenceId, $scientificNameId = 0, $hideScientificNameAuthors = null) {
         $models_taxSynonymy = array();
         $scientificNameId = intval($scientificNameId);
         $referenceId = intval($referenceId);
+        $hideScientificNameAuthors = trim($hideScientificNameAuthors);
         
         // check for a valid reference id
-        if( $referenceId <= 0 ) return;
+        if( $referenceId <= 0 ) {
+            return;
+        }
+        
+        // parse the hide author names parameter
+        if( $hideScientificNameAuthors == "true" ) {
+            $hideScientificNameAuthors = true;
+        }
+        else if( $hideScientificNameAuthors == "false" ) {
+            $hideScientificNameAuthors = false;
+        }
+        else {
+            $hideScientificNameAuthors = NULL;
+        }
+        
+        // if hide scientific name authors is null, use preference from literature entry
+        if( $hideScientificNameAuthors == NULL ) {
+            $model_lit = Lit::model()->findByAttributes(array(
+                'citationID' => $referenceId
+            ));
+            // this should never happen!
+            if( $model_lit == NULL ) {
+                return;
+            }
+
+            // update hide-scientific name authors setting from literature entry
+            $hideScientificNameAuthors = ($model_lit->hideScientificNameAuthors) ? true : false;
+        }
         
         // check if a certain scientific name id is specified & load the fitting synonymy entry
         if( $scientificNameId > 0 ) {
@@ -86,33 +113,12 @@ class ClassificationBrowserController extends Controller {
             $models_taxSynonymy = TaxSynonymy::model()->findAll($dbCriteria);
         }
         
-        // create the spreadsheet
-        $objPHPExcel = XPHPExcel::createPHPExcel();
+        // create & configure download helper component
+        $classificationDownloadComponent = new ClassificationDownloadComponent();
+        $classificationDownloadComponent->setHideScientificNameAuthors($hideScientificNameAuthors);
         
-        // fill in the static column headings
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, 1, "reference");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, 1, "license");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(2, 1, "downloaded");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, 1, "modified");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(4, 1, "scientific_name_id");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, 1, "parent_scientific_name_id");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(6, 1, "accepted_scientific_name_id");
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(7, 1, "taxonomic_status");
-        
-        // fetch all ranks, sorted by hierarchy for creating the headings of the download
-        $dbCriteria = new CDbCriteria();
-        $dbCriteria->order = 'rank_hierarchy ASC';
-        $models_taxRank = TaxRank::model()->findAll($dbCriteria);
-        foreach($models_taxRank as $model_taxRank) {
-            // fill in the header information, hierarchy starts with 1, but column "A" is 0
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_taxRank->rank_hierarchy - 1, 1, $model_taxRank->rank);
-        }
-        
-        // cycle through top-level elements and continue exporting their children
-        $rowIndex = 2;
-        foreach($models_taxSynonymy as $model_taxSynonymy) {
-            $this->exportClassificationToPHPExcel($objPHPExcel->getActiveSheet(), array(), $model_taxSynonymy, $rowIndex);
-        }
+        // create download object
+        $objPHPExcel = $classificationDownloadComponent->createDownload($models_taxSynonymy);
         
         // prepare excel sheet for download
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
@@ -124,66 +130,5 @@ class ClassificationBrowserController extends Controller {
         // provide output
         $objWriter->save('php://output');
         exit(0);
-    }
-    
-    /**
-     * Map a given tax synonymy entry to a phpexcel object, including all children recursively
-     * @param PHPExcel_Worksheet $pHPExcelWorksheet The worksheet to add the information to
-     * @param array $models_parentTaxSynonymy An array of all parent tax-synonymy entries
-     * @param TaxSynonymy $model_taxSynonymy The currently active tax-synonym entry
-     * @param int $rowIndex The row-index to add the information to
-     */
-    protected function exportClassificationToPHPExcel($pHPExcelWorksheet, $models_parentTaxSynonymy, $model_taxSynonymy, &$rowIndex) {
-        // add basic information
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(0, $rowIndex, $model_taxSynonymy->sourceCitation->getCitation());
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(1, $rowIndex, Yii::app()->params['classifications_license']);
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(2, $rowIndex, date("Y-m-d H:i:s"));
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(3, $rowIndex, "");
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(4, $rowIndex, $model_taxSynonymy->taxonID);
-        if( $model_taxSynonymy->taxClassification != null ) {
-            $pHPExcelWorksheet->setCellValueByColumnAndRow(5, $rowIndex, $model_taxSynonymy->taxClassification->parent_taxonID);
-        }
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(6, $rowIndex, $model_taxSynonymy->acc_taxon_ID);
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(7, $rowIndex, ($model_taxSynonymy->acc_taxon_ID) ? 'synonym' : 'accepted');
-        
-        // add parent information
-        foreach( $models_parentTaxSynonymy as $model_parentTaxSynonymy ) {
-            $pHPExcelWorksheet->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_parentTaxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_parentTaxSynonymy->viewTaxon->getScientificName($model_taxSynonymy->sourceCitation->hideScientificNameAuthors));
-        }
-        
-        // add the currently active information
-        $pHPExcelWorksheet->setCellValueByColumnAndRow(self::HIERARCHY_OFFSET + $model_taxSynonymy->taxSpecies->taxRank->rank_hierarchy - 1, $rowIndex, $model_taxSynonymy->viewTaxon->getScientificName($model_taxSynonymy->sourceCitation->hideScientificNameAuthors));
-        $rowIndex++;
-        
-        // create criteria for searching for synonyms
-        $dbSynonymCriteria = new CDbCriteria();
-        $dbSynonymCriteria->addColumnCondition(array(
-            'source_citationID' => $model_taxSynonymy->source_citationID,
-            'acc_taxon_ID' => $model_taxSynonymy->taxonID
-        ));
-        
-        // fetch all synonyms
-        $models_taxSynonymySynonyms = TaxSynonymy::model()->findAll($dbSynonymCriteria);
-        foreach($models_taxSynonymySynonyms as $model_taxSynonymySynonym) {
-            $this->exportClassificationToPHPExcel($pHPExcelWorksheet, $models_parentTaxSynonymy, $model_taxSynonymySynonym, $rowIndex);
-        }
-        
-        // create search criteria for fetching all children
-        $dbCriteria = new CDbCriteria();
-        $dbCriteria->with = array("taxClassification");
-        $dbCriteria->addColumnCondition(array(
-            'source_citationID' => $model_taxSynonymy->source_citationID,
-            'parent_taxonID' => $model_taxSynonymy->taxonID,
-        ));
-        $dbCriteria->order = 'taxClassification.order ASC';
-        
-        // add current entry as parent
-        $models_parentTaxSynonymy[] = $model_taxSynonymy;
-        
-        // fetch all children
-        $models_taxSynonymyChildren = TaxSynonymy::model()->findAll($dbCriteria);
-        foreach($models_taxSynonymyChildren as $model_taxSynonymyChild) {
-            $this->exportClassificationToPHPExcel($pHPExcelWorksheet, $models_parentTaxSynonymy, $model_taxSynonymyChild, $rowIndex);
-        }
     }
 }

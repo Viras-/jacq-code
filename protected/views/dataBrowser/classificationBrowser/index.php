@@ -1,35 +1,45 @@
 <?php
 /* @var $this ClassificationBrowserController */
 
-$this->breadcrumbs=array(
-	Yii::t('jacq', 'Classification Browser'),
+$this->breadcrumbs = array(
+    Yii::t('jacq', 'Classification Browser'),
 );
 ?>
 <div align="left">
-    <form action='#' onsubmit="return false;" style="<?php if($referenceType == 'citation' && $referenceId > 0) echo "display: none;"; ?>">
+    <form action='#' onsubmit="return false;" style="<?php if ($referenceType == 'citation' && $referenceId > 0) echo "display: none;"; ?>">
         <select id="classificationBrowser_referenceType">
-            <option value="">select reference type</option>
+            <option value=""><?php echo Yii::t('jacq', 'select reference type'); ?></option>
             <!--<option value="person">person</option>-->
             <!--<option value="service">service</option>-->
             <!--<option value="specimen">specimen</option>-->
-            <option value="periodical">citation</option>
+            <option value="periodical"><?php echo Yii::t('jacq', 'citation'); ?></option>
         </select>
         <br />
         <select id="classificationBrowser_referenceID">
-            <option value="">select classification reference</option>
+            <option value=""><?php echo Yii::t('jacq', 'select classification reference'); ?></option>
         </select>
         <br />
         <input id="filter_taxonID" type="hidden" />
-        <br />
-        Filter: <input id="scientificName" type="text" />
+        <div style="margin-top: 15px;">
+            <?php echo Yii::t('jacq', 'hide author names'); ?>:
+            <select id="hide-scientific-name-authors">
+                <option value="">Auto</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        
+        <?php echo Yii::t('jacq', 'Filter'); ?>: <input id="scientificName" type="text" />
         <input id="filter_button" type="image" src="images/magnifier.png" alt="filter" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <label><input type="checkbox" id="open_all"> expand Subhierarchies</label>
+        
+        <span style="margin-left: 30px;">
+            <label><input type="checkbox" id="open_all"> <?php echo Yii::t('jacq', 'expand Subhierarchies'); ?></label>
+        </span>
         <div id="progressbar" style="width:50%; height:10px; position:fixed; top:60px;"></div>
         <br />
     </form>
     <div id="jstree_classificationBrowser" style="padding-top: 10px; padding-bottom: 10px;"></div>
-    <div id="infoBox" style="display: none; padding: 5px; background: #FFFFFF; border: 1px solid #000000; position: absolute; top: 0px; left: 0px;">Info</div>
+    <div id="infoBox" style="display: none; padding: 5px; background: #FFFFFF; border: 1px solid #000000; position: absolute; top: 0px; left: 0px;"><?php echo Yii::t('jacq', 'Info'); ?></div>
 </div>
 
 <?php
@@ -59,4 +69,3 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 <div id="authorization_view" style="height: 400px;"></div>
 <?php
 $this->endWidget('zii.widgets.jui.CJuiDialog');
-?>
