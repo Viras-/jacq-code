@@ -508,21 +508,22 @@ class LivingPlantController extends JacqController {
 
                         // handle assigned label-types
                         $new_labelTypes = (isset($_POST['LabelTypes']) && is_array($_POST['LabelTypes'])) ? $_POST['LabelTypes'] : array();
-                        // Remove unchecked label assignments, if user is allowed to do so
-                        if( Yii::app()->user->checkAccess('oprtn_clearLabelType') ) {
-                            $models_botanicalObjectLabel = BotanicalObjectLabel::model()->findAllByAttributes(array(
-                                'botanical_object_id' => $model_livingPlant->id,
-                            ));
-                            foreach($models_botanicalObjectLabel as $model_botanicalObjectLabel) {
-                                if(!in_array($model_botanicalObjectLabel->label_type_id, $new_labelTypes)) {
-                                    $model_botanicalObjectLabel->delete();
-                                }
-                                else {
-                                    $new_labelTypes = array_diff($new_labelTypes, array($model_botanicalObjectLabel->label_type_id));
-                                }
+                        
+                        // cycle through all existing label assignment entries and check them
+                        $models_botanicalObjectLabel = BotanicalObjectLabel::model()->findAllByAttributes(array(
+                            'botanical_object_id' => $model_livingPlant->id,
+                        ));
+                        foreach($models_botanicalObjectLabel as $model_botanicalObjectLabel) {
+                            // check if label-type was unchecked, deleting it if user has right to do so
+                            if( !in_array($model_botanicalObjectLabel->label_type_id, $new_labelTypes)
+                                && Yii::app()->user->checkAccess('oprtn_clearLabelType') ) {
+                                $model_botanicalObjectLabel->delete();
+                            }
+                            else {
+                                $new_labelTypes = array_diff($new_labelTypes, array($model_botanicalObjectLabel->label_type_id));
                             }
                         }
-                        // add all label assignments, if user is allowed to do so
+                        // add all missing label assignments, if user is allowed to do so
                         if( count($new_labelTypes) > 0 && Yii::app()->user->checkAccess('oprtn_assignLabelType') ) {
                             foreach ($new_labelTypes as $label_type_id ) {
                                 $model_botanicalObjectLabel = new BotanicalObjectLabel;
