@@ -186,19 +186,16 @@ class User extends ActiveRecord {
     }
 
     /**
-     * Invoked before the user model is saved, we convert any new password input to the actual hash in here
+     * Before validation we convert the password to the actual hash
      */
-    protected function beforeSave() {
+    protected function beforeValidate() {
         // convert the password inputs to the actual password, since here everything was validated
         if( !empty($this->new_password) ) {
             $this->updateSalt();
             $this->password = sha1($this->new_password . sha1($this->salt));
-            
-            $this->new_password = null;
-            $this->new_password_confirm = null;
-        }
+       }
 
-        return parent::beforeSave();
+        return parent::beforeValidate();
     }
 
     /**
@@ -206,6 +203,10 @@ class User extends ActiveRecord {
      */
     public function onAfterSave($event) {
         parent::onAfterSave($event);
+        
+        // clean out the virtual password attributes after saving
+        $this->new_password = null;
+        $this->new_password_confirm = null;
         
         // check if groups should be modified
         if( is_array($this->groups) ) {
