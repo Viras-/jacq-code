@@ -2,9 +2,11 @@
 -- -----------------------------------------------------
 -- Table `tbl_index_seminum_revision`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_index_seminum_revision` ;
+
 CREATE TABLE IF NOT EXISTS `tbl_index_seminum_revision` (
   `index_seminum_revision_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` INT UNSIGNED NOT NULL,
+  `user_id` INT NOT NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`index_seminum_revision_id`),
   INDEX `fk_tbl_index_seminum_revision_frmwrk_user_idx` (`user_id` ASC),
@@ -15,11 +17,14 @@ CREATE TABLE IF NOT EXISTS `tbl_index_seminum_revision` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `tbl_index_seminum_content`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `tbl_index_seminum_content` ;
+
 CREATE TABLE IF NOT EXISTS `tbl_index_seminum_content` (
-  `index_seminum_content_id` INT NOT NULL AUTO_INCREMENT,
+  `index_seminum_content_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `index_seminum_revision_id` INT UNSIGNED NOT NULL,
   `botanical_object_id` INT NOT NULL,
   `accession_number` INT NOT NULL,
