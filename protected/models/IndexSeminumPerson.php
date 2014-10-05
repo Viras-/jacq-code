@@ -1,26 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "tbl_index_seminum_revision".
+ * This is the model class for table "tbl_index_seminum_person".
  *
- * The followings are the available columns in table 'tbl_index_seminum_revision':
- * @property integer $index_seminum_revision_id
- * @property integer $user_id
+ * The followings are the available columns in table 'tbl_index_seminum_person':
+ * @property integer $index_seminum_person_id
+ * @property integer $index_seminum_content_id
  * @property string $name
  * @property string $timestamp
  *
  * The followings are the available model relations:
- * @property IndexSeminumContent[] $indexSeminumContents
- * @property FrmwrkUser $user
+ * @property IndexSeminumContent $indexSeminumContent
  */
-class IndexSeminumRevision extends CActiveRecord
+class IndexSeminumPerson extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_index_seminum_revision';
+		return 'tbl_index_seminum_person';
 	}
 
 	/**
@@ -31,12 +30,12 @@ class IndexSeminumRevision extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, name', 'required'),
-			array('user_id', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>50),
+			array('index_seminum_content_id, name', 'required'),
+			array('index_seminum_content_id', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('index_seminum_revision_id, user_id, name, timestamp', 'safe', 'on'=>'search'),
+			array('index_seminum_person_id, index_seminum_content_id, name, timestamp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +47,7 @@ class IndexSeminumRevision extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'indexSeminumContents' => array(self::HAS_MANY, 'IndexSeminumContent', 'index_seminum_revision_id'),
-			'user' => array(self::BELONGS_TO, 'FrmwrkUser', 'user_id'),
+			'indexSeminumContent' => array(self::BELONGS_TO, 'IndexSeminumContent', 'index_seminum_content_id'),
 		);
 	}
 
@@ -59,8 +57,8 @@ class IndexSeminumRevision extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'index_seminum_revision_id' => 'Index Seminum Revision',
-			'user_id' => 'User',
+			'index_seminum_person_id' => 'Index Seminum Person',
+			'index_seminum_content_id' => 'Index Seminum Content',
 			'name' => 'Name',
 			'timestamp' => 'Timestamp',
 		);
@@ -84,8 +82,8 @@ class IndexSeminumRevision extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('index_seminum_revision_id',$this->index_seminum_revision_id);
-		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('index_seminum_person_id',$this->index_seminum_person_id);
+		$criteria->compare('index_seminum_content_id',$this->index_seminum_content_id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('timestamp',$this->timestamp,true);
 
@@ -98,7 +96,7 @@ class IndexSeminumRevision extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return IndexSeminumRevision the static model class
+	 * @return IndexSeminumPerson the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

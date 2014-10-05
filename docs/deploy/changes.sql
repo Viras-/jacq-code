@@ -3,11 +3,13 @@
 -- Table `tbl_index_seminum_revision`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tbl_index_seminum_revision` (
-  `index_seminum_revision_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `index_seminum_revision_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`index_seminum_revision_id`),
   INDEX `fk_tbl_index_seminum_revision_frmwrk_user_idx` (`user_id` ASC),
+  UNIQUE INDEX `revision_name_UNIQUE` (`name` ASC),
   CONSTRAINT `fk_tbl_index_seminum_revision_frmwrk_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `frmwrk_user` (`id`)
@@ -19,8 +21,8 @@ ENGINE = InnoDB;
 -- Table `tbl_index_seminum_content`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tbl_index_seminum_content` (
-  `index_seminum_content_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `index_seminum_revision_id` INT UNSIGNED NOT NULL,
+  `index_seminum_content_id` INT NOT NULL AUTO_INCREMENT,
+  `index_seminum_revision_id` INT NOT NULL,
   `botanical_object_id` INT NOT NULL,
   `accession_number` INT NOT NULL,
   `family` TEXT NOT NULL,
@@ -32,8 +34,8 @@ CREATE TABLE IF NOT EXISTS `tbl_index_seminum_content` (
   `habitat` VARCHAR(45) NULL,
   `altitude_min` INT NULL,
   `altitude_max` INT NULL,
-  `longitude` VARCHAR(45) NULL,
   `latitude` VARCHAR(45) NULL,
+  `longitude` VARCHAR(45) NULL,
   `acquisition_date` VARCHAR(45) NULL,
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`index_seminum_content_id`),
@@ -51,14 +53,14 @@ CREATE TABLE IF NOT EXISTS `tbl_index_seminum_content` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `tbl_index_seminum_person`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tbl_index_seminum_person` (
-  `index_seminum_person_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `index_seminum_content_id` INT UNSIGNED NOT NULL,
+  `index_seminum_person_id` INT NOT NULL AUTO_INCREMENT,
+  `index_seminum_content_id` INT NOT NULL,
   `name` VARCHAR(255) NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`index_seminum_person_id`),
   INDEX `fk_tbl_index_seminum_person_tbl_index_seminum_content_idx` (`index_seminum_content_id` ASC),
   CONSTRAINT `fk_tbl_index_seminum_person_tbl_index_seminum_content`
