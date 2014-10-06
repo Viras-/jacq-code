@@ -25,7 +25,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'name',
         'timestamp',
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'ISButtonColumn',
         ),
     ),
 ));
