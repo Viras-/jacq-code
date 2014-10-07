@@ -69,3 +69,9 @@ CREATE TABLE IF NOT EXISTS `tbl_index_seminum_person` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
+('oprtn_indexSeminum', 0, 'Access to index seminum actions', NULL, 'N;');
+
+INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
+('grp_admin', 'oprtn_indexSeminum');

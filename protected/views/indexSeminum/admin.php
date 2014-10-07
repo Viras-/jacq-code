@@ -3,16 +3,16 @@
 /* @var $model IndexSeminumRevision */
 
 $this->breadcrumbs = array(
-    'Index Seminum Revisions' => array('admin'),
-    'Manage',
+    Yii::t('jacq', 'Index Seminum') => array('admin'),
+    Yii::t('jacq', 'Manage'),
 );
 
 $this->menu = array(
-    array('label' => 'Create Index Semimum Revision', 'url' => array('create')),
+    array('label' => Yii::t('jacq', 'Create Index Seminum'), 'url' => array('create')),
 );
 ?>
 
-<h1>Index Seminum Revision Management</h1>
+<h1><?php echo CHtml::encode(Yii::t('jacq', 'Manage Index Seminum')); ?></h1>
 
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
@@ -21,7 +21,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'filter' => $model,
     'columns' => array(
         'index_seminum_revision_id',
-        'user_id',
+        'user.username',
         'name',
         'timestamp',
         array(

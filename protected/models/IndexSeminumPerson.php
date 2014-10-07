@@ -12,7 +12,7 @@
  * The followings are the available model relations:
  * @property IndexSeminumContent $indexSeminumContent
  */
-class IndexSeminumPerson extends CActiveRecord
+class IndexSeminumPerson extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -57,10 +57,10 @@ class IndexSeminumPerson extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'index_seminum_person_id' => 'Index Seminum Person',
-			'index_seminum_content_id' => 'Index Seminum Content',
-			'name' => 'Name',
-			'timestamp' => 'Timestamp',
+			'index_seminum_person_id' => Yii::t('jacq','Index Seminum Person'),
+			'index_seminum_content_id' => Yii::t('jacq','Index Seminum Content'),
+			'name' => Yii::t('jacq','Name'),
+			'timestamp' => Yii::t('jacq','Timestamp'),
 		);
 	}
 

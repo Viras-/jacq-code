@@ -27,7 +27,7 @@
  * @property IndexSeminumRevision $indexSeminumRevision
  * @property IndexSeminumPerson[] $indexSeminumPeople
  */
-class IndexSeminumContent extends CActiveRecord
+class IndexSeminumContent extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -77,23 +77,23 @@ class IndexSeminumContent extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'index_seminum_content_id' => 'Index Seminum Content',
-			'index_seminum_revision_id' => 'Index Seminum Revision',
-			'botanical_object_id' => 'Botanical Object',
-			'accession_number' => 'Accession Number',
-			'family' => 'Family',
-			'scientific_name' => 'Scientific Name',
-			'index_seminum_type' => 'Index Seminum Type',
-			'ipen_number' => 'Ipen Number',
-			'acquisition_number' => 'Acquisition Number',
-			'acquisition_locality' => 'Acquisition Locality',
-			'habitat' => 'Habitat',
-			'altitude_min' => 'Altitude Min',
-			'altitude_max' => 'Altitude Max',
-			'latitude' => 'Latitude',
-			'longitude' => 'Longitude',
-			'acquisition_date' => 'Acquisition Date',
-			'timestamp' => 'Timestamp',
+			'index_seminum_content_id' => Yii::t('jacq','Index Seminum Content'),
+			'index_seminum_revision_id' => Yii::t('jacq','Index Seminum Revision'),
+			'botanical_object_id' => Yii::t('jacq','Botanical Object'),
+			'accession_number' => Yii::t('jacq','Accession Number'),
+			'family' => Yii::t('jacq','Family'),
+			'scientific_name' => Yii::t('jacq','Scientific Name'),
+			'index_seminum_type' => Yii::t('jacq','Index Seminum Type'),
+			'ipen_number' => Yii::t('jacq','IPEN Number'),
+			'acquisition_number' => Yii::t('jacq','Acquisition Number'),
+			'acquisition_locality' => Yii::t('jacq','Acquisition Locality'),
+			'habitat' => Yii::t('jacq','Habitat'),
+			'altitude_min' => Yii::t('jacq','Altitude Min'),
+			'altitude_max' => Yii::t('jacq','Altitude Max'),
+			'latitude' => Yii::t('jacq','Latitude'),
+			'longitude' => Yii::t('jacq','Longitude'),
+			'acquisition_date' => Yii::t('jacq','Acquisition Date'),
+			'timestamp' => Yii::t('jacq','Timestamp')
 		);
 	}
 

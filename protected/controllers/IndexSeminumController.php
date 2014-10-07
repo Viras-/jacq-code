@@ -26,19 +26,11 @@ class IndexSeminumController extends JacqController {
      */
     public function accessRules() {
         return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view'),
-                'users' => array('*'),
+            array('allow',
+                'actions' => array('admin', 'create', 'download'),
+                'roles' => array('oprtn_indexSeminum'),
             ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
-                'users' => array('@'),
-            ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete'),
-                'users' => array('admin'),
-            ),
-            array('deny', // deny all users
+            array('deny', // deny all users by default
                 'users' => array('*'),
             ),
         );
@@ -145,7 +137,7 @@ class IndexSeminumController extends JacqController {
     }
 
     /**
-     * Manages all models.
+     * List of index seminum revisions created before
      */
     public function actionAdmin() {
         $model = new IndexSeminumRevision('search');
@@ -156,6 +148,59 @@ class IndexSeminumController extends JacqController {
         $this->render('admin', array(
             'model' => $model,
         ));
+    }
+
+    /**
+     * Download a given index seminum revision
+     * @param int $id ID of index seminum revision to load
+     */
+    public function actionDownload($id) {
+        $id = intval($id);
+
+        // check for a valid id
+        if ($id <= 0) {
+            throw new CHttpException(400, "Invalid id passed");
+        }
+
+        // try to load the index seminum revision
+        $model_indexSeminumRevision = IndexSeminumRevision::model()->findByPk($id);
+        if ($model_indexSeminumRevision == NULL) {
+            throw new CHttpException(404, "Unable to find revision");
+        }
+
+        // require phpexcel for CSV / Excel download
+        Yii::import('ext.phpexcel.XPHPExcel');
+
+        // create phpexcel object for downloading
+        $pHPExcel = XPHPExcel::createPHPExcel();
+
+        // add header information, based on all index seminum revision attributes
+        $model_indexSeminumContent = IndexSeminumContent::model();
+        $metadata_indexSeminumContent = $model_indexSeminumContent->getMetaData();
+        $index = 0;
+        foreach ($metadata_indexSeminumContent->columns as $column_indexSeminumContent) {
+            $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow($index, 1, $model_indexSeminumContent->getAttributeLabel($column_indexSeminumContent->name));
+            $index++;
+        }
+
+        foreach ($model_indexSeminumRevision->indexSeminumContents as $row => $model_indexSeminumContent) {
+            $index = 0;
+            foreach ($metadata_indexSeminumContent->columns as $column_indexSeminumContent) {
+                $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow($index, $row + 2, $model_indexSeminumContent->getAttribute($column_indexSeminumContent->name));
+                $index++;
+            }
+        }
+
+        // prepare excel sheet for download
+        $pHPExcelWriter = PHPExcel_IOFactory::createWriter($pHPExcel, 'CSV');
+        
+        // send header information
+        header('Content-type: text/csv');
+        header('Content-disposition: attachment;filename=index-seminum_' . urlencode($model_indexSeminumRevision->name) . '.csv');        
+
+        // provide output
+        $pHPExcelWriter->save('php://output');
+        exit(0);
     }
 
 }

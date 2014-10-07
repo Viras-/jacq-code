@@ -2,16 +2,16 @@
 /* @var $this IndexSeminumRevisionController */
 /* @var $model IndexSeminumRevision */
 
-$this->breadcrumbs=array(
-	'Index Seminum Revisions'=>array('admin'),
-	'Create',
+$this->breadcrumbs = array(
+    Yii::t('jacq', 'Index Seminum') => array('admin'),
+    Yii::t('jacq', 'Create'),
 );
 
-$this->menu=array(
-	array('label'=>'Manage IndexSeminumRevision', 'url'=>array('admin')),
+$this->menu = array(
+    array('label' => Yii::t('jacq', 'Manage Index Seminum'), 'url' => array('admin')),
 );
 ?>
 
-<h1>Create IndexSeminumRevision</h1>
+<h1><?php echo CHtml::encode(Yii::t('jacq', 'Create Index Seminum')); ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_form', array('model' => $model)); ?>

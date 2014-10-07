@@ -11,9 +11,9 @@
  *
  * The followings are the available model relations:
  * @property IndexSeminumContent[] $indexSeminumContents
- * @property FrmwrkUser $user
+ * @property User $user
  */
-class IndexSeminumRevision extends CActiveRecord
+class IndexSeminumRevision extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -49,7 +49,7 @@ class IndexSeminumRevision extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'indexSeminumContents' => array(self::HAS_MANY, 'IndexSeminumContent', 'index_seminum_revision_id'),
-			'user' => array(self::BELONGS_TO, 'FrmwrkUser', 'user_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 
@@ -59,10 +59,10 @@ class IndexSeminumRevision extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'index_seminum_revision_id' => 'Index Seminum Revision',
-			'user_id' => 'User',
-			'name' => 'Name',
-			'timestamp' => 'Timestamp',
+			'index_seminum_revision_id' => Yii::t('jacq','Index Seminum Revision'),
+			'user_id' => Yii::t('jacq','User'),
+			'name' => Yii::t('jacq','Name'),
+			'timestamp' => Yii::t('jacq','Timestamp'),
 		);
 	}
 
