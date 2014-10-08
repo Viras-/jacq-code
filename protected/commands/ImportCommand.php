@@ -1,23 +1,12 @@
 <?php
 /**
- * Helper exception class for import errors
- */
-class ImportException extends Exception {
-    public function __construct($message, $activeRecord) {
-        $message .= ': ' . var_export($activeRecord->getErrors(), true);
-        
-        parent::__construct($message);
-    }
-}
-
-/**
  * Command for handling import of old data
  */
 class ImportCommand extends CConsoleCommand {
     /**
      * Import data from old HBV database
      * @param type $start
-     * @throws ImportException
+     * @throws ModelException
      * @throws Exception
      */
     public function actionHBV($IDPflanze = 0) {
@@ -68,14 +57,14 @@ class ImportCommand extends CConsoleCommand {
                     // create location coordinates objectb
                     $model_locationCoordinates = new LocationCoordinates();
                     if( !$model_locationCoordinates->save() ) {
-                        throw new ImportException('Unable to save locationCoordinates', $model_locationCoordinates);
+                        throw new ModelException('Unable to save locationCoordinates', $model_locationCoordinates);
                     }
 
                     // create acquisition date object
                     $model_acquisitionDate = new AcquisitionDate();
                     $model_acquisitionDate->date = $model_importHerkunft->CollDatum;
                     if(!$model_acquisitionDate->save()) {
-                        throw new ImportException('Unable to save acquisitionDate', $model_acquisitionDate);
+                        throw new ModelException('Unable to save acquisitionDate', $model_acquisitionDate);
                     }
 
                     // create aquisition event
@@ -106,7 +95,7 @@ class ImportCommand extends CConsoleCommand {
                             $model_location = new Location();
                             $model_location->location = $location_string;
                             if( !$model_location->save() ) {
-                                throw new ImportException('Unable to save location', $model_location);
+                                throw new ModelException('Unable to save location', $model_location);
                             }
                         }
 
@@ -116,7 +105,7 @@ class ImportCommand extends CConsoleCommand {
 
                     // save the acquisition event after preparing all info
                     if( !$model_aquisitionEvent->save() ) {
-                        throw new ImportException('Unable to save aquisitionEvent', $model_aquisitionEvent);
+                        throw new ModelException('Unable to save aquisitionEvent', $model_aquisitionEvent);
                     }
 
                     // add the collecting person
@@ -126,7 +115,7 @@ class ImportCommand extends CConsoleCommand {
                         $model_acquisitionEventPerson->acquisition_event_id = $model_aquisitionEvent->id;
                         $model_acquisitionEventPerson->person_id = $model_collectorPerson->id;
                         if( !$model_acquisitionEventPerson->save() ) {
-                            throw new ImportException('Unable to save acquisitionEventPerson', $model_acquisitionEventPerson);
+                            throw new ModelException('Unable to save acquisitionEventPerson', $model_acquisitionEventPerson);
                         }
                     }
 
@@ -141,7 +130,7 @@ class ImportCommand extends CConsoleCommand {
                             $model_acquisitionSource = new AcquisitionSource();
                             $model_acquisitionSource->name = $model_importHerkunft->Bezugsquelle;
                             if( !$model_acquisitionSource->save() ) {
-                                throw new ImportException('Unable to save acquisitionSource', $model_acquisitionSource);
+                                throw new ModelException('Unable to save acquisitionSource', $model_acquisitionSource);
                             }
                         }
 
@@ -151,7 +140,7 @@ class ImportCommand extends CConsoleCommand {
                         $model_acquisitionEventSource->acquisition_source_id = $model_acquisitionSource->acquisition_source_id;
                         $model_acquisitionEventSource->source_date = $model_importHerkunft->CollDatum;
                         if( !$model_acquisitionEventSource->save() ) {
-                            throw new ImportException('Unable to save acquisitionEventSource', $model_acquisitionEventSource);
+                            throw new ModelException('Unable to save acquisitionEventSource', $model_acquisitionEventSource);
                         }
                     }
 
@@ -279,14 +268,14 @@ class ImportCommand extends CConsoleCommand {
                                     $model_cultivar->scientific_name_id = $model_scientificNameInformation->scientific_name_id;
                                     $model_cultivar->cultivar = $FormCult;
                                     if( $model_cultivar->save() ) {
-                                        throw new ImportException('Unable to save cultivar', $model_cultivar);
+                                        throw new ModelException('Unable to save cultivar', $model_cultivar);
                                     }
                                 }
                             }
                         }
                         // finally save the model
                         if(!$model_scientificNameInformation->save()) {
-                            throw new ImportException('Unable to save scientificNameInformation', $model_scientificNameInformation);
+                            throw new ModelException('Unable to save scientificNameInformation', $model_scientificNameInformation);
                         }
                     }
 
@@ -305,7 +294,7 @@ class ImportCommand extends CConsoleCommand {
 
                     // save botanical object model
                     if( !$model_botanicalObject->save() ) {
-                        throw new ImportException('Unable to save botanicalObject', $model_botanicalObject);
+                        throw new ModelException('Unable to save botanicalObject', $model_botanicalObject);
                     }
 
                     // create import properties & save them
@@ -317,14 +306,14 @@ class ImportCommand extends CConsoleCommand {
                         $model_importProperties->Verbreitung = $model_importSysDiverses->Verbreitung;
                     }
                     if( !$model_importProperties->save() ) {
-                        throw new ImportException('Unable to save importProperties', $model_importProperties);
+                        throw new ModelException('Unable to save importProperties', $model_importProperties);
                     }
 
                     // create a date entry for "Eingangsdatum"
                     $model_incomingDate = new AcquisitionDate();
                     $model_incomingDate->custom = $model_akzession->Eingangsdatum;
                     if( !$model_incomingDate->save() ) {
-                        throw new ImportException('Unable to save incomingDate', $model_incomingDate);
+                        throw new ModelException('Unable to save incomingDate', $model_incomingDate);
                     }
 
                     // now create living plant model & import properties
@@ -368,7 +357,7 @@ class ImportCommand extends CConsoleCommand {
 
                     // save the living plant
                     if( !$model_livingPlant->save() ) {
-                        throw new ImportException('Unable to save livingPlant', $model_livingPlant);
+                        throw new ModelException('Unable to save livingPlant', $model_livingPlant);
                     }
                     // import old accession numbers
                     if( $model_akzession->AkzessNr != NULL ) {
@@ -397,7 +386,7 @@ class ImportCommand extends CConsoleCommand {
                         $model_separation->date = $model_akzession->AbgangDatum;
                         $model_separation->annotation = $model_akzession->AbgangMemo;
                         if( !$model_separation->save() ) {
-                            throw new ImportException('Unable to save separation', $model_separation);
+                            throw new ModelException('Unable to save separation', $model_separation);
                         }
                     }
 
