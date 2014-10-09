@@ -189,14 +189,21 @@ class IndexSeminumController extends JacqController {
                 $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow($index, $row + 2, $model_indexSeminumContent->getAttribute($column_indexSeminumContent->name));
                 $index++;
             }
+
+            // now add collectors to download, as they are dynamic we have to set the header each time as well
+            foreach ($model_indexSeminumContent->indexSeminumPeople as $model_indexSeminumPerson) {
+                $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow($index, 1, $model_indexSeminumPerson->getAttributeLabel('name'));
+                $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow($index, $row + 2, $model_indexSeminumPerson->name);
+                $index++;
+            }
         }
 
         // prepare excel sheet for download
         $pHPExcelWriter = PHPExcel_IOFactory::createWriter($pHPExcel, 'CSV');
-        
+
         // send header information
         header('Content-type: text/csv');
-        header('Content-disposition: attachment;filename=index-seminum_' . urlencode($model_indexSeminumRevision->name) . '.csv');        
+        header('Content-disposition: attachment;filename=index-seminum_' . urlencode($model_indexSeminumRevision->name) . '.csv');
 
         // provide output
         $pHPExcelWriter->save('php://output');

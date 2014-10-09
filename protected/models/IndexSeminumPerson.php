@@ -59,7 +59,7 @@ class IndexSeminumPerson extends ActiveRecord
 		return array(
 			'index_seminum_person_id' => Yii::t('jacq','Index Seminum Person'),
 			'index_seminum_content_id' => Yii::t('jacq','Index Seminum Content'),
-			'name' => Yii::t('jacq','Name'),
+			'name' => Yii::t('jacq','Acquisition Person(s)'),
 			'timestamp' => Yii::t('jacq','Timestamp'),
 		);
 	}
