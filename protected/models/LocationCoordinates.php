@@ -21,7 +21,7 @@
  * @property AcquisitionEvent[] $acquisitionEvents
  */
 class LocationCoordinates extends CActiveRecord {
-    private static $sexagesimal_pattern = "%3d° %2d′ %2d″";
+    private static $sexagesimal_pattern = "%3d° %2d′ %2d″ %s";
 
     /**
      * Returns the static model of the specified AR class.
@@ -122,7 +122,7 @@ class LocationCoordinates extends CActiveRecord {
      * @return string
      */
     public function getLatitudeSexagesimal() {
-        return sprintf(self::$sexagesimal_pattern, $this->latitude_degrees, $this->latitude_minutes, $this->latitude_seconds);
+        return sprintf(self::$sexagesimal_pattern, $this->latitude_degrees, $this->latitude_minutes, $this->latitude_seconds, $this->latitude_half);
     }
 
     /**
@@ -130,6 +130,6 @@ class LocationCoordinates extends CActiveRecord {
      * @return string
      */
     public function getLongitudeSexagesimal() {
-        return sprintf(self::$sexagesimal_pattern, $this->longitude_degrees, $this->longitude_minutes, $this->longitude_seconds);
+        return sprintf(self::$sexagesimal_pattern, $this->longitude_degrees, $this->longitude_minutes, $this->longitude_seconds, $this->longitude_half);
     }
 }

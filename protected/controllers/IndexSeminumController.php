@@ -91,7 +91,7 @@ class IndexSeminumController extends JacqController {
                             }
                             // check for locality information
                             if ($model_livingPlant->id0->acquisitionEvent->location) {
-                                $model_indexSeminumContent->acquisition_locality = $model_livingPlant->id0->acquisitionEvent->location->location;
+                                $model_indexSeminumContent->acquisition_location = $model_livingPlant->id0->acquisitionEvent->location->location;
                             }
                         }
 
