@@ -66,11 +66,11 @@ class IndexSeminumController extends JacqController {
                         $model_indexSeminumContent = new IndexSeminumContent();
                         $model_indexSeminumContent->index_seminum_revision_id = $model_indexSeminumRevision->index_seminum_revision_id;
                         $model_indexSeminumContent->botanical_object_id = $model_livingPlant->id;
-                        $model_indexSeminumContent->accession_number = $model_livingPlant->accession_number;
+                        $model_indexSeminumContent->accession_number = $model_livingPlant->accessionNumber;
                         $model_indexSeminumContent->family = $model_livingPlant->id0->getFamily();
                         $model_indexSeminumContent->scientific_name = $model_livingPlant->id0->getScientificName();
                         $model_indexSeminumContent->index_seminum_type = $model_livingPlant->indexSeminumType->type;
-                        $model_indexSeminumContent->ipen_number = $model_livingPlant->ipen_number;
+                        $model_indexSeminumContent->ipen_number = $model_livingPlant->ipenNumber;
                         $model_indexSeminumContent->habitat = $model_livingPlant->id0->habitat;
 
                         // check if we have acquistion information

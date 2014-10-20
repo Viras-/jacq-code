@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `tbl_index_seminum_content` (
   `family` TEXT NOT NULL,
   `scientific_name` TEXT NOT NULL,
   `index_seminum_type` VARCHAR(3) NOT NULL,
-  `ipen_number` VARCHAR(20) NOT NULL,
+  `ipen_number` VARCHAR(28) NOT NULL,
   `acquisition_number` TEXT NULL,
   `acquisition_locality` VARCHAR(45) NULL,
   `habitat` VARCHAR(45) NULL,
