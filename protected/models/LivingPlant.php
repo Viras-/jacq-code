@@ -43,6 +43,11 @@ class LivingPlant extends ActiveRecord {
     public $accessionNumber_search;
 
     /**
+     * Default values
+     */
+    public $index_seminum_type_id = 4;
+    
+    /**
      * Virtual AccessionNumber Attribute which returns a formatted version of the id
      * @return string
      */
