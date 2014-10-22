@@ -84,6 +84,7 @@ class AcquisitionEvent extends CActiveRecord {
             'number' => Yii::t('jacq', 'Number'),
             'annotation' => Yii::t('jacq', 'Annotation'),
             'location_coordinates_id' => Yii::t('jacq', 'Location Coordinates'),
+            'people' => Yii::t('jacq', 'Collectors')
         );
     }
 
@@ -109,4 +110,20 @@ class AcquisitionEvent extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
+
+    /**
+     * Return a concatenated list of people for this event
+     * @return string
+     */
+    public function getPeople() {
+        $peopleNames = array();
+
+        foreach ($this->tblPeople as $model_person) {
+            $peopleNames[] = $model_person->name;
+        }
+
+        // return concatenated list of people names
+        return implode(', ', $peopleNames);
+    }
+
 }

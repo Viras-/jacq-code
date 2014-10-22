@@ -15,7 +15,6 @@
                         'changeYear' => true
                     ),
                     'htmlOptions' => array(
-                        
                     ),
                     'value' => $model_acquisitionDate->date,
                 ));
@@ -57,19 +56,19 @@
                         $( "#AcquisitionEvent_location_id" ).val( ui.item.id );
                     }
                 }',
-            /*'open' => 'js:function(event, ui) {
-                    var liItem = $("<li class=\'ui-menu-item\' role=\'menuitem\'></li>")
-                    var aItem = $( "<a class=\'ui-corner-all\'>More...</a>" );
-                    aItem.hover( function() { $(this).addClass( "ui-state-hover" ); }, function() { $(this).removeClass( "ui-state-hover" ); } );
-                    aItem.click( function(event, ui) { $( "#locationName" ).autocomplete( "option", "source", "index.php?r=autoComplete/location&geonames=true" ); return false; } );
+        /* 'open' => 'js:function(event, ui) {
+          var liItem = $("<li class=\'ui-menu-item\' role=\'menuitem\'></li>")
+          var aItem = $( "<a class=\'ui-corner-all\'>More...</a>" );
+          aItem.hover( function() { $(this).addClass( "ui-state-hover" ); }, function() { $(this).removeClass( "ui-state-hover" ); } );
+          aItem.click( function(event, ui) { $( "#locationName" ).autocomplete( "option", "source", "index.php?r=autoComplete/location&geonames=true" ); return false; } );
 
-                    liItem.append( aItem );
-                    $(this).autocomplete( "widget" ).append( liItem );
-                }',*/
-            /*'search' => 'js:function(event, ui) {
-                    $( "#AcquisitionEvent_location_id" ).val("");
-                    return true;
-                }'*/
+          liItem.append( aItem );
+          $(this).autocomplete( "widget" ).append( liItem );
+          }', */
+        /* 'search' => 'js:function(event, ui) {
+          $( "#AcquisitionEvent_location_id" ).val("");
+          return true;
+          }' */
         ),
         'value' => ($model_acquisitionEvent->location != null) ? $model_acquisitionEvent->location->location : '',
         'htmlOptions' => array(
@@ -83,9 +82,9 @@
 <!-- acquisition altitude -->
 <div class="row">
     <?php echo $form->labelEx($model_locationCoordinates, 'altitude'); ?>
-    <?php echo $form->textField($model_locationCoordinates, 'altitude_min', array( 'size' => 5 ) ); ?>
+    <?php echo $form->textField($model_locationCoordinates, 'altitude_min', array('size' => 5)); ?>
     -
-    <?php echo $form->textField($model_locationCoordinates, 'altitude_max', array( 'size' => 5 )); ?>
+    <?php echo $form->textField($model_locationCoordinates, 'altitude_max', array('size' => 5)); ?>
     <?php echo $form->error($model_locationCoordinates, 'altitude'); ?>
 </div>
 <!-- acquisition coordinates -->
@@ -93,25 +92,25 @@
     <table>
         <tr>
             <td>
-            <?php echo $form->labelEx($model_locationCoordinates, 'latitude'); ?>
-            <?php echo $form->textField($model_locationCoordinates, 'latitude_degrees', array( 'size' => 3 ) ); ?>
-            <?php echo $form->textField($model_locationCoordinates, 'latitude_minutes', array( 'size' => 2 ) ); ?>
-            <?php echo $form->textField($model_locationCoordinates, 'latitude_seconds', array( 'size' => 2 ) ); ?>
-            <?php echo $form->dropDownList($model_locationCoordinates, 'latitude_half', array( 'N' => 'N', 'S' => 'S' ) ); ?>
-            <?php echo $form->error($model_locationCoordinates, 'latitude_degrees'); ?>
+                <?php echo $form->labelEx($model_locationCoordinates, 'latitude'); ?>
+                <?php echo $form->textField($model_locationCoordinates, 'latitude_degrees', array('size' => 3)); ?>
+                <?php echo $form->textField($model_locationCoordinates, 'latitude_minutes', array('size' => 2)); ?>
+                <?php echo $form->textField($model_locationCoordinates, 'latitude_seconds', array('size' => 2)); ?>
+                <?php echo $form->dropDownList($model_locationCoordinates, 'latitude_half', array('N' => 'N', 'S' => 'S')); ?>
+                <?php echo $form->error($model_locationCoordinates, 'latitude_degrees'); ?>
             </td>
             <td>
-            <?php echo $form->labelEx($model_locationCoordinates, 'longitude'); ?>
-            <?php echo $form->textField($model_locationCoordinates, 'longitude_degrees', array( 'size' => 3 ) ); ?>
-            <?php echo $form->textField($model_locationCoordinates, 'longitude_minutes', array( 'size' => 2 ) ); ?>
-            <?php echo $form->textField($model_locationCoordinates, 'longitude_seconds', array( 'size' => 2 ) ); ?>
-            <?php echo $form->dropDownList($model_locationCoordinates, 'longitude_half', array( 'E' => 'E', 'W' => 'W' ) ); ?>
-            <?php echo $form->error($model_locationCoordinates, 'longitude_degrees'); ?>
+                <?php echo $form->labelEx($model_locationCoordinates, 'longitude'); ?>
+                <?php echo $form->textField($model_locationCoordinates, 'longitude_degrees', array('size' => 3)); ?>
+                <?php echo $form->textField($model_locationCoordinates, 'longitude_minutes', array('size' => 2)); ?>
+                <?php echo $form->textField($model_locationCoordinates, 'longitude_seconds', array('size' => 2)); ?>
+                <?php echo $form->dropDownList($model_locationCoordinates, 'longitude_half', array('E' => 'E', 'W' => 'W')); ?>
+                <?php echo $form->error($model_locationCoordinates, 'longitude_degrees'); ?>
             </td>
             <td>
-            <?php echo $form->labelEx($model_locationCoordinates, 'exactness'); ?>
-            <?php echo $form->textField($model_locationCoordinates, 'exactness', array( 'size' => 5 )); ?>
-            <?php echo $form->error($model_locationCoordinates, 'exactness'); ?>
+                <?php echo $form->labelEx($model_locationCoordinates, 'exactness'); ?>
+                <?php echo $form->textField($model_locationCoordinates, 'exactness', array('size' => 5)); ?>
+                <?php echo $form->error($model_locationCoordinates, 'exactness'); ?>
             </td>
         </tr>
     </table>
@@ -119,7 +118,7 @@
 <!-- acquisition annotation -->
 <div class="row">
     <?php echo $form->labelEx($model_acquisitionEvent, 'annotation'); ?>
-    <?php echo $form->textArea($model_acquisitionEvent, 'annotation', array( 'style' => 'width: 100%;' ) ); ?>
+    <?php echo $form->textArea($model_acquisitionEvent, 'annotation', array('style' => 'width: 100%;')); ?>
     <?php echo $form->error($model_acquisitionEvent, 'annotation'); ?>
 </div>
 <!-- index seminum -->
@@ -139,4 +138,9 @@
         </tr>
     </table>
 </div>
-
+<!-- habitat -->
+<div class="row">
+    <?php echo $form->labelEx($model_botanicalObject, 'habitat'); ?>
+    <?php echo $form->textField($model_botanicalObject, 'habitat'); ?>
+    <?php echo $form->error($model_botanicalObject, 'habitat'); ?>
+</div>
