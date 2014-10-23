@@ -411,3 +411,8 @@ table.infoBox td {
   line-height: 18px;
   font-size: 12px;
 }
+
+/* disable padding for first cell in a row div */
+.row td:first-child {
+    padding-left: 0px;
+}

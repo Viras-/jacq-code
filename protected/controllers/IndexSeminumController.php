@@ -27,7 +27,7 @@ class IndexSeminumController extends JacqController {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('admin', 'create', 'download'),
+                'actions' => array('admin', 'create', 'download', 'clear'),
                 'roles' => array('oprtn_indexSeminum'),
             ),
             array('deny', // deny all users by default
@@ -66,11 +66,11 @@ class IndexSeminumController extends JacqController {
                         $model_indexSeminumContent = new IndexSeminumContent();
                         $model_indexSeminumContent->index_seminum_revision_id = $model_indexSeminumRevision->index_seminum_revision_id;
                         $model_indexSeminumContent->botanical_object_id = $model_livingPlant->id;
-                        $model_indexSeminumContent->accession_number = $model_livingPlant->accession_number;
+                        $model_indexSeminumContent->accession_number = $model_livingPlant->accessionNumber;
                         $model_indexSeminumContent->family = $model_livingPlant->id0->getFamily();
                         $model_indexSeminumContent->scientific_name = $model_livingPlant->id0->getScientificName();
                         $model_indexSeminumContent->index_seminum_type = $model_livingPlant->indexSeminumType->type;
-                        $model_indexSeminumContent->ipen_number = $model_livingPlant->ipen_number;
+                        $model_indexSeminumContent->ipen_number = $model_livingPlant->ipenNumber;
                         $model_indexSeminumContent->habitat = $model_livingPlant->id0->habitat;
 
                         // check if we have acquistion information
@@ -114,7 +114,8 @@ class IndexSeminumController extends JacqController {
                             }
                         }
                     }
-                } else {
+                }
+                else {
                     throw new ModelException("Unable to save index seminum revision", $model_indexSeminumRevision);
                 }
 
@@ -139,14 +140,16 @@ class IndexSeminumController extends JacqController {
     /**
      * List of index seminum revisions created before
      */
-    public function actionAdmin() {
+    public function actionAdmin($cleared = false) {
         $model = new IndexSeminumRevision('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['IndexSeminumRevision']))
+        if (isset($_GET['IndexSeminumRevision'])) {
             $model->attributes = $_GET['IndexSeminumRevision'];
+        }
 
         $this->render('admin', array(
             'model' => $model,
+            'cleared' => $cleared,
         ));
     }
 
@@ -200,6 +203,7 @@ class IndexSeminumController extends JacqController {
 
         // prepare excel sheet for download
         $pHPExcelWriter = PHPExcel_IOFactory::createWriter($pHPExcel, 'CSV');
+        $pHPExcelWriter->setExcelCompatibility(TRUE);
 
         // send header information
         header('Content-type: text/csv');
@@ -210,4 +214,19 @@ class IndexSeminumController extends JacqController {
         exit(0);
     }
 
+    /**
+     * Action for cleaing all index seminum associations
+     */
+    public function actionClear() {
+        // remove all entries from index seminum
+        LivingPlant::model()->updateAll(array(
+            'index_seminum' => 0
+        ));
+
+        // Redirect to default action, indicating success
+        $this->redirect(array(
+            $this->defaultAction,
+            'cleared' => true
+        ));
+    }
 }
