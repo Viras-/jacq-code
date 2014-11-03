@@ -12,10 +12,9 @@ class UserController extends JacqController {
      * @return array action filters
      */
     public function filters() {
-        return parent::filters() + array(
-            'accessControl', // perform access control for CRUD operations
+        return array_merge(parent::filters() + array(
             'postOnly + delete', // we only allow deletion via POST request
-        );
+        ));
     }
 
     /**
