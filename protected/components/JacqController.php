@@ -25,7 +25,8 @@ class JacqController extends CController
             return parent::filters() +
                 array(
                     // global password setter filter, causes a redirect to the profile page if user has to change its password
-                    array('application.filters.UserPasswordFilter')
+                    array('application.filters.UserPasswordFilter'),
+                    'accessControl'
                 )
             ;
         }
