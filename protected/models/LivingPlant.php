@@ -187,6 +187,7 @@ class LivingPlant extends ActiveRecord {
         // add all other search criterias
         $criteria->compare('organisation.description', $this->organisation_search, true);
         $criteria->compare('location.location', $this->location_search, true);
+        $criteria->compare('place_number', $this->place_number, true);
 
         // prepare searching for (alternative) accession numbers
         if (!empty($this->accessionNumber_search)) {
@@ -228,7 +229,7 @@ class LivingPlant extends ActiveRecord {
         if (!Yii::app()->user->checkAccess('acs_greenhouse')) {
             $criteria->compare('organisation.greenhouse', 0);
         }
-
+        
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => array(

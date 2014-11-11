@@ -21,6 +21,11 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'place_number'); ?>
+		<?php echo $form->textField($model,'place_number'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->label($model,'location_search'); ?>
 		<?php echo $form->textField($model,'location_search'); ?>
 	</div>
