@@ -90,7 +90,7 @@ class SiteController extends JacqController {
      */
     public function actionLogout() {
         // logout for singleSignOnLegacy
-        Yii::app()->dbHerbarInputLogWrite
+        Yii::app()->dbHerbarInputLog
             ->createCommand('UPDATE tbl_herbardb_users SET login = NULL WHERE userID = :userID')
             ->bindValue(':userID', Yii::app()->session['uid'], PDO::PARAM_INT)
             ->execute();
@@ -100,7 +100,6 @@ class SiteController extends JacqController {
     }
 
     private function singleSignOnLegacy() {
-        $parts = explode('@', Yii::app()->params['singleSignOnLegacy']);
 //        Yii::log(Yii::app()->user->name);
         $dbRow = Yii::app()->dbHerbarInputLog
                     ->createCommand()
@@ -116,6 +115,7 @@ class SiteController extends JacqController {
                         )
                         ->queryRow();
         if ($dbRow) {
+            $parts = explode('@', Yii::app()->params['singleSignOnLegacy']);
             Yii::app()->session['username']      = $parts[0];
             Yii::app()->session['password']      = $parts[1];
             Yii::app()->session['uid']           = $dbRow['userID'];
@@ -142,7 +142,7 @@ class SiteController extends JacqController {
                                                  + $dbRow['commonnameInsert'] * 0x20000;
             Yii::app()->session['linkControl']   = $dbRow['linkTaxon'];
             Yii::app()->session['editorControl'] = $dbRow['editor'];
-            Yii::app()->dbHerbarInputLogWrite
+            Yii::app()->dbHerbarInputLog
                 ->createCommand('UPDATE tbl_herbardb_users SET login = NOW() WHERE userID = :userID')
                 ->bindValue(':userID', $dbRow['userID'], PDO::PARAM_INT)
                 ->execute();
