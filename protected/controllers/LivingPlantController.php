@@ -736,7 +736,6 @@ class LivingPlantController extends JacqController {
                         'id0.acquisitionEvent.locationCoordinates.latitudeSexagesimal',
                         'id0.acquisitionEvent.locationCoordinates.longitudeSexagesimal',
                         'id0.acquisitionEvent.acquisitionDate.date',
-                        'id0.acquisitionEvent.location.location',
                         'id0.acquisitionEvent.people'
                     )
             );
