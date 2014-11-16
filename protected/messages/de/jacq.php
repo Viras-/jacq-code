@@ -26,7 +26,7 @@ return array (
   'Acquisition Date' => 'Sammeldatum',
   'Acquisition Event' => 'Sammel Ereignis',
   'Acquisition Locality' => 'Sammlungsort',
-  'Acquisition Number' => 'Sammlungsnummer',
+  'Acquisition Number' => 'Sammelnummer',
   'Acquisition Person(s)' => 'Sammler-Name(n)',
   'Acquisition Source' => 'Bezugsquelle',
   'Acquisition Type' => 'Sammel Typ',
