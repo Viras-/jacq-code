@@ -203,7 +203,9 @@ class IndexSeminumController extends JacqController {
 
         // prepare excel sheet for download
         $pHPExcelWriter = PHPExcel_IOFactory::createWriter($pHPExcel, 'CSV');
-        $pHPExcelWriter->setExcelCompatibility(TRUE);
+        // configure to be excel compatible
+        $pHPExcelWriter->setUseBOM(TRUE);
+        $pHPExcelWriter->setDelimiter(';');
 
         // send header information
         header('Content-type: text/csv');
