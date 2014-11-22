@@ -95,7 +95,7 @@ class SiteController extends JacqController {
             ->bindValue(':userID', Yii::app()->session['uid'], PDO::PARAM_INT)
             ->execute();
 
-        Yii::app()->user->logout();
+        Yii::app()->user->logout(false);
         $this->redirect(Yii::app()->homeUrl);
     }
 
