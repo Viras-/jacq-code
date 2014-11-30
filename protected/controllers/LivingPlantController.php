@@ -727,6 +727,16 @@ class LivingPlantController extends JacqController {
                         'id0.scientificNameAuthor',
                         'id0.familyWithoutAuthor',
                         'id0.familyAuthor',
+                        'indexSeminumType.type',
+                        'ipenNumber',
+                        'id0.habitat',
+                        'id0.acquisitionEvent.number',
+                        'id0.acquisitionEvent.locationCoordinates.altitude_min',
+                        'id0.acquisitionEvent.locationCoordinates.altitude_max',
+                        'id0.acquisitionEvent.locationCoordinates.latitudeSexagesimal',
+                        'id0.acquisitionEvent.locationCoordinates.longitudeSexagesimal',
+                        'id0.acquisitionEvent.acquisitionDate.date',
+                        'id0.acquisitionEvent.people'
                     )
             );
         }

@@ -91,7 +91,8 @@ class AcquisitionDate extends ActiveRecord {
             'month' => Yii::t('jacq', 'Month'),
             'day' => Yii::t('jacq', 'Day'),
             'custom' => Yii::t('jacq', 'Custom'),
-            'acquisition_date' => Yii::t('jacq', 'Acquisition Date')
+            'acquisition_date' => Yii::t('jacq', 'Acquisition Date'),
+            'date' => Yii::t('jacq', 'Acquisition Date'),
         );
     }
 

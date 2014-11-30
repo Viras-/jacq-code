@@ -2,7 +2,7 @@
 <?php
 if( $model_livingPlant->ipen_locked ) {
 ?>
-    <?php echo CHtml::encode($model_livingPlant->ipen_number); ?>
+    <?php echo CHtml::encode($model_livingPlant->ipenNumber); ?>
 <?php
 }
 else {
@@ -15,4 +15,3 @@ else {
     <?php echo $form->error($model_livingPlant, 'ipen_number'); ?>
 <?php
 }
-?>

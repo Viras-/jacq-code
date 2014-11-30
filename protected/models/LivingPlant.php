@@ -31,6 +31,7 @@
  * @property ViewTaxon $labelSynonymViewTaxon
  */
 class LivingPlant extends ActiveRecord {
+
     /**
      * Helper attributes for searching across relations
      */
@@ -40,37 +41,44 @@ class LivingPlant extends ActiveRecord {
     public $separated_search;
     public $label_type_search;
     public $accessionNumber_search;
+
+    /**
+     * Default values
+     */
+    public $index_seminum_type_id = 4;
     
     /**
      * Virtual AccessionNumber Attribute which returns a formatted version of the id
      * @return string
      */
     public function getAccessionNumber() {
-        if( $this->id <= 0 ) return '';
-        
+        if ($this->id <= 0)
+            return '';
+
         return sprintf('%07d', $this->accession_number);
     }
-    
+
     /**
      * Get the synonym for label printing
      * @return string
      */
     public function getLabelSynonymScientificName() {
         // check for a correct scientific name entry
-        if( $this->labelSynonymViewTaxon == NULL ) return NULL;
-        
+        if ($this->labelSynonymViewTaxon == NULL)
+            return NULL;
+
         // return the constructed scientific name
         return $this->labelSynonymViewTaxon->getScientificName();
     }
-    
+
     public function init() {
         parent::init();
-        
-        if( $this->isNewRecord ) {
+
+        if ($this->isNewRecord) {
             $this->ipen_number = "XX-X-XX";
         }
     }
-    
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -147,11 +155,11 @@ class LivingPlant extends ActiveRecord {
             'scientificName_search' => Yii::t('jacq', 'Scientific Name'),
             'organisation_search' => Yii::t('jacq', 'Garden Site'),
             'location_search' => Yii::t('jacq', 'Location'),
-            'separated_search' => Yii::t('jacq', 'Separated' ),
+            'separated_search' => Yii::t('jacq', 'Separated'),
             'labelSynonymScientificName' => Yii::t('jacq', 'Label Synonym'),
             'cultivar_id' => Yii::t('jacq', 'Cultivar'),
             'label_annotation' => Yii::t('jacq', 'Label Annotation'),
-            );
+        );
     }
 
     /**
@@ -165,23 +173,23 @@ class LivingPlant extends ActiveRecord {
         $criteria = new CDbCriteria;
         $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location', 'id0.viewTaxon', 'id0.importProperties');
         $criteria->together = true;
-        
+
         // search for scientific name
         $criteria->compare('viewTaxon.genus', $scientificName_searchComponents[0], true);
         if (count($scientificName_searchComponents) >= 2) {
             $criteria->compare('viewTaxon.epithet', $scientificName_searchComponents[1], true);
         }
         // search in imported scientific names
-        if(!empty($this->scientificName_search)) {
-            $criteria->addCondition("id0.scientific_name_id = " . Yii::app()->params['indetScientificNameId'] . " AND importProperties.species_name LIKE '%" . implode('%', $scientificName_searchComponents) ."%'", "OR");
+        if (!empty($this->scientificName_search)) {
+            $criteria->addCondition("id0.scientific_name_id = " . Yii::app()->params['indetScientificNameId'] . " AND importProperties.species_name LIKE '%" . implode('%', $scientificName_searchComponents) . "%'", "OR");
         }
-        
+
         // add all other search criterias
         $criteria->compare('organisation.description', $this->organisation_search, true);
         $criteria->compare('location.location', $this->location_search, true);
-        
+
         // prepare searching for (alternative) accession numbers
-        if( !empty($this->accessionNumber_search) ) {
+        if (!empty($this->accessionNumber_search)) {
             $accessionNumberCriteria = new CDbCriteria();
             $accessionNumberCriteria->with = array('alternativeAccessionNumbers');
             $accessionNumberCriteria->compare('accession_number', $this->accessionNumber_search, true, 'OR');
@@ -191,55 +199,71 @@ class LivingPlant extends ActiveRecord {
             $criteria->with[] = 'alternativeAccessionNumbers';
             $criteria->mergeWith($accessionNumberCriteria, 'AND');
         }
-        
+
         // search for separated entries
-        if( $this->separated_search == null ) $this->separated_search = 0;
+        if ($this->separated_search == null)
+            $this->separated_search = 0;
         $criteria->compare('id0.separated', $this->separated_search);
-        
+
         // search for index seminum entries
-        if( $this->index_seminum == 1 ) {
+        if ($this->index_seminum == 1) {
             $criteria->compare('index_seminum', $this->index_seminum);
         }
-        
+
         // search for label by their types
-        if( is_array($this->label_type_search) ) {
+        if (is_array($this->label_type_search)) {
             // criteria separate criteria for label searching
             $labelCriteria = new CDbCriteria();
             $labelCriteria->with = array('id0.tblLabelTypes');
-            foreach( $this->label_type_search as $label_type ) {
+            foreach ($this->label_type_search as $label_type) {
                 $labelCriteria->compare('tblLabelTypes.label_type_id', $label_type, false, 'OR');
             }
-            
+
             // add label search to main criteria
             $criteria->with[] = 'id0.tblLabelTypes';
             $criteria->mergeWith($labelCriteria, 'AND');
         }
-        
+
         // check if the user is allowed to view plants from the greenhouse
-        if( !Yii::app()->user->checkAccess('acs_greenhouse') ) {
-            $criteria->compare('organisation.greenhouse',0);
+        if (!Yii::app()->user->checkAccess('acs_greenhouse')) {
+            $criteria->compare('organisation.greenhouse', 0);
         }
-        
+
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                    'sort' => array(
-                        'attributes' => array(
-                            'scientificName_search' => array(
-                                'asc' => '`herbar_view`.GetScientificName(`id0`.`scientific_name_id`, 0)',
-                                'desc' => '`herbar_view`.GetScientificName(`id0`.`scientific_name_id`, 0) DESC'
-                            ),
-                            'organisation_search' => array(
-                                'asc' => 'organisation.description',
-                                'desc' => 'organisation.description DESC'
-                            ),
-                            'location_search' => array(
-                                'asc' => 'location.location',
-                                'desc' => 'location.location DESC'
-                            ),
-                            '*'
-                        )
-                    )
-                ));
+            'criteria' => $criteria,
+            'sort' => array(
+                'attributes' => array(
+                    'scientificName_search' => array(
+                        'asc' => '`herbar_view`.GetScientificName(`id0`.`scientific_name_id`, 0)',
+                        'desc' => '`herbar_view`.GetScientificName(`id0`.`scientific_name_id`, 0) DESC'
+                    ),
+                    'organisation_search' => array(
+                        'asc' => 'organisation.description',
+                        'desc' => 'organisation.description DESC'
+                    ),
+                    'location_search' => array(
+                        'asc' => 'location.location',
+                        'desc' => 'location.location DESC'
+                    ),
+                    '*'
+                )
+            )
+        ));
+    }
+
+    /**
+     * Virtual getter for returning a correctly formatted version of the ipen number
+     * @return string
+     */
+    public function getIpenNumber() {
+        // check if we have a legacy ipen-number
+        if (strlen($this->ipen_number) > 7) {
+            return $this->ipen_number;
+        }
+        // otherwhise return the correctly formatted, complete ipen number
+        else {
+            return $this->ipen_number . "-" . $this->getAccessionNumber();
+        }
     }
 
     /**
@@ -247,32 +271,33 @@ class LivingPlant extends ActiveRecord {
      * @param string $value ISO-2 code for the country
      */
     public function setIpenNumberCountryCode($value) {
-        if( !$this->ipen_locked ) {
-            $this->ipen_number = $value . substr( $this->ipen_number, 2 );
+        if (!$this->ipen_locked) {
+            $this->ipen_number = $value . substr($this->ipen_number, 2);
         }
     }
 
     public function getIpenNumberCountryCode() {
         return substr($this->ipen_number, 0, 2);
     }
-    
+
     public function setIpenNumberState($value) {
-        if( !$this->ipen_locked ) {
-            $this->ipen_number = substr( $this->ipen_number, 0, 3 ) . $value . substr( $this->ipen_number, 4 );
+        if (!$this->ipen_locked) {
+            $this->ipen_number = substr($this->ipen_number, 0, 3) . $value . substr($this->ipen_number, 4);
         }
     }
 
     public function getIpenNumberState() {
         return substr($this->ipen_number, 3, 1);
     }
-    
+
     public function setIpenNumberInstitutionCode($value) {
-        if( !$this->ipen_locked ) {
-            $this->ipen_number = substr( $this->ipen_number, 0, 5 ) . $value;
+        if (!$this->ipen_locked) {
+            $this->ipen_number = substr($this->ipen_number, 0, 5) . $value;
         }
     }
 
     public function getIpenNumberInstitutionCode() {
         return substr($this->ipen_number, 5);
     }
+
 }

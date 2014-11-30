@@ -17,11 +17,9 @@ $this->menu = array(
 // check if saving was successfull
 if( $success ) {
     ?>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            MsgBox.infoMsg('<?php echo Yii::t('jacq', 'Successfully saved'); ?>');
-        });
-    </script>
+    <div class="flash-success">
+        <?php echo CHtml::encode(Yii::t('jacq', 'Successfully saved')); ?>
+    </div>
     <?php
 }
 ?>

@@ -117,10 +117,14 @@ class AutoCompleteController extends JSONServiceController {
                     $model_locationGeonames = LocationGeonames::model()->find('geonameId=:geonameId', array(':geonameId' => $geoname['geonameId']));
                     if ($model_locationGeonames != null) {
                         $model_location = Location::model()->findByPk($model_locationGeonames->id);
+                        
+                        // update model with new location description
+                        $model_location->location = $geoname['name'] . ' (' . $geoname['adminName1'] . ', ' . $geoname['countryName'] . ')';
+                        $model_location->save();
                     } else {
                         // Create location model & save it
                         $model_location = new Location;
-                        $model_location->location = $geoname['name'] . ' (' . $geoname['countryName'] . ')';
+                        $model_location->location = $geoname['name'] . ' (' . $geoname['adminName1'] . ', ' . $geoname['countryName'] . ')';
                         $model_location->save();
                         // Create according geonames model & save it as well
                         $model_locationGeonames = new LocationGeonames;

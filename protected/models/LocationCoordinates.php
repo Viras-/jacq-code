@@ -21,6 +21,7 @@
  * @property AcquisitionEvent[] $acquisitionEvents
  */
 class LocationCoordinates extends CActiveRecord {
+    private static $sexagesimal_pattern = "%3d° %2d′ %2d″ %s";
 
     /**
      * Returns the static model of the specified AR class.
@@ -81,10 +82,10 @@ class LocationCoordinates extends CActiveRecord {
             'longitude_minutes' => 'Longitude Minutes',
             'longitude_seconds' => 'Longitude Seconds',
             'longitude_half' => 'Longitude Half',
-            'altitude' => Yii::t('jacq','Altitude'),
-            'exactness' => Yii::t('jacq','Exactness'),
-            'latitude' => Yii::t('jacq','Latitude'),
-            'longitude' => Yii::t('jacq','Longitude'),
+            'altitude' => Yii::t('jacq', 'Altitude'),
+            'exactness' => Yii::t('jacq', 'Exactness'),
+            'latitude' => Yii::t('jacq', 'Latitude'),
+            'longitude' => Yii::t('jacq', 'Longitude'),
         );
     }
 
@@ -112,8 +113,23 @@ class LocationCoordinates extends CActiveRecord {
         $criteria->compare('longitude_half', $this->longitude_half, true);
 
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
 
+    /**
+     * Helper function for return the latitude coordinates in Sexagesimal writing
+     * @return string
+     */
+    public function getLatitudeSexagesimal() {
+        return sprintf(self::$sexagesimal_pattern, $this->latitude_degrees, $this->latitude_minutes, $this->latitude_seconds, $this->latitude_half);
+    }
+
+    /**
+     * Helper function for return the latitude coordinates in Sexagesimal writing
+     * @return string
+     */
+    public function getLongitudeSexagesimal() {
+        return sprintf(self::$sexagesimal_pattern, $this->longitude_degrees, $this->longitude_minutes, $this->longitude_seconds, $this->longitude_half);
+    }
 }
