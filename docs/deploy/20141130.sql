@@ -76,5 +76,3 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
 ('grp_admin', 'oprtn_indexSeminum');
 
-ALTER TABLE `jacq_input`.`tbl_relevancy_type` 
-ADD COLUMN `important` TINYINT(1) NOT NULL DEFAULT 0 AFTER `type`;

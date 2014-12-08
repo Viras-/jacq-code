@@ -81,7 +81,7 @@ class AcquisitionEvent extends CActiveRecord {
             'acquisition_date_id' => Yii::t('jacq', 'Acquisition Date'),
             'acquisition_type_id' => Yii::t('jacq', 'Acquisition Type'),
             'location_id' => Yii::t('jacq', 'Location'),
-            'number' => Yii::t('jacq', 'Number'),
+            'number' => Yii::t('jacq', 'Acquisition Number'),
             'annotation' => Yii::t('jacq', 'Annotation'),
             'location_coordinates_id' => Yii::t('jacq', 'Location Coordinates'),
             'people' => Yii::t('jacq', 'Collectors')
