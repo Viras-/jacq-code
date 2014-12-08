@@ -65,6 +65,7 @@
                     'items' => array(
                         array('label' => Yii::t('jacq', 'Living Plant'), 'url' => array('livingPlant/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_readLivingplant'), 'itemOptions'=>array('class'=>'has-sub'), 'items' => array(
                             array('label' => Yii::t('jacq', 'Index Seminum'), 'url' => array('indexSeminum/'), 'visible' => Yii::app()->user->checkAccess('oprtn_indexSeminum')),
+                            array('label' => Yii::t('jacq', 'Inventory'), 'url' => array('inventory/'), 'visible' => true),
                         )),
                         array('label' => Yii::t('jacq', 'Garden Site'), 'url' => array('organisation/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createOrganisation')),
                         array('label' => Yii::t('jacq', 'Tree Record File'), 'url' => array('treeRecordFile/index'), 'visible' => Yii::app()->user->checkAccess('oprtn_createTreeRecordFile')),
