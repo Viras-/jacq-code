@@ -1,7 +1,7 @@
 <!-- redetermine -->
 <div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'redetermine'); ?>
-    <?php echo $form->checkBox($model_botanicalObject, 'redetermine' ); ?>
+    <?php echo $form->checkBox($model_botanicalObject, 'redetermine'); ?>
     <?php echo $form->error($model_botanicalObject, 'redetermine'); ?>
 </div>
 <!-- determination date -->
@@ -18,7 +18,6 @@
             'changeYear' => true
         ),
         'htmlOptions' => array(
-
         ),
         'value' => $model_botanicalObject->determination_date,
     ));
@@ -31,7 +30,7 @@
         <tr>
             <td>
                 <?php echo $form->labelEx($model_botanicalObject, 'ident_status_id'); ?>
-                <?php echo $form->dropDownList($model_botanicalObject, 'ident_status_id', CHtml::listData(IdentStatus::model()->findAll(array('order'=>'status')), 'ident_status_id', 'status'), array('empty' => '')); ?>
+                <?php echo $form->dropDownList($model_botanicalObject, 'ident_status_id', CHtml::listData(IdentStatus::model()->findAll(array('order' => 'status')), 'ident_status_id', 'status'), array('empty' => '')); ?>
                 <?php echo $form->error($model_botanicalObject, 'ident_status_id'); ?>
             </td>
             <td>
@@ -62,45 +61,12 @@
         </tr>
     </table>
 </div>
-<!-- relevancy -->
-<div class="row">
-    <table style="width: auto;">
-        <tr>
-            <td>
-                <?php echo $form->labelEx(Relevancy::model(), 'relevancy_type_id'); ?>
-                <?php
-                // Find all checked relevancy types for this entry
-                $selected_relevancyTypes = array();
-                if (!$model_livingPlant->isNewRecord) {
-                    $models_relevancy = Relevancy::model()->findAll('living_plant_id=:living_plant_id', array(':living_plant_id' => $model_livingPlant->id));
 
-                    // Add all selected relevancy types to array
-                    foreach ($models_relevancy as $model_relevancy) {
-                        $selected_relevancyTypes[] = $model_relevancy->relevancy_type_id;
-                    }
-                }
+<?php
+// render (non important) relevancy form
+echo $this->renderPartial('form_relevancy', array('important' => 0, 'form' => $form, 'model_livingPlant' => $model_livingPlant));
+?>
 
-                // Create checkbox list for all relevancy type entries
-                $models_relevancyType = RelevancyType::model()->findAll();
-                echo CHtml::checkBoxList(
-                        'RelevancyType', 
-                        $selected_relevancyTypes, 
-                        Html::listDataSorted(
-                                $models_relevancyType,
-                                'id',
-                                'typeTranslated'
-                        ), 
-                        array(
-                            'labelOptions' => array(
-                                'style' => 'display: inline'
-                            )
-                        )
-                );
-                ?>
-            </td>
-        </tr>
-    </table>
-</div>
 <!-- certificate(s) -->
 <div class="row">
     <?php

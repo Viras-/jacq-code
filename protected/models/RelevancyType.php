@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'tbl_relevancy_type':
  * @property integer $id
  * @property string $type
+ * @property integer $important
  *
  * The followings are the available model relations:
  * @property Relevancy[] $relevancies
@@ -38,7 +39,7 @@ class RelevancyType extends ActiveRecord {
             array('type', 'length', 'max' => 20),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, type', 'safe', 'on' => 'search'),
+            array('id, type, important', 'safe', 'on' => 'search'),
         );
     }
 
@@ -60,6 +61,7 @@ class RelevancyType extends ActiveRecord {
         return array(
             'id' => Yii::t('jacq', 'ID'),
             'type' => Yii::t('jacq', 'Type'),
+            'important' => Yii::t('jacq', 'Important'),
         );
     }
 
@@ -77,7 +79,8 @@ class RelevancyType extends ActiveRecord {
         $criteria->compare('type', $this->type, true);
 
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
+
 }

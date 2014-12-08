@@ -54,24 +54,46 @@
     </table>
 </div>
 
-<!-- organisation -->
 <div class="row">
-    <?php echo $form->labelEx($model_botanicalObject, 'organisation_id'); ?>
-    <?php echo CHtml::textField('BotanicalObject_organisation_name', $model_botanicalObject->organisation->description, array('readonly' => 'readonly')); ?>
-    <?php echo $form->hiddenField($model_botanicalObject, 'organisation_id'); ?>
-    <a href="#" onclick="$('#organisation_select_dialog').dialog('open');
-            return false;"><img src="images/magnifier.png" ></a>
-</div>
+    <table border="0" width="100%" style="margin: 0;">
+        <tr>
+            <td width="50%">
+                <table border="0" width="100%" style="margin: 0;">
+                    <tr>
+                        <td>
+                            <!-- organisation -->
+                            <?php echo $form->labelEx($model_botanicalObject, 'organisation_id'); ?>
+                            <?php echo CHtml::textField('BotanicalObject_organisation_name', $model_botanicalObject->organisation->description, array('readonly' => 'readonly')); ?>
+                            <?php echo $form->hiddenField($model_botanicalObject, 'organisation_id'); ?>
+                            <a href="#" onclick="$('#organisation_select_dialog').dialog('open');
+                                    return false;"><img src="images/magnifier.png" ></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <!-- place number -->
+                            <?php echo $form->labelEx($model_livingPlant, 'place_number'); ?>
+                            <?php echo $form->textField($model_livingPlant, 'place_number'); ?>
+                            <?php echo $form->error($model_livingPlant, 'place_number'); ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <!-- accession number -->
+                            <?php require("form_accessionNumber.php"); ?>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <?php
+                // render (important) relevancy form
+                echo $this->renderPartial('form_relevancy', array('important' => 1, 'form' => $form, 'model_livingPlant' => $model_livingPlant));
+                ?>
+            </td>
+        </tr>
+    </table>
 
-<!-- place number -->
-<div class="row">
-    <?php echo $form->labelEx($model_livingPlant, 'place_number'); ?>
-    <?php echo $form->textField($model_livingPlant, 'place_number'); ?>
-    <?php echo $form->error($model_livingPlant, 'place_number'); ?>
-</div>
-
-<div class="row">
-    <?php require("form_accessionNumber.php"); ?>
 </div>
 
 <!-- IPEN & accession number -->
