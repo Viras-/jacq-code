@@ -46,7 +46,7 @@
                 <?php echo $form->textField($model_botanicalObject, 'family', array('readonly' => true)); ?>
                 <?php echo $form->error($model_botanicalObject, 'family'); ?>
             </td>
-            <td>
+            <td width='40%'>
                 <?php echo $form->labelEx($model_botanicalObject, 'familyReference'); ?>
                 <?php echo CHtml::encode($model_botanicalObject->familyReference); ?>
             </td>
@@ -57,7 +57,7 @@
 <div class="row">
     <table border="0" width="100%" style="margin: 0;">
         <tr>
-            <td width="50%">
+            <td>
                 <table border="0" width="100%" style="margin: 0;">
                     <tr>
                         <td>
@@ -85,7 +85,7 @@
                     </tr>
                 </table>
             </td>
-            <td>
+            <td width='40%'>
                 <?php
                 // render (important) relevancy form
                 echo $this->renderPartial('form_relevancy', array('important' => 1, 'form' => $form, 'model_livingPlant' => $model_livingPlant));

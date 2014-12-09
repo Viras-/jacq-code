@@ -74,9 +74,17 @@ echo $this->renderPartial('form_relevancy', array('important' => 0, 'form' => $f
     require('form_certificates.php');
     ?>
 </div>
+
 <!-- phyto control -->
 <div class="row">
     <?php echo $form->labelEx($model_livingPlant, 'phyto_control'); ?>
     <?php echo $form->checkbox($model_livingPlant, 'phyto_control'); ?>
     <?php echo $form->error($model_livingPlant, 'phyto_control'); ?>
+</div>
+
+<!-- bgci export -->
+<div class="row">
+    <?php echo $form->labelEx($model_livingPlant, 'bgci'); ?>
+    <?php echo $form->checkbox($model_livingPlant, 'bgci'); ?>
+    <?php echo $form->error($model_livingPlant, 'bgci'); ?>
 </div>

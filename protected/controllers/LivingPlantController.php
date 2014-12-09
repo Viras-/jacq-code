@@ -839,6 +839,17 @@ class LivingPlantController extends JacqController {
         ), false, true);
     }
     
+    public function actionBgci() {
+        // require phpexcel for CSV / Excel download
+        Yii::import('ext.phpexcel.XPHPExcel');
+
+        // create phpexcel object for downloading
+        $pHPExcel = XPHPExcel::createPHPExcel();
+        
+        $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow($index, 1, $model_indexSeminumContent->getAttributeLabel($column_indexSeminumContent->name));
+
+    }
+    
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
