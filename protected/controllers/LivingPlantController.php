@@ -839,15 +839,17 @@ class LivingPlantController extends JacqController {
         ), false, true);
     }
     
+    /**
+     * Download all records which are marked for BGCI export
+     */
     public function actionBgci() {
         // require phpexcel for CSV / Excel download
         Yii::import('ext.phpexcel.XPHPExcel');
 
         // create phpexcel object for downloading
         $pHPExcel = XPHPExcel::createPHPExcel();
-        
-        $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow($index, 1, $model_indexSeminumContent->getAttributeLabel($column_indexSeminumContent->name));
 
+        $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow($index, 1, $model_indexSeminumContent->getAttributeLabel($column_indexSeminumContent->name));
     }
     
     /**
