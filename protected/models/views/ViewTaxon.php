@@ -57,6 +57,7 @@ class ViewTaxon extends CActiveRecord {
     
     protected $scientificName = null;
     protected $scientificNameAuthor = null;
+    protected $scientificNameComponents = null;
 
     /**
      * Returns the static model of the specified AR class.
@@ -85,7 +86,7 @@ class ViewTaxon extends CActiveRecord {
         }
         
         // make sure we have the scientific name info
-        $this->getScientificNameComponents();
+        $this->buildScientificNameComponents();
         
         // fetch basic scientific name
         $scientificName = $this->scientificName;
@@ -103,7 +104,7 @@ class ViewTaxon extends CActiveRecord {
      * @return string
      */
     public function getScientificNameAuthor() {
-        $this->getScientificNameComponents();
+        $this->buildScientificNameComponents();
         
         return $this->scientificNameAuthor;
     }
@@ -111,7 +112,7 @@ class ViewTaxon extends CActiveRecord {
     /**
      * Fetch the scientific name components from the database, if required
      */
-    protected function getScientificNameComponents() {
+    protected function buildScientificNameComponents() {
         // only query database if we did not do it before
         if( $this->scientificName != NULL && $this->scientificNameAuthor != NULL )  {
             return;
@@ -133,6 +134,31 @@ class ViewTaxon extends CActiveRecord {
         // remember the actual components
         $this->scientificName = $scientificNameComponents[0]['ScientificName'];
         $this->scientificNameAuthor = $scientificNameComponents[0]['Author'];
+    }
+    
+    /**
+     * Function for querying the database in order to the the components of a scientific name
+     * @return array Containing entries for 'GenericEpithet', 'SpecificEpithet', 'InfraspecificRank', 'InfraspecificEpithet' and 'Author'
+     */
+    public function getScientificNameComponents() {
+        // only query database if we did not do it before
+        if( $this->scientificNameComponents != NULL )  {
+            return $this->scientificNameComponents;
+        }
+        
+        // query the database for the scientific name
+        $dbHerbarView = Yii::app()->dbHerbarView;
+        $dbHerbarView->createCommand("CALL  GetScientificNameComponents(" . $this->taxonID . ", @genericEpithet, @specificEpithet, @infraspecificRank, @infraspecificEpithet, @author);")->execute();
+        $scientificNameComponents = $dbHerbarView->createCommand("SELECT @genericEpithet AS 'GenericEpithet', @specificEpithet AS 'SpecificEpithet', @infraspecificRank AS 'InfraspecificRank', @infraspecificEpithet AS 'InfraspecificEpithet', @author AS 'Author'")->queryAll();
+        
+        // should actually never happen
+        if( count($scientificNameComponents) <= 0 ) {
+            return NULL;
+        }
+        
+        // remember the actual components & return them
+        $this->scientificNameComponents = $scientificNameComponents[0];
+        return $this->scientificNameComponents;
     }
     
     /**

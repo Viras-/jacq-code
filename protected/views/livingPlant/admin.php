@@ -25,20 +25,23 @@ $('.search-form form').submit(function(){
 
 <div class="search-form">
     <?php
-    $lpGridView = $this->renderPartial('_search',array(
-            'model'=>$model,
-    )); ?>
+    $lpGridView = $this->renderPartial('_search', array(
+        'model' => $model,
+    ));
+    ?>
 </div><!-- search-form -->
 
 <div style="text-align: right;">
-<?php
+    <?php
+// add export button for BGCI
+    echo CHtml::link(CHtml::image('images/bgci_logo.png', Yii::t('jacq', 'Download BGCI')), $this->createUrl('livingPlant/bgci'));
+    ?>
+    <?php
 // add export button for CSV
-$this->renderExportGridButton(
-        'living-plant-grid',
-        CHtml::image('images/table_save.png', Yii::t('jacq', 'Download CSV')),
-        array()
-);
-?>
+    $this->renderExportGridButton(
+            'living-plant-grid', CHtml::image('images/table_save.png', Yii::t('jacq', 'Download CSV')), array()
+    );
+    ?>
 </div>
 <?php
 $lpGridView = $this->widget('zii.widgets.grid.CGridView', array(
@@ -54,4 +57,4 @@ $lpGridView = $this->widget('zii.widgets.grid.CGridView', array(
             'class' => 'LPButtonColumn',
         ),
     ),
-));
+        ));
