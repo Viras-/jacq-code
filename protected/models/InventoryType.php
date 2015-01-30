@@ -11,7 +11,7 @@
  * The followings are the available model relations:
  * @property Inventory[] $inventories
  */
-class InventoryType extends CActiveRecord {
+class InventoryType extends ActiveRecord {
 
     /**
      * @return string the associated database table name

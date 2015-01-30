@@ -31,7 +31,7 @@ class InventoryController extends JacqController {
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
+                'actions' => array('create', 'update', 'ajaxInventoryType'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -88,6 +88,23 @@ class InventoryController extends JacqController {
 
         $this->render('admin', array(
             'model_inventory' => $model_inventory,
+        ));
+    }
+
+    /**
+     * Update form for inventory type
+     * @param type $inventory_type_id
+     */
+    public function actionAjaxInventoryType($inventory_type_id) {
+        $inventory_type_id = intval($inventory_type_id);
+        if ($inventory_type_id <= 0) {
+            return;
+        }
+
+        $model_inventoryType = InventoryType::model()->findByPk($inventory_type_id);
+
+        $this->renderPartial('forms/' . $model_inventoryType->type, array(
+            'model_inventoryType' => $model_inventoryType
         ));
     }
 

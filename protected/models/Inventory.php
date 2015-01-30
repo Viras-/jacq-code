@@ -14,7 +14,7 @@
  * @property FrmwrkUser $user
  * @property InventoryObject[] $inventoryObjects
  */
-class Inventory extends CActiveRecord {
+class Inventory extends ActiveRecord {
 
     /**
      * @return string the associated database table name

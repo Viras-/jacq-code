@@ -13,7 +13,7 @@
  * @property Inventory $inventory
  * @property BotanicalObject $botanicalObject
  */
-class InventoryObject extends CActiveRecord {
+class InventoryObject extends ActiveRecord {
 
     /**
      * @return string the associated database table name

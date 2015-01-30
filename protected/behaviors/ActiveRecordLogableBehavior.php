@@ -93,7 +93,13 @@ class ActiveRecordLogableBehavior extends CActiveRecordBehavior {
             // cycle through original structure and add column definitions from it
             $columns_log = array();
             foreach($this->owner->getTableSchema()->columns AS $column_name => $column_info) {
-                $columns_log[$column_name] = $column_info->dbType;
+                // original timestamps should not be updated anymore in the logging table, so make them standard ones
+                if( stristr($column_info->dbType, 'TIMESTAMP') ) {
+                    $columns_log[$column_name] = 'TIMESTAMP NULL DEFAULT NULL';
+                }
+                else {
+                    $columns_log[$column_name] = $column_info->dbType;
+                }
             }
             
             // add additional log columns

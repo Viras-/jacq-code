@@ -14,6 +14,9 @@
         // There is a call to performAjaxValidation() commented in generated controller code.
         // See class documentation of CActiveForm for details on this.
         'enableAjaxValidation' => false,
+        'htmlOptions' => array(
+            'enctype' => 'multipart/form-data'
+        ),
     ));
     ?>
 
@@ -23,8 +26,30 @@
 
     <div class="row">
         <?php echo $form->labelEx($model_inventory, 'inventory_type_id'); ?>
-        <?php echo $form->dropDownList($model_inventory, 'inventory_type_id', Html::listDataSorted(Cultivar::model()->findAll(), 'inventory_type_id', 'type')); ?>
+        <?php
+        echo $form->dropDownList($model_inventory, 'inventory_type_id', Html::listDataSorted(InventoryType::model()->findAll(), 'inventory_type_id', 'typeTranslated', true), array(
+            'onchange' =>
+            new CJavaScriptExpression("
+                var selectedVal = $(this).val();
+                if( selectedVal == '' ) return;
+
+                $.ajax({
+                    url: '" . $this->createUrl('inventory/ajaxInventoryType') . "',
+                    data: {
+                        inventory_type_id: selectedVal
+                    }
+                }).done(function(data) {
+                    $('#inventory_form-content').html(data);
+                });
+                return false;
+            ")
+        ));
+        ?>
         <?php echo $form->error($model_inventory, 'inventory_type_id'); ?>
+    </div>
+
+    <div class="row">
+        <div id="inventory_form-content"></div>
     </div>
 
     <div class="row buttons">
