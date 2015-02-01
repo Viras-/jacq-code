@@ -31,8 +31,6 @@
             'onchange' =>
             new CJavaScriptExpression("
                 var selectedVal = $(this).val();
-                if( selectedVal == '' ) return;
-
                 $.ajax({
                     url: '" . $this->createUrl('inventory/ajaxInventoryType') . "',
                     data: {

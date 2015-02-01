@@ -27,7 +27,7 @@ class InventoryType extends ActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('type, timestamp', 'required'),
+            array('type', 'required'),
             array('type', 'length', 'max' => 45),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.

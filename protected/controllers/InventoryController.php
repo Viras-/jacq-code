@@ -61,19 +61,96 @@ class InventoryController extends JacqController {
     public function actionCreate() {
         $model_inventory = new Inventory;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Inventory'])) {
             $model_inventory->attributes = $_POST['Inventory'];
+
+            // only if the inventory model is complete, we check the actual content
+            if ($model_inventory->validate()) {
+            }
+
             if ($model_inventory->save()) {
-                $this->redirect(array('view', 'id' => $model_inventory->inventory_id));
+                switch ($model_inventory->inventory_type_id) {
+                    // Inventory run
+                    case 1:
+                        $model_inventoryData = inventoryInventory($model_inventory);
+                        break;
+                }
+
+                $this->redirect('admin');
             }
         }
 
         $this->render('create', array(
             'model_inventory' => $model_inventory,
         ));
+    }
+
+    /**
+     * Handle a "normal" inventory run
+     * @param Inventory $model_inventory
+     * @return type
+     */
+    protected function inventoryInventory($model_inventory) {
+        if (isset($_POST['InventoryInventory'])) {
+            $inventoryInventory = $_POST['InventoryInventory'];
+
+            // extract organisation id
+            $organisation_id = intval($inventoryInventory['organisation_id']);
+            if ($organisation_id <= 0) {
+                return null;
+            }
+
+            // extract file upload information
+            $uploadedFile = CUploadedFile::getInstanceByName('InventoryInventory[inventory_file]');
+
+            // try to read the excel sheet
+            try {
+                // identify file and read it into memory
+                $inputFileType = PHPExcel_IOFactory::identify($uploadedFile->getTempName());
+                $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+                $objPHPExcel = $objReader->load($uploadedFile->getTempName());
+
+                // extract dimensions
+                $sheet = $objPHPExcel->getSheet(0);
+                $highestRow = $sheet->getHighestRow();
+
+                // iterate over content
+                for ($row = 1; $row < $highestRow; $row++) {
+                    $accession_number = $sheet->getCellByColumnAndRow(0, $row);
+                    
+                    // try to find living plant with this accession number
+                    $model_livingPlant = LivingPlant::model()->findByAttributes(array(
+                        'accession_number' => $accession_number
+                    ));
+                    
+                    // check if we found an entry
+                    if( $model_livingPlant == NULL ) {
+                        // add log entry about missing accession number
+                        $model_inventoryObject = new InventoryObject();
+                        $model_inventoryObject->inventory_id = $model_inventory->inventory_id;
+                        $model_inventoryObject->message = $accession_number;
+                        
+                        continue;
+                    }
+                    
+                    // now update entry
+                    $model_livingPlant->id0->organisation_id = $organisation_id;
+                    $model_livingPlant->save();
+                    
+                    // create log entry
+                    $model_inventoryObject = new InventoryObject();
+                    $model_inventoryObject->inventory_id = $model_inventory->inventory_id;
+                    $model_inventoryObject->botanical_object_id = $model_livingPlant->id0->id;
+                    $model_inventoryObject->message = $organisation_id;
+                    $model_inventoryObject->save();
+                }
+            } catch (Exception $e) {
+                // TODO propert error handling
+                die('Error reading uploaded file! ' . $e->getMessage());
+            }
+        }
+
+        return NULL;
     }
 
     /**
