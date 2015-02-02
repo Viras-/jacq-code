@@ -59,4 +59,5 @@ return array (
   'unknown' => 'Unbekannt',
   'working' => 'Arbeit',
   'none' => 'Kein',
+  'inventory' => 'Inventur',
 );

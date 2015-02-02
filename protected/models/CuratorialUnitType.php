@@ -1,27 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "tbl_specimen".
+ * This is the model class for table "tbl_curatorial_unit_type".
  *
- * The followings are the available columns in table 'tbl_specimen':
- * @property integer $specimen_id
- * @property integer $botanical_object_id
- * @property integer $curatorial_unit_id
- * @property string $barcode
+ * The followings are the available columns in table 'tbl_curatorial_unit_type':
+ * @property integer $curatorial_unit_type_id
+ * @property string $type_name
  * @property string $timestamp
  *
  * The followings are the available model relations:
- * @property BotanicalObject $botanicalObject
- * @property CuratorialUnit $curatorialUnit
+ * @property CuratorialUnit[] $curatorialUnits
  */
-class Specimen extends CActiveRecord
+class CuratorialUnitType extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_specimen';
+		return 'tbl_curatorial_unit_type';
 	}
 
 	/**
@@ -32,12 +29,11 @@ class Specimen extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('botanical_object_id, curatorial_unit_id, timestamp', 'required'),
-			array('botanical_object_id, curatorial_unit_id', 'numerical', 'integerOnly'=>true),
-			array('barcode', 'length', 'max'=>20),
+			array('type_name, timestamp', 'required'),
+			array('type_name', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('specimen_id, botanical_object_id, curatorial_unit_id, barcode, timestamp', 'safe', 'on'=>'search'),
+			array('curatorial_unit_type_id, type_name, timestamp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,8 +45,7 @@ class Specimen extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'botanicalObject' => array(self::BELONGS_TO, 'BotanicalObject', 'botanical_object_id'),
-			'curatorialUnit' => array(self::BELONGS_TO, 'CuratorialUnit', 'curatorial_unit_id'),
+			'curatorialUnits' => array(self::HAS_MANY, 'CuratorialUnit', 'curatorial_unit_type_id'),
 		);
 	}
 
@@ -60,10 +55,8 @@ class Specimen extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'specimen_id' => 'Specimen',
-			'botanical_object_id' => 'Botanical Object',
-			'curatorial_unit_id' => 'Curatorial Unit',
-			'barcode' => 'Barcode',
+			'curatorial_unit_type_id' => 'Curatorial Unit Type',
+			'type_name' => 'Type Name',
 			'timestamp' => 'Timestamp',
 		);
 	}
@@ -86,10 +79,8 @@ class Specimen extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('specimen_id',$this->specimen_id);
-		$criteria->compare('botanical_object_id',$this->botanical_object_id);
-		$criteria->compare('curatorial_unit_id',$this->curatorial_unit_id);
-		$criteria->compare('barcode',$this->barcode,true);
+		$criteria->compare('curatorial_unit_type_id',$this->curatorial_unit_type_id);
+		$criteria->compare('type_name',$this->type_name,true);
 		$criteria->compare('timestamp',$this->timestamp,true);
 
 		return new CActiveDataProvider($this, array(
@@ -101,7 +92,7 @@ class Specimen extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Specimen the static model class
+	 * @return CuratorialUnitType the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
