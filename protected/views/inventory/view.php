@@ -20,8 +20,8 @@ $this->widget('zii.widgets.CDetailView', array(
     'data' => $model_inventory,
     'attributes' => array(
         'inventory_id',
-        'user_id',
-        'inventory_type_id',
+        'user.username',
+        'inventoryType.type',
         'timestamp',
     ),
 ));

@@ -11,7 +11,7 @@
  *
  * The followings are the available model relations:
  * @property InventoryType $inventoryType
- * @property FrmwrkUser $user
+ * @property User $user
  * @property InventoryObject[] $inventoryObjects
  */
 class Inventory extends ActiveRecord {
@@ -46,7 +46,7 @@ class Inventory extends ActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'inventoryType' => array(self::BELONGS_TO, 'InventoryType', 'inventory_type_id'),
-            'user' => array(self::BELONGS_TO, 'FrmwrkUser', 'user_id'),
+            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
             'inventoryObjects' => array(self::HAS_MANY, 'InventoryObject', 'inventory_id'),
         );
     }
@@ -76,20 +76,16 @@ class Inventory extends ActiveRecord {
      * based on the search/filter conditions.
      */
     public function search() {
-        // @todo Please modify the following code to remove attributes that should not be searched.
-
         $criteria = new CDbCriteria;
 
         $criteria->compare('inventory_id', $this->inventory_id);
-        $criteria->compare('user_id', $this->user_id);
-        $criteria->compare('inventory_type_id', $this->inventory_type_id);
         $criteria->compare('timestamp', $this->timestamp, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
-
+    
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!

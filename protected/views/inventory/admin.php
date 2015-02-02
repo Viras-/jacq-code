@@ -34,11 +34,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'filter' => $model_inventory,
     'columns' => array(
         'inventory_id',
-        'user_id',
-        'inventory_type_id',
+        'user.username',
+        'inventoryType.type',
         'timestamp',
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'InvButtonColumn',
         ),
     ),
 ));
