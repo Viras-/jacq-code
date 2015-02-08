@@ -93,6 +93,11 @@ class InventoryObject extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+                    'sort' => array(
+                        'defaultOrder' => array(
+                            'timestamp' => true
+                        )
+                    )
 		));
 	}
 
@@ -106,4 +111,12 @@ class InventoryObject extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        /**
+         * Virtual attribute for returning the rendered message
+         * @return string
+         */
+        public function getRenderedMessage() {
+            return InventoryHandler::getMessage($this);
+        }
 }
