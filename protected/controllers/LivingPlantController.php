@@ -318,6 +318,16 @@ class LivingPlantController extends JacqController {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id, $success = false) {
+        // prepare model for searching all related inventory object entries
+        $model_inventoryObject = new InventoryObject('search');
+        $model_inventoryObject->unsetAttributes();
+        if (isset($_GET['InventoryObject'])) {
+            $model_inventoryObject->attributes = $_GET['InventoryObject'];
+        }
+        // always make sure we only load related entries
+        $model_inventoryObject->botanical_object_id = $id;
+
+        // prepare all model objects for updating
         $model_livingPlant = $this->loadModel($id);
         $model_botanicalObject = $model_livingPlant->id0;
         $model_acquisitionEvent = $model_botanicalObject->acquisitionEvent;
@@ -663,6 +673,7 @@ class LivingPlantController extends JacqController {
             'model_botanicalObject' => $model_botanicalObject,
             'model_locationCoordinates' => $model_locationCoordinates,
             'model_incomingDate' => $model_incomingDate,
+            'model_inventoryObject' => $model_inventoryObject,
             'success' => $success
         );
         $data['data'] = &$data;

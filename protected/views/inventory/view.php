@@ -25,3 +25,18 @@ $this->widget('zii.widgets.CDetailView', array(
         'timestamp',
     ),
 ));
+
+// Grid view of all related inventory objects
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'inventory-object-grid',
+    'dataProvider' => $model_inventoryObject->search(),
+    'columns' => array(
+        'inventory_object_id',
+        'botanical_object_id',
+        'renderedMessage',
+        'timestamp',
+        array(
+            'class' => 'InvObjButtonColumn',
+        ),
+    ),
+));

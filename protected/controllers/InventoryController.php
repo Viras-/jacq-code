@@ -49,8 +49,18 @@ class InventoryController extends JacqController {
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView($id) {
+        // prepare model for searching all related inventory object entries
+        $model_inventoryObject = new InventoryObject('search');
+        $model_inventoryObject->unsetAttributes();
+        if (isset($_GET['InventoryObject'])) {
+            $model_inventoryObject->attributes = $_GET['InventoryObject'];
+        }
+        // always make sure we only load related entries
+        $model_inventoryObject->inventory_id = $id;
+
         $this->render('view', array(
             'model_inventory' => $this->loadModel($id),
+            'model_inventoryObject' => $model_inventoryObject,
         ));
     }
 
