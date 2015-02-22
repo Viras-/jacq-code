@@ -160,5 +160,6 @@ return array(
         'classifications_license' => '',        // license string which is added to downloaded classifications
         'guidUrlPrefix' => '',                  // URL-Prefix for GUIDs passed to outside world
         'singleSignOnLegacy' => 'u@p',          // username and password used by the legacy part
+        'bgciRankHierarchyCutoff' => 22,        // hierarchy must be above this value to include the rank abbreviation in bgci export
     ),
 );

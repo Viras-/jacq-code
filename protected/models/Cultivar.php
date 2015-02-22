@@ -100,4 +100,17 @@ class Cultivar extends ActiveRecord {
         return parent::model($className);
     }
 
+    
+    /**
+     * Helper function for quoting the cultivar name, takes into account legacy entries which might contain the quotes already
+     * @return string
+     */
+    public function getCultivarQuoted() {
+        if( strpos($this->cultivar, "'") === FALSE ) {
+            return "'" . $this->cultivar . "'";
+        }
+        else {
+            return $this->cultivar;
+        }
+    }
 }
