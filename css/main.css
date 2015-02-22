@@ -416,3 +416,9 @@ table.infoBox td {
 .row td:first-child {
     padding-left: 0px;
 }
+
+/* separation div formatting for use as table */
+.separation_td {
+    display: inline-block;
+    width: 30%;
+}
