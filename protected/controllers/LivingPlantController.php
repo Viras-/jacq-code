@@ -887,9 +887,9 @@ class LivingPlantController extends JacqController {
             // fill in all required information
             $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $row + 2, $scientificNameComponents['GenericEpithet']);
             $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $row + 2, $scientificNameComponents['SpecificEpithet']);
-            $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow(4, $row + 2, $scientificNameComponents['InfraspecificRank']);
+            $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow(4, $row + 2, ($model_livingPlant->id0->taxSpecies->taxRank->rank_hierarchy > Yii::app()->params['bgciRankHierarchyCutoff']) ? $scientificNameComponents['InfraspecificRank'] : '');
             $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $row + 2, $scientificNameComponents['InfraspecificEpithet']);
-            $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow(6, $row + 2, ($model_livingPlant->cultivar != null) ? $model_livingPlant->cultivar->cultivar : '');
+            $pHPExcel->getActiveSheet()->setCellValueByColumnAndRow(6, $row + 2, ($model_livingPlant->cultivar != null) ? $model_livingPlant->cultivar->cultivarQuoted : '');
         }
 
         // prepare excel sheet for download
@@ -906,7 +906,7 @@ class LivingPlantController extends JacqController {
         $pHPExcelWriter->save('php://output');
         exit(0);
     }
-
+    
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
