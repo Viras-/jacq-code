@@ -28,7 +28,7 @@ class LivingPlantController extends JacqController {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -216,21 +216,22 @@ class LivingPlantController extends JacqController {
                                     }
                                 }
 
-                                // check for separation entries and update/add them
+                                // Check for separation entries
                                 if (isset($_POST['Separation'])) {
-                                    // cycle through all posted separation entries
                                     foreach ($_POST['Separation'] as $i => $separation) {
-                                        // only handle separation entry if it has a type set
-                                        if (empty($separation['separation_type_id']))
+                                        // auto-generate id
+                                        unset($separation['id']);
+
+                                        // check for "deleted" entry
+                                        if ($separation['delete'] > 0) {
                                             continue;
+                                        }
 
-                                        // check if this is an update and load the model
-                                        $separation_model = new Separation;
-
-                                        // set the attributes & save the separation entry
-                                        $separation_model->attributes = $separation;
-                                        $separation_model->botanical_object_id = $model_botanicalObject->id;
-                                        $separation_model->save();
+                                        // create new model and save it
+                                        $model_separation = new Separation();
+                                        $model_separation->attributes = $separation;
+                                        $model_separation->botanical_object_id = $model_livingPlant->id;
+                                        $model_separation->save();
                                     }
                                 }
 
@@ -540,28 +541,32 @@ class LivingPlantController extends JacqController {
                             }
                         }
 
-                        // check for separation entries and update/add them
+                        // Check for separation entries
                         if (isset($_POST['Separation'])) {
-                            // cycle through all posted separation entries
                             foreach ($_POST['Separation'] as $i => $separation) {
-                                // only handle separation entry if it has a type set
-                                if (empty($separation['separation_type_id']))
+                                // make sure we have a clean integer as id
+                                $separation['id'] = intval($separation['id']);
+
+                                // check for "deleted" entry
+                                if ($separation['delete'] > 0) {
+                                    if ($separation['id'] > 0) {
+                                        Separation::model()->deleteByPk($separation['id']);
+                                    }
                                     continue;
-
-                                // check if this is an update and load the model
-                                $separation_model = null;
-                                if (isset($separation['id'])) {
-                                    $separation_model = Separation::model()->findByPk($separation['id']);
                                 }
-                                // .. else create a new separation entry
+
+                                // check if this is an existing entry
+                                if ($separation['id'] > 0) {
+                                    $model_separation = Separation::model()->findByPk($separation['id']);
+                                }
                                 else {
-                                    $separation_model = new Separation();
+                                    $model_separation = new Separation();
                                 }
 
-                                // set the attributes & save the separation entry
-                                $separation_model->attributes = $separation;
-                                $separation_model->botanical_object_id = $model_botanicalObject->id;
-                                $separation_model->save();
+                                // assign attributes and save it
+                                $model_separation->attributes = $separation;
+                                $model_separation->botanical_object_id = $model_livingPlant->id;
+                                $model_separation->save();
                             }
                         }
 
@@ -852,6 +857,17 @@ class LivingPlantController extends JacqController {
 
         $this->renderPartial('form_specimen', array(
             'model_specimen' => $model_specimen
+                ), false, true);
+    }
+
+    /**
+     * renders form for entering a new separation
+     */
+    public function actionAjaxSeparation() {
+        $model_separation = new Separation();
+
+        $this->renderPartial('form_separation', array(
+            'model_separation' => $model_separation
                 ), false, true);
     }
 
