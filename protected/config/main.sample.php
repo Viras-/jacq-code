@@ -9,7 +9,7 @@ return array(
     'name' => 'JACQ',
     'language' => 'de',
     // preloading 'log' component
-    'preload' => array('log'),
+    'preload' => array('log', 'inventoryInventoryHandler'),
     // autoloading model and component classes
     'import' => array(
         'application.models.*',
@@ -18,6 +18,7 @@ return array(
         'application.models.legacy.*',
         'application.models.srvc.*',
         'application.components.*',
+        'application.components.inventory.*',
         'application.controllers.JSONServiceController',
     ),
     'modules' => array(
@@ -145,6 +146,10 @@ return array(
         // uuid minter component
         'uuidMinter' => array(
             'class' => 'application.components.services.UuidMinterComponent'
+        ),
+        /** Inventory handlers **/
+        'inventoryInventoryHandler' => array(
+            'class' => 'application.components.inventory.InventoryInventoryHandler'
         ),
     ),
     // application-level parameters that can be accessed

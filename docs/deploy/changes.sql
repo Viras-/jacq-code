@@ -147,5 +147,7 @@ ADD CONSTRAINT `fk_tbl_inventory_object_tbl_botanical_object1`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
-ALTER TABLE `jacq_input`.`tbl_inventory_object` 
+ALTER TABLE `tbl_inventory_object` 
 ADD COLUMN `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `message`;
+
+ALTER TABLE `tbl_inventory_object` CHANGE `message` `message` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Logging message produced by inventory type handler';

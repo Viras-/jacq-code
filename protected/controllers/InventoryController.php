@@ -79,112 +79,36 @@ class InventoryController extends JacqController {
 
         if (isset($_POST['Inventory'])) {
             $model_inventory->attributes = $_POST['Inventory'];
-            
+
             // do inventory runs in transaction mode
             $dbTransaction = $model_inventory->getDbConnection()->beginTransaction();
 
             try {
                 // update user entry
                 $model_inventory->user_id = Yii::app()->user->id;
-                
+
                 // only if the inventory model is complete, we check the actual content
                 if ($model_inventory->save()) {
-                    switch ($model_inventory->inventory_type_id) {
-                        // Inventory run
-                        case 1:
-                            $model_inventoryData = $this->inventoryInventory($model_inventory);
-                            break;
-                    }
-                    
+                    // execute inventory handler
+                    InventoryHandler::handle($model_inventory);
+
                     // if we reach here, everything went well and we can commit the inventory run
                     $dbTransaction->commit();
-                    $this->redirect(array('admin'));
+                    $this->redirect(array('view', 'id' => $model_inventory->inventory_id));
                 }
                 else {
                     throw new Exception("Unable to save inventory base entry");
                 }
             }
             // catch any error and rollback
-            catch(Exception $e) {
+            catch (Exception $e) {
                 $dbTransaction->rollback();
             }
-
         }
 
         $this->render('create', array(
             'model_inventory' => $model_inventory,
         ));
-    }
-
-    /**
-     * Handle a "normal" inventory run
-     * @param Inventory $model_inventory
-     * @throws Exception
-     */
-    protected function inventoryInventory($model_inventory) {
-        if (isset($_POST['InventoryInventory'])) {
-            $inventoryInventory = $_POST['InventoryInventory'];
-
-            // extract organisation id
-            $organisation_id = intval($inventoryInventory['organisation_id']);
-            if ($organisation_id <= 0) {
-                return null;
-            }
-
-            // extract file upload information
-            $uploadedFile = CUploadedFile::getInstanceByName('InventoryInventory[inventory_file]');
-
-            // identify file and read it into memory
-            $inputFileType = PHPExcel_IOFactory::identify($uploadedFile->getTempName());
-            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
-            $objPHPExcel = $objReader->load($uploadedFile->getTempName());
-
-            // extract dimensions
-            $sheet = $objPHPExcel->getSheet(0);
-            $highestRow = $sheet->getHighestRow();
-
-            // iterate over content
-            for ($row = 1; $row <= $highestRow; $row++) {
-                // treat cell entry as accession number, check for validity
-                $accession_number = trim($sheet->getCellByColumnAndRow(0, $row));
-                if( empty($accession_number) ) {
-                    continue;
-                }
-
-                // try to find living plant with this accession number
-                $model_livingPlant = LivingPlant::model()->findByAttributes(array(
-                    'accession_number' => $accession_number
-                ));
-
-                // check if we found an entry
-                if( $model_livingPlant == NULL ) {
-                    // add log entry about missing accession number
-                    $model_inventoryObject = new InventoryObject();
-                    $model_inventoryObject->inventory_id = $model_inventory->inventory_id;
-                    $model_inventoryObject->message = $accession_number;
-                    if( $model_inventoryObject->save() ) {
-                        throw new Exception("Unable to save log message");
-                    }
-
-                    continue;
-                }
-
-                // now update entry
-                $model_livingPlant->id0->organisation_id = $organisation_id;
-                if( !$model_livingPlant->id0->save() ) {
-                    throw new Exception("Unable to process living plant '" . $model_livingPlant->id0->id . "'");
-                }
-
-                // create log entry
-                $model_inventoryObject = new InventoryObject();
-                $model_inventoryObject->inventory_id = $model_inventory->inventory_id;
-                $model_inventoryObject->botanical_object_id = $model_livingPlant->id0->id;
-                $model_inventoryObject->message = $organisation_id;
-                if( !$model_inventoryObject->save() ) {
-                    throw new Exception("Unable to create log entry for '" . $model_livingPlant->id0->id . "'");
-                }
-            }
-        }
     }
 
     /**
