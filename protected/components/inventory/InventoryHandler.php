@@ -12,6 +12,12 @@ abstract class InventoryHandler extends CComponent {
     }
     
     /**
+     * Main entry point for inventory handlers. Executes the actual processing. Gets passed the mobel_inventory information
+     * @param Inventory $model_inventory Inventory object containing the basic information
+     */
+    protected abstract function doHandle($model_inventory);
+    
+    /**
      * Implement with your own rendering info
      * @param InventoryObject $model_inventoryObject inventory object entry to render
      */
@@ -31,6 +37,16 @@ abstract class InventoryHandler extends CComponent {
         $inventoryHandler = InventoryHandler::$inventoryHandlers[$model_inventoryObject->inventory->inventory_type_id];
         
         return $inventoryHandler->renderMessage($model_inventoryObject);
+    }
+
+    /**
+     * Handle a given inventory run, automatically selects the correct handler based on the inventory-type-id
+     * @param Inventory $model_inventory
+     */
+    public static function handle($model_inventory) {
+        $inventoryHandler = InventoryHandler::$inventoryHandlers[$model_inventory->inventory_type_id];
+        
+        $inventoryHandler->doHandle($model_inventory);
     }
     
     /**

@@ -20,8 +20,6 @@
     ));
     ?>
 
-    <p class="note">Fields with <span class="required">*</span> are required.</p>
-
     <?php echo $form->errorSummary($model_inventory); ?>
 
     <div class="row">
@@ -51,7 +49,7 @@
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model_inventory->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton($model_inventory->isNewRecord ? Yii::t('jacq', 'Create') : Yii::t('jacq', 'Save')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

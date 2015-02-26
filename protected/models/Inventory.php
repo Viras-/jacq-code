@@ -56,10 +56,10 @@ class Inventory extends ActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'inventory_id' => 'Inventory',
-            'user_id' => 'User',
-            'inventory_type_id' => 'Inventory Type',
-            'timestamp' => 'Timestamp',
+            'inventory_id' => Yii::t('jacq', 'Inventory'),
+            'user_id' => Yii::t('jacq', 'User'),
+            'inventory_type_id' => Yii::t('jacq', 'Inventory Type'),
+            'timestamp' => Yii::t('jacq', 'Timestamp'),
         );
     }
 
@@ -83,9 +83,14 @@ class Inventory extends ActiveRecord {
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => array(
+                    'timestamp' => true
+                )
+            )
         ));
     }
-    
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!

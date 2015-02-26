@@ -51,9 +51,9 @@ class InventoryType extends ActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'inventory_type_id' => 'Inventory Type',
-            'type' => 'Type',
-            'timestamp' => 'Timestamp',
+            'inventory_type_id' => Yii::t('jacq', 'Inventory Type'),
+            'type' => Yii::t('jacq', 'Type'),
+            'timestamp' => Yii::t('jacq', 'Timestamp'),
         );
     }
 

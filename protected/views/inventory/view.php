@@ -3,17 +3,17 @@
 /* @var $model Inventory */
 
 $this->breadcrumbs = array(
-    'Inventories' => array('admin'),
+    Yii::t('jacq', 'Inventories') => array('admin'),
     $model_inventory->inventory_id,
 );
 
 $this->menu = array(
-    array('label' => 'Create Inventory', 'url' => array('create')),
-    array('label' => 'Manage Inventory', 'url' => array('admin')),
+    array('label' => Yii::t('jacq', 'Create Inventory'), 'url' => array('create')),
+    array('label' => Yii::t('jacq', 'Manage Inventory'), 'url' => array('admin')),
 );
 ?>
 
-<h1>View Inventory #<?php echo $model_inventory->inventory_id; ?></h1>
+<h1><?php echo Yii::t('jacq', 'View Inventory'); ?> #<?php echo $model_inventory->inventory_id; ?></h1>
 
 <?php
 $this->widget('zii.widgets.CDetailView', array(

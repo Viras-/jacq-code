@@ -3,17 +3,17 @@
 /* @var $model Inventory */
 
 $this->breadcrumbs = array(
-    'Inventories' => array('admin'),
-    'Manage',
+    Yii::t('jacq', 'Inventories') => array('admin'),
+    Yii::t('jacq', 'Manage'),
 );
 
 $this->menu = array(
-    array('label' => 'Create Inventory', 'url' => array('create')),
+    array('label' => Yii::t('jacq', 'Create Inventory'), 'url' => array('create')),
 );
 
 ?>
 
-<h1>Manage Inventories</h1>
+<h1><?php echo Yii::t('jacq', 'Manage Inventories' ); ?></h1>
 
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
