@@ -151,3 +151,14 @@ ALTER TABLE `tbl_inventory_object`
 ADD COLUMN `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `message`;
 
 ALTER TABLE `tbl_inventory_object` CHANGE `message` `message` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Logging message produced by inventory type handler';
+
+INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
+('oprtn_inventory', 0, 'Inventory Access', NULL, 'N;'),
+('tsk_inventory', 1, 'Inventory Access', NULL, 'N;');
+
+INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
+('tsk_inventory', 'oprtn_inventory');
+
+INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
+('grp_admin', 'tsk_inventory');
+

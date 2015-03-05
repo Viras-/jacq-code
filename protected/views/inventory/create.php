@@ -14,4 +14,15 @@ $this->menu = array(
 
 <h1><?php echo Yii::t('jacq', 'Create Inventory'); ?></h1>
 
+<?php
+// check if saving was successfull
+if( $error_msg ) {
+    ?>
+    <div class="flash-success">
+        <?php echo $error_msg; ?>
+    </div>
+    <?php
+}
+?>
+
 <?php $this->renderPartial('_form', array('model_inventory' => $model_inventory)); ?>

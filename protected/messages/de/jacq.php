@@ -17,7 +17,8 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Inventories' => 'Inventuren',
+  'Botanical object "{botanical_object_id}" was not found. Updated status to "separated".' => 'Botanisches Objekt "{botanical_object_id}" wurde nicht gefunden. Status auf "Ausgeschieden" gesetzt.',
+  'Separate non found entries' => 'Nicht gefundene Einträge ausscheiden.',
   'Access for groups' => 'Zugriff für Gruppen',
   'Access for users' => 'Zugriff für Benutzer',
   'Accessible' => 'Accessible',
@@ -112,6 +113,7 @@ return array (
   'Index Seminum Type' => 'Art',
   'Index Seminum links cleared.' => 'Markierungen für Index Seminum gelöscht.',
   'Info' => 'Information',
+  'Inventories' => 'Inventuren',
   'Inventory' => 'Inventuren',
   'Inventory Object' => 'Inventur-Eintrag',
   'Inventory Type' => 'Inventur-Typ',
