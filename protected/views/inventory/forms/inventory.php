@@ -6,5 +6,10 @@
 </div>
 
 <div class="row">
+    <?php echo Html::label(Yii::t('jacq', 'Separate non found entries'), 'InventoryInventory[separate_not_found]'); ?>
+    <?php echo Html::checkBox('InventoryInventory[separate_not_found]'); ?>
+</div>
+
+<div class="row">
     <?php echo Html::fileField('InventoryInventory[inventory_file]'); ?>
 </div>

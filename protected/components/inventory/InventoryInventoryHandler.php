@@ -6,6 +6,7 @@
 class InventoryInventoryHandler extends InventoryHandler {
 
     public static $TYPE_ID = 1;
+    public static $SEPARATED = 'separated';
 
     protected function getTypeId() {
         return InventoryInventoryHandler::$TYPE_ID;
@@ -16,12 +17,21 @@ class InventoryInventoryHandler extends InventoryHandler {
      */
     protected function renderMessage($model_inventoryObject) {
         if ($model_inventoryObject->botanical_object_id) {
-            return Yii::t(
-                            'jacq', 'Assigned botanical object "{botanical_object_id}" to organisation "{organisation_id}".', array(
-                        '{botanical_object_id}' => $model_inventoryObject->botanical_object_id,
-                        '{organisation_id}' => $model_inventoryObject->message
-                            )
-            );
+            if ($model_inventoryObject->message == InventoryInventoryHandler::$SEPARATED) {
+                return Yii::t(
+                                'jacq', 'Botanical object "{botanical_object_id}" was not found. Updated status to "separated".', array(
+                            '{botanical_object_id}' => $model_inventoryObject->botanical_object_id
+                                )
+                );
+            }
+            else {
+                return Yii::t(
+                                'jacq', 'Assigned botanical object "{botanical_object_id}" to organisation "{organisation_id}".', array(
+                            '{botanical_object_id}' => $model_inventoryObject->botanical_object_id,
+                            '{organisation_id}' => $model_inventoryObject->message
+                                )
+                );
+            }
         }
         else {
             return Yii::t(
@@ -47,6 +57,9 @@ class InventoryInventoryHandler extends InventoryHandler {
                 throw new Exception("Invalid organisation id passed");
             }
 
+            // check for separation request
+            $separate_not_found = (isset($inventoryInventory['separate_not_found'])) ? true : false;
+
             // extract file upload information
             $uploadedFile = CUploadedFile::getInstanceByName('InventoryInventory[inventory_file]');
 
@@ -58,6 +71,9 @@ class InventoryInventoryHandler extends InventoryHandler {
             // extract dimensions
             $sheet = $objPHPExcel->getSheet(0);
             $highestRow = $sheet->getHighestRow();
+
+            // used for remembering all updates entries
+            $updatedEntries = array();
 
             // iterate over content
             for ($row = 1; $row <= $highestRow; $row++) {
@@ -98,6 +114,40 @@ class InventoryInventoryHandler extends InventoryHandler {
                 $model_inventoryObject->message = $organisation_id;
                 if (!$model_inventoryObject->save()) {
                     throw new Exception("Unable to create log entry for '" . $model_livingPlant->id0->id . "'");
+                }
+
+                // add entry to updated ones
+                $updatedEntries[] = $model_livingPlant->id;
+            }
+
+            // now that all entries are processed, check if we should separate the remaining ones
+            if ($separate_not_found) {
+                // fetch a list of all entries for this organisation first
+                $models_botanicalObject = BotanicalObject::model()->findAllByAttributes(array(
+                    'organisation_id' => $organisation_id
+                ));
+
+                // iterate over list and check if the entry was found
+                foreach ($models_botanicalObject as $model_botanicalObject) {
+                    // check if the entry exists in the updated list
+                    if (in_array($model_botanicalObject->id, $updatedEntries)) {
+                        continue;
+                    }
+
+                    // if not set entry to separated
+                    $model_botanicalObject->separated = 1;
+                    if (!$model_botanicalObject->save()) {
+                        throw new Exception("Unable to separate living plant '" . $model_botanicalObject->id . "'");
+                    }
+
+                    // write a log message for it
+                    $model_inventoryObject = new InventoryObject();
+                    $model_inventoryObject->inventory_id = $model_inventory->inventory_id;
+                    $model_inventoryObject->botanical_object_id = $model_botanicalObject->id;
+                    $model_inventoryObject->message = InventoryInventoryHandler::$SEPARATED;
+                    if (!$model_inventoryObject->save()) {
+                        throw new Exception("Unable to create log entry for separation of'" . $model_botanicalObject->id . "'");
+                    }
                 }
             }
         }

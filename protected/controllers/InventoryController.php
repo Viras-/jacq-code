@@ -76,6 +76,9 @@ class InventoryController extends JacqController {
 
         // empty wrapper model
         $model_inventory = new Inventory;
+        
+        // no error so far
+        $error_msg = NULL;
 
         if (isset($_POST['Inventory'])) {
             $model_inventory->attributes = $_POST['Inventory'];
@@ -102,12 +105,15 @@ class InventoryController extends JacqController {
             }
             // catch any error and rollback
             catch (Exception $e) {
+                $error_msg = $e->getMessage();
+                
                 $dbTransaction->rollback();
             }
         }
 
         $this->render('create', array(
             'model_inventory' => $model_inventory,
+            'error_msg' => $error_msg,
         ));
     }
 
