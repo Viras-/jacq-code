@@ -9,15 +9,6 @@ class UserController extends JacqController {
     public $layout = '//layouts/column2';
 
     /**
-     * @return array action filters
-     */
-    public function filters() {
-        return array_merge(parent::filters() + array(
-            'postOnly + delete', // we only allow deletion via POST request
-        ));
-    }
-
-    /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
