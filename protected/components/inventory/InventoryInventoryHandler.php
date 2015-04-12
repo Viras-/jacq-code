@@ -7,6 +7,7 @@ class InventoryInventoryHandler extends InventoryHandler {
 
     public static $TYPE_ID = 1;
     public static $SEPARATED = 'separated';
+    public static $SEPARATION_TYPE_ID = 7;
 
     protected function getTypeId() {
         return InventoryInventoryHandler::$TYPE_ID;
@@ -19,21 +20,19 @@ class InventoryInventoryHandler extends InventoryHandler {
         if ($model_inventoryObject->botanical_object_id) {
             if ($model_inventoryObject->message == InventoryInventoryHandler::$SEPARATED) {
                 return Yii::t(
-                                'jacq', 'Botanical object "{botanical_object_id}" was not found. Updated status to "separated".', array(
-                            '{botanical_object_id}' => $model_inventoryObject->botanical_object_id
+                                'jacq', 'Livingplant "{accession_number}" not found in inventory run. Updated status to "separated".', array(
+                            '{accession_number}' => $model_inventoryObject->botanicalObject->livingPlant->accession_number
                                 )
                 );
-            }
-            else {
+            } else {
                 return Yii::t(
-                                'jacq', 'Assigned botanical object "{botanical_object_id}" to organisation "{organisation_id}".', array(
-                            '{botanical_object_id}' => $model_inventoryObject->botanical_object_id,
-                            '{organisation_id}' => $model_inventoryObject->message
+                                'jacq', 'Assigned living plant "{accession_number}" to organisation "{description}".', array(
+                            '{accession_number}' => $model_inventoryObject->botanicalObject->livingPlant->accession_number,
+                            '{description}' => Organisation::model()->findByPk($model_inventoryObject->message)->description
                                 )
                 );
             }
-        }
-        else {
+        } else {
             return Yii::t(
                             'jacq', 'Unable to find living plant with accession number "{accession_number}"', array(
                         '{accession_number}' => $model_inventoryObject->message
@@ -89,16 +88,26 @@ class InventoryInventoryHandler extends InventoryHandler {
                 ));
 
                 // check if we found an entry
-                if ($model_livingPlant == NULL) {
-                    // add log entry about missing accession number
-                    $model_inventoryObject = new InventoryObject();
-                    $model_inventoryObject->inventory_id = $model_inventory->inventory_id;
-                    $model_inventoryObject->message = $accession_number;
-                    if (!$model_inventoryObject->save()) {
-                        throw new Exception("Unable to save log message");
-                    }
+                if ($model_livingPlant === NULL) {
+                    // try to find the entry by the alternative accession number
+                    $model_alternativeAccessionNumber = AlternativeAccessionNumber::model()->findByAttributes(array(
+                        'number' => $accession_number
+                    ));
+                    // if we did not find an entry either, give up
+                    if( $model_alternativeAccessionNumber === NULL ) {
+                        // add log entry about missing accession number
+                        $model_inventoryObject = new InventoryObject();
+                        $model_inventoryObject->inventory_id = $model_inventory->inventory_id;
+                        $model_inventoryObject->message = $accession_number;
+                        if (!$model_inventoryObject->save()) {
+                            throw new Exception("Unable to save log message");
+                        }
 
-                    continue;
+                        continue;
+                    }
+                    
+                    // use living plant entry referenced by alternative accession number entry
+                    $model_livingPlant = $model_alternativeAccessionNumber->livingPlant;
                 }
 
                 // now update entry
@@ -133,11 +142,26 @@ class InventoryInventoryHandler extends InventoryHandler {
                     if (in_array($model_botanicalObject->id, $updatedEntries)) {
                         continue;
                     }
+                    
+                    // check if object is already separated
+                    if( $model_botanicalObject->separated == 1 ) {
+                        continue;
+                    }
 
                     // if not set entry to separated
                     $model_botanicalObject->separated = 1;
                     if (!$model_botanicalObject->save()) {
                         throw new Exception("Unable to separate living plant '" . $model_botanicalObject->id . "'");
+                    }
+                    
+                    // in addition add a separation entry
+                    $model_separation = new Separation();
+                    $model_separation->botanical_object_id = $model_botanicalObject->id;
+                    $model_separation->separation_type_id = InventoryInventoryHandler::$SEPARATION_TYPE_ID;
+                    $model_separation->date = new CDbExpression('NOW()');
+                    $model_separation->annotation = Yii::t('jacq', 'inventory');
+                    if (!$model_separation->save()) {
+                        throw new Exception("Unable to save separation for living plant '" . $model_botanicalObject->id . "'");
                     }
 
                     // write a log message for it

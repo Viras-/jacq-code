@@ -17,8 +17,9 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Botanical object "{botanical_object_id}" was not found. Updated status to "separated".' => 'Botanisches Objekt "{botanical_object_id}" wurde nicht gefunden. Status auf "Ausgeschieden" gesetzt.',
-  'Separate non found entries' => 'Nicht gefundene Einträge ausscheiden.',
+  'Assigned living plant "{accession_number}" to organisation "{description}".' => 'Lebendpflanze "{accession_number}" wurde dem Standort "{description}" zugewiesen.',
+  'Livingplant "{accession_number}" not found in inventory run. Updated status to "separated".' => 'Kein Eintrag für Lebendpflanze "{accession_number}" in dieser Inventur. Status auf "Ausgeschieden" gesetzt.',
+  'inventory' => 'Inventur',
   'Access for groups' => 'Zugriff für Gruppen',
   'Access for users' => 'Zugriff für Benutzer',
   'Accessible' => 'Accessible',
@@ -39,7 +40,6 @@ return array (
   'Annotation' => 'Bemerkung',
   'Aquisition' => 'Sammeldaten',
   'Are you sure you want to clear all Index Seminum links?' => 'Sind Sie sicher, dass alle Index Seminum Markierung gelöscht werden sollen?',
-  'Assigned botanical object "{botanical_object_id}" to organisation "{organisation_id}".' => 'Botanisches Objekt "{botanical_object_id}" wurde dem Standort "{organisation_id}" zugewiesen.',
   'Authorization' => 'Autorisierung',
   'BGCI' => 'BGCI',
   'Basic' => 'Grunddaten',
@@ -136,7 +136,7 @@ return array (
   'Manage Index Seminum' => 'Index Seminum verwalten',
   'Manage Inventories' => 'Inventuren verwalten',
   'Manage Inventory' => 'Inventuren verwalten',
-  'Manage Living Plant' => 'Lebenpflanze verwalten',
+  'Manage Living Plant' => 'Lebendpflanze verwalten',
   'Manage Living Plants' => 'Lebendpflanzen verwalten',
   'Manage Tree Record File' => 'Baumkontrollblatt verwalten',
   'Manage Tree Record Files' => 'Baumkontrollblätter verwalten',
@@ -168,6 +168,7 @@ return array (
   'Scientific Name Author' => 'Autor wissenschaftlicher Name',
   'Scientific Name Information' => 'Wissenschaftlicher Name Information',
   'Scientific Name Without Author' => 'Wissenschaftlicher Name ohne Autor',
+  'Separate non found entries' => 'Nicht gefundene Einträge ausscheiden.',
   'Separated' => 'Ausgeschieden',
   'Separation' => 'Abgang',
   'Separation Type' => 'Abgang',
