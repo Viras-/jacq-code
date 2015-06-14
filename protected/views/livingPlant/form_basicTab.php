@@ -46,7 +46,7 @@
                 <?php echo $form->textField($model_botanicalObject, 'family', array('readonly' => true)); ?>
                 <?php echo $form->error($model_botanicalObject, 'family'); ?>
             </td>
-            <td>
+            <td width='40%'>
                 <?php echo $form->labelEx($model_botanicalObject, 'familyReference'); ?>
                 <?php echo CHtml::encode($model_botanicalObject->familyReference); ?>
             </td>
@@ -54,24 +54,46 @@
     </table>
 </div>
 
-<!-- organisation -->
 <div class="row">
-    <?php echo $form->labelEx($model_botanicalObject, 'organisation_id'); ?>
-    <?php echo CHtml::textField('BotanicalObject_organisation_name', $model_botanicalObject->organisation->description, array('readonly' => 'readonly')); ?>
-    <?php echo $form->hiddenField($model_botanicalObject, 'organisation_id'); ?>
-    <a href="#" onclick="$('#organisation_select_dialog').dialog('open');
-            return false;"><img src="images/magnifier.png" ></a>
-</div>
+    <table border="0" width="100%" style="margin: 0;">
+        <tr>
+            <td>
+                <table border="0" width="100%" style="margin: 0;">
+                    <tr>
+                        <td>
+                            <!-- organisation -->
+                            <?php echo $form->labelEx($model_botanicalObject, 'organisation_id'); ?>
+                            <?php echo CHtml::textField('BotanicalObject_organisation_name', $model_botanicalObject->organisation->description, array('readonly' => 'readonly')); ?>
+                            <?php echo $form->hiddenField($model_botanicalObject, 'organisation_id'); ?>
+                            <a href="#" onclick="$('#organisation_select_dialog').dialog('open');
+                                    return false;"><img src="images/magnifier.png" ></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <!-- place number -->
+                            <?php echo $form->labelEx($model_livingPlant, 'place_number'); ?>
+                            <?php echo $form->textField($model_livingPlant, 'place_number'); ?>
+                            <?php echo $form->error($model_livingPlant, 'place_number'); ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <!-- accession number -->
+                            <?php require("form_accessionNumber.php"); ?>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width='40%'>
+                <?php
+                // render (important) relevancy form
+                echo $this->renderPartial('form_relevancy', array('important' => 1, 'form' => $form, 'model_livingPlant' => $model_livingPlant));
+                ?>
+            </td>
+        </tr>
+    </table>
 
-<!-- place number -->
-<div class="row">
-    <?php echo $form->labelEx($model_livingPlant, 'place_number'); ?>
-    <?php echo $form->textField($model_livingPlant, 'place_number'); ?>
-    <?php echo $form->error($model_livingPlant, 'place_number'); ?>
-</div>
-
-<div class="row">
-    <?php require("form_accessionNumber.php"); ?>
 </div>
 
 <!-- IPEN & accession number -->
@@ -208,60 +230,5 @@ if (Yii::app()->user->checkAccess('oprtn_assignLabelType') || Yii::app()->user->
 
 <!-- separations -->
 <div class="row">
-    <table style="width: auto;">
-        <?php
-        $model_separations = $model_botanicalObject->separations;
-        $model_separations[] = new Separation;  // Add one new entry for adding
-
-        foreach ($model_separations as $i => $model_separation) {
-            ?>
-            <tr>
-                <td>
-                    <?php
-                    $separation_types = Html::listDataSorted(SeparationType::model()->findAll(), 'id', 'typeTranslated');
-
-                    // check if we have a valid id already, if not skip the hidden field
-                    if ($model_separation->id > 0) {
-                        echo $form->hiddenField($model_separation, "[$i]id");
-                    }
-                    else {
-                        $separation_types = array('' => Yii::t('jacq_types', 'none')) + $separation_types;
-                    }
-
-                    echo $form->labelEx($model_separation, 'separation_type_id');
-                    echo $form->dropDownList($model_separation, "[$i]separation_type_id", $separation_types);
-                    echo $form->error($model_separation, 'separation_type_id');
-                    ?>
-                </td>
-                <td>
-                    <?php
-                    echo $form->labelEx($model_separation, 'date');
-                    $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                        'name' => "Separation[$i][date]",
-                        // additional javascript options for the date picker plugin
-                        'options' => array(
-                            'showAnim' => 'fold',
-                            'dateFormat' => 'yy-mm-dd',
-                            'changeMonth' => true,
-                            'changeYear' => true,
-                        ),
-                        'htmlOptions' => array(
-                        ),
-                        'value' => $model_separation->date,
-                    ));
-                    echo $form->error($model_separation, 'date');
-                    ?>
-                </td>
-                <td>
-                    <?php
-                    echo $form->labelEx($model_separation, 'annotation');
-                    echo $form->textField($model_separation, "[$i]annotation");
-                    echo $form->error($model_separation, 'annotation');
-                    ?>
-                </td>
-            </tr>
-            <?php
-        }
-        ?>
-    </table>
+    <?php require("form_separations.php"); ?>
 </div>

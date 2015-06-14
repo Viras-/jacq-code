@@ -1,28 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "tbl_cultivar".
+ * This is the model class for table "tbl_inventory_type".
  *
- * The followings are the available columns in table 'tbl_cultivar':
- * @property integer $cultivar_id
- * @property integer $scientific_name_id
- * @property string $cultivar
+ * The followings are the available columns in table 'tbl_inventory_type':
+ * @property integer $inventory_type_id
+ * @property string $type
+ * @property string $timestamp
  *
  * The followings are the available model relations:
- * @property ScientificNameInformation $scientificName
- * @property LivingPlant[] $livingPlants
+ * @property Inventory[] $inventories
  */
-class Cultivar extends ActiveRecord {
-    /**
-     * @var helper attribute for deleting a cultivar entry
-     */
-    public $delete = 0;
+class InventoryType extends ActiveRecord {
 
     /**
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'tbl_cultivar';
+        return 'tbl_inventory_type';
     }
 
     /**
@@ -32,12 +27,11 @@ class Cultivar extends ActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('cultivar_id, scientific_name_id, cultivar', 'required'),
-            array('cultivar_id, scientific_name_id', 'numerical', 'integerOnly' => true),
-            array('cultivar', 'length', 'max' => 255),
+            array('type', 'required'),
+            array('type', 'length', 'max' => 45),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('cultivar_id, scientific_name_id, cultivar', 'safe', 'on' => 'search'),
+            array('inventory_type_id, type, timestamp', 'safe', 'on' => 'search'),
         );
     }
 
@@ -48,8 +42,7 @@ class Cultivar extends ActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'scientificName' => array(self::BELONGS_TO, 'ScientificNameInformation', 'scientific_name_id'),
-            'livingPlants' => array(self::HAS_MANY, 'LivingPlant', 'cultivar_id'),
+            'inventories' => array(self::HAS_MANY, 'Inventory', 'inventory_type_id'),
         );
     }
 
@@ -58,9 +51,9 @@ class Cultivar extends ActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'cultivar_id' => Yii::t('jacq', 'Cultivar'),
-            'scientific_name_id' => Yii::t('jacq', 'Scientific Name'),
-            'cultivar' => Yii::t('jacq', 'Cultivar'),
+            'inventory_type_id' => Yii::t('jacq', 'Inventory Type'),
+            'type' => Yii::t('jacq', 'Type'),
+            'timestamp' => Yii::t('jacq', 'Timestamp'),
         );
     }
 
@@ -81,9 +74,9 @@ class Cultivar extends ActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('cultivar_id', $this->cultivar_id);
-        $criteria->compare('scientific_name_id', $this->scientific_name_id);
-        $criteria->compare('cultivar', $this->cultivar, true);
+        $criteria->compare('inventory_type_id', $this->inventory_type_id);
+        $criteria->compare('type', $this->type, true);
+        $criteria->compare('timestamp', $this->timestamp, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -94,23 +87,10 @@ class Cultivar extends ActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return Cultivar the static model class
+     * @return InventoryType the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
 
-    
-    /**
-     * Helper function for quoting the cultivar name, takes into account legacy entries which might contain the quotes already
-     * @return string
-     */
-    public function getCultivarQuoted() {
-        if( strpos($this->cultivar, "'") === FALSE ) {
-            return "'" . $this->cultivar . "'";
-        }
-        else {
-            return $this->cultivar;
-        }
-    }
 }

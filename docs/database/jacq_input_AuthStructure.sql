@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.5
+-- version 4.1.13
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 23. Feb 2014 um 07:58
--- Server Version: 5.5.33-MariaDB
+-- Erstellungszeit: 05. Mrz 2015 um 19:14
+-- Server Version: 5.6.12
 -- PHP-Version: 5.4.20
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,11 +24,6 @@ SET time_zone = "+00:00";
 --
 
 --
--- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthAssignment`
---
-
-TRUNCATE TABLE `frmwrk_AuthAssignment`;
---
 -- Daten für Tabelle `frmwrk_AuthAssignment`
 --
 
@@ -37,11 +32,6 @@ INSERT INTO `frmwrk_AuthAssignment` (`itemname`, `userid`, `bizrule`, `data`) VA
 ('grp_admin', 1, NULL, 'N;');
 
 --
--- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthItem`
---
-
-TRUNCATE TABLE `frmwrk_AuthItem`;
---
 -- Daten für Tabelle `frmwrk_AuthItem`
 --
 
@@ -49,7 +39,12 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('acs_greenhouse', 1, 'Allow access to plants which are inside the greenhouse', '', 's:0:"";'),
 ('editorLivingplant', 2, 'editor for living plants', NULL, 'N;'),
 ('grp_admin', 2, 'main admin, has all roles assigned (so can do everything)', '', 's:0:"";'),
+('grp_gardener', 2, 'Group for Gardeners', NULL, 'N;'),
 ('grp_guest', 2, 'guest (default) role', '', 's:0:"";'),
+('grp_labelPrinters', 2, 'Group for Label printing', NULL, 'N;'),
+('grp_leadGardener', 2, 'Group for lead gardeners', NULL, 'N;'),
+('grp_Scientist', 2, 'user groups for Scientists', '', 's:0:"";'),
+('grp_volunteers', 2, 'user group for volunteers', NULL, 'N;'),
 ('managerLivingplant', 2, 'manage living plants', NULL, 'N;'),
 ('managerOrganisation', 2, 'manage organisation entries', NULL, 'N;'),
 ('managerScientificNameInformation', 2, 'Manager for Scientific Name Information', NULL, 'N;'),
@@ -68,6 +63,8 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('oprtn_deleteOrganisation', 0, 'delete an organisation entry', NULL, 'N;'),
 ('oprtn_deleteTreeRecordFile', 0, 'delete a tree record file', NULL, 'N;'),
 ('oprtn_deleteUser', 0, 'delete user', NULL, 'N;'),
+('oprtn_indexSeminum', 0, 'Access to index seminum actions', NULL, 'N;'),
+('oprtn_inventory', 0, 'Inventory Access', NULL, 'N;'),
 ('oprtn_readLivingplant', 0, 'read/show a living plant', '', 's:0:"";'),
 ('oprtn_showClassificationBrowser', 0, 'show classification browser', NULL, 'N;'),
 ('oprtn_showStatistics', 0, 'show statistics', NULL, 'N;'),
@@ -78,70 +75,73 @@ INSERT INTO `frmwrk_AuthItem` (`name`, `type`, `description`, `bizrule`, `data`)
 ('tsk_deleteOrganisation', 1, 'delete an organisation', NULL, 'N;'),
 ('tsk_deleteTreeRecordFile', 1, 'delete a tree record file', NULL, 'N;'),
 ('tsk_editLivingplant', 1, 'Edit a living plant', '', 's:0:"";'),
+('tsk_inventory', 1, 'Inventory Access', NULL, 'N;'),
 ('tsk_manageACL', 1, 'manage ACL access', NULL, 'N;'),
 ('tsk_managementLabels', 1, 'Label Manager', NULL, 'N;'),
 ('tsk_managerUser', 1, 'manager users', NULL, 'N;'),
 ('tsk_manageScientificNameInformation', 1, 'Manager for Scientific Name Information', NULL, 'N;');
 
 --
--- TRUNCATE Tabelle vor dem Einfügen `frmwrk_AuthItemChild`
---
-
-TRUNCATE TABLE `frmwrk_AuthItemChild`;
---
 -- Daten für Tabelle `frmwrk_AuthItemChild`
 --
 
 INSERT INTO `frmwrk_AuthItemChild` (`parent`, `child`) VALUES
-('editorLivingplant', 'tsk_editLivingplant'),
 ('grp_admin', 'acs_greenhouse'),
+('grp_gardener', 'acs_greenhouse'),
 ('grp_admin', 'editorLivingplant'),
+('managerLivingplant', 'editorLivingplant'),
+('grp_leadGardener', 'grp_gardener'),
 ('grp_admin', 'grp_guest'),
+('grp_gardener', 'grp_guest'),
+('grp_volunteers', 'grp_guest'),
 ('grp_admin', 'managerLivingplant'),
 ('grp_admin', 'managerOrganisation'),
 ('grp_admin', 'managerScientificNameInformation'),
 ('grp_admin', 'managerTreeRecordFile'),
-('grp_admin', 'rbacManager'),
-('grp_admin', 'tsk_manageACL'),
-('grp_admin', 'tsk_managerUser'),
-('grp_admin', 'oprtn_showStatistics'),
-('grp_guest', 'oprtn_showClassificationBrowser'),
-('managerLivingplant', 'editorLivingplant'),
-('managerLivingplant', 'tsk_deleteLivingplant'),
-('managerLivingplant', 'tsk_managementLabels'),
-('managerOrganisation', 'tsk_createOrganisation'),
-('managerOrganisation', 'tsk_deleteOrganisation'),
-('managerScientificNameInformation', 'tsk_manageScientificNameInformation'),
-('managerTreeRecordFile', 'tsk_createTreeRecordFile'),
-('managerTreeRecordFile', 'tsk_deleteTreeRecordFile'),
-('oprtn_createLivingplant', 'oprtn_readLivingplant'),
-('tsk_createOrganisation', 'oprtn_createOrganisation'),
-('tsk_createTreeRecordFile', 'oprtn_createTreeRecordFile'),
-('tsk_deleteLivingplant', 'oprtn_deleteLivingplant'),
-('tsk_deleteOrganisation', 'oprtn_deleteOrganisation'),
-('tsk_deleteTreeRecordFile', 'oprtn_deleteTreeRecordFile'),
-('tsk_editLivingplant', 'oprtn_createLivingplant'),
 ('tsk_manageACL', 'oprtn_aclBotanicalObject'),
 ('tsk_manageACL', 'oprtn_aclClassification'),
 ('tsk_manageACL', 'oprtn_aclOrganisation'),
+('grp_leadGardener', 'oprtn_assignLabelType'),
 ('tsk_managementLabels', 'oprtn_assignLabelType'),
 ('tsk_managementLabels', 'oprtn_clearLabelType'),
+('tsk_editLivingplant', 'oprtn_createLivingplant'),
+('tsk_createOrganisation', 'oprtn_createOrganisation'),
+('tsk_manageScientificNameInformation', 'oprtn_createScientificNameInformation'),
+('tsk_createTreeRecordFile', 'oprtn_createTreeRecordFile'),
 ('tsk_managerUser', 'oprtn_createUser'),
+('tsk_deleteLivingplant', 'oprtn_deleteLivingplant'),
+('tsk_deleteOrganisation', 'oprtn_deleteOrganisation'),
+('tsk_deleteTreeRecordFile', 'oprtn_deleteTreeRecordFile'),
 ('tsk_managerUser', 'oprtn_deleteUser'),
-('tsk_manageScientificNameInformation', 'oprtn_createScientificNameInformation');
+('grp_admin', 'oprtn_indexSeminum'),
+('tsk_inventory', 'oprtn_inventory'),
+('grp_Scientist', 'oprtn_readLivingplant'),
+('grp_volunteers', 'oprtn_readLivingplant'),
+('oprtn_createLivingplant', 'oprtn_readLivingplant'),
+('grp_guest', 'oprtn_showClassificationBrowser'),
+('grp_admin', 'oprtn_showStatistics'),
+('grp_admin', 'rbacManager'),
+('managerOrganisation', 'tsk_createOrganisation'),
+('managerTreeRecordFile', 'tsk_createTreeRecordFile'),
+('managerLivingplant', 'tsk_deleteLivingplant'),
+('managerOrganisation', 'tsk_deleteOrganisation'),
+('managerTreeRecordFile', 'tsk_deleteTreeRecordFile'),
+('editorLivingplant', 'tsk_editLivingplant'),
+('grp_gardener', 'tsk_editLivingplant'),
+('grp_admin', 'tsk_inventory'),
+('grp_admin', 'tsk_manageACL'),
+('grp_labelPrinters', 'tsk_managementLabels'),
+('managerLivingplant', 'tsk_managementLabels'),
+('grp_admin', 'tsk_managerUser'),
+('managerScientificNameInformation', 'tsk_manageScientificNameInformation');
 
---
--- TRUNCATE Tabelle vor dem Einfügen `frmwrk_user`
---
-
-TRUNCATE TABLE `frmwrk_user`;
 --
 -- Daten für Tabelle `frmwrk_user`
 --
 
-INSERT INTO `frmwrk_user` (`id`, `username`, `password`, `salt`, `user_type_id`, `employment_type_id`, `title_prefix`, `firstname`, `lastname`, `title_suffix`, `birthdate`, `organisation_id`) VALUES
-(1, 'admin', '7e0ae685a84eedefe091fc1a6ea8388fc5961089', 'WzbA$vhKNh', 2, 1, '', '', '', '', '2013-12-10', 4),
-(2, 'editor', '7bbc1c5812d76078e8b0954afe521dc7bcbcfd59', '=PHazE,4Sc', 1, 1, '', '', '', '', '0000-00-00', 1);
+INSERT INTO `frmwrk_user` (`id`, `username`, `password`, `salt`, `user_type_id`, `employment_type_id`, `title_prefix`, `firstname`, `lastname`, `title_suffix`, `birthdate`, `organisation_id`, `force_password_change`) VALUES
+(1, 'admin', '9a2195f1155c03534626b5272c695da3c553cbd8', 'P?R,lV=;j/', 2, 1, '', '', '', '', '2013-12-10', 4, 0),
+(2, 'editor', '7bbc1c5812d76078e8b0954afe521dc7bcbcfd59', '=PHazE,4Sc', 1, 1, '', '', '', '', '0000-00-00', 1, 1);
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 

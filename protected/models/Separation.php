@@ -15,6 +15,10 @@
  * @property BotanicalObject $botanicalObject
  */
 class Separation extends ActiveRecord {
+    /**
+     * @var helper attribute for deleting an alternative accession number entry
+     */
+    public $delete = 0;
 
     /**
      * Returns the static model of the specified AR class.

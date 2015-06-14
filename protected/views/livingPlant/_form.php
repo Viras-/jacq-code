@@ -38,7 +38,7 @@
             Yii::t('jacq', 'Gardening') => $this->renderPartial('form_gardeningTab', $data, true),
             Yii::t('jacq', 'Collection') => $this->renderPartial('form_collectionTab', $data, true),
             Yii::t('jacq', 'Derivatives') => $this->renderPartial('form_derivativesTab', $data, true),
-            Yii::t('jacq', 'Inventory') => 'Work in progress',
+            Yii::t('jacq', 'Inventory') => (!$model_livingPlant->isNewRecord) ? $this->renderPartial('form_inventoryTab', $data, true) : '',
         ),
         // additional javascript options for the tabs plugin
         'options'=>array(

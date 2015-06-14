@@ -9,7 +9,7 @@ return array(
     'name' => 'JACQ',
     'language' => 'de',
     // preloading 'log' component
-    'preload' => array('log'),
+    'preload' => array('log', 'inventoryInventoryHandler'),
     // autoloading model and component classes
     'import' => array(
         'application.models.*',
@@ -18,6 +18,7 @@ return array(
         'application.models.legacy.*',
         'application.models.srvc.*',
         'application.components.*',
+        'application.components.inventory.*',
         'application.controllers.JSONServiceController',
     ),
     'modules' => array(
@@ -41,6 +42,7 @@ return array(
         'user' => array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
+            'stateKeyPrefix' => 'jacq-yii',
         ),
         // uncomment the following to enable URLs in path-format
         /*
@@ -145,6 +147,10 @@ return array(
         'uuidMinter' => array(
             'class' => 'application.components.services.UuidMinterComponent'
         ),
+        /** Inventory handlers **/
+        'inventoryInventoryHandler' => array(
+            'class' => 'application.components.inventory.InventoryInventoryHandler'
+        ),
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
@@ -159,5 +165,6 @@ return array(
         'classifications_license' => '',        // license string which is added to downloaded classifications
         'guidUrlPrefix' => '',                  // URL-Prefix for GUIDs passed to outside world
         'singleSignOnLegacy' => 'u@p',          // username and password used by the legacy part
+        'bgciRankHierarchyCutoff' => 22,        // hierarchy must be above this value to include the rank abbreviation in bgci export
     ),
 );

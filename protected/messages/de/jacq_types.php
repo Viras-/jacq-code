@@ -36,6 +36,7 @@ return array (
   'herb' => 'Kraut',
   'herbarium' => 'Herbar',
   'historic' => 'Historisch',
+  'inventory' => 'Inventur',
   'left_company' => 'Ausgeschieden',
   'male' => 'männlich',
   'morphological fixation' => 'Morphologische Fixierung',

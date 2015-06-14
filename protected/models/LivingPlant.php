@@ -18,6 +18,7 @@
  * @property integer $label_synonym_scientific_name_id
  * @property integer $cultivar_id
  * @property string $label_annotation
+ * @property integer $bgci
  *
  * The followings are the available model relations:
  * @property AlternativeAccessionNumber[] $alternativeAccessionNumbers
@@ -103,7 +104,7 @@ class LivingPlant extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('id', 'required'),
-            array('id, accession_number, ipen_locked, phyto_control, index_seminum, index_seminum_type_id, incoming_date_id, label_synonym_scientific_name_id, cultivar_id', 'numerical', 'integerOnly' => true),
+            array('id, accession_number, ipen_locked, phyto_control, index_seminum, index_seminum_type_id, incoming_date_id, label_synonym_scientific_name_id, cultivar_id, bgci', 'numerical', 'integerOnly' => true),
             array('ipen_number, place_number', 'length', 'max' => 50),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
@@ -112,7 +113,7 @@ class LivingPlant extends ActiveRecord {
             array('cultivation_date', 'default', 'setOnEmpty' => true, 'value' => NULL),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('accessionNumber_search, scientificName_search, organisation_search, location_search, separated_search, index_seminum, label_type_search, label_synonym_scientific_name_id', 'safe', 'on' => 'search'),
+            array('accessionNumber_search, scientificName_search, organisation_search, location_search, separated_search, index_seminum, label_type_search, label_synonym_scientific_name_id, bgci', 'safe', 'on' => 'search'),
         );
     }
 
@@ -159,6 +160,7 @@ class LivingPlant extends ActiveRecord {
             'labelSynonymScientificName' => Yii::t('jacq', 'Label Synonym'),
             'cultivar_id' => Yii::t('jacq', 'Cultivar'),
             'label_annotation' => Yii::t('jacq', 'Label Annotation'),
+            'bgci' => Yii::t('jacq', 'BGCI')
         );
     }
 
@@ -187,6 +189,7 @@ class LivingPlant extends ActiveRecord {
         // add all other search criterias
         $criteria->compare('organisation.description', $this->organisation_search, true);
         $criteria->compare('location.location', $this->location_search, true);
+        $criteria->compare('place_number', $this->place_number, true);
 
         // prepare searching for (alternative) accession numbers
         if (!empty($this->accessionNumber_search)) {
@@ -228,7 +231,7 @@ class LivingPlant extends ActiveRecord {
         if (!Yii::app()->user->checkAccess('acs_greenhouse')) {
             $criteria->compare('organisation.greenhouse', 0);
         }
-
+        
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => array(
