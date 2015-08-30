@@ -15,6 +15,9 @@
                         'change' => 'js:function( event, ui ) {
                                 if( typeof ui.item !== "undefined" ) {
                                     $( "#BotanicalObject_scientific_name_id" ).val( ui.item.id );
+                                    
+                                    // update scientific name of toolbar as well
+                                    $(".toolbar .scientific_name").text( ui.item.value );
                                 }
                             }',
                     ),

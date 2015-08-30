@@ -17,9 +17,7 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Assigned living plant "{accession_number}" to organisation "{description}".' => 'Lebendpflanze "{accession_number}" wurde dem Standort "{description}" zugewiesen.',
-  'Livingplant "{accession_number}" not found in inventory run. Updated status to "separated".' => 'Kein Eintrag für Lebendpflanze "{accession_number}" in dieser Inventur. Status auf "Ausgeschieden" gesetzt.',
-  'inventory' => 'Inventur',
+  'Work Label' => 'Arbeits-Etikett',
   'Access for groups' => 'Zugriff für Gruppen',
   'Access for users' => 'Zugriff für Benutzer',
   'Accessible' => 'Accessible',
@@ -40,6 +38,7 @@ return array (
   'Annotation' => 'Bemerkung',
   'Aquisition' => 'Sammeldaten',
   'Are you sure you want to clear all Index Seminum links?' => 'Sind Sie sicher, dass alle Index Seminum Markierung gelöscht werden sollen?',
+  'Assigned living plant "{accession_number}" to organisation "{description}".' => 'Lebendpflanze "{accession_number}" wurde dem Standort "{description}" zugewiesen.',
   'Authorization' => 'Autorisierung',
   'BGCI' => 'BGCI',
   'Basic' => 'Grunddaten',
@@ -125,6 +124,7 @@ return array (
   'Latitude' => 'Latitude',
   'Living Plant' => 'Lebendpflanze',
   'Living Plants' => 'Lebendpflanzen',
+  'Livingplant "{accession_number}" not found in inventory run. Updated status to "separated".' => 'Kein Eintrag für Lebendpflanze "{accession_number}" in dieser Inventur. Status auf "Ausgeschieden" gesetzt.',
   'Location' => 'Ort',
   'Location Coordinates' => 'Orts-Koordinaten',
   'Login' => 'Login',
@@ -208,6 +208,7 @@ return array (
   'citation' => 'Zitat',
   'expand Subhierarchies' => 'Hierarchie aufklappen',
   'hide author names' => 'Autoren-Namen ausblenden',
+  'inventory' => 'Inventur',
   'no' => 'Nein',
   'none' => 'kein',
   'select classification reference' => 'Referenz für Klassifikation auswählen',
