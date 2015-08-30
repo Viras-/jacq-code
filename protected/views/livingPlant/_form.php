@@ -7,22 +7,55 @@
         'htmlOptions' => array(
             'data-plus-as-tab' => "true"
         )
-            ));
-    
+    ));
+
     // pass reference to main form through sub-render calls
     $data['form'] = &$form;
-    
+
     // maintain reference to botanical object id
     echo $form->hiddenField($model_botanicalObject, 'id');
     ?>
 
+    <!-- fixed floating toolbar for easier saving, only in update mode available -->
     <?php
-    if( !$model_botanicalObject->isNewRecord && Yii::app()->user->checkAccess('oprtn_aclBotanicalObject') ) {
+    if (!$model_livingPlant->isNewRecord) {
+        ?>
+        <div class="toolbar">
+            <table>
+                <tr>
+                    <td>
+                        <span class="scientific_name"><?php echo $model_botanicalObject->scientificName; ?></span> (<?php echo $model_livingPlant->accessionNumber; ?>)
+                    </td>
+                    <td class="right">
+                        <?php echo CHtml::submitButton(Yii::t('jacq', 'Save'), array('data-plus-as-tab' => "false")); ?>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <script type="text/javascript">
+            $(window).bind('scroll', function () {
+                if ($(window).scrollTop() > 60) {
+                    $('.toolbar').addClass('fixed');
+                    $('.toolbar').width($('#content').width());
+                } else {
+                    $('.toolbar').removeClass('fixed');
+                }
+            });
+        </script>
+        <?php
+    }
     ?>
-    <div style="text-align: right;">
-        <a href="#"><img src="images/user.png" border="0" onclick="$('#authorization_management_dialog').dialog('open'); return false;" /></a>
-    </div>
+
+
     <?php
+    if (!$model_botanicalObject->isNewRecord && Yii::app()->user->checkAccess('oprtn_aclBotanicalObject')) {
+        ?>
+        <div style="text-align: right;">
+            <a href="#"><img src="images/user.png" border="0" onclick="$('#authorization_management_dialog').dialog('open');
+                    return false;" /></a>
+        </div>
+        <?php
     }
     ?>
 
@@ -32,8 +65,8 @@
     </fieldset>
 
     <?php
-    $this->widget('zii.widgets.jui.CJuiTabs',array(
-        'tabs'=>array(
+    $this->widget('zii.widgets.jui.CJuiTabs', array(
+        'tabs' => array(
             Yii::t('jacq', 'Aquisition') => $this->renderPartial('form_acquisitionTab', $data, true),
             Yii::t('jacq', 'Gardening') => $this->renderPartial('form_gardeningTab', $data, true),
             Yii::t('jacq', 'Collection') => $this->renderPartial('form_collectionTab', $data, true),
@@ -41,12 +74,12 @@
             Yii::t('jacq', 'Inventory') => (!$model_livingPlant->isNewRecord) ? $this->renderPartial('form_inventoryTab', $data, true) : '',
         ),
         // additional javascript options for the tabs plugin
-        'options'=>array(
+        'options' => array(
         ),
     ));
     ?>
 
-    <?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);  ?>
+    <?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);   ?>
 
     <br />
     <?php require('form_importProperties.php'); ?>
@@ -76,7 +109,7 @@
     ?>
     <!-- iframe for downloading tree records -->
     <iframe id="tree_record_download_iframe" scrolling="no" src="about:blank" style="display: none;">No iFrame support in your browser</iframe>
-    
+
     <?php
     // widget for chosing the organisation
     $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
@@ -160,107 +193,107 @@
 <!-- List of source-codes for institutions to auto-fill the IPEN number -->
 <script type="text/javascript">
     var ipen_codes = {
-        <?php
-        $ipen_code_models = Organisation::model()->findAll();
-        foreach( $ipen_code_models as $ipen_code_model ) {
-            echo "'" . $ipen_code_model->id . "': '" . $ipen_code_model->getIpenCode() . "',\n";
-        }
-        ?>
+<?php
+$ipen_code_models = Organisation::model()->findAll();
+foreach ($ipen_code_models as $ipen_code_model) {
+    echo "'" . $ipen_code_model->id . "': '" . $ipen_code_model->getIpenCode() . "',\n";
+}
+?>
         '0': ''
     };
-    
+
     /**
      * Called when the scientific name information dialog is opened (for reloading)
      */
-    function scientificNameInformationOpen(event,ui) {
+    function scientificNameInformationOpen(event, ui) {
         // load authorization view and assign it to div
-        $('#scientific_name_information_view').load('<?php echo $this->createUrl('scientificNameInformation/ajaxUpdate', array('scientific_name_id' => '')); ?>' + $('#BotanicalObject_scientific_name_id').val() );
+        $('#scientific_name_information_view').load('<?php echo $this->createUrl('scientificNameInformation/ajaxUpdate', array('scientific_name_id' => '')); ?>' + $('#BotanicalObject_scientific_name_id').val());
     }
-    
+
     /**
      * Called when the scientific name information dialog is closed (empty content)
      */
-    function scientificNameInformationClose(event,ui) {
+    function scientificNameInformationClose(event, ui) {
         $('#scientific_name_information_view').html('');
     }
-    
+
     /**
      * Called when the scientific name informations are saved
      */
-    function scientificNameInformationSave(event,ui) {
+    function scientificNameInformationSave(event, ui) {
         // keep reference to dialog
         var self = this;
-        
+
         // get all select values for sending to the server
         var formData = $('#scientific-name-information-update-form').serialize();
-        
+
         // disable the whole form
         $('#scientific-name-information-update-form').attr('disabled', 'disabled');
-        
+
         // send the request to the server
         $.post(
                 $('#scientific-name-information-update-form').attr('action'),
                 formData,
-                function(data, textStatus, jqXHR) {
+                function (data, textStatus, jqXHR) {
                     // close the calling dialog
                     $(self).dialog('close');
                 }
         );
     }
-    
+
     /**
      * Called when the authorization dialog is opened (for reloading)
      */
-    function authorizationOpen(event,ui) {
+    function authorizationOpen(event, ui) {
         // load authorization view and assign it to div
         $('#authorization_view').load('<?php echo $this->createUrl('authorization/ajaxBotanicalObjectAccess', array('botanical_object_id' => $model_botanicalObject->id)); ?>');
     }
-    
+
     /**
      * Called when the authorization dialog is closed (empty content)
      */
-    function authorizationClose(event,ui) {
+    function authorizationClose(event, ui) {
         $('#authorization_view').html('');
     }
-    
+
     /**
      * Called when the authorization settings are saved
      */
-    function authorizationSave(event,ui) {
+    function authorizationSave(event, ui) {
         // keep reference to dialog
         var self = this;
-        
+
         // get all select values for sending to the server
         var formData = {};
-        $('#authorization_form select').each(function() {
+        $('#authorization_form select').each(function () {
             formData[$(this).attr('name')] = $(this).val();
         });
-        
+
         // disable the whole form
         $('#authorization_form select').attr('disabled', 'disabled');
-        
+
         // send the request to the server
         $.post(
                 '<?php echo $this->createUrl('authorization/ajaxBotanicalObjectAccessSave', array('botanical_object_id' => $model_botanicalObject->id)); ?>',
                 formData,
-                function(data, textStatus, jqXHR) {
+                function (data, textStatus, jqXHR) {
                     // close the calling dialog
                     $(self).dialog('close');
                 }
         );
     }
-    
+
     // Bind to change event of institution select
-    $(document).ready(function(){
+    $(document).ready(function () {
         // initialize jsTree for organisation
         $('#organisation_tree').jstree({
             "json_data": {
                 "ajax": {
                     "url": "index.php?r=jSONOrganisation/japi&action=getChildren",
-                    "data": function(n) {
+                    "data": function (n) {
                         var link = (n.children) ? n.children('a').first() : n;
                         var organisation_id = (link.attr) ? link.attr("data-organisation-id") : 0;
-                        
+
                         return {
                             "organisation_id": organisation_id
                         };
@@ -269,27 +302,27 @@
             },
             "plugins": ["json_data", "themes"]
         });
-        
+
         // bind to click events onto tree items
-        $('#organisation_tree a').live('click', function() {
+        $('#organisation_tree a').live('click', function () {
             // update references to organisation
-            $('#BotanicalObject_organisation_id').val( $(this).attr('data-organisation-id') );
-            $('#BotanicalObject_organisation_name').val( $(this).text() );
+            $('#BotanicalObject_organisation_id').val($(this).attr('data-organisation-id'));
+            $('#BotanicalObject_organisation_name').val($(this).text());
             $('#organisation_select_dialog').dialog('close');
-            
+
             // update IPEN code, only if not locked
-            if( !$('#LivingPlant_ipen_locked').is(':checked') ) {
-                $( "#LivingPlant_ipenNumberInstitutionCode" ).val( ipen_codes[$("#BotanicalObject_organisation_id").val()] );
+            if (!$('#LivingPlant_ipen_locked').is(':checked')) {
+                $("#LivingPlant_ipenNumberInstitutionCode").val(ipen_codes[$("#BotanicalObject_organisation_id").val()]);
             }
             return false;
         });
-        
+
         // bind to new location event
-        $('#locationName').bind('autocompleteselect', function(event, ui) {
-            if( typeof ui.item.countryCode !== "undefined" && !$("#LivingPlant_ipen_locked").is(":checked") ) {
-                $( "#LivingPlant_ipenNumberCountryCode" ).val( ui.item.countryCode );
+        $('#locationName').bind('autocompleteselect', function (event, ui) {
+            if (typeof ui.item.countryCode !== "undefined" && !$("#LivingPlant_ipen_locked").is(":checked")) {
+                $("#LivingPlant_ipenNumberCountryCode").val(ui.item.countryCode);
             }
         });
     });
-    
+
 </script>
