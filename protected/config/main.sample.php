@@ -158,13 +158,14 @@ return array(
         // this is used in contact page
         'adminEmail' => 'admin@domain.com',
         'groupPrefix' => 'grp_',
-        'familyClassificationIds' => array(0),  // reference(s) to use for family finding, order by priority
-        'jsonJacqUrl' => null,                  // url to get all jacq-json-services, change to a services url
-        'indetScientificNameId' => 0,           // scientific_name_id of indet names (for import compatibility)
-        'jacqClassificationCitationId' => 0,    // citation ID which is used for importing the jacq-legacy classification
-        'classifications_license' => '',        // license string which is added to downloaded classifications
-        'guidUrlPrefix' => '',                  // URL-Prefix for GUIDs passed to outside world
-        'singleSignOnLegacy' => 'u@p',          // username and password used by the legacy part
-        'bgciRankHierarchyCutoff' => 22,        // hierarchy must be above this value to include the rank abbreviation in bgci export
+        'familyClassificationIds' => array(0),                          // reference(s) to use for family finding, order by priority
+        'jsonJacqUrl' => null,                                          // url to get all jacq-json-services, change to a services url
+        'indetScientificNameId' => 0,                                   // scientific_name_id of indet names (for import compatibility)
+        'jacqClassificationCitationId' => 0,                            // citation ID which is used for importing the jacq-legacy classification
+        'classifications_license' => '',                                // license string which is added to downloaded classifications
+        'guidUrlPrefix' => '',                                          // URL-Prefix for GUIDs passed to outside world
+        'singleSignOnLegacy' => 'u@p',                                  // username and password used by the legacy part
+        'bgciRankHierarchyCutoff' => 22,                                // hierarchy must be above this value to include the rank abbreviation in bgci export
+        'jacqJavaEEBaseUrl' => 'http://localhost:8080/jacq-service/',   // Base URL to Jacq JavaEE installation (trailing slash!)
     ),
 );
