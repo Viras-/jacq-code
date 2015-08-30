@@ -8,6 +8,7 @@
  * @property integer $accession_number
  * @property string $ipen_number
  * @property integer $ipen_locked
+ * @property string $ipen_type
  * @property integer $phyto_control
  * @property string $place_number
  * @property integer $index_seminum
@@ -106,6 +107,7 @@ class LivingPlant extends ActiveRecord {
             array('id', 'required'),
             array('id, accession_number, ipen_locked, phyto_control, index_seminum, index_seminum_type_id, incoming_date_id, label_synonym_scientific_name_id, cultivar_id, bgci', 'numerical', 'integerOnly' => true),
             array('ipen_number, place_number', 'length', 'max' => 50),
+            array('ipen_type', 'length', 'max' => 7),
             array('ipenNumberCountryCode', 'length', 'max' => 2),
             array('ipenNumberState', 'length', 'max' => 1),
             array('ipenNumberInstitutionCode', 'length', 'max' => 45),
@@ -144,6 +146,7 @@ class LivingPlant extends ActiveRecord {
             'id' => Yii::t('jacq', 'ID'),
             'ipen_number' => Yii::t('jacq', 'IPEN Number'),
             'ipen_locked' => Yii::t('jacq', 'IPEN Locked'),
+            'ipen_type' => Yii::t('jacq', 'IPEN Type'),
             'phyto_control' => Yii::t('jacq', 'Phyto Control'),
             'accessionNumber' => Yii::t('jacq', 'Accession Number'),
             'accessionNumber_search' => Yii::t('jacq', 'Accession Number'),
@@ -302,5 +305,12 @@ class LivingPlant extends ActiveRecord {
     public function getIpenNumberInstitutionCode() {
         return substr($this->ipen_number, 5);
     }
-
+    
+    public function getIpenNumberCustom() {
+        return $this->ipen_number;
+    }
+    
+    public function setIpenNumberCustom($value) {
+        $this->ipen_number = $value;
+    }
 }
