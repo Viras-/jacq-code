@@ -154,11 +154,20 @@ class JSONjsTreeController extends JacqController {
         $synonyms = JSONClassificationController::japiSynonyms($referenceType, $referenceID, $taxonID);
         if( count($synonyms) > 0 ) {
             foreach( $synonyms as $synonym ) {
+                $typeLink = $synonym["hasType"] ? "<span class='typeBox'>&#x3C4;</span>" : '';
+                $specimenLink = $synonym["hasSpecimen"] ? "<span class='specimenBox'>S</span>" : '';
+                if ($synonym["hasType"] || $synonym["hasSpecimen"]) {
+                    $parts = explode(' ', $synonym["referenceName"]);
+                    $taxon = trim((count($parts) <= 2) ? $parts[0] : $synonym["referenceName"]);
+                } else {
+                    $taxon = '';
+                }
                 $return[] = array(
                     "data" => array(
-                        "title" => (($synonym['referenceInfo']['cited']) ? $synonym["referenceName"] : '[' . $synonym["referenceName"] . ']') . $infoLink, // uncited synonyms (i.e. basionym) are shown in brackets
+                        "title" => (($synonym['referenceInfo']['cited']) ? $synonym["referenceName"] : '[' . $synonym["referenceName"] . ']') . $infoLink . $typeLink . $specimenLink, // uncited synonyms (i.e. basionym) are shown in brackets
                         "attr" => array(
                             "data-taxon-id" => $synonym["taxonID"],
+                            "data-taxon" => $taxon,
                             "data-reference-id" => $synonym["referenceId"],
                             "data-reference-type" => $synonym["referenceType"]
                         )
@@ -178,11 +187,20 @@ class JSONjsTreeController extends JacqController {
                 $title = $child["referenceName"];
                 $titleFull = '';
             }
+            $typeLink = $child["hasType"] ? "<span class='typeBox'>&#x3C4;</span>" : '';
+            $specimenLink = $child["hasSpecimen"] ? "<span class='specimenBox'>S</span>" : '';
+            if ($child["hasType"] || $child["hasSpecimen"]) {
+                $parts = explode(' ', $child["referenceName"]);
+                $taxon = trim((count($parts) <= 2) ? $parts[0] : $child["referenceName"]);
+            } else {
+                $taxon = '';
+            }
             $entry = array(
                 "data" => array(
-                    "title" => $title . $infoLink,
+                    "title" => $title .  $infoLink . $typeLink . $specimenLink,
                     "attr" => array(
                         "data-taxon-id" => $child["taxonID"],
+                        "data-taxon" => $taxon,
                         "data-reference-id" => $child["referenceId"],
                         "data-reference-type" => $child["referenceType"],
                     )
