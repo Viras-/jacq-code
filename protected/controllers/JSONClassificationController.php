@@ -1054,7 +1054,7 @@ class JSONClassificationController extends JacqController {
                 array(
                     'AND',
                     'tst.typusID IS NOT NULL',
-                    's.taxonID = :taxonID',
+                    'tst.taxonID = :taxonID',
                 ),
                 array(
                     ':taxonID' => $taxonID
