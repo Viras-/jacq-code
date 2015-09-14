@@ -8,7 +8,7 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array('label' => Yii::t('jacq', 'Create Living Plant'), 'url' => array('create')),
     array('label' => Yii::t('jacq', 'Manage Living Plant'), 'url' => array('admin')),
-    array('label' => Yii::t('jacq', 'Work Label'), 'url' => Yii::app()->params['jacqJavaEEBaseUrl'] . 'rest/label/work/' . $model_livingPlant->accession_number),
+    array('label' => Yii::t('jacq', 'Work Label'), 'url' => Yii::app()->params['jacqJavaEEBaseUrl'] . 'rest/label/work/' . $model_livingPlant->id),
 );
 ?>
 
