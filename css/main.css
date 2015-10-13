@@ -250,6 +250,17 @@ table.infoBox td {
     padding: 2px;
 }
 
+span.typeBox {
+    padding: 0 0 0 1em;
+    color: red;
+    font-weight: bold;
+}
+
+span.specimenBox {
+    padding: 0 0 0 1em;
+    font-weight: bold;
+}
+
 /* Starter CSS for Menu */
 #cssmenu {
   padding: 0;

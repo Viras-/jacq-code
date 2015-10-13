@@ -193,6 +193,26 @@ $('#jstree_classificationBrowser .infoBox').live({
     }
 });
 
+// add click handler for all specimen links
+$('#jstree_classificationBrowser .specimenBox').live({
+    click: function() {
+        var taxon = $(this).parent().attr('data-taxon');
+        window.open('http://herbarium.univie.ac.at/database/search.php?taxon=' + encodeURIComponent(taxon) + '&search=1');
+
+        return false;
+    }
+});
+
+// add click handler for all type links
+$('#jstree_classificationBrowser .typeBox').live({
+    click: function() {
+        var taxon = $(this).parent().attr('data-taxon');
+        window.open('http://herbarium.univie.ac.at/database/search.php?taxon=' + encodeURIComponent(taxon) + '&search=1');
+
+        return false;
+    }
+});
+
 // add click handler for access handling
 $('#jstree_classificationBrowser .acl').live({
     click: function() {

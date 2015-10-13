@@ -140,6 +140,8 @@ class JSONClassificationController extends JacqController {
                         "referenceName" => $dbRow['referenceName'],
                         "referenceType" => "citation",
                         "hasChildren" => true,
+                        "hasType" => false,
+                        "hasSpecimen" => false,
 //                        "nrAccTaxa" => $dbRow2['number'],
 //                        "nrSynonyms" => $dbRow3['number']
                     );
@@ -215,6 +217,8 @@ class JSONClassificationController extends JacqController {
                         "referenceName" => $dbRow['scientificName'],
                         "referenceType" => "citation",
                         "hasChildren" => ($dbRow['hasChildren'] > 0 || $dbRow['hasSynonyms'] > 0 || $dbRow['hasBasionym']),
+                        "hasType" => JSONClassificationController::hasType($dbRow['taxonID']),
+                        "hasSpecimen" => JSONClassificationController::hasSpecimen($dbRow['taxonID']),
                         "referenceInfo" => array(
                             "number" => $dbRow['number'],
                             "order" => $dbRow['order'],
@@ -358,6 +362,8 @@ class JSONClassificationController extends JacqController {
                 "referenceName" => $dbRows[0]['scientificName'],
                 "referenceId" => $referenceID,
                 "referenceType" => $referenceType,
+                "hasType" => JSONClassificationController::hasType($basID),
+                "hasSpecimen" => JSONClassificationController::hasSpecimen($basID),
                 "referenceInfo" => array(
                     "type" => "homotype",
                     "cited" => false
@@ -403,6 +409,8 @@ class JSONClassificationController extends JacqController {
                         "referenceName" => $dbRow['scientificName'],
                         "referenceId" => $referenceID,
                         "referenceType" => $referenceType,
+                        "hasType" => JSONClassificationController::hasType($dbRow['taxonID']),
+                        "hasSpecimen" => JSONClassificationController::hasSpecimen($dbRow['taxonID']),
                         "referenceInfo" => array(
                             "type" => ($dbRow['homotype'] > 0) ? "homotype" : "heterotype",
                             'cited' => true
@@ -529,7 +537,9 @@ class JSONClassificationController extends JacqController {
                 "referenceId" => $dbRow['referenceId'],
                 "referenceType" => "citation",
                 "taxonID" => $taxonID,
-                "hasChildren" => $hasChildren
+                "hasChildren" => $hasChildren,
+                "hasType" => false,
+                "hasSpecimen" => false
                 //"hasChildren" => JSONClassificationController::hasChildren($dbRow['referenceId'], $taxonID)
                 //"hasChildren" => (count(JSONClassificationController::japiChildren("citation", $dbRow['referenceId'], $taxonID)) > 0)
             );
@@ -609,6 +619,8 @@ class JSONClassificationController extends JacqController {
                     "referenceType" => "citation",
                     "taxonID" => $taxonID,
                     "hasChildren" => false,
+                    "hasType" => false,
+                    "hasSpecimen" => false,
                 );
             }
         }
@@ -670,6 +682,8 @@ class JSONClassificationController extends JacqController {
                             "referenceId" => $referenceId,
                             "referenceName" => $dbRow['referenceName'],
                             "referenceType" => "citation",
+                            "hasType" => JSONClassificationController::hasType($dbRow['taxonID']),
+                            "hasSpecimen" => JSONClassificationController::hasSpecimen($dbRow['taxonID']),
                             "referenceInfo" => array(
                                 "number" => $dbRow['number'],
                                 "order" => $dbRow['order']
@@ -705,7 +719,9 @@ class JSONClassificationController extends JacqController {
                                 "taxonID" => $accTaxon['acc_taxon_ID'],
                                 "referenceId" => $referenceId,
                                 "referenceName" => $accTaxon['referenceName'],
-                                "referenceType" => "citation"
+                                "referenceType" => "citation",
+                                "hasType" => JSONClassificationController::hasType($accTaxon['acc_taxon_ID']),
+                                "hasSpecimen" => JSONClassificationController::hasSpecimen($accTaxon['acc_taxon_ID'])
                             );
                         }
                         // if not we have to return the citation entry
@@ -727,7 +743,9 @@ class JSONClassificationController extends JacqController {
                                     "taxonID" => 0,
                                     "referenceId" => $dbRow['referenceId'],
                                     "referenceName" => $dbRow['referenceName'],
-                                    "referenceType" => "citation"
+                                    "referenceType" => "citation",
+                                    "hasType" => false,
+                                    "hasSpecimen" => false
                                 );
                             }
                         }
@@ -748,7 +766,9 @@ class JSONClassificationController extends JacqController {
                             "taxonID" => 0,
                             "referenceId" => $dbRow['referenceId'],
                             "referenceName" => $dbRow['referenceName'],
-                            "referenceType" => "periodical"
+                            "referenceType" => "periodical",
+                            "hasType" => false,
+                            "hasSpecimen" => false
                         );
                     }
                 }
@@ -993,5 +1013,54 @@ class JSONClassificationController extends JacqController {
 
             return (count($dbRows) > 0);
         }
+    }
+
+    /**
+     * Are there any specimen records of a given taxonID?
+     * NOTE: the function is static so that it can be called from other static functions as well
+     * @param int $taxonID ID of taxon
+     * @return bool specimen record(s) present?
+     */
+    public static function hasSpecimen ($taxonID)
+    {
+        // setup db query
+        $db = JSONClassificationController::getDbHerbarInput();
+
+        $dbCommand = $db->createCommand()
+            ->select("s.specimen_ID")
+            ->from('tbl_specimens s')
+            ->where('s.taxonID = :taxonID', array(':taxonID' => $taxonID));
+        $dbRows = $dbCommand->queryAll();
+
+        return (count($dbRows) > 0);
+    }
+
+    /**
+     * Are there any type records of a given taxonID?
+     * NOTE: the function is static so that it can be called from other static functions as well
+     * @param int $taxonID ID of taxon
+     * @return bool type record(s) present?
+     */
+    public static function hasType ($taxonID)
+    {
+        // setup db query
+        $db = JSONClassificationController::getDbHerbarInput();
+
+        $dbCommand = $db->createCommand()
+            ->select("s.specimen_ID")
+            ->from('tbl_specimens s')
+            ->leftJoin('tbl_specimens_types tst', 'tst.specimenID = s.specimen_ID')
+            ->where(
+                array(
+                    'AND',
+                    'tst.typusID IS NOT NULL',
+                    'tst.taxonID = :taxonID',
+                ),
+                array(
+                    ':taxonID' => $taxonID
+                ));
+        $dbRows = $dbCommand->queryAll();
+
+        return (count($dbRows) > 0);
     }
 }
