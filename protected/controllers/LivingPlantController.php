@@ -28,7 +28,7 @@ class LivingPlantController extends JacqController {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber', 'copyAndNew'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -68,6 +68,27 @@ class LivingPlantController extends JacqController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
+        $this->createEntry();
+    }
+
+    /**
+     * Create a new entry based on an existing one
+     * @param int $living_plant_id
+     */
+    public function actionCopyAndNew($living_plant_id) {
+        $living_plant_id = intval($living_plant_id);
+        if ($living_plant_id <= 0) {
+            return;
+        }
+
+        $this->createEntry($living_plant_id);
+    }
+
+    /**
+     * Helper function for creating a new living plant entry, can be based on an existing entry
+     * @param integer $living_plant_id Id of living plant to base the new entry on ("copy"). optional
+     */
+    protected function createEntry($living_plant_id = 0) {
         $model_acquisitionDate = new AcquisitionDate;
         $model_acquisitionEvent = new AcquisitionEvent;
         $model_livingPlant = new LivingPlant;
@@ -75,6 +96,34 @@ class LivingPlantController extends JacqController {
         $model_locationCoordinates = new LocationCoordinates;
         $model_incomingDate = new AcquisitionDate;
         $model_botanicalObject->scientificNameInformation = new ScientificNameInformation;
+
+        // check if entries should be based on an existing 
+        if ($living_plant_id > 0) {
+            $model_livingPlant = $this->loadModel($living_plant_id);
+            $model_livingPlant->setIsNewRecord(true);
+            unset($model_livingPlant->id);
+            unset($model_livingPlant->accession_number);
+
+            $model_botanicalObject = $model_livingPlant->id0;
+            $model_botanicalObject->setIsNewRecord(true);
+            unset($model_botanicalObject->id);
+
+            $model_acquisitionEvent = $model_botanicalObject->acquisitionEvent;
+            $model_acquisitionEvent->setIsNewRecord(true);
+            unset($model_acquisitionEvent->id);
+
+            $model_acquisitionDate = $model_acquisitionEvent->acquisitionDate;
+            $model_acquisitionDate->setIsNewRecord(true);
+            unset($model_acquisitionDate->id);
+
+            $model_locationCoordinates = $model_acquisitionEvent->locationCoordinates;
+            $model_locationCoordinates->setIsNewRecord(true);
+            unset($model_locationCoordinates->id);
+
+            $model_incomingDate = $model_livingPlant->incomingDate;
+            $model_incomingDate->setIsNewRecord(true);
+            unset($model_incomingDate->id);
+        }
 
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['LocationCoordinates'])) {
             $model_acquisitionDate->setDate($_POST['AcquisitionDate']['date']);
