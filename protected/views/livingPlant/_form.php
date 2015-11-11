@@ -27,6 +27,17 @@
                         <span class="scientific_name"><?php echo $model_botanicalObject->scientificName; ?></span> (<?php echo $model_livingPlant->accessionNumber; ?>)
                     </td>
                     <td class="right">
+                        <?php
+                        echo Html::button(
+                                Yii::t('jacq', 'Copy & New'), array(
+                            'type' => 'button',
+                            'onclick' => 'window.location.href = "' . $this->createUrl('copyAndNew', array(
+                                'living_plant_id' => $model_livingPlant->id
+                                    )
+                            ) . '"'
+                                )
+                        );
+                        ?>
                         <?php echo CHtml::submitButton(Yii::t('jacq', 'Save'), array('data-plus-as-tab' => "false")); ?>
                     </td>
                 </tr>
@@ -79,12 +90,25 @@
     ));
     ?>
 
-    <?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);   ?>
+    <?php //echo $form->errorSummary($model_acquisitionDate, $model_acquisitionEvent, $model_livingPlant,$model_botanicalObject);    ?>
 
     <br />
     <?php require('form_importProperties.php'); ?>
 
     <div class="row buttons">
+        <?php
+        if (!$model_livingPlant->isNewRecord) {
+            echo Html::button(
+                    Yii::t('jacq', 'Copy & New'), array(
+                'type' => 'button',
+                'onclick' => 'window.location.href = "' . $this->createUrl('copyAndNew', array(
+                    'living_plant_id' => $model_livingPlant->id
+                        )
+                ) . '"'
+                    )
+            );
+        }
+        ?>
         <?php echo CHtml::submitButton($model_livingPlant->isNewRecord ? Yii::t('jacq', 'Create') : Yii::t('jacq', 'Save'), array('data-plus-as-tab' => "false")); ?>
     </div>
     <?php $this->endWidget(); ?>

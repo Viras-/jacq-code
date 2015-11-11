@@ -28,7 +28,7 @@ class LivingPlantController extends JacqController {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber', 'copyAndNew'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -72,6 +72,19 @@ class LivingPlantController extends JacqController {
     }
 
     /**
+     * Create a new entry based on an existing one
+     * @param int $living_plant_id
+     */
+    public function actionCopyAndNew($living_plant_id) {
+        $living_plant_id = intval($living_plant_id);
+        if ($living_plant_id <= 0) {
+            return;
+        }
+
+        $this->createEntry($living_plant_id);
+    }
+
+    /**
      * Helper function for creating a new living plant entry, can be based on an existing entry
      * @param integer $living_plant_id Id of living plant to base the new entry on ("copy"). optional
      */
@@ -89,17 +102,27 @@ class LivingPlantController extends JacqController {
             $model_livingPlant = $this->loadModel($living_plant_id);
             $model_livingPlant->setIsNewRecord(true);
             unset($model_livingPlant->id);
+            unset($model_livingPlant->accession_number);
 
             $model_botanicalObject = $model_livingPlant->id0;
             $model_botanicalObject->setIsNewRecord(true);
             unset($model_botanicalObject->id);
 
-            $model_acquisitionDate = new AcquisitionDate;
-            $model_acquisitionEvent = new AcquisitionEvent;
-            $model_botanicalObject = new BotanicalObject;
-            $model_locationCoordinates = new LocationCoordinates;
-            $model_incomingDate = new AcquisitionDate;
-            $model_botanicalObject->scientificNameInformation = new ScientificNameInformation;
+            $model_acquisitionEvent = $model_botanicalObject->acquisitionEvent;
+            $model_acquisitionEvent->setIsNewRecord(true);
+            unset($model_acquisitionEvent->id);
+
+            $model_acquisitionDate = $model_acquisitionEvent->acquisitionDate;
+            $model_acquisitionDate->setIsNewRecord(true);
+            unset($model_acquisitionDate->id);
+
+            $model_locationCoordinates = $model_acquisitionEvent->locationCoordinates;
+            $model_locationCoordinates->setIsNewRecord(true);
+            unset($model_locationCoordinates->id);
+
+            $model_incomingDate = $model_livingPlant->incomingDate;
+            $model_incomingDate->setIsNewRecord(true);
+            unset($model_incomingDate->id);
         }
 
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['LocationCoordinates'])) {
@@ -552,8 +575,7 @@ class LivingPlantController extends JacqController {
                             // check if label-type was unchecked, deleting it if user has right to do so
                             if (!in_array($model_botanicalObjectLabel->label_type_id, $new_labelTypes) && Yii::app()->user->checkAccess('oprtn_clearLabelType')) {
                                 $model_botanicalObjectLabel->delete();
-                            }
-                            else {
+                            } else {
                                 $new_labelTypes = array_diff($new_labelTypes, array($model_botanicalObjectLabel->label_type_id));
                             }
                         }
@@ -584,8 +606,7 @@ class LivingPlantController extends JacqController {
                                 // check if this is an existing entry
                                 if ($separation['id'] > 0) {
                                     $model_separation = Separation::model()->findByPk($separation['id']);
-                                }
-                                else {
+                                } else {
                                     $model_separation = new Separation();
                                 }
 
@@ -613,8 +634,7 @@ class LivingPlantController extends JacqController {
                                 // check if this is an existing entry
                                 if ($certificate['id'] > 0) {
                                     $model_certificate = Certificate::model()->findByPk($certificate['id']);
-                                }
-                                else {
+                                } else {
                                     $model_certificate = new Certificate();
                                 }
 
@@ -642,8 +662,7 @@ class LivingPlantController extends JacqController {
                                 // check if this is an existing entry
                                 if ($alternativeAccessionNumber['id'] > 0) {
                                     $model_alternativeAccessionNumber = AlternativeAccessionNumber::model()->findByPk($alternativeAccessionNumber['id']);
-                                }
-                                else {
+                                } else {
                                     $model_alternativeAccessionNumber = new AlternativeAccessionNumber();
                                 }
 
@@ -671,8 +690,7 @@ class LivingPlantController extends JacqController {
                                 // check if this is an existing entry
                                 if ($specimen['id_specimen'] > 0) {
                                     $model_specimen = Specimen::model()->findByPk($specimen['id_specimen']);
-                                }
-                                else {
+                                } else {
                                     $model_specimen = new Specimen();
                                 }
 
@@ -726,8 +744,7 @@ class LivingPlantController extends JacqController {
             // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if (!isset($_GET['ajax']))
                 $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-        }
-        else
+        } else
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
 
@@ -1028,7 +1045,8 @@ class LivingPlantController extends JacqController {
      * @param boolean $bAllowAccess input value for AllowAccess
      * @return null|boolean null if no access information is available, else true or false
      */
-    private function checkAccessOrganisation($model_accessOrganisation, $bAllowAccess) {
+    private function checkAccessOrganisation($model_accessOrganisation,
+            $bAllowAccess) {
         // check for valid model
         if ($model_accessOrganisation == null)
             return $bAllowAccess;
@@ -1036,8 +1054,7 @@ class LivingPlantController extends JacqController {
         // check for explicit allowal or denial
         if ($model_accessOrganisation->allowDeny == 1) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
