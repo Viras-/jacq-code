@@ -178,7 +178,7 @@ class AutoCompleteController extends JSONServiceController {
         $command = $dbHerbarInput->createCommand()
                 ->select("SammlerID, Sammler")
                 ->from("tbl_collector")
-                ->where('Sammler LIKE :Sammler', array(':Sammler' => $term . '%'));
+                ->where(array('like', 'Sammler', $term . '%'));
         $rows = $command->queryAll();
 
         // Construct answer array with data from table
