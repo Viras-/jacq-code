@@ -97,7 +97,7 @@ class LivingPlantController extends JacqController {
         $model_incomingDate = new AcquisitionDate;
         $model_botanicalObject->scientificNameInformation = new ScientificNameInformation;
 
-        // check if entries should be based on an existing 
+        // check if entries should be based on an existing
         if ($living_plant_id > 0) {
             $model_livingPlant = $this->loadModel($living_plant_id);
             $model_livingPlant->setIsNewRecord(true);
@@ -560,7 +560,9 @@ class LivingPlantController extends JacqController {
                                 $model_botanicalObjectSex = new BotanicalObjectSex;
                                 $model_botanicalObjectSex->botanical_object_id = $model_livingPlant->id;
                                 $model_botanicalObjectSex->sex_id = $sex_id;
-                                $model_botanicalObjectSex->save();
+                                if (!$model_botanicalObjectSex->save()) {
+                                    error_log(var_export($model_botanicalObjectSex->getErrors(), true));
+                                }
                             }
                         }
 
@@ -811,7 +813,7 @@ class LivingPlantController extends JacqController {
     }
 
     /**
-     * Update drop down list for available pages 
+     * Update drop down list for available pages
      */
     public function actionTreeRecordFilePages() {
         $data = TreeRecordFilePage::model()->findAll('tree_record_file_id=:tree_record_file_id', array(':tree_record_file_id' => intval($_POST['TreeRecord']['tree_record_file_id'])));
@@ -823,7 +825,7 @@ class LivingPlantController extends JacqController {
     }
 
     /**
-     * Download & display a tree record file page 
+     * Download & display a tree record file page
      */
     public function actionTreeRecordFilePageView() {
         $tree_record_file_page_id = intval($_GET['tree_record_file_page_id']);
@@ -849,7 +851,7 @@ class LivingPlantController extends JacqController {
     }
 
     /**
-     * renders form for entering a new certificate 
+     * renders form for entering a new certificate
      */
     public function actionAjaxCertificate() {
         $model_certificate = new Certificate;
@@ -871,7 +873,7 @@ class LivingPlantController extends JacqController {
     }
 
     /**
-     * renders form for entering a new alternative accession number 
+     * renders form for entering a new alternative accession number
      */
     public function actionAjaxAlternativeAccessionNumber() {
         $model_alternativeAccessionNumber = new AlternativeAccessionNumber();
@@ -1025,7 +1027,7 @@ class LivingPlantController extends JacqController {
         }
 
         /**
-         * Accession (livingplant) level 
+         * Accession (livingplant) level
          */
         $bAccessionAccess = Yii::app()->authorization->botanicalObjectAccess($model->id, Yii::app()->user->getId());
         if ($bAccessionAccess !== NULL)
@@ -1045,8 +1047,7 @@ class LivingPlantController extends JacqController {
      * @param boolean $bAllowAccess input value for AllowAccess
      * @return null|boolean null if no access information is available, else true or false
      */
-    private function checkAccessOrganisation($model_accessOrganisation,
-            $bAllowAccess) {
+    private function checkAccessOrganisation($model_accessOrganisation, $bAllowAccess) {
         // check for valid model
         if ($model_accessOrganisation == null)
             return $bAllowAccess;

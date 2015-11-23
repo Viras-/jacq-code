@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Handles the auto-complete functions
  */
@@ -6,7 +7,7 @@ class AutoCompleteController extends JSONServiceController {
 
     /**
      * Return connection to herbarinput database
-     * @return CDbConnection 
+     * @return CDbConnection
      */
     private function getDbHerbarInput() {
         return Yii::app()->dbHerbarInput;
@@ -14,7 +15,7 @@ class AutoCompleteController extends JSONServiceController {
 
     /**
      * Return connection to herbar_view database
-     * @return CDbConnection 
+     * @return CDbConnection
      */
     private function getDbHerbarView() {
         return Yii::app()->dbHerbarView;
@@ -23,7 +24,7 @@ class AutoCompleteController extends JSONServiceController {
     /**
      * Get the scientific name for a given taxon ID
      * @param int $taxonID
-     * @return string 
+     * @return string
      */
     private function getTaxonName($taxonID) {
         $dbHerbarView = $this->getDbHerbarView();
@@ -34,7 +35,7 @@ class AutoCompleteController extends JSONServiceController {
     }
 
     /**
-     * Search for fitting scientific names and return them 
+     * Search for fitting scientific names and return them
      */
     public function actionScientificName($term) {
         $pieces = explode(' ', $term);
@@ -62,8 +63,7 @@ class AutoCompleteController extends JSONServiceController {
 
             $where_fields[] = 'te0.epithet LIKE :epithet0';
             $where_fields_data[':epithet0'] = $pieces[1] . '%';
-        }
-        else {
+        } else {
             $where_fields[] = 'ts.speciesID IS NULL';
         }
 
@@ -93,7 +93,7 @@ class AutoCompleteController extends JSONServiceController {
     }
 
     /**
-     * Search for fitting location names (and query geonames if necessary) 
+     * Search for fitting location names (and query geonames if necessary)
      */
     public function actionLocation() {
         $term = trim($_GET['term']);
@@ -117,7 +117,7 @@ class AutoCompleteController extends JSONServiceController {
                     $model_locationGeonames = LocationGeonames::model()->find('geonameId=:geonameId', array(':geonameId' => $geoname['geonameId']));
                     if ($model_locationGeonames != null) {
                         $model_location = Location::model()->findByPk($model_locationGeonames->id);
-                        
+
                         // update model with new location description
                         $model_location->location = $geoname['name'] . ' (' . $geoname['adminName1'] . ', ' . $geoname['countryName'] . ')';
                         $model_location->save();
@@ -163,29 +163,31 @@ class AutoCompleteController extends JSONServiceController {
     }
 
     /**
-     * Auto-completer action for person names 
+     * Auto-completer action for person names
      */
     public function actionPerson() {
         // Clean up passed person name
         $term = trim($_GET['term']);
 
         // We want at least two letters
-        if (strlen($term) <= 0)
+        if (strlen($term) <= 0) {
             return;
+        }
 
         // Fetch all possible persons
-        $dbHerbarInput = $this->getDbHerbarInput();
-        $command = $dbHerbarInput->createCommand()
-                ->select("SammlerID, Sammler")
-                ->from("tbl_collector")
-                ->where('Sammler LIKE :Sammler', array(':Sammler' => $term . '%'));
+        $dbJacqInput = Yii::app()->db;
+        $command = $dbJacqInput->createCommand()
+                ->select("id, name")
+                ->from("view_person")
+                ->where(array('like', 'name', $term . '%'))
+                ->group('name');
         $rows = $command->queryAll();
 
         // Construct answer array with data from table
         $results = array();
         foreach ($rows as $row) {
             // Get a fitting person entry
-            $model_person = Person::getByName($row['Sammler']);
+            $model_person = Person::getByName($row['name']);
 
             // Add resulting perosn model info to response
             $results[] = array(
@@ -198,28 +200,28 @@ class AutoCompleteController extends JSONServiceController {
         // Output results as service response
         $this->serviceOutput($results);
     }
-    
+
     /**
      * Autocompleter function for Acquisition-Source entries
      * @param string $term name of acquisition source entry to search for
      */
     public function actionAcquisitionSource($term) {
         $results = array();
-        
+
         // search for entries containing the search term as name
         $dbCriteria = new CDbCriteria();
         $dbCriteria->addSearchCondition('name', $term);
         $models_acquisitionSource = AcquisitionSource::model()->findAll($dbCriteria);
 
         // add all found entries to the result
-        foreach( $models_acquisitionSource as $model_acquisitionSource ) {
+        foreach ($models_acquisitionSource as $model_acquisitionSource) {
             $results[] = array(
                 'label' => $model_acquisitionSource->name,
                 'value' => $model_acquisitionSource->name,
                 'id' => $model_acquisitionSource->acquisition_source_id,
             );
         }
-        
+
         // Output results as service response
         $this->serviceOutput($results);
     }

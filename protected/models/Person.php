@@ -12,6 +12,7 @@
  * @property BotanicalObject[] $botanicalObjects
  */
 class Person extends ActiveRecord {
+
     /**
      * @var helper attribute for deleting a person entry
      */
@@ -84,16 +85,16 @@ class Person extends ActiveRecord {
         $criteria->compare('name', $this->name, true);
 
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
-    
+
     /**
      * Return a person entry by name, automatically adds a new one if it does not find any
      * @param string $name Name to search for
-     * @return Person 
+     * @return Person
      */
-    public static function getByName( $name ) {
+    public static function getByName($name) {
         return Person::getByAttributes($name);
     }
 
@@ -102,23 +103,27 @@ class Person extends ActiveRecord {
      * @param string $name Name of person to search for
      * @return null|\Person
      */
-    private static function getByAttributes( $name = '' ) {
-        if( empty($name) ) return NULL;
-        
+    private static function getByAttributes($name = '') {
+        if (empty($name))
+            return NULL;
+
         // create search criteria
         $dbCriteria = new CDbCriteria();
-        if( !empty($name) ) $dbCriteria->addSearchCondition('name', $name);
-        
+        if (!empty($name)) {
+            $dbCriteria->compare('name', $name);
+        }
+
         // Find fitting entry
         $model_person = Person::model()->find($dbCriteria);
         // If none found, add a new one
-        if( $model_person == null ) {
+        if ($model_person == null) {
             $model_person = new Person;
             $model_person->name = $name;
             $model_person->save();
         }
-        
+
         // Finally return the model
         return $model_person;
     }
+
 }
