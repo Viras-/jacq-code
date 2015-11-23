@@ -100,17 +100,33 @@ class LivingPlantController extends JacqController {
         // check if entries should be based on an existing
         if ($living_plant_id > 0) {
             $model_livingPlant = $this->loadModel($living_plant_id);
+
+            $models_relevancy = $model_livingPlant->relevancies;
+            $model_certificates = $model_livingPlant->certificates;
+
             $model_livingPlant->setIsNewRecord(true);
             unset($model_livingPlant->id);
             unset($model_livingPlant->accession_number);
+            $model_livingPlant->relevancies = $models_relevancy;
+            $model_livingPlant->certificates = $model_certificates;
 
             $model_botanicalObject = $model_livingPlant->id0;
             $model_botanicalObject->setIsNewRecord(true);
             unset($model_botanicalObject->id);
 
             $model_acquisitionEvent = $model_botanicalObject->acquisitionEvent;
+
+            $model_acquisitionPersons = array();
+            if (isset($model_acquisitionEvent->tblPeople)) {
+                $model_acquisitionPersons = $model_acquisitionEvent->tblPeople;
+            }
+
+            $models_acquisitionEventSource = $model_acquisitionEvent->acquisitionEventSources;
+
             $model_acquisitionEvent->setIsNewRecord(true);
             unset($model_acquisitionEvent->id);
+            $model_acquisitionEvent->tblPeople = $model_acquisitionPersons;
+            $model_acquisitionEvent->acquisitionEventSources = $models_acquisitionEventSource;
 
             $model_acquisitionDate = $model_acquisitionEvent->acquisitionDate;
             $model_acquisitionDate->setIsNewRecord(true);
@@ -126,7 +142,7 @@ class LivingPlantController extends JacqController {
         }
 
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['LocationCoordinates'])) {
-            $model_acquisitionDate->setDate($_POST['AcquisitionDate']['date']);
+            $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
             $model_livingPlant->attributes = $_POST['LivingPlant'];
             $model_botanicalObject->attributes = $_POST['BotanicalObject'];
@@ -387,7 +403,7 @@ class LivingPlantController extends JacqController {
 
         // Check if we have a correct submission
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'])) {
-            $model_acquisitionDate->setDate($_POST['AcquisitionDate']['date']);
+            $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
             $model_livingPlant->attributes = $_POST['LivingPlant'];
             $model_botanicalObject->attributes = $_POST['BotanicalObject'];
