@@ -15,7 +15,7 @@
                         'change' => 'js:function( event, ui ) {
                                 if( typeof ui.item !== "undefined" ) {
                                     $( "#BotanicalObject_scientific_name_id" ).val( ui.item.id );
-                                    
+
                                     // update scientific name of toolbar as well
                                     $(".toolbar .scientific_name").text( ui.item.value );
                                 }
@@ -111,7 +111,7 @@
         $('#LivingPlant_ipen_type').on('change', function () {
             $.ajax({
                 url: 'index.php?r=livingPlant/ajaxIpenNumber&id=<?php echo $model_livingPlant->id ?>&type=' + $(this).val()
-            }).done(function(data) {
+            }).done(function (data) {
                 $('#ipenNumber').html(data);
             });
         });
@@ -147,7 +147,7 @@
                 <?php echo $form->labelEx($model_livingPlant, 'ipen_locked');
                 ?>
                 <?php echo $form->checkBox($model_livingPlant, 'ipen_locked'); ?>
-<?php echo $form->error($model_livingPlant, 'ipen_locked'); ?>
+                <?php echo $form->error($model_livingPlant, 'ipen_locked'); ?>
             </td>
         </tr>
     </table>
@@ -155,7 +155,7 @@
 
 <!-- display alternative accession numbers -->
 <div class="row">
-<?php require("form_alternativeAccessionNumbers.php"); ?>
+    <?php require("form_alternativeAccessionNumbers.php"); ?>
 </div>
 
 <!-- plant sex -->
@@ -167,7 +167,7 @@
                 <?php
 // display checkbox for assigned sexes
                 echo CHtml::checkBoxList(
-                        'Sex', CHtml::listData($model_botanicalObject->botanicalObjectSexes, 'id', 'id'), Html::listDataSorted(
+                        'Sex', CHtml::listData($model_botanicalObject->botanicalObjectSexes, 'sex_id', 'sex_id'), Html::listDataSorted(
                                 Sex::model()->findAll(), 'id', 'sexTranslated'
                         ), array(
                     'labelOptions' => array('style' => 'display: inline'),
@@ -189,7 +189,7 @@ if (Yii::app()->user->checkAccess('oprtn_assignLabelType') || Yii::app()->user->
         <table style="width: 100%;">
             <tr>
                 <td>
-    <?php echo $form->labelEx(LabelType::model(), 'label_type_id'); ?>
+                    <?php echo $form->labelEx(LabelType::model(), 'label_type_id'); ?>
                 </td>
             </tr>
             <?php
@@ -220,7 +220,7 @@ if (Yii::app()->user->checkAccess('oprtn_assignLabelType') || Yii::app()->user->
                         ));
                         ?>
                         <?php echo $form->hiddenField($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
-        <?php echo $form->error($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
+                        <?php echo $form->error($model_livingPlant, 'label_synonym_scientific_name_id'); ?>
                     </td>
                 </tr>
                 <!-- display annotation field for labels, if user is allowed to assign label printing -->
@@ -228,7 +228,7 @@ if (Yii::app()->user->checkAccess('oprtn_assignLabelType') || Yii::app()->user->
                     <td>
                         <?php echo $form->labelEx($model_livingPlant, 'label_annotation'); ?>
                         <?php echo $form->textField($model_livingPlant, 'label_annotation', array('style' => 'width: 80%;')); ?>
-        <?php echo $form->error($model_livingPlant, 'label_annotation'); ?>
+                        <?php echo $form->error($model_livingPlant, 'label_annotation'); ?>
                     </td>
                 </tr>
                 <?php
@@ -266,10 +266,10 @@ if (Yii::app()->user->checkAccess('oprtn_assignLabelType') || Yii::app()->user->
 <div class="row">
     <?php echo $form->labelEx($model_botanicalObject, 'separated'); ?>
     <?php echo $form->checkBox($model_botanicalObject, 'separated'); ?>
-<?php echo $form->error($model_botanicalObject, 'separated'); ?>
+    <?php echo $form->error($model_botanicalObject, 'separated'); ?>
 </div>
 
 <!-- separations -->
 <div class="row">
-<?php require("form_separations.php"); ?>
+    <?php require("form_separations.php"); ?>
 </div>
