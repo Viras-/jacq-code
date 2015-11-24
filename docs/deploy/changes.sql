@@ -11,3 +11,4 @@ CREATE VIEW `jacq_input`.`view_person` AS
         `herbarinput`.`tbl_collector`
 ;
 
+INSERT INTO `srvc_uuid_minter_type` (`uuid_minter_type_id`, `description`, `timestamp`) VALUES (3, 'specimen', NOW());
