@@ -14,27 +14,23 @@
  * @property AcquisitionEvent[] $acquisitionEvents
  */
 class AcquisitionDate extends ActiveRecord {
+
     /**
      * Getter function for virtual date attribute
      * @return string formatted date
      */
     public function getDate() {
-        if( $this->custom != NULL ) {
-            return $this->custom;
-        }
-        else {
-            return sprintf('%04d-%02d-%02d', $this->year, $this->month, $this->day);
-        }
+        return sprintf('%04d-%02d-%02d', $this->year, $this->month, $this->day);
     }
-    
+
     /**
      * Set the virtual date attribute (splits it up into its components
-     * @param string $value 
+     * @param string $value
      */
     public function setDate($value) {
-            $this->year = substr($value, 0, 4);
-            $this->month = substr($value, 5, 2);
-            $this->day = substr($value, 8, 2);
+        $this->year = substr($value, 0, 4);
+        $this->month = substr($value, 5, 2);
+        $this->day = substr($value, 8, 2);
     }
 
     /**
@@ -66,7 +62,7 @@ class AcquisitionDate extends ActiveRecord {
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, year, month, day, custom', 'safe', 'on' => 'search'),
-            //array('date', 'type', 'type' => 'date', 'dateFormat' => 'yyyy-MM-dd'),
+                //array('date', 'type', 'type' => 'date', 'dateFormat' => 'yyyy-MM-dd'),
         );
     }
 
@@ -113,7 +109,8 @@ class AcquisitionDate extends ActiveRecord {
         $criteria->compare('custom', $this->custom, true);
 
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
+
 }

@@ -404,6 +404,7 @@ class LivingPlantController extends JacqController {
         // Check if we have a correct submission
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'])) {
             $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
+            $model_acquisitionDate->setDate($_POST['AcquisitionDate']['date']);
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
             $model_livingPlant->attributes = $_POST['LivingPlant'];
             $model_botanicalObject->attributes = $_POST['BotanicalObject'];
