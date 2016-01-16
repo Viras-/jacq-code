@@ -143,6 +143,7 @@ class LivingPlantController extends JacqController {
 
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['LocationCoordinates'])) {
             $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
+            $model_acquisitionDate->setDate($_POST['AcquisitionDate']['date']);
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
             $model_livingPlant->attributes = $_POST['LivingPlant'];
             $model_botanicalObject->attributes = $_POST['BotanicalObject'];
@@ -418,6 +419,10 @@ class LivingPlantController extends JacqController {
                 if ($model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0) {
                     $model_location = Location::getByName($locationName);
                     $model_acquisitionEvent->location_id = $model_location->id;
+                }
+                // check if location is empty now, if yes make sure we reset the location id
+                else if (empty($locationName)) {
+                    $model_acquisitionEvent->location_id = null;
                 }
 
                 // save coordinates info
