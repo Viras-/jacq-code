@@ -28,7 +28,7 @@ class LivingPlantController extends JacqController {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber', 'copyAndNew'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -68,6 +68,27 @@ class LivingPlantController extends JacqController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
+        $this->createEntry();
+    }
+
+    /**
+     * Create a new entry based on an existing one
+     * @param int $living_plant_id
+     */
+    public function actionCopyAndNew($living_plant_id) {
+        $living_plant_id = intval($living_plant_id);
+        if ($living_plant_id <= 0) {
+            return;
+        }
+
+        $this->createEntry($living_plant_id);
+    }
+
+    /**
+     * Helper function for creating a new living plant entry, can be based on an existing entry
+     * @param integer $living_plant_id Id of living plant to base the new entry on ("copy"). optional
+     */
+    protected function createEntry($living_plant_id = 0) {
         $model_acquisitionDate = new AcquisitionDate;
         $model_acquisitionEvent = new AcquisitionEvent;
         $model_livingPlant = new LivingPlant;
@@ -76,7 +97,52 @@ class LivingPlantController extends JacqController {
         $model_incomingDate = new AcquisitionDate;
         $model_botanicalObject->scientificNameInformation = new ScientificNameInformation;
 
+        // check if entries should be based on an existing
+        if ($living_plant_id > 0) {
+            $model_livingPlant = $this->loadModel($living_plant_id);
+
+            $models_relevancy = $model_livingPlant->relevancies;
+            $model_certificates = $model_livingPlant->certificates;
+
+            $model_livingPlant->setIsNewRecord(true);
+            unset($model_livingPlant->id);
+            unset($model_livingPlant->accession_number);
+            $model_livingPlant->relevancies = $models_relevancy;
+            $model_livingPlant->certificates = $model_certificates;
+
+            $model_botanicalObject = $model_livingPlant->id0;
+            $model_botanicalObject->setIsNewRecord(true);
+            unset($model_botanicalObject->id);
+
+            $model_acquisitionEvent = $model_botanicalObject->acquisitionEvent;
+
+            $model_acquisitionPersons = array();
+            if (isset($model_acquisitionEvent->tblPeople)) {
+                $model_acquisitionPersons = $model_acquisitionEvent->tblPeople;
+            }
+
+            $models_acquisitionEventSource = $model_acquisitionEvent->acquisitionEventSources;
+
+            $model_acquisitionEvent->setIsNewRecord(true);
+            unset($model_acquisitionEvent->id);
+            $model_acquisitionEvent->tblPeople = $model_acquisitionPersons;
+            $model_acquisitionEvent->acquisitionEventSources = $models_acquisitionEventSource;
+
+            $model_acquisitionDate = $model_acquisitionEvent->acquisitionDate;
+            $model_acquisitionDate->setIsNewRecord(true);
+            unset($model_acquisitionDate->id);
+
+            $model_locationCoordinates = $model_acquisitionEvent->locationCoordinates;
+            $model_locationCoordinates->setIsNewRecord(true);
+            unset($model_locationCoordinates->id);
+
+            $model_incomingDate = $model_livingPlant->incomingDate;
+            $model_incomingDate->setIsNewRecord(true);
+            unset($model_incomingDate->id);
+        }
+
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'], $_POST['LocationCoordinates'])) {
+            $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
             $model_acquisitionDate->setDate($_POST['AcquisitionDate']['date']);
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
             $model_livingPlant->attributes = $_POST['LivingPlant'];
@@ -338,6 +404,7 @@ class LivingPlantController extends JacqController {
 
         // Check if we have a correct submission
         if (isset($_POST['AcquisitionDate'], $_POST['AcquisitionEvent'], $_POST['LivingPlant'], $_POST['BotanicalObject'])) {
+            $model_acquisitionDate->attributes = $_POST['AcquisitionDate'];
             $model_acquisitionDate->setDate($_POST['AcquisitionDate']['date']);
             $model_acquisitionEvent->attributes = $_POST['AcquisitionEvent'];
             $model_livingPlant->attributes = $_POST['LivingPlant'];
@@ -352,6 +419,10 @@ class LivingPlantController extends JacqController {
                 if ($model_acquisitionEvent->location_id <= 0 && strlen($locationName) > 0) {
                     $model_location = Location::getByName($locationName);
                     $model_acquisitionEvent->location_id = $model_location->id;
+                }
+                // check if location is empty now, if yes make sure we reset the location id
+                else if (empty($locationName)) {
+                    $model_acquisitionEvent->location_id = null;
                 }
 
                 // save coordinates info
@@ -511,7 +582,9 @@ class LivingPlantController extends JacqController {
                                 $model_botanicalObjectSex = new BotanicalObjectSex;
                                 $model_botanicalObjectSex->botanical_object_id = $model_livingPlant->id;
                                 $model_botanicalObjectSex->sex_id = $sex_id;
-                                $model_botanicalObjectSex->save();
+                                if (!$model_botanicalObjectSex->save()) {
+                                    error_log(var_export($model_botanicalObjectSex->getErrors(), true));
+                                }
                             }
                         }
 
@@ -762,7 +835,7 @@ class LivingPlantController extends JacqController {
     }
 
     /**
-     * Update drop down list for available pages 
+     * Update drop down list for available pages
      */
     public function actionTreeRecordFilePages() {
         $data = TreeRecordFilePage::model()->findAll('tree_record_file_id=:tree_record_file_id', array(':tree_record_file_id' => intval($_POST['TreeRecord']['tree_record_file_id'])));
@@ -774,7 +847,7 @@ class LivingPlantController extends JacqController {
     }
 
     /**
-     * Download & display a tree record file page 
+     * Download & display a tree record file page
      */
     public function actionTreeRecordFilePageView() {
         $tree_record_file_page_id = intval($_GET['tree_record_file_page_id']);
@@ -800,7 +873,7 @@ class LivingPlantController extends JacqController {
     }
 
     /**
-     * renders form for entering a new certificate 
+     * renders form for entering a new certificate
      */
     public function actionAjaxCertificate() {
         $model_certificate = new Certificate;
@@ -822,7 +895,7 @@ class LivingPlantController extends JacqController {
     }
 
     /**
-     * renders form for entering a new alternative accession number 
+     * renders form for entering a new alternative accession number
      */
     public function actionAjaxAlternativeAccessionNumber() {
         $model_alternativeAccessionNumber = new AlternativeAccessionNumber();
@@ -976,7 +1049,7 @@ class LivingPlantController extends JacqController {
         }
 
         /**
-         * Accession (livingplant) level 
+         * Accession (livingplant) level
          */
         $bAccessionAccess = Yii::app()->authorization->botanicalObjectAccess($model->id, Yii::app()->user->getId());
         if ($bAccessionAccess !== NULL)
@@ -996,8 +1069,7 @@ class LivingPlantController extends JacqController {
      * @param boolean $bAllowAccess input value for AllowAccess
      * @return null|boolean null if no access information is available, else true or false
      */
-    private function checkAccessOrganisation($model_accessOrganisation,
-            $bAllowAccess) {
+    private function checkAccessOrganisation($model_accessOrganisation, $bAllowAccess) {
         // check for valid model
         if ($model_accessOrganisation == null)
             return $bAllowAccess;
