@@ -18,7 +18,7 @@
  * @property integer $source_specimenID
  * @property integer $userID
  * @property string $timestamp
- * 
+ *
  * The followings are the available model relations:
  * @property ViewTaxon $viewTaxon
  * @property TaxClassification $taxClassification
@@ -37,7 +37,7 @@ class TaxSynonymy extends CActiveRecord {
 
     /**
      * Reference to accepted entry (if current is not accepted)
-     * @var TaxSynonymy 
+     * @var TaxSynonymy
      */
     public $taxSynonymyAccepted = NULL;
 
@@ -120,10 +120,15 @@ class TaxSynonymy extends CActiveRecord {
             'tax_syn_ID' => $this->tax_syn_ID
         ));
 
-        $this->taxSynonymyAccepted = TaxSynonymy::model()->findByAttributes(array(
-            'taxonID' => $this->acc_taxon_ID,
-            'source_citationID' => $this->source_citationID
-        ));
+        if ($this->taxonID == $this->acc_taxon_ID) {
+            Yii::log("Self-Referencing Synonymy entry: " + $this->tax_syn_ID, CLogger::LEVEL_ERROR);
+        }
+        else {
+            $this->taxSynonymyAccepted = TaxSynonymy::model()->findByAttributes(array(
+                'taxonID' => $this->acc_taxon_ID,
+                'source_citationID' => $this->source_citationID
+            ));
+        }
     }
 
     /**
@@ -233,4 +238,5 @@ class TaxSynonymy extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
+
 }
