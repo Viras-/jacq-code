@@ -123,7 +123,7 @@ class TaxSynonymy extends CActiveRecord {
         if ($this->taxonID == $this->acc_taxon_ID) {
             Yii::log("Self-Referencing Synonymy entry: " + $this->tax_syn_ID, CLogger::LEVEL_ERROR);
         }
-        else {
+        else if ($this->acc_taxon_ID != NULL) {
             $this->taxSynonymyAccepted = TaxSynonymy::model()->findByAttributes(array(
                 'taxonID' => $this->acc_taxon_ID,
                 'source_citationID' => $this->source_citationID

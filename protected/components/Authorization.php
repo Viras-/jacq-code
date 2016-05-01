@@ -100,6 +100,7 @@ class Authorization extends CComponent {
         $classificationAccess = NULL;
         $models_taxSynonymy = TaxSynonymy::model()->findAllByAttributes(array(
             'taxonID' => $taxonID,
+            'source' => 'literature'
         ));
 
         // cycle through all classification entries for this scientific name
