@@ -71,9 +71,15 @@
                             <a href="#" onclick="$('#organisation_select_dialog').dialog('open');
                                     return false;"><img src="images/magnifier.png" ></a>
                         </td>
+                        <td>
+                            <!-- reviewed -->
+                            <?php echo $form->labelEx($model_livingPlant, 'reviewed'); ?>
+                            <?php echo $form->checkBox($model_livingPlant, 'reviewed'); ?>
+                            <?php echo $form->error($model_livingPlant, 'reviewed'); ?>
+                        </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <!-- place number -->
                             <?php echo $form->labelEx($model_livingPlant, 'place_number'); ?>
                             <?php echo $form->textField($model_livingPlant, 'place_number'); ?>
@@ -81,7 +87,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <!-- accession number -->
                             <?php require("form_accessionNumber.php"); ?>
                         </td>
@@ -127,13 +133,15 @@
                     ?>
                     <?php echo CHtml::encode($model_livingPlant->ipenNumber); ?>
                     <?php
-                } else {
+                }
+                else {
                     ?>
                     <span id="ipenNumber">
                         <?php
                         if ($model_livingPlant->ipen_type === 'custom') {
                             require("form_ipenNumberCustom.php");
-                        } else {
+                        }
+                        else {
                             require("form_ipenNumberDefault.php");
                         }
                         ?>
@@ -144,8 +152,7 @@
                 ?>
             </td>
             <td>
-                <?php echo $form->labelEx($model_livingPlant, 'ipen_locked');
-                ?>
+                <?php echo $form->labelEx($model_livingPlant, 'ipen_locked'); ?>
                 <?php echo $form->checkBox($model_livingPlant, 'ipen_locked'); ?>
                 <?php echo $form->error($model_livingPlant, 'ipen_locked'); ?>
             </td>
