@@ -28,7 +28,7 @@ class LivingPlantController extends JacqController {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber', 'copyAndNew'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber', 'copyAndNew', 'ajaxImageServerResource'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -599,7 +599,8 @@ class LivingPlantController extends JacqController {
                             // check if label-type was unchecked, deleting it if user has right to do so
                             if (!in_array($model_botanicalObjectLabel->label_type_id, $new_labelTypes) && Yii::app()->user->checkAccess('oprtn_clearLabelType')) {
                                 $model_botanicalObjectLabel->delete();
-                            } else {
+                            }
+                            else {
                                 $new_labelTypes = array_diff($new_labelTypes, array($model_botanicalObjectLabel->label_type_id));
                             }
                         }
@@ -630,7 +631,8 @@ class LivingPlantController extends JacqController {
                                 // check if this is an existing entry
                                 if ($separation['id'] > 0) {
                                     $model_separation = Separation::model()->findByPk($separation['id']);
-                                } else {
+                                }
+                                else {
                                     $model_separation = new Separation();
                                 }
 
@@ -658,7 +660,8 @@ class LivingPlantController extends JacqController {
                                 // check if this is an existing entry
                                 if ($certificate['id'] > 0) {
                                     $model_certificate = Certificate::model()->findByPk($certificate['id']);
-                                } else {
+                                }
+                                else {
                                     $model_certificate = new Certificate();
                                 }
 
@@ -686,7 +689,8 @@ class LivingPlantController extends JacqController {
                                 // check if this is an existing entry
                                 if ($alternativeAccessionNumber['id'] > 0) {
                                     $model_alternativeAccessionNumber = AlternativeAccessionNumber::model()->findByPk($alternativeAccessionNumber['id']);
-                                } else {
+                                }
+                                else {
                                     $model_alternativeAccessionNumber = new AlternativeAccessionNumber();
                                 }
 
@@ -714,7 +718,8 @@ class LivingPlantController extends JacqController {
                                 // check if this is an existing entry
                                 if ($specimen['id_specimen'] > 0) {
                                     $model_specimen = Specimen::model()->findByPk($specimen['id_specimen']);
-                                } else {
+                                }
+                                else {
                                     $model_specimen = new Specimen();
                                 }
 
@@ -768,7 +773,8 @@ class LivingPlantController extends JacqController {
             // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if (!isset($_GET['ajax']))
                 $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-        } else
+        }
+        else
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
 
@@ -1008,14 +1014,37 @@ class LivingPlantController extends JacqController {
     }
 
     /**
+     * Update the public visibility of a given image on the image server
+     * @param String $identifier unique identifier of image server resource
+     * @param Boolean $public Allow / Disallow public access
+     */
+    public function actionAjaxImageServerResource($botanical_object_id, $identifier, $public) {
+        // load the living plant model
+        $model_livingPlant = $this->loadModel($botanical_object_id);
+
+        // get image server for organization
+        $imageServer = NULL;
+        if ($model_livingPlant->id0 != NULL && $model_livingPlant->id0->organisation != NULL) {
+            $imageServer = $model_livingPlant->id0->organisation->getImageServer();
+        }
+
+        // update image status
+        if ($imageServer != NULL) {
+            $jacqImageServer = new JacqImageServer($imageServer->base_url, $imageServer->key);
+            $jacqImageServer->setPublic($identifier, $public);
+        }
+    }
+
+    /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
      * @param integer the ID of the model to be loaded
      */
     public function loadModel($id) {
         $model = LivingPlant::model()->findByPk($id);
-        if ($model === null)
+        if ($model === null) {
             throw new CHttpException(404, 'The requested page does not exist.');
+        }
 
         // check if user is allowed to access this model
         // default rights setup
@@ -1077,7 +1106,8 @@ class LivingPlantController extends JacqController {
         // check for explicit allowal or denial
         if ($model_accessOrganisation->allowDeny == 1) {
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
