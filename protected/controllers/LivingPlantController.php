@@ -28,7 +28,7 @@ class LivingPlantController extends JacqController {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber', 'copyAndNew', 'ajaxImageServerResource'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber', 'copyAndNew', 'ajaxImageServerResource', 'ajaxVegetative'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -341,7 +341,7 @@ class LivingPlantController extends JacqController {
                                 if (isset($_POST['Specimen'])) {
                                     foreach ($_POST['Specimen'] as $i => $specimen) {
                                         // auto-generate id
-                                        unset($specimen['id_specimen']);
+                                        unset($specimen['specimen_id']);
 
                                         // check for "deleted" entry (which means ignore it)
                                         if ($specimen['delete'] > 0)
@@ -705,19 +705,19 @@ class LivingPlantController extends JacqController {
                         if (isset($_POST['Specimen'])) {
                             foreach ($_POST['Specimen'] as $i => $specimen) {
                                 // make sure we have a clean integer as id
-                                $specimen['id_specimen'] = intval($specimen['id_specimen']);
+                                $specimen['specimen_id'] = intval($specimen['specimen_id']);
 
                                 // check for "deleted" entry
                                 if ($specimen['delete'] > 0) {
-                                    if ($specimen['id_specimen'] > 0) {
-                                        Specimen::model()->deleteByPk($specimen['id_specimen']);
+                                    if ($specimen['specimen_id'] > 0) {
+                                        Specimen::model()->deleteByPk($specimen['specimen_id']);
                                     }
                                     continue;
                                 }
 
                                 // check if this is an existing entry
-                                if ($specimen['id_specimen'] > 0) {
-                                    $model_specimen = Specimen::model()->findByPk($specimen['id_specimen']);
+                                if ($specimen['specimen_id'] > 0) {
+                                    $model_specimen = Specimen::model()->findByPk($specimen['specimen_id']);
                                 }
                                 else {
                                     $model_specimen = new Specimen();
@@ -1033,6 +1033,17 @@ class LivingPlantController extends JacqController {
             $jacqImageServer = new JacqImageServer($imageServer->base_url, $imageServer->key);
             $jacqImageServer->setPublic($identifier, $public);
         }
+    }
+
+    /**
+     * Render a new row for entering specimen data
+     */
+    public function actionAjaxVegetative() {
+        $model_derivativeVegetative = new DerivativeVegetative();
+
+        $this->renderPartial('form_vegetative', array(
+            'model_derivativeVegetative' => $model_derivativeVegetative
+                ), false, true);
     }
 
     /**

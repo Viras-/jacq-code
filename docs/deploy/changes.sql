@@ -20,40 +20,38 @@ ALTER TABLE `jacq_input`.`tbl_living_plant`
 CHANGE COLUMN `reviewed` `reviewed` TINYINT(1) NULL DEFAULT 0 COMMENT '' ;
 
 ALTER TABLE `jacq_input`.`tbl_separation`
-ADD COLUMN `vegetative_derivative_id` INT(11) NOT NULL COMMENT '' AFTER `botanical_object_id`,
-ADD INDEX `fk_tbl_separation_tbl_deriative_vegetative1_idx` (`vegetative_derivative_id` ASC)  COMMENT '';
+ADD COLUMN `derivative_vegetative_id` INT NOT NULL COMMENT '' AFTER `botanical_object_id`,
+ADD INDEX `fk_tbl_separation_tbl_derivative_vegetative1_idx` (`derivative_vegetative_id` ASC)  COMMENT '';
 
-CREATE TABLE IF NOT EXISTS `jacq_input`.`tbl_deriative_vegetative` (
-  `living_plant_id` INT(11) NOT NULL COMMENT '',
-  `accesion_number` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
-  `organisation_id` INT(11) NOT NULL COMMENT '',
-  `phenology_id` INT(11) NOT NULL COMMENT '',
+CREATE TABLE IF NOT EXISTS `tbl_derivative_vegetative` (
+  `derivative_vegetative_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `living_plant_id` INT NOT NULL COMMENT '',
+  `accesion_number` INT NOT NULL COMMENT '',
+  `organisation_id` INT NOT NULL COMMENT '',
+  `phenology_id` INT NOT NULL COMMENT '',
   `cultivation_date` DATE NULL DEFAULT NULL COMMENT '',
   `annotation` TEXT NULL DEFAULT NULL COMMENT '',
-  PRIMARY KEY (`living_plant_id`)  COMMENT '',
   UNIQUE INDEX `accesion_number_UNIQUE` (`accesion_number` ASC)  COMMENT '',
-  INDEX `fk_c_tbl_organisation1_idx` (`organisation_id` ASC)  COMMENT '',
-  INDEX `fk_tbl_deriative_vegetative_tbl_phenology1_idx` (`phenology_id` ASC)  COMMENT '',
-  CONSTRAINT `fk_tbl_deriative_vegetative_tbl_living_plant1`
-    FOREIGN KEY (`living_plant_id`)
-    REFERENCES `jacq_input`.`tbl_living_plant` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tbl_deriative_vegetative_tbl_organisation1`
+  INDEX `fk_tbl_vegetative_derivative_tbl_organisation1_idx` (`organisation_id` ASC)  COMMENT '',
+  INDEX `fk_tbl_vegetative_derivative_tbl_phenology1_idx` (`phenology_id` ASC)  COMMENT '',
+  PRIMARY KEY (`derivative_vegetative_id`)  COMMENT '',
+  INDEX `fk_tbl_derivative_vegetative_tbl_living_plant1_idx` (`living_plant_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_tbl_vegetative_derivative_tbl_organisation1`
     FOREIGN KEY (`organisation_id`)
-    REFERENCES `jacq_input`.`tbl_organisation` (`id`)
+    REFERENCES `tbl_organisation` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tbl_deriative_vegetative_tbl_phenology1`
+  CONSTRAINT `fk_tbl_vegetative_derivative_tbl_phenology1`
     FOREIGN KEY (`phenology_id`)
-    REFERENCES `jacq_input`.`tbl_phenology` (`id`)
+    REFERENCES `tbl_phenology` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tbl_derivative_vegetative_tbl_living_plant1`
+    FOREIGN KEY (`living_plant_id`)
+    REFERENCES `tbl_living_plant` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci;
-
-DROP TABLE IF EXISTS `jacq_input`.`tbl_specimen` ;
+ENGINE = InnoDB;
 
 ALTER TABLE `jacq_input`.`tbl_living_plant`
 ADD CONSTRAINT `fk_livingplant_object1`
@@ -63,11 +61,11 @@ ADD CONSTRAINT `fk_livingplant_object1`
   ON UPDATE CASCADE;
 
 ALTER TABLE `jacq_input`.`tbl_separation`
-ADD CONSTRAINT `fk_tbl_separation_tbl_deriative_vegetative1`
-  FOREIGN KEY (`vegetative_derivative_id`)
-  REFERENCES `jacq_input`.`tbl_deriative_vegetative` (`living_plant_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
+ADD CONSTRAINT `fk_tbl_separation_tbl_derivative_vegetative1`
+    FOREIGN KEY (`derivative_vegetative_id`)
+    REFERENCES `tbl_derivative_vegetative` (`derivative_vegetative_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
 
 
 DELIMITER $$

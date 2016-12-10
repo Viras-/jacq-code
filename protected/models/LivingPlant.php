@@ -25,6 +25,7 @@
  * The followings are the available model relations:
  * @property AlternativeAccessionNumber[] $alternativeAccessionNumbers
  * @property Certificate[] $certificates
+ * @property DerivativeVegetative[] $derivativeVegetatives
  * @property BotanicalObject $id0
  * @property IndexSeminumType $indexSeminumType
  * @property AcquisitionDate $incomingDate
@@ -129,6 +130,7 @@ class LivingPlant extends ActiveRecord {
         return array(
             'alternativeAccessionNumbers' => array(self::HAS_MANY, 'AlternativeAccessionNumber', 'living_plant_id'),
             'certificates' => array(self::HAS_MANY, 'Certificate', 'living_plant_id'),
+            'derivativeVegetatives' => array(self::HAS_MANY, 'DerivativeVegetative', 'living_plant_id'),
             'id0' => array(self::BELONGS_TO, 'BotanicalObject', 'id'),
             'indexSeminumType' => array(self::BELONGS_TO, 'IndexSeminumType', 'index_seminum_type_id'),
             'incomingDate' => array(self::BELONGS_TO, 'AcquisitionDate', 'incoming_date_id'),
