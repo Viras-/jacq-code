@@ -32,7 +32,7 @@
                     $model_livingPlant->accessionNumber . '_%'
                 ));
 
-                $resources = [];
+                $resources = array();
                 foreach ($resourcesDetails as $resourceDetails) {
                     $resources[] = $resourceDetails['identifier'];
                 }
