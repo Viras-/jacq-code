@@ -26,12 +26,13 @@ ADD INDEX `fk_tbl_separation_tbl_derivative_vegetative1_idx` (`derivative_vegeta
 CREATE TABLE IF NOT EXISTS `tbl_derivative_vegetative` (
   `derivative_vegetative_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `living_plant_id` INT NOT NULL COMMENT '',
-  `accesion_number` INT NOT NULL COMMENT '',
+  `accession_number` INT NOT NULL COMMENT '',
   `organisation_id` INT NOT NULL COMMENT '',
   `phenology_id` INT NOT NULL COMMENT '',
   `cultivation_date` DATE NULL DEFAULT NULL COMMENT '',
+  `index_seminum` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '',
   `annotation` TEXT NULL DEFAULT NULL COMMENT '',
-  UNIQUE INDEX `accesion_number_UNIQUE` (`accesion_number` ASC)  COMMENT '',
+  UNIQUE INDEX `accession_number_UNIQUE` (`accession_number` ASC)  COMMENT '',
   INDEX `fk_tbl_vegetative_derivative_tbl_organisation1_idx` (`organisation_id` ASC)  COMMENT '',
   INDEX `fk_tbl_vegetative_derivative_tbl_phenology1_idx` (`phenology_id` ASC)  COMMENT '',
   PRIMARY KEY (`derivative_vegetative_id`)  COMMENT '',
@@ -91,3 +92,9 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+ALTER TABLE `tbl_index_seminum_content`
+CHANGE COLUMN `accession_number` `accession_number` TEXT NOT NULL COMMENT '' ;
+
+UPDATE `tbl_index_seminum_content`
+SET `accession_number` = LPAD(`accession_number`, 7, '0');

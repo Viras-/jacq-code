@@ -6,10 +6,11 @@
  * The followings are the available columns in table 'tbl_derivative_vegetative':
  * @property integer $derivative_vegetative_id
  * @property integer $living_plant_id
- * @property integer $accesion_number
+ * @property integer $accession_number
  * @property integer $organisation_id
  * @property integer $phenology_id
  * @property string $cultivation_date
+ * @property integer $index_seminum
  * @property string $annotation
  *
  * The followings are the available model relations:
@@ -26,6 +27,18 @@ class DerivativeVegetative extends CActiveRecord {
     public $delete = 0;
 
     /**
+     * Virtual AccessionNumber Attribute which returns a formatted version of the combined accession number
+     * @return string
+     */
+    public function getAccessionNumber() {
+        if ($this->derivative_vegetative_id <= 0) {
+            return '';
+        }
+
+        return $this->livingPlant->accessionNUmber . sprintf('-%04d', $this->accession_number);
+    }
+
+    /**
      * @return string the associated database table name
      */
     public function tableName() {
@@ -39,12 +52,12 @@ class DerivativeVegetative extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('living_plant_id, accesion_number, organisation_id, phenology_id', 'required'),
-            array('living_plant_id, accesion_number, organisation_id, phenology_id', 'numerical', 'integerOnly' => true),
+            array('living_plant_id, accession_number, organisation_id, phenology_id, index_seminum', 'required'),
+            array('living_plant_id, accession_number, organisation_id, phenology_id, index_seminum', 'numerical', 'integerOnly' => true),
             array('cultivation_date, annotation', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('derivative_vegetative_id, living_plant_id, accesion_number, organisation_id, phenology_id, cultivation_date, annotation', 'safe', 'on' => 'search'),
+            array('derivative_vegetative_id, living_plant_id, accsesion_number, organisation_id, phenology_id, cultivation_date, annotation', 'safe', 'on' => 'search'),
         );
     }
 
@@ -69,10 +82,11 @@ class DerivativeVegetative extends CActiveRecord {
         return array(
             'derivative_vegetative_id' => 'Derivative Vegetative',
             'living_plant_id' => 'Living Plant',
-            'accesion_number' => 'Accesion Number',
+            'accession_number' => 'Accession Number',
             'organisation_id' => 'Organisation',
             'phenology_id' => 'Phenology',
             'cultivation_date' => 'Cultivation Date',
+            'index_seminum' => 'Index Seminum',
             'annotation' => 'Annotation',
         );
     }
@@ -96,10 +110,11 @@ class DerivativeVegetative extends CActiveRecord {
 
         $criteria->compare('derivative_vegetative_id', $this->derivative_vegetative_id);
         $criteria->compare('living_plant_id', $this->living_plant_id);
-        $criteria->compare('accesion_number', $this->accesion_number);
+        $criteria->compare('accession_number', $this->accession_number);
         $criteria->compare('organisation_id', $this->organisation_id);
         $criteria->compare('phenology_id', $this->phenology_id);
         $criteria->compare('cultivation_date', $this->cultivation_date, true);
+        $criteria->compare('index_seminum', $this->index_seminum);
         $criteria->compare('annotation', $this->annotation, true);
 
         return new CActiveDataProvider($this, array(

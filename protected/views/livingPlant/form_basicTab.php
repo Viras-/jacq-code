@@ -68,8 +68,9 @@
                             <?php echo $form->labelEx($model_botanicalObject, 'organisation_id'); ?>
                             <?php echo CHtml::textField('BotanicalObject_organisation_name', $model_botanicalObject->organisation->description, array('readonly' => 'readonly')); ?>
                             <?php echo $form->hiddenField($model_botanicalObject, 'organisation_id'); ?>
-                            <a href="#" onclick="$('#organisation_select_dialog').dialog('open');
-                                    return false;"><img src="images/magnifier.png" ></a>
+                            <a href="#" onclick="organisationDialogOpen('#BotanicalObject_organisation_id', '#BotanicalObject_organisation_name'); return false;">
+                                <img src="images/magnifier.png" >
+                            </a>
                         </td>
                         <td>
                             <!-- reviewed -->

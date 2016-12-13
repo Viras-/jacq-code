@@ -28,7 +28,7 @@ class LivingPlantController extends JacqController {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber', 'copyAndNew', 'ajaxImageServerResource', 'ajaxVegetative'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber', 'copyAndNew', 'ajaxImageServerResource', 'ajaxVegetative', 'ajaxVegetativeDelete', 'ajaxVegetativeList'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -1036,13 +1036,110 @@ class LivingPlantController extends JacqController {
     }
 
     /**
-     * Render a new row for entering specimen data
+     * Render the form for adding / editing a vegetative derivative
      */
-    public function actionAjaxVegetative() {
-        $model_derivativeVegetative = new DerivativeVegetative();
+    public function actionAjaxVegetative($derivative_vegetative_id = 0, $living_plant_id = 0) {
+        // prevent double loading of jquery scripts
+        Yii::app()->clientscript->scriptMap['jquery-ui.min.js'] = false;
+        Yii::app()->clientscript->scriptMap['jquery.js'] = false;
 
-        $this->renderPartial('form_vegetative', array(
-            'model_derivativeVegetative' => $model_derivativeVegetative
+        // check if we are saving a derivative
+        if (isset($_POST['DerivativeVegetative'])) {
+            $derivative_vegetative_id = intval($_POST['DerivativeVegetative']['derivative_vegetative_id']);
+
+            $model_derivativeVegetative = null;
+            if ($derivative_vegetative_id > 0) {
+                $model_derivativeVegetative = DerivativeVegetative::model()->findByPk($derivative_vegetative_id);
+
+                if ($model_derivativeVegetative === null) {
+                    throw new CHttpException(404, 'The requested derivative does not exist.');
+                }
+
+                // fetch living plant id from saved object
+                $living_plant_id = $model_derivativeVegetative->living_plant_id;
+            }
+            else {
+                // checked passed id for validity
+                $living_plant_id = intval($living_plant_id);
+                if ($living_plant_id <= 0) {
+                    throw new CHttpException(400, 'Unable to fetch living plant id.');
+                }
+
+                $model_derivativeVegetative = new DerivativeVegetative();
+                $model_derivativeVegetative->living_plant_id = $living_plant_id;
+            }
+
+            // assign attributes to model
+            $model_derivativeVegetative->attributes = $_POST['DerivativeVegetative'];
+
+            // try to save model
+            if ($model_derivativeVegetative->save()) {
+                return;
+            }
+        }
+        else {
+            $derivative_vegetative_id = intval($derivative_vegetative_id);
+
+            $model_derivativeVegetative = null;
+            if ($derivative_vegetative_id > 0) {
+                $model_derivativeVegetative = DerivativeVegetative::model()->findByPk($derivative_vegetative_id);
+
+                if ($model_derivativeVegetative === null) {
+                    throw new CHttpException(404, 'The requested derivative does not exist.');
+                }
+
+                // fetch living plant id from saved object
+                $living_plant_id = $model_derivativeVegetative->living_plant_id;
+            }
+            else {
+                // checked passed id for validity
+                $living_plant_id = intval($living_plant_id);
+                if ($living_plant_id <= 0) {
+                    throw new CHttpException(400, 'Unable to fetch living plant id.');
+                }
+
+                $model_derivativeVegetative = new DerivativeVegetative();
+                $model_derivativeVegetative->living_plant_id = $living_plant_id;
+            }
+        }
+
+        // load livingplant model
+        $model_livingPlant = $this->loadModel($living_plant_id);
+
+        // render the form for editing
+        $this->renderPartial('form_vegetativeEdit', array(
+            'model_derivativeVegetative' => $model_derivativeVegetative,
+            'model_livingPlant' => $model_livingPlant
+                ), false, true);
+    }
+
+    /**
+     * Delete the given vegetative derivative
+     * @param int $derivative_vegetative_id
+     * @throws CHttpException
+     */
+    public function actionAjaxVegetativeDelete($derivative_vegetative_id) {
+        $derivative_vegetative_id = intval($derivative_vegetative_id);
+
+        if ($derivative_vegetative_id > 0) {
+            DerivativeVegetative::model()->deleteByPk($derivative_vegetative_id);
+        }
+        else {
+            throw new CHttpException(404, 'The requested derivative does not exist.');
+        }
+    }
+
+    /**
+     * Render the list of vegetative derivatives for the given living plant
+     * @param type $living_plant_id
+     */
+    public function actionAjaxVegetativeList($living_plant_id) {
+        $model_livingPlant = $this->loadModel($living_plant_id);
+
+        // render the list
+        $this->renderPartial(
+                'form_vegetativesList', array(
+            'model_livingPlant' => $model_livingPlant
                 ), false, true);
     }
 
