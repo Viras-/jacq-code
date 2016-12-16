@@ -67,6 +67,11 @@
         <?php echo $form->error($model_derivativeVegetative, 'index_seminum'); ?>
     </div>
 
+    <!-- separations -->
+    <div class="row">
+        <?php require('form_vegetativeSeparations.php'); ?>
+    </div>
+
     <!-- annotation -->
     <div class="row">
         <?php echo $form->labelEx($model_derivativeVegetative, 'annotation'); ?>

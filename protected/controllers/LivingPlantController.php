@@ -937,6 +937,10 @@ class LivingPlantController extends JacqController {
      * renders form for entering a new separation
      */
     public function actionAjaxSeparation() {
+        // prevent double loading of jquery scripts
+        Yii::app()->clientscript->scriptMap['jquery-ui.min.js'] = false;
+        Yii::app()->clientscript->scriptMap['jquery.js'] = false;
+
         $model_separation = new Separation();
 
         $this->renderPartial('form_separation', array(
@@ -1074,7 +1078,42 @@ class LivingPlantController extends JacqController {
 
             // try to save model
             if ($model_derivativeVegetative->save()) {
-                return;
+                // try to save separations
+                $allSaved = true;
+                if (isset($_POST['Separation'])) {
+                    foreach ($_POST['Separation'] as $i => $separation) {
+                        // make sure we have a clean integer as id
+                        $separation['id'] = intval($separation['id']);
+
+                        // check for "deleted" entry
+                        if ($separation['delete'] > 0) {
+                            if ($separation['id'] > 0) {
+                                Separation::model()->deleteByPk($separation['id']);
+                            }
+                            continue;
+                        }
+
+                        // check if this is an existing entry
+                        if ($separation['id'] > 0) {
+                            $model_separation = Separation::model()->findByPk($separation['id']);
+                        }
+                        else {
+                            $model_separation = new Separation();
+                        }
+
+                        // assign attributes and save it
+                        $model_separation->attributes = $separation;
+                        $model_separation->derivative_vegetative_id = $model_derivativeVegetative->derivative_vegetative_id;
+
+                        if (!$model_separation->save()) {
+                            $allSaved = false;
+                        }
+                    }
+                }
+
+                if ($allSaved) {
+                    return;
+                }
             }
         }
         else {

@@ -64,7 +64,7 @@
         ?>
         <div style="text-align: right;">
             <a href="#"><img src="images/user.png" border="0" onclick="$('#authorization_management_dialog').dialog('open');
-                        return false;" /></a>
+                    return false;" /></a>
         </div>
         <?php
     }
@@ -221,7 +221,7 @@
             'title' => Yii::t('jacq', 'Vegetative Derivative'),
             'autoOpen' => false,
             'resizable' => false,
-            'width' => 630,
+            'width' => 800,
             'buttons' => array(
                 array(
                     'text' => Yii::t('jacq', 'Close'),

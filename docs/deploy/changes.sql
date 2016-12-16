@@ -98,3 +98,45 @@ CHANGE COLUMN `accession_number` `accession_number` TEXT NOT NULL COMMENT '' ;
 
 UPDATE `tbl_index_seminum_content`
 SET `accession_number` = LPAD(`accession_number`, 7, '0');
+
+ALTER TABLE `jacq_input`.`tbl_separation`
+DROP FOREIGN KEY `fk_tbl_separation_tbl_derivative_vegetative1`;
+
+ALTER TABLE `jacq_input`.`tbl_separation`
+CHANGE COLUMN `derivative_vegetative_id` `derivative_vegetative_id` INT(11) NULL DEFAULT NULL COMMENT '' ,
+CHANGE COLUMN `separation_type_id` `separation_type_id` INT(11) NULL DEFAULT NULL COMMENT '' ;
+
+ALTER TABLE `jacq_input`.`tbl_separation`
+DROP FOREIGN KEY `fk_tbl_separation_tbl_separation_type1`;
+
+ALTER TABLE `jacq_input`.`tbl_separation` ADD CONSTRAINT `fk_tbl_separation_tbl_separation_type1`
+  FOREIGN KEY (`separation_type_id`)
+  REFERENCES `jacq_input`.`tbl_separation_type` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_tbl_separation_tbl_derivative_vegetative1`
+  FOREIGN KEY (`derivative_vegetative_id`)
+  REFERENCES `jacq_input`.`tbl_derivative_vegetative` (`derivative_vegetative_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `jacq_input`.`tbl_separation`
+DROP FOREIGN KEY `fk_tbl_separation_tbl_separation_type1`;
+
+ALTER TABLE `jacq_input`.`tbl_separation`
+CHANGE COLUMN `botanical_object_id` `botanical_object_id` INT(11) NULL DEFAULT NULL COMMENT '' ,
+CHANGE COLUMN `separation_type_id` `separation_type_id` INT(11) NOT NULL COMMENT '' ;
+
+ALTER TABLE `jacq_input`.`tbl_separation`
+DROP FOREIGN KEY `fk_tbl_separation_tbl_botanical_object1`;
+
+ALTER TABLE `jacq_input`.`tbl_separation` ADD CONSTRAINT `fk_tbl_separation_tbl_separation_type1`
+  FOREIGN KEY (`separation_type_id`)
+  REFERENCES `jacq_input`.`tbl_separation_type` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_tbl_separation_tbl_botanical_object1`
+  FOREIGN KEY (`botanical_object_id`)
+  REFERENCES `jacq_input`.`tbl_botanical_object` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;

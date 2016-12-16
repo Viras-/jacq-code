@@ -12,8 +12,9 @@
  * @property string $annotation
  *
  * The followings are the available model relations:
- * @property DerivativeVegetative $derivativeVegetative
+ * @property SeparationType $separationType
  * @property BotanicalObject $botanicalObject
+ * @property DerivativeVegetative $derivativeVegetative
  */
 class Separation extends ActiveRecord {
 
@@ -36,7 +37,7 @@ class Separation extends ActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('botanical_object_id, derivative_vegetative_id, separation_type_id', 'required'),
+            array('separation_type_id', 'required'),
             array('botanical_object_id, derivative_vegetative_id, separation_type_id', 'numerical', 'integerOnly' => true),
             array('date, annotation', 'safe'),
             // The following rule is used by search().
@@ -52,9 +53,9 @@ class Separation extends ActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'derivativeVegetative' => array(self::BELONGS_TO, 'DerivativeVegetative', 'derivative_vegetative_id'),
-            'botanicalObject' => array(self::BELONGS_TO, 'BotanicalObject', 'botanical_object_id'),
             'separationType' => array(self::BELONGS_TO, 'SeparationType', 'separation_type_id'),
+            'botanicalObject' => array(self::BELONGS_TO, 'BotanicalObject', 'botanical_object_id'),
+            'derivativeVegetative' => array(self::BELONGS_TO, 'DerivativeVegetative', 'derivative_vegetative_id'),
         );
     }
 
