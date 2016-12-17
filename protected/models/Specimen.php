@@ -58,10 +58,10 @@ class Specimen extends ActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'specimen_id' => 'Specimen',
-            'botanical_object_id' => 'Botanical Object',
-            'herbar_number' => 'Herbar Number',
-            'timestamp' => 'Timestamp',
+            'specimen_id' => Yii::t('jacq', 'Specimen'),
+            'botanical_object_id' => Yii::t('jacq', 'Botanical Object'),
+            'herbar_number' => Yii::t('jacq', 'Herbar Number'),
+            'timestamp' => Yii::t('jacq', 'Timestamp'),
         );
     }
 
