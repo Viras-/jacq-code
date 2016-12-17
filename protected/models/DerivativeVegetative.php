@@ -80,14 +80,14 @@ class DerivativeVegetative extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'derivative_vegetative_id' => 'Derivative Vegetative',
-            'living_plant_id' => 'Living Plant',
-            'accession_number' => 'Accession Number',
-            'organisation_id' => 'Organisation',
-            'phenology_id' => 'Phenology',
-            'cultivation_date' => 'Cultivation Date',
-            'index_seminum' => 'Index Seminum',
-            'annotation' => 'Annotation',
+            'derivative_vegetative_id' => Yii::t('jacq', 'Derivative Vegetative'),
+            'living_plant_id' => Yii::t('jacq', 'Living Plant'),
+            'accession_number' => Yii::t('jacq', 'Accession Number'),
+            'organisation_id' => Yii::t('jacq', 'Organisation'),
+            'phenology_id' => Yii::t('jacq', 'Phenology'),
+            'cultivation_date' => Yii::t('jacq', 'Cultivation Date'),
+            'index_seminum' => Yii::t('jacq', 'Index Seminum'),
+            'annotation' => Yii::t('jacq', 'Annotation'),
         );
     }
 

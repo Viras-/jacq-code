@@ -64,12 +64,12 @@ class Separation extends ActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => 'ID',
-            'botanical_object_id' => 'Botanical Object',
-            'derivative_vegetative_id' => 'Derivative Vegetative',
-            'separation_type_id' => 'Separation Type',
-            'date' => 'Date',
-            'annotation' => 'Annotation',
+            'id' => Yii::t('jacq', 'ID'),
+            'botanical_object_id' => Yii::t('jacq', 'Botanical Object'),
+            'derivative_vegetative_id' => Yii::t('jacq', 'Derivative Vegetative'),
+            'separation_type_id' => Yii::t('jacq', 'Separation Type'),
+            'date' => Yii::t('jacq', 'Date'),
+            'annotation' => Yii::t('jacq', 'Annotation'),
         );
     }
 

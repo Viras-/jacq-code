@@ -1,4 +1,3 @@
-<?php echo CHtml::activeLabelEx(DerivativeVegetative::model(), 'derivative_vegetative_id'); ?>
 <div class="row">
     <div class="vegetative_td">
         <?php echo CHtml::activeLabelEx(DerivativeVegetative::model(), 'cultivation_date'); ?>
