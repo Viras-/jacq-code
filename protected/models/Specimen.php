@@ -61,11 +61,11 @@ class Specimen extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'specimen_id' => 'Specimen',
-            'botanical_object_id' => 'Botanical Object',
-            'curatorial_unit_id' => 'Curatorial Unit',
-            'barcode' => 'Barcode',
-            'timestamp' => 'Timestamp',
+            'specimen_id' => Yii::t('jacq', 'Specimen'),
+            'botanical_object_id' => Yii::t('jacq', 'Botanical Object'),
+            'curatorial_unit_id' => Yii::t('jacq', 'Curatorial Unit'),
+            'barcode' => Yii::t('jacq', 'Barcode'),
+            'timestamp' => Yii::t('jacq', 'Timestamp'),
         );
     }
 

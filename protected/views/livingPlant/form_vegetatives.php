@@ -20,7 +20,7 @@
             ));
         }
         else {
-            echo Html::encode(Yii::t('jacq', 'please_save_first'));
+            echo Html::encode(Yii::t('jacq', 'Please save the entry before adding vegetative derivatives.'));
         }
         ?>
     </div>
