@@ -344,8 +344,9 @@ class LivingPlantController extends JacqController {
                                         unset($specimen['specimen_id']);
 
                                         // check for "deleted" entry (which means ignore it)
-                                        if ($specimen['delete'] > 0)
+                                        if ($specimen['delete'] > 0) {
                                             continue;
+                                        }
 
                                         // create new model and save it
                                         $model_specimen = new Specimen();

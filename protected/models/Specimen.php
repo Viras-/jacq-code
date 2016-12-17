@@ -6,15 +6,13 @@
  * The followings are the available columns in table 'tbl_specimen':
  * @property integer $specimen_id
  * @property integer $botanical_object_id
- * @property integer $curatorial_unit_id
- * @property string $barcode
+ * @property string $herbar_number
  * @property string $timestamp
  *
  * The followings are the available model relations:
  * @property BotanicalObject $botanicalObject
- * @property CuratorialUnit $curatorialUnit
  */
-class Specimen extends CActiveRecord {
+class Specimen extends ActiveRecord {
 
     /**
      * @var helper attribute for deleting a specimen entry
@@ -35,12 +33,12 @@ class Specimen extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('botanical_object_id, curatorial_unit_id, timestamp', 'required'),
-            array('botanical_object_id, curatorial_unit_id', 'numerical', 'integerOnly' => true),
-            array('barcode', 'length', 'max' => 20),
+            array('botanical_object_id, herbar_number', 'required'),
+            array('botanical_object_id', 'numerical', 'integerOnly' => true),
+            array('herbar_number', 'length', 'max' => 20),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('specimen_id, botanical_object_id, curatorial_unit_id, barcode, timestamp', 'safe', 'on' => 'search'),
+            array('specimen_id, botanical_object_id, herbar_number, timestamp', 'safe', 'on' => 'search'),
         );
     }
 
@@ -52,7 +50,6 @@ class Specimen extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             'botanicalObject' => array(self::BELONGS_TO, 'BotanicalObject', 'botanical_object_id'),
-            'curatorialUnit' => array(self::BELONGS_TO, 'CuratorialUnit', 'curatorial_unit_id'),
         );
     }
 
@@ -63,8 +60,7 @@ class Specimen extends CActiveRecord {
         return array(
             'specimen_id' => 'Specimen',
             'botanical_object_id' => 'Botanical Object',
-            'curatorial_unit_id' => 'Curatorial Unit',
-            'barcode' => 'Barcode',
+            'herbar_number' => 'Herbar Number',
             'timestamp' => 'Timestamp',
         );
     }
@@ -88,8 +84,7 @@ class Specimen extends CActiveRecord {
 
         $criteria->compare('specimen_id', $this->specimen_id);
         $criteria->compare('botanical_object_id', $this->botanical_object_id);
-        $criteria->compare('curatorial_unit_id', $this->curatorial_unit_id);
-        $criteria->compare('barcode', $this->barcode, true);
+        $criteria->compare('herbar_number', $this->herbar_number, true);
         $criteria->compare('timestamp', $this->timestamp, true);
 
         return new CActiveDataProvider($this, array(
