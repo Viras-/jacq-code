@@ -1081,6 +1081,9 @@ class LivingPlantController extends JacqController {
                 // try to save separations
                 $allSaved = true;
                 if (isset($_POST['Separation'])) {
+                    $model_derivativeVegetative->separations = array();
+
+
                     foreach ($_POST['Separation'] as $i => $separation) {
                         // make sure we have a clean integer as id
                         $separation['id'] = intval($separation['id']);
@@ -1105,6 +1108,10 @@ class LivingPlantController extends JacqController {
                         $model_separation->attributes = $separation;
                         $model_separation->derivative_vegetative_id = $model_derivativeVegetative->derivative_vegetative_id;
 
+                        // keep reference to separation model (e.g. if validation fails)
+                        $model_derivativeVegetative->separations[] = $model_separation;
+
+                        // try to save separation
                         if (!$model_separation->save()) {
                             $allSaved = false;
                         }
