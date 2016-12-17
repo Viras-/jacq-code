@@ -1,10 +1,12 @@
 <div class="form">
+    <?php echo CHtml::activeLabelEx(DerivativeVegetative::model(), 'derivative_vegetative_id'); ?>
     <div id="derivatives_vegetative">
     </div>
     <div id="vegetative_addRow">
         <?php
-        echo CHtml::imageButton('images/add.png', array(
-            'onclick' => "
+        if (!$model_livingPlant->isNewRecord) {
+            echo CHtml::imageButton('images/add.png', array(
+                'onclick' => "
             $.ajax({
                 url: 'index.php?r=livingPlant/ajaxVegetative&derivative_vegetative_id=0&living_plant_id=" . $model_livingPlant->id . "'
             }).done(function(data) {
@@ -15,7 +17,11 @@
                 $('#vegetative_dialog').dialog('open');
             });
             return false;"
-        ));
+            ));
+        }
+        else {
+            echo Html::encode(Yii::t('jacq', 'please_save_first'));
+        }
         ?>
     </div>
 </div>

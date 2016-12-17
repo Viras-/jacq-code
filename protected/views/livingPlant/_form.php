@@ -396,7 +396,10 @@ foreach ($ipen_code_models as $ipen_code_model) {
      * @returns {undefined}
      */
     function refreshVegetatives() {
-        $('#derivatives_vegetative').load('<?php echo $this->createUrl('livingPlant/ajaxVegetativeList', array('living_plant_id' => $model_livingPlant->id)); ?>');
+        var living_plant_id = <?php echo intval($model_livingPlant->id); ?>;
+        if (living_plant_id > 0) {
+            $('#derivatives_vegetative').load('<?php echo $this->createUrl('livingPlant/ajaxVegetativeList', array('living_plant_id' => $model_livingPlant->id)); ?>');
+        }
     }
 
     // Bind to change event of institution select
