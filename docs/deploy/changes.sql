@@ -140,3 +140,29 @@ ADD CONSTRAINT `fk_tbl_separation_tbl_botanical_object1`
   REFERENCES `jacq_input`.`tbl_botanical_object` (`id`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
+
+
+-- MySQL Workbench Synchronization
+-- Generated: 2016-12-17 11:03
+-- Model: Livingplants
+-- Version: 1.0
+-- Project: Livingplants
+-- Author: Wolfgang Koller
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+ALTER TABLE `jacq_input`.`tbl_specimen`
+DROP COLUMN `curatorial_unit_id`,
+CHANGE COLUMN `barcode` `herbar_number` VARCHAR(20) NOT NULL COMMENT '' ,
+DROP INDEX `fk_tbl_specimen_tbl_curatorial_unit1_idx` ;
+
+DROP TABLE IF EXISTS `jacq_input`.`tbl_curatorial_unit_type` ;
+
+DROP TABLE IF EXISTS `jacq_input`.`tbl_curatorial_unit` ;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

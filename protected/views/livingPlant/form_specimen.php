@@ -13,9 +13,9 @@ else {
     <?php
     echo CHtml::activeHiddenField($model_specimen, "[$model_form_id]specimen_id");
     echo CHtml::activeHiddenField($model_specimen, "[$model_form_id]delete");
-    echo CHtml::activeTextField($model_specimen, "[$model_form_id]barcode");
+    echo CHtml::activeTextField($model_specimen, "[$model_form_id]herbar_number");
 
-    echo CHtml::error($model_specimen, "barcode");
+    echo CHtml::error($model_specimen, "herbar_number");
     ?>
     <?php
     echo CHtml::imageButton('images/delete.png', array(
