@@ -211,6 +211,34 @@
     <?php
     $this->endWidget('zii.widgets.jui.CJuiDialog');
     ?>
+
+    <?php
+    // widget for scientific name information editing
+    $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+        'id' => 'vegetative_dialog',
+        // additional javascript options for the dialog plugin
+        'options' => array(
+            'title' => Yii::t('jacq', 'Vegetative Derivative'),
+            'autoOpen' => false,
+            'resizable' => false,
+            'width' => 800,
+            'buttons' => array(
+                array(
+                    'text' => Yii::t('jacq', 'Close'),
+                    'click' => new CJavaScriptExpression('vegetativeDialogClose')
+                ),
+                array(
+                    'text' => Yii::t('jacq', 'Save'),
+                    'click' => new CJavaScriptExpression('vegetativeDialogSave')
+                ),
+            )
+        ),
+    ));
+    ?>
+    <div id="scientific_name_information_view" style="height: 300px;"></div>
+    <?php
+    $this->endWidget('zii.widgets.jui.CJuiDialog');
+    ?>
 </div><!-- form -->
 
 
@@ -307,6 +335,73 @@ foreach ($ipen_code_models as $ipen_code_model) {
         );
     }
 
+    /**
+     * Handle dialog closing for vegetative derivatives
+     */
+    function vegetativeDialogClose() {
+        $('#vegetative_dialog').html('');
+        $('#vegetative_dialog').dialog('close');
+    }
+
+    /**
+     * Handle saving of vegetative derivatives
+     */
+    function vegetativeDialogSave() {
+        // keep reference to dialog
+        var self = this;
+
+        // get all select values for sending to the server
+        var formData = $('#vegetative-form').serialize();
+        $('#vegetative-form select').each(function () {
+            formData[$(this).attr('name')] = $(this).val();
+        });
+
+        // disable the whole form
+        $('#vegetative-form').attr('disabled', 'disabled');
+        $('#vegetative-form select').attr('disabled', 'disabled');
+
+        // send the request to the server
+        $.post(
+                $('#vegetative-form').attr('action'),
+                formData,
+                function (data, textStatus, jqXHR) {
+                    // we do not expect any response, if we receive one add it as content and keep the dialog open
+                    if (data === null || data === '') {
+                        // refresh list of vegetatives
+                        refreshVegetatives();
+
+                        // close the calling dialog
+                        $(self).dialog('close');
+                    } else {
+                        $(self).html(data);
+                    }
+                }
+        );
+    }
+
+    /**
+     * Open the organisation dialog
+     * @param String id_target jQuery-Selector of element to set the selected id to
+     * @param String name_target jQuery-Selector of element to set the selected name to
+     * @returns {undefined}
+     */
+    function organisationDialogOpen(id_target, name_target) {
+        $('#organisation_select_dialog').data('id_target', id_target);
+        $('#organisation_select_dialog').data('name_target', name_target);
+        $('#organisation_select_dialog').dialog('open');
+    }
+
+    /**
+     * Refresh list of vegetative derivatives
+     * @returns {undefined}
+     */
+    function refreshVegetatives() {
+        var living_plant_id = <?php echo intval($model_livingPlant->id); ?>;
+        if (living_plant_id > 0) {
+            $('#derivatives_vegetative').load('<?php echo $this->createUrl('livingPlant/ajaxVegetativeList', array('living_plant_id' => $model_livingPlant->id)); ?>');
+        }
+    }
+
     // Bind to change event of institution select
     $(document).ready(function () {
         // initialize jsTree for organisation
@@ -330,8 +425,8 @@ foreach ($ipen_code_models as $ipen_code_model) {
         // bind to click events onto tree items
         $('#organisation_tree a').live('click', function () {
             // update references to organisation
-            $('#BotanicalObject_organisation_id').val($(this).attr('data-organisation-id'));
-            $('#BotanicalObject_organisation_name').val($(this).text());
+            $($('#organisation_select_dialog').data('id_target')).val($(this).attr('data-organisation-id'));
+            $($('#organisation_select_dialog').data('name_target')).val($(this).text());
             $('#organisation_select_dialog').dialog('close');
 
             // update IPEN code, only if not locked
@@ -347,6 +442,9 @@ foreach ($ipen_code_models as $ipen_code_model) {
                 $("#LivingPlant_ipenNumberCountryCode").val(ui.item.countryCode);
             }
         });
+
+        // refresh vegetatives
+        refreshVegetatives();
     });
 
 </script>

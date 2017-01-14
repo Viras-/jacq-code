@@ -44,12 +44,12 @@ class IndexSeminumContent extends ActiveRecord {
         // will receive user inputs.
         return array(
             array('index_seminum_revision_id, botanical_object_id, accession_number, family, scientific_name, index_seminum_type, ipen_number', 'required'),
-            array('index_seminum_revision_id, botanical_object_id, accession_number, altitude_min, altitude_max', 'numerical', 'integerOnly' => true),
+            array('index_seminum_revision_id, botanical_object_id, altitude_min, altitude_max', 'numerical', 'integerOnly' => true),
             array('index_seminum_type', 'length', 'max' => 3),
             array('ipen_number', 'length', 'max' => 28),
             array('latitude, longitude', 'length', 'max' => 14),
             array('habitat', 'length', 'max' => 45),
-            array('acquisition_date', 'length', 'max' => 20),
+            array('acquisition_date, accession_number', 'length', 'max' => 20),
             array('acquisition_number, acquisition_location', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.

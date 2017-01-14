@@ -457,3 +457,10 @@ span.specimenBox {
     top: 0;
     display: block;
 }
+
+/* separation div formatting for use as table */
+.vegetative_td {
+    display: inline-block;
+    width: 24%;
+}
+

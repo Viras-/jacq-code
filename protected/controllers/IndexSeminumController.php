@@ -104,6 +104,66 @@ class IndexSeminumController extends JacqController {
                             }
                         }
                     }
+
+                    // fetch all records marked for the index seminum
+                    $dbCriteria = new CDbCriteria();
+                    $dbCriteria->compare('index_seminum', true);
+                    $models_derivativeVegetative = DerivativeVegetative::model()->findAll($dbCriteria);
+
+                    // iterate over model and add it to the index seminum content table
+                    foreach ($models_derivativeVegetative as $model_derivativeVegetative) {
+                        // transfer all properties to a static field in the index seminum content table
+                        $model_indexSeminumContent = new IndexSeminumContent();
+                        $model_indexSeminumContent->index_seminum_revision_id = $model_indexSeminumRevision->index_seminum_revision_id;
+                        $model_indexSeminumContent->botanical_object_id = $model_derivativeVegetative->livingPlant->id;
+                        $model_indexSeminumContent->accession_number = $model_derivativeVegetative->accessionNumber;
+                        $model_indexSeminumContent->family = $model_derivativeVegetative->livingPlant->id0->getFamily();
+                        $model_indexSeminumContent->scientific_name = $model_derivativeVegetative->livingPlant->id0->getScientificName();
+                        $model_indexSeminumContent->index_seminum_type = $model_derivativeVegetative->livingPlant->indexSeminumType->type;
+                        $model_indexSeminumContent->ipen_number = $model_derivativeVegetative->livingPlant->ipenNumber;
+                        $model_indexSeminumContent->habitat = $model_derivativeVegetative->livingPlant->id0->habitat;
+
+                        // check if we have acquistion information
+                        if ($model_derivativeVegetative->livingPlant->id0->acquisitionEvent) {
+                            $model_indexSeminumContent->acquisition_number = $model_derivativeVegetative->livingPlant->id0->acquisitionEvent->number;
+
+                            // check for coordinates / altitude information
+                            if ($model_derivativeVegetative->livingPlant->id0->acquisitionEvent->locationCoordinates) {
+                                $model_indexSeminumContent->altitude_min = $model_derivativeVegetative->livingPlant->id0->acquisitionEvent->locationCoordinates->altitude_min;
+                                $model_indexSeminumContent->altitude_max = $model_derivativeVegetative->livingPlant->id0->acquisitionEvent->locationCoordinates->altitude_max;
+                                $model_indexSeminumContent->latitude = $model_derivativeVegetative->livingPlant->id0->acquisitionEvent->locationCoordinates->getLatitudeSexagesimal();
+                                $model_indexSeminumContent->longitude = $model_derivativeVegetative->livingPlant->id0->acquisitionEvent->locationCoordinates->getLongitudeSexagesimal();
+                            }
+
+                            // check for date information
+                            if ($model_derivativeVegetative->livingPlant->id0->acquisitionEvent->acquisitionDate) {
+                                $model_indexSeminumContent->acquisition_date = $model_derivativeVegetative->livingPlant->id0->acquisitionEvent->acquisitionDate->getDate();
+                            }
+                            // check for locality information
+                            if ($model_derivativeVegetative->livingPlant->id0->acquisitionEvent->location) {
+                                $model_indexSeminumContent->acquisition_location = $model_derivativeVegetative->livingPlant->id0->acquisitionEvent->location->location;
+                            }
+                        }
+
+                        // try to save the content, throw exception on error
+                        if (!$model_indexSeminumContent->save()) {
+                            throw new ModelException("Unable to save index seminum content", $model_indexSeminumContent);
+                        }
+
+                        // remember collector information
+                        if ($model_derivativeVegetative->livingPlant->id0->acquisitionEvent) {
+                            foreach ($model_derivativeVegetative->livingPlant->id0->acquisitionEvent->tblPeople as $model_person) {
+                                $model_indexSeminumPerson = new IndexSeminumPerson();
+                                $model_indexSeminumPerson->index_seminum_content_id = $model_indexSeminumContent->index_seminum_content_id;
+                                $model_indexSeminumPerson->name = $model_person->name;
+
+                                // try to save the collectors information
+                                if (!$model_indexSeminumPerson->save()) {
+                                    throw new ModelException("Unable to save IndexSeminumPerson", $model_indexSeminumPerson);
+                                }
+                            }
+                        }
+                    }
                 }
                 else {
                     throw new ModelException("Unable to save index seminum revision", $model_indexSeminumRevision);
@@ -214,6 +274,9 @@ class IndexSeminumController extends JacqController {
         LivingPlant::model()->updateAll(array(
             'index_seminum' => 0
         ));
+        DerivativeVegetative::model()->updateAll(array(
+            'index_seminum' => 0
+        ));
 
         // Redirect to default action, indicating success
         $this->redirect(array(
@@ -221,4 +284,5 @@ class IndexSeminumController extends JacqController {
             'cleared' => true
         ));
     }
+
 }

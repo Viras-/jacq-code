@@ -28,7 +28,7 @@ class LivingPlantController extends JacqController {
                 'roles' => array('oprtn_readLivingplant'),
             ),
             array('allow', // creating / updating
-                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber', 'copyAndNew'),
+                'actions' => array('create', 'update', 'treeRecordFilePages', 'treeRecordFilePageView', 'ajaxCertificate', 'ajaxAcquisitionPerson', 'ajaxAlternativeAccessionNumber', 'ajaxAcquisitionEventSource', 'ajaxSpecimen', 'ajaxSeparation', 'ajaxIpenNumber', 'copyAndNew', 'ajaxImageServerResource', 'ajaxVegetative', 'ajaxVegetativeDelete', 'ajaxVegetativeList'),
                 'roles' => array('oprtn_createLivingplant'),
             ),
             array('allow', // deleting
@@ -341,11 +341,12 @@ class LivingPlantController extends JacqController {
                                 if (isset($_POST['Specimen'])) {
                                     foreach ($_POST['Specimen'] as $i => $specimen) {
                                         // auto-generate id
-                                        unset($specimen['id_specimen']);
+                                        unset($specimen['specimen_id']);
 
                                         // check for "deleted" entry (which means ignore it)
-                                        if ($specimen['delete'] > 0)
+                                        if ($specimen['delete'] > 0) {
                                             continue;
+                                        }
 
                                         // create new model and save it
                                         $model_specimen = new Specimen();
@@ -599,7 +600,8 @@ class LivingPlantController extends JacqController {
                             // check if label-type was unchecked, deleting it if user has right to do so
                             if (!in_array($model_botanicalObjectLabel->label_type_id, $new_labelTypes) && Yii::app()->user->checkAccess('oprtn_clearLabelType')) {
                                 $model_botanicalObjectLabel->delete();
-                            } else {
+                            }
+                            else {
                                 $new_labelTypes = array_diff($new_labelTypes, array($model_botanicalObjectLabel->label_type_id));
                             }
                         }
@@ -630,7 +632,8 @@ class LivingPlantController extends JacqController {
                                 // check if this is an existing entry
                                 if ($separation['id'] > 0) {
                                     $model_separation = Separation::model()->findByPk($separation['id']);
-                                } else {
+                                }
+                                else {
                                     $model_separation = new Separation();
                                 }
 
@@ -658,7 +661,8 @@ class LivingPlantController extends JacqController {
                                 // check if this is an existing entry
                                 if ($certificate['id'] > 0) {
                                     $model_certificate = Certificate::model()->findByPk($certificate['id']);
-                                } else {
+                                }
+                                else {
                                     $model_certificate = new Certificate();
                                 }
 
@@ -686,7 +690,8 @@ class LivingPlantController extends JacqController {
                                 // check if this is an existing entry
                                 if ($alternativeAccessionNumber['id'] > 0) {
                                     $model_alternativeAccessionNumber = AlternativeAccessionNumber::model()->findByPk($alternativeAccessionNumber['id']);
-                                } else {
+                                }
+                                else {
                                     $model_alternativeAccessionNumber = new AlternativeAccessionNumber();
                                 }
 
@@ -701,20 +706,21 @@ class LivingPlantController extends JacqController {
                         if (isset($_POST['Specimen'])) {
                             foreach ($_POST['Specimen'] as $i => $specimen) {
                                 // make sure we have a clean integer as id
-                                $specimen['id_specimen'] = intval($specimen['id_specimen']);
+                                $specimen['specimen_id'] = intval($specimen['specimen_id']);
 
                                 // check for "deleted" entry
                                 if ($specimen['delete'] > 0) {
-                                    if ($specimen['id_specimen'] > 0) {
-                                        Specimen::model()->deleteByPk($specimen['id_specimen']);
+                                    if ($specimen['specimen_id'] > 0) {
+                                        Specimen::model()->deleteByPk($specimen['specimen_id']);
                                     }
                                     continue;
                                 }
 
                                 // check if this is an existing entry
-                                if ($specimen['id_specimen'] > 0) {
-                                    $model_specimen = Specimen::model()->findByPk($specimen['id_specimen']);
-                                } else {
+                                if ($specimen['specimen_id'] > 0) {
+                                    $model_specimen = Specimen::model()->findByPk($specimen['specimen_id']);
+                                }
+                                else {
                                     $model_specimen = new Specimen();
                                 }
 
@@ -768,7 +774,8 @@ class LivingPlantController extends JacqController {
             // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if (!isset($_GET['ajax']))
                 $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-        } else
+        }
+        else
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
 
@@ -931,6 +938,10 @@ class LivingPlantController extends JacqController {
      * renders form for entering a new separation
      */
     public function actionAjaxSeparation() {
+        // prevent double loading of jquery scripts
+        Yii::app()->clientscript->scriptMap['jquery-ui.min.js'] = false;
+        Yii::app()->clientscript->scriptMap['jquery.js'] = false;
+
         $model_separation = new Separation();
 
         $this->renderPartial('form_separation', array(
@@ -1008,14 +1019,187 @@ class LivingPlantController extends JacqController {
     }
 
     /**
+     * Update the public visibility of a given image on the image server
+     * @param String $identifier unique identifier of image server resource
+     * @param Boolean $public Allow / Disallow public access
+     */
+    public function actionAjaxImageServerResource($botanical_object_id, $identifier, $public) {
+        // load the living plant model
+        $model_livingPlant = $this->loadModel($botanical_object_id);
+
+        // get image server for organization
+        $imageServer = NULL;
+        if ($model_livingPlant->id0 != NULL && $model_livingPlant->id0->organisation != NULL) {
+            $imageServer = $model_livingPlant->id0->organisation->getImageServer();
+        }
+
+        // update image status
+        if ($imageServer != NULL) {
+            $jacqImageServer = new JacqImageServer($imageServer->base_url, $imageServer->key);
+            $jacqImageServer->setPublic($identifier, $public);
+        }
+    }
+
+    /**
+     * Render the form for adding / editing a vegetative derivative
+     */
+    public function actionAjaxVegetative($derivative_vegetative_id = 0, $living_plant_id = 0) {
+        // prevent double loading of jquery scripts
+        Yii::app()->clientscript->scriptMap['jquery-ui.min.js'] = false;
+        Yii::app()->clientscript->scriptMap['jquery.js'] = false;
+
+        // check if we are saving a derivative
+        if (isset($_POST['DerivativeVegetative'])) {
+            $derivative_vegetative_id = intval($_POST['DerivativeVegetative']['derivative_vegetative_id']);
+
+            $model_derivativeVegetative = null;
+            if ($derivative_vegetative_id > 0) {
+                $model_derivativeVegetative = DerivativeVegetative::model()->findByPk($derivative_vegetative_id);
+
+                if ($model_derivativeVegetative === null) {
+                    throw new CHttpException(404, 'The requested derivative does not exist.');
+                }
+
+                // fetch living plant id from saved object
+                $living_plant_id = $model_derivativeVegetative->living_plant_id;
+            }
+            else {
+                // checked passed id for validity
+                $living_plant_id = intval($living_plant_id);
+                if ($living_plant_id <= 0) {
+                    throw new CHttpException(400, 'Unable to fetch living plant id.');
+                }
+
+                $model_derivativeVegetative = new DerivativeVegetative();
+                $model_derivativeVegetative->living_plant_id = $living_plant_id;
+            }
+
+            // assign attributes to model
+            $model_derivativeVegetative->attributes = $_POST['DerivativeVegetative'];
+
+            // try to save model
+            if ($model_derivativeVegetative->save()) {
+                // try to save separations
+                $allSaved = true;
+                if (isset($_POST['Separation'])) {
+                    $model_derivativeVegetative->separations = array();
+
+
+                    foreach ($_POST['Separation'] as $i => $separation) {
+                        // make sure we have a clean integer as id
+                        $separation['id'] = intval($separation['id']);
+
+                        // check for "deleted" entry
+                        if ($separation['delete'] > 0) {
+                            if ($separation['id'] > 0) {
+                                Separation::model()->deleteByPk($separation['id']);
+                            }
+                            continue;
+                        }
+
+                        // check if this is an existing entry
+                        if ($separation['id'] > 0) {
+                            $model_separation = Separation::model()->findByPk($separation['id']);
+                        }
+                        else {
+                            $model_separation = new Separation();
+                        }
+
+                        // assign attributes and save it
+                        $model_separation->attributes = $separation;
+                        $model_separation->derivative_vegetative_id = $model_derivativeVegetative->derivative_vegetative_id;
+
+                        // keep reference to separation model (e.g. if validation fails)
+                        $model_derivativeVegetative->separations[] = $model_separation;
+
+                        // try to save separation
+                        if (!$model_separation->save()) {
+                            $allSaved = false;
+                        }
+                    }
+                }
+
+                if ($allSaved) {
+                    return;
+                }
+            }
+        }
+        else {
+            $derivative_vegetative_id = intval($derivative_vegetative_id);
+
+            $model_derivativeVegetative = null;
+            if ($derivative_vegetative_id > 0) {
+                $model_derivativeVegetative = DerivativeVegetative::model()->findByPk($derivative_vegetative_id);
+
+                if ($model_derivativeVegetative === null) {
+                    throw new CHttpException(404, 'The requested derivative does not exist.');
+                }
+
+                // fetch living plant id from saved object
+                $living_plant_id = $model_derivativeVegetative->living_plant_id;
+            }
+            else {
+                // checked passed id for validity
+                $living_plant_id = intval($living_plant_id);
+                if ($living_plant_id <= 0) {
+                    throw new CHttpException(400, 'Unable to fetch living plant id.');
+                }
+
+                $model_derivativeVegetative = new DerivativeVegetative();
+                $model_derivativeVegetative->living_plant_id = $living_plant_id;
+            }
+        }
+
+        // load livingplant model
+        $model_livingPlant = $this->loadModel($living_plant_id);
+
+        // render the form for editing
+        $this->renderPartial('form_vegetativeEdit', array(
+            'model_derivativeVegetative' => $model_derivativeVegetative,
+            'model_livingPlant' => $model_livingPlant
+                ), false, true);
+    }
+
+    /**
+     * Delete the given vegetative derivative
+     * @param int $derivative_vegetative_id
+     * @throws CHttpException
+     */
+    public function actionAjaxVegetativeDelete($derivative_vegetative_id) {
+        $derivative_vegetative_id = intval($derivative_vegetative_id);
+
+        if ($derivative_vegetative_id > 0) {
+            DerivativeVegetative::model()->deleteByPk($derivative_vegetative_id);
+        }
+        else {
+            throw new CHttpException(404, 'The requested derivative does not exist.');
+        }
+    }
+
+    /**
+     * Render the list of vegetative derivatives for the given living plant
+     * @param type $living_plant_id
+     */
+    public function actionAjaxVegetativeList($living_plant_id) {
+        $model_livingPlant = $this->loadModel($living_plant_id);
+
+        // render the list
+        $this->renderPartial(
+                'form_vegetativesList', array(
+            'model_livingPlant' => $model_livingPlant
+                ), false, true);
+    }
+
+    /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
      * @param integer the ID of the model to be loaded
      */
     public function loadModel($id) {
         $model = LivingPlant::model()->findByPk($id);
-        if ($model === null)
+        if ($model === null) {
             throw new CHttpException(404, 'The requested page does not exist.');
+        }
 
         // check if user is allowed to access this model
         // default rights setup
@@ -1077,7 +1261,8 @@ class LivingPlantController extends JacqController {
         // check for explicit allowal or denial
         if ($model_accessOrganisation->allowDeny == 1) {
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
