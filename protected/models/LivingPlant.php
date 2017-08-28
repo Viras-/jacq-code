@@ -45,6 +45,7 @@ class LivingPlant extends ActiveRecord {
     public $separated_search;
     public $label_type_search;
     public $accessionNumber_search;
+    public $organisation_hierarchy_search;
 
     /**
      * Default values
@@ -117,7 +118,7 @@ class LivingPlant extends ActiveRecord {
             array('cultivation_date', 'default', 'setOnEmpty' => true, 'value' => NULL),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('accessionNumber_search, scientificName_search, organisation_search, location_search, separated_search, index_seminum, label_type_search, label_synonym_scientific_name_id, bgci, reviewed', 'safe', 'on' => 'search'),
+            array('organisation_hierarchy_search, accessionNumber_search, scientificName_search, organisation_search, location_search, separated_search, index_seminum, label_type_search, label_synonym_scientific_name_id, bgci, reviewed', 'safe', 'on' => 'search'),
         );
     }
 
@@ -167,7 +168,8 @@ class LivingPlant extends ActiveRecord {
             'cultivar_id' => Yii::t('jacq', 'Cultivar'),
             'label_annotation' => Yii::t('jacq', 'Label Annotation'),
             'bgci' => Yii::t('jacq', 'BGCI'),
-            'reviewed' => Yii::t('jacq', 'Reviewed')
+            'reviewed' => Yii::t('jacq', 'Reviewed'),
+            'organisation_hierarchy_search' => Yii::t('jacq', 'Hierarchie'),
         );
     }
 
@@ -193,8 +195,29 @@ class LivingPlant extends ActiveRecord {
             $criteria->addCondition("id0.scientific_name_id = " . Yii::app()->params['indetScientificNameId'] . " AND importProperties.species_name LIKE '%" . implode('%', $scientificName_searchComponents) . "%'", "OR");
         }
 
+        // check if we should search for the organisational hierarchy
+        if ($this->organisation_hierarchy_search == 1) {
+            // find all entries matching the name
+            $organisationSearchCriteria = new CDbCriteria();
+            $organisationSearchCriteria->addSearchCondition('description', $this->organisation_search);
+
+            $models_organisationSearch = Organisation::model()->findAll($organisationSearchCriteria);
+
+            // create a list of all relevant ids
+            $organisationSearch_ids = array();
+            foreach ($models_organisationSearch as $model_organisationSearch) {
+                $organisationSearch_ids[] = $model_organisationSearch->id;
+                $organisationSearch_ids += $model_organisationSearch->getAllSubOrganisationIds();
+            }
+
+            $criteria->addInCondition('organisation.id', $organisationSearch_ids);
+        }
+        // else just match the name
+        else {
+            $criteria->compare('organisation.description', $this->organisation_search, true);
+        }
+
         // add all other search criterias
-        $criteria->compare('organisation.description', $this->organisation_search, true);
         $criteria->compare('location.location', $this->location_search, true);
         $criteria->compare('place_number', $this->place_number, true);
 
@@ -211,8 +234,9 @@ class LivingPlant extends ActiveRecord {
         }
 
         // search for separated entries
-        if ($this->separated_search == null)
+        if ($this->separated_search == null) {
             $this->separated_search = 0;
+        }
         $criteria->compare('id0.separated', $this->separated_search);
 
         // search for index seminum entries
