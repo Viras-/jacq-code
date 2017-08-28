@@ -23,12 +23,12 @@ return array(
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
-        /*'gii' => array(
-            'class' => 'system.gii.GiiModule',
-            'password' => 'gii',
-            // If removed, Gii defaults to localhost only. Edit carefully to taste.
-            'ipFilters' => array('127.0.0.1', '::1'),
-        ),*/
+        /* 'gii' => array(
+          'class' => 'system.gii.GiiModule',
+          'password' => 'gii',
+          // If removed, Gii defaults to localhost only. Edit carefully to taste.
+          'ipFilters' => array('127.0.0.1', '::1'),
+          ), */
         'rbam' => array(
             'rbacManagerRole' => 'rbacManager',
             'authItemsManagerRole' => 'rbacManager',
@@ -59,7 +59,6 @@ return array(
           'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
           ), */
         // uncomment the following to use a MySQL database
-
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=jacq_input',
             'emulatePrepare' => true,
@@ -147,7 +146,7 @@ return array(
         'uuidMinter' => array(
             'class' => 'application.components.services.UuidMinterComponent'
         ),
-        /** Inventory handlers **/
+        /** Inventory handlers * */
         'inventoryInventoryHandler' => array(
             'class' => 'application.components.inventory.InventoryInventoryHandler'
         ),
@@ -158,14 +157,14 @@ return array(
         // this is used in contact page
         'adminEmail' => 'admin@domain.com',
         'groupPrefix' => 'grp_',
-        'familyClassificationIds' => array(0),                          // reference(s) to use for family finding, order by priority
-        'jsonJacqUrl' => null,                                          // url to get all jacq-json-services, change to a services url
-        'indetScientificNameId' => 0,                                   // scientific_name_id of indet names (for import compatibility)
-        'jacqClassificationCitationId' => 0,                            // citation ID which is used for importing the jacq-legacy classification
-        'classifications_license' => '',                                // license string which is added to downloaded classifications
-        'guidUrlPrefix' => '',                                          // URL-Prefix for GUIDs passed to outside world
-        'singleSignOnLegacy' => 'u@p',                                  // username and password used by the legacy part
-        'bgciRankHierarchyCutoff' => 22,                                // hierarchy must be above this value to include the rank abbreviation in bgci export
-        'jacqJavaEEBaseUrl' => 'http://localhost:8080/jacq-service/',   // Base URL to Jacq JavaEE installation (trailing slash!)
+        'familyClassificationIds' => array(0), // reference(s) to use for family finding, order by priority
+        'jsonJacqUrl' => null, // url to get all jacq-json-services, change to a services url
+        'indetScientificNameId' => 0, // scientific_name_id of indet names (for import compatibility)
+        'jacqClassificationCitationId' => 0, // citation ID which is used for importing the jacq-legacy classification
+        'classifications_license' => '', // license string which is added to downloaded classifications
+        'guidUrlPrefix' => '', // URL-Prefix for GUIDs passed to outside world
+        'singleSignOnLegacy' => 'u@p', // username and password used by the legacy part
+        'bgciRankHierarchyCutoff' => 22, // hierarchy must be above this value to include the rank abbreviation in bgci export
+        'jacqJavaEEBaseUrl' => 'http://localhost:8080/jacq-service/', // Base URL to Jacq JavaEE installation (trailing slash!)
     ),
 );

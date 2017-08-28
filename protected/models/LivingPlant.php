@@ -46,6 +46,7 @@ class LivingPlant extends ActiveRecord {
     public $label_type_search;
     public $accessionNumber_search;
     public $organisation_hierarchy_search;
+    public $scientificName_hierarchy_search;
 
     /**
      * Default values
@@ -118,7 +119,7 @@ class LivingPlant extends ActiveRecord {
             array('cultivation_date', 'default', 'setOnEmpty' => true, 'value' => NULL),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('organisation_hierarchy_search, accessionNumber_search, scientificName_search, organisation_search, location_search, separated_search, index_seminum, label_type_search, label_synonym_scientific_name_id, bgci, reviewed', 'safe', 'on' => 'search'),
+            array('scientificName_hierarchy_search, organisation_hierarchy_search, accessionNumber_search, scientificName_search, organisation_search, location_search, separated_search, index_seminum, label_type_search, label_synonym_scientific_name_id, bgci, reviewed', 'safe', 'on' => 'search'),
         );
     }
 
@@ -170,6 +171,7 @@ class LivingPlant extends ActiveRecord {
             'bgci' => Yii::t('jacq', 'BGCI'),
             'reviewed' => Yii::t('jacq', 'Reviewed'),
             'organisation_hierarchy_search' => Yii::t('jacq', 'Hierarchie'),
+            'scientificName_hierarchy_search' => Yii::t('jacq', 'Hierarchie')
         );
     }
 
@@ -185,14 +187,53 @@ class LivingPlant extends ActiveRecord {
         $criteria->with = array('id0', 'id0.organisation', 'id0.acquisitionEvent.location', 'id0.viewTaxon', 'id0.importProperties');
         $criteria->together = true;
 
-        // search for scientific name
-        $criteria->compare('viewTaxon.genus', $scientificName_searchComponents[0], true);
-        if (count($scientificName_searchComponents) >= 2) {
-            $criteria->compare('viewTaxon.epithet', $scientificName_searchComponents[1], true);
+        // check if we should use the hierarchy search for scientific names
+        if ($this->scientificName_hierarchy_search == 1) {
+            $scientific_name_ids = array();
+
+            // search for scientific name
+            $scientificNameSearchCriteria = new CDbCriteria();
+            $scientificNameSearchCriteria->addSearchCondition('genus', $scientificName_searchComponents[0]);
+            if (count($scientificName_searchComponents) >= 2) {
+                $scientificNameSearchCriteria->addSearchCondition('epithet', $scientificName_searchComponents[1]);
+            }
+            $models_viewTaxon = ViewTaxon::model()->findAll($scientificNameSearchCriteria);
+
+            // iterate over scientific name matches and try to find entry in classification
+            foreach ($models_viewTaxon as $model_viewTaxon) {
+                $scientific_name_ids[] = $model_viewTaxon->taxonID;
+
+                // find synonymy entry
+                $reference_id = Yii::app()->params['familyClassificationIds'][0];
+
+                // get tax synonymy entry
+                $model_taxSynonymy = TaxSynonymy::model()->findByAttributes(array(
+                    'taxonID' => $model_viewTaxon->taxonID,
+                    'source_citationID' => $reference_id
+                ));
+
+                // now fetch all children for the given classification and add it to the search list
+                if ($model_taxSynonymy != NULL) {
+                    $models_taxSynonymyChildren = $model_taxSynonymy->getAllChildren();
+
+                    foreach ($models_taxSynonymyChildren as $model_taxSynonymyChildren) {
+                        $scientific_name_ids[] = $model_taxSynonymyChildren->taxonID;
+                    }
+                }
+            }
+
+            $criteria->addInCondition('id0.scientific_name_id', $scientific_name_ids);
         }
-        // search in imported scientific names
-        if (!empty($this->scientificName_search)) {
-            $criteria->addCondition("id0.scientific_name_id = " . Yii::app()->params['indetScientificNameId'] . " AND importProperties.species_name LIKE '%" . implode('%', $scientificName_searchComponents) . "%'", "OR");
+        else {
+            // search for scientific name
+            $criteria->compare('viewTaxon.genus', $scientificName_searchComponents[0], true);
+            if (count($scientificName_searchComponents) >= 2) {
+                $criteria->compare('viewTaxon.epithet', $scientificName_searchComponents[1], true);
+            }
+            // search in imported scientific names
+            if (!empty($this->scientificName_search)) {
+                $criteria->addCondition("id0.scientific_name_id = " . Yii::app()->params['indetScientificNameId'] . " AND importProperties.species_name LIKE '%" . implode('%', $scientificName_searchComponents) . "%'", "OR");
+            }
         }
 
         // check if we should search for the organisational hierarchy
