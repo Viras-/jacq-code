@@ -8,8 +8,19 @@
     ?>
 
     <div class="row">
-        <?php echo $form->label($model, 'scientificName_search'); ?>
-        <?php echo $form->textField($model, 'scientificName_search'); ?>
+        <table border="0" width="100%">
+            <tr>
+                <td>
+                    <?php echo $form->label($model, 'scientificName_search'); ?>
+                    <?php echo $form->textField($model, 'scientificName_search'); ?>
+                </td>
+                <td>
+                    <?php echo $form->label($model, 'scientificName_hierarchy_search'); ?>
+                    <?php echo $form->checkBox($model, 'scientificName_hierarchy_search'); ?>
+                </td>
+            </tr>
+
+        </table>
     </div>
 
     <div class="row">
