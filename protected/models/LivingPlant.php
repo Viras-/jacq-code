@@ -189,7 +189,40 @@ class LivingPlant extends ActiveRecord {
 
         // check if we should use the hierarchy search for scientific names
         if ($this->scientificName_hierarchy_search == 1) {
-            // TODO
+            $scientific_name_ids = array();
+
+            // search for scientific name
+            $scientificNameSearchCriteria = new CDbCriteria();
+            $scientificNameSearchCriteria->addSearchCondition('genus', $scientificName_searchComponents[0]);
+            if (count($scientificName_searchComponents) >= 2) {
+                $scientificNameSearchCriteria->addSearchCondition('epithet', $scientificName_searchComponents[1]);
+            }
+            $models_viewTaxon = ViewTaxon::model()->findAll($scientificNameSearchCriteria);
+
+            // iterate over scientific name matches and try to find entry in classification
+            foreach ($models_viewTaxon as $model_viewTaxon) {
+                $scientific_name_ids[] = $model_viewTaxon->taxonID;
+
+                // find synonymy entry
+                $reference_id = Yii::app()->params['familyClassificationIds'][0];
+
+                // get tax synonymy entry
+                $model_taxSynonymy = TaxSynonymy::model()->findByAttributes(array(
+                    'taxonID' => $model_viewTaxon->taxonID,
+                    'source_citationID' => $reference_id
+                ));
+
+                // now fetch all children for the given classification and add it to the search list
+                if ($model_taxSynonymy != NULL) {
+                    $models_taxSynonymyChildren = $model_taxSynonymy->getAllChildren();
+
+                    foreach ($models_taxSynonymyChildren as $model_taxSynonymyChildren) {
+                        $scientific_name_ids[] = $model_taxSynonymyChildren->taxonID;
+                    }
+                }
+            }
+
+            $criteria->addInCondition('id0.scientific_name_id', $scientific_name_ids);
         }
         else {
             // search for scientific name
