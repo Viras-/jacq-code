@@ -218,6 +218,18 @@ class LivingPlant extends ActiveRecord {
 
                     foreach ($models_taxSynonymyChildren as $model_taxSynonymyChildren) {
                         $scientific_name_ids[] = $model_taxSynonymyChildren->taxonID;
+
+                        // since species entries are often not linked via classifications, we do this implicitly using the genID logic
+                        if ($model_taxSynonymyChildren->viewTaxon->tax_rankID == 7) {
+                            // find all scientific names with genID equal to our genus entry
+                            $models_taxSpecies = TaxSpecies::model()->findAllByAttributes(array(
+                                'genID' => $model_taxSynonymyChildren->viewTaxon->genID
+                            ));
+
+                            foreach ($models_taxSpecies as $model_taxSpecies) {
+                                $scientific_name_ids[] = $model_taxSpecies->taxonID;
+                            }
+                        }
                     }
                 }
             }
