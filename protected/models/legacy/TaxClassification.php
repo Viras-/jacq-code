@@ -9,7 +9,7 @@
  * @property integer $parent_taxonID
  * @property string $number
  * @property integer $order
- * 
+ *
  * The followings are the available model relations:
  * @property TaxSynonymy $taxSynonymy
  */
@@ -98,4 +98,22 @@ class TaxClassification extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
+
+    protected function getLowerScientificNameIds() {
+        $scientific_name_ids = array();
+
+        $criteria = new CDbCriteria;
+        $criteria->with = array('taxSynonymy');
+        $criteria->together = true;
+
+        $criteria->compare('taxSynonymy.source_citationID', $this->taxSynonymy->source_citationID);
+        $criteria->compare('parent_taxonID', $this->taxSynonymy->taxonID);
+
+        $models_taxClassification = $this::model()->findAll($criteria);
+
+        foreach ($models_taxClassification as $model_taxClassification) {
+
+        }
+    }
+
 }
