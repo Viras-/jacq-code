@@ -34,6 +34,12 @@
         </a>
         <?php echo $form->error($model_derivativeVegetative, 'organisation_id'); ?>
     </div>
+    <!-- place number -->
+    <div class="row">
+        <?php echo $form->labelEx($model_derivativeVegetative, 'place_number'); ?>
+        <?php echo $form->textField($model_derivativeVegetative, 'place_number'); ?>
+        <?php echo $form->error($model_derivativeVegetative, 'place_number'); ?>
+    </div>
     <!-- phenology -->
     <div class="row">
         <?php echo $form->labelEx($model_derivativeVegetative, 'phenology_id'); ?>

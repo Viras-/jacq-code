@@ -40,8 +40,8 @@
     </div>
 
     <div class="row">
-        <?php echo $form->label($model, 'accessionNumber_search'); ?>
-        <?php echo $form->textField($model, 'accessionNumber_search'); ?>
+        <?php echo $form->label($model, 'accession_number'); ?>
+        <?php echo $form->textField($model, 'accession_number'); ?>
     </div>
 
     <div class="row">

@@ -12,6 +12,7 @@
  * @property string $cultivation_date
  * @property integer $index_seminum
  * @property string $annotation
+ * @property string $place_number
  *
  * The followings are the available model relations:
  * @property LivingPlant $livingPlant
@@ -55,6 +56,7 @@ class DerivativeVegetative extends CActiveRecord {
             array('living_plant_id, accession_number, organisation_id, phenology_id, index_seminum', 'required'),
             array('living_plant_id, accession_number, organisation_id, phenology_id, index_seminum', 'numerical', 'integerOnly' => true),
             array('cultivation_date, annotation', 'safe'),
+            array('place_number', 'length', 'max' => 20),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('derivative_vegetative_id, living_plant_id, accsesion_number, organisation_id, phenology_id, cultivation_date, annotation', 'safe', 'on' => 'search'),
@@ -88,6 +90,7 @@ class DerivativeVegetative extends CActiveRecord {
             'cultivation_date' => Yii::t('jacq', 'Cultivation Date'),
             'index_seminum' => Yii::t('jacq', 'Index Seminum'),
             'annotation' => Yii::t('jacq', 'Annotation'),
+            'place_number' => Yii::t('jacq', 'Place Number'),
         );
     }
 

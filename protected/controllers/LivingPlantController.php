@@ -790,12 +790,12 @@ class LivingPlantController extends JacqController {
      * Manages all models.
      */
     public function actionAdmin() {
-        $model = new LivingPlant('search');
+        $model = new BotanicalObjectSearch('search');
         $model->unsetAttributes();  // clear any default values
         // check for new search parameters
-        if (isset($_GET['LivingPlant'])) {
-            $model->attributes = $_GET['LivingPlant'];
-            Yii::app()->session['LivingPlant_filter'] = $_GET['LivingPlant'];
+        if (isset($_GET['BotanicalObjectSearch'])) {
+            $model->attributes = $_GET['BotanicalObjectSearch'];
+            Yii::app()->session['LivingPlant_filter'] = $_GET['BotanicalObjectSearch'];
         }
         // if not try to retrieve from session
         else if (isset(Yii::app()->session['LivingPlant_filter'])) {
