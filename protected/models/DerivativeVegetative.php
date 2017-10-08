@@ -13,6 +13,7 @@
  * @property integer $index_seminum
  * @property string $annotation
  * @property string $place_number
+ * @property integer $separated
  *
  * The followings are the available model relations:
  * @property LivingPlant $livingPlant
@@ -36,7 +37,7 @@ class DerivativeVegetative extends CActiveRecord {
             return '';
         }
 
-        return $this->livingPlant->accessionNUmber . sprintf('-%04d', $this->accession_number);
+        return $this->livingPlant->accessionNUmber . sprintf('-%03d', $this->accession_number);
     }
 
     /**
@@ -53,8 +54,8 @@ class DerivativeVegetative extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('living_plant_id, accession_number, organisation_id, phenology_id, index_seminum', 'required'),
-            array('living_plant_id, accession_number, organisation_id, phenology_id, index_seminum', 'numerical', 'integerOnly' => true),
+            array('living_plant_id, organisation_id, phenology_id, index_seminum, separated', 'required'),
+            array('living_plant_id, accession_number, organisation_id, phenology_id, index_seminum, separated', 'numerical', 'integerOnly' => true),
             array('cultivation_date, annotation', 'safe'),
             array('place_number', 'length', 'max' => 20),
             // The following rule is used by search().
@@ -91,6 +92,7 @@ class DerivativeVegetative extends CActiveRecord {
             'index_seminum' => Yii::t('jacq', 'Index Seminum'),
             'annotation' => Yii::t('jacq', 'Annotation'),
             'place_number' => Yii::t('jacq', 'Place Number'),
+            'separated' => Yii::t('jacq', 'Separated'),
         );
     }
 

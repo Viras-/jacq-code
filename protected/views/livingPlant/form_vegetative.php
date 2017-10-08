@@ -8,7 +8,7 @@ if ($model_derivativeVegetative->derivative_vegetative_id > 0) {
             <?php echo CHtml::encode($model_derivativeVegetative->cultivation_date); ?>
         </div>
         <div class="vegetative_td">
-            <?php echo CHtml::encode($model_derivativeVegetative->accession_number); ?>
+            <?php echo CHtml::encode($model_derivativeVegetative->accessionNumber); ?>
         </div>
         <div class="vegetative_td">
             <?php echo CHtml::encode($model_derivativeVegetative->organisation->description); ?>

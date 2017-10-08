@@ -229,7 +229,7 @@ class BotanicalObjectSearch extends CActiveRecord {
         if ($this->separated_search == null) {
             $this->separated_search = 0;
         }
-        $criteria->compare('id0.separated', $this->separated_search);
+        $criteria->compare('t.separated', $this->separated_search);
 
         // search for index seminum entries
         if ($this->index_seminum == 1) {
@@ -281,7 +281,7 @@ class BotanicalObjectSearch extends CActiveRecord {
     }
 
     public function primaryKey() {
-        return 'id';
+        return array('id', 'derivative_id');
     }
 
     /**

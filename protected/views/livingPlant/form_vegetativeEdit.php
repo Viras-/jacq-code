@@ -18,11 +18,19 @@
     ?>
     <!-- accession number -->
     <div class="row">
-        <?php echo $form->labelEx($model_derivativeVegetative, 'accession_number'); ?>
-        <?php echo Html::encode($model_livingPlant->accessionNumber); ?>
-        -
-        <?php echo $form->textField($model_derivativeVegetative, 'accession_number'); ?>
-        <?php echo $form->error($model_derivativeVegetative, 'accession_number'); ?>
+        <?php
+        if ($model_derivativeVegetative->isNewRecord) {
+            ?>
+            <?php echo $form->labelEx($model_derivativeVegetative, 'accession_number'); ?>
+            <?php echo Html::encode($model_livingPlant->accessionNumber); ?>
+            -
+            auto
+            <?php
+        }
+        else {
+            echo Html::encode($model_derivativeVegetative->accessionNumber);
+        }
+        ?>
     </div>
     <!-- organization -->
     <div class="row">
@@ -66,11 +74,17 @@
         ?>
         <?php echo $form->error($model_derivativeVegetative, 'cultivation_date'); ?>
     </div>
-    <!-- annotation -->
+    <!-- index-seminum -->
     <div class="row">
         <?php echo $form->labelEx($model_derivativeVegetative, 'index_seminum'); ?>
         <?php echo $form->checkBox($model_derivativeVegetative, 'index_seminum'); ?>
         <?php echo $form->error($model_derivativeVegetative, 'index_seminum'); ?>
+    </div>
+    <!-- index-seminum -->
+    <div class="row">
+        <?php echo $form->labelEx($model_derivativeVegetative, 'separated'); ?>
+        <?php echo $form->checkBox($model_derivativeVegetative, 'separated'); ?>
+        <?php echo $form->error($model_derivativeVegetative, 'separated'); ?>
     </div>
 
     <!-- separations -->
