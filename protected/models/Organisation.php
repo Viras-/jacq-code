@@ -324,7 +324,7 @@ class Organisation extends ActiveRecord {
         foreach ($this->organisations as $organisation) {
             $organisation_ids[] = $organisation->id;
 
-            $organisation_ids += $organisation->getAllSubOrganisationIds();
+            $organisation_ids = array_merge($organisation_ids, $organisation->getAllSubOrganisationIds());
         }
 
         return $organisation_ids;

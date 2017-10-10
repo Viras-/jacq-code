@@ -1048,6 +1048,17 @@ class LivingPlantController extends JacqController {
         Yii::app()->clientscript->scriptMap['jquery-ui.min.js'] = false;
         Yii::app()->clientscript->scriptMap['jquery.js'] = false;
 
+        // secure passed ids
+        $derivative_vegetative_id = intval($derivative_vegetative_id);
+        $living_plant_id = intval($living_plant_id);
+
+        // load livingplant model
+        $model_livingPlant = null;
+        if ($living_plant_id > 0) {
+            $model_livingPlant = $this->loadModel($living_plant_id);
+        }
+
+
         // check if we are saving a derivative
         if (isset($_POST['DerivativeVegetative'])) {
             $derivative_vegetative_id = intval($_POST['DerivativeVegetative']['derivative_vegetative_id']);
@@ -1065,7 +1076,6 @@ class LivingPlantController extends JacqController {
             }
             else {
                 // checked passed id for validity
-                $living_plant_id = intval($living_plant_id);
                 if ($living_plant_id <= 0) {
                     throw new CHttpException(400, 'Unable to fetch living plant id.');
                 }
@@ -1125,8 +1135,6 @@ class LivingPlantController extends JacqController {
             }
         }
         else {
-            $derivative_vegetative_id = intval($derivative_vegetative_id);
-
             $model_derivativeVegetative = null;
             if ($derivative_vegetative_id > 0) {
                 $model_derivativeVegetative = DerivativeVegetative::model()->findByPk($derivative_vegetative_id);
@@ -1140,18 +1148,18 @@ class LivingPlantController extends JacqController {
             }
             else {
                 // checked passed id for validity
-                $living_plant_id = intval($living_plant_id);
                 if ($living_plant_id <= 0) {
                     throw new CHttpException(400, 'Unable to fetch living plant id.');
                 }
 
                 $model_derivativeVegetative = new DerivativeVegetative();
                 $model_derivativeVegetative->living_plant_id = $living_plant_id;
+
+                // if we are creating a new entry, add organisation entry to vegetative derivative as default
+                $model_derivativeVegetative->organisation = $model_livingPlant->id0->organisation;
+                $model_derivativeVegetative->organisation_id = $model_livingPlant->id0->organisation_id;
             }
         }
-
-        // load livingplant model
-        $model_livingPlant = $this->loadModel($living_plant_id);
 
         // render the form for editing
         $this->renderPartial('form_vegetativeEdit', array(

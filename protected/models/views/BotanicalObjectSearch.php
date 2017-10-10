@@ -199,7 +199,7 @@ class BotanicalObjectSearch extends CActiveRecord {
             $organisationSearch_ids = array();
             foreach ($models_organisationSearch as $model_organisationSearch) {
                 $organisationSearch_ids[] = $model_organisationSearch->id;
-                $organisationSearch_ids += $model_organisationSearch->getAllSubOrganisationIds();
+                $organisationSearch_ids = array_merge($organisationSearch_ids, $model_organisationSearch->getAllSubOrganisationIds());
             }
 
             $criteria->addInCondition('organisation.id', $organisationSearch_ids);
