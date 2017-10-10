@@ -8,7 +8,7 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array('label' => Yii::t('jacq', 'Create Living Plant'), 'url' => array('create')),
     array('label' => Yii::t('jacq', 'Manage Living Plant'), 'url' => array('admin')),
-    array('label' => Yii::t('jacq', 'Work Label'), 'url' => Yii::app()->params['jacqJavaEEBaseUrl'] . 'rest/label/work/' . $model_livingPlant->id),
+    array('label' => Yii::t('jacq', 'Work Label'), 'url' => Yii::app()->params['jacqJavaEEBaseUrl'] . 'rest/label/work/living/' . $model_livingPlant->id),
 );
 ?>
 
@@ -16,7 +16,7 @@ $this->menu = array(
 
 <?php
 // check if saving was successfull
-if( $success ) {
+if ($success) {
     ?>
     <div class="flash-success">
         <?php echo CHtml::encode(Yii::t('jacq', 'Successfully saved')); ?>

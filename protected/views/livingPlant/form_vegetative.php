@@ -15,6 +15,10 @@ if ($model_derivativeVegetative->derivative_vegetative_id > 0) {
         </div>
         <div class="vegetative_td">
             <?php
+            echo CHtml::link(CHtml::image('images/page_green.png', Yii::t('jacq', 'Work Label')), Yii::app()->params['jacqJavaEEBaseUrl'] . 'rest/label/work/vegetative/' . $model_derivativeVegetative->derivative_vegetative_id);
+            ?>
+            &nbsp;
+            <?php
             echo CHtml::imageButton('images/pencil.png', array(
                 'onclick' => "
                     $.ajax({
