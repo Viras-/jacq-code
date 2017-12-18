@@ -226,4 +226,5 @@ return array(
     'select classification reference' => 'Referenz für Klassifikation auswählen',
     'select reference type' => 'Referenz Art auswählen',
     'yes' => 'Ja',
+    'Propagation Date' => 'Vermehrungsdatum'
 );

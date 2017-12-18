@@ -88,7 +88,7 @@ class DerivativeVegetative extends CActiveRecord {
             'accession_number' => Yii::t('jacq', 'Accession Number'),
             'organisation_id' => Yii::t('jacq', 'Organisation'),
             'phenology_id' => Yii::t('jacq', 'Phenology'),
-            'cultivation_date' => Yii::t('jacq', 'Cultivation Date'),
+            'cultivation_date' => Yii::t('jacq', 'Propagation Date'),
             'index_seminum' => Yii::t('jacq', 'Index Seminum'),
             'annotation' => Yii::t('jacq', 'Annotation'),
             'place_number' => Yii::t('jacq', 'Place Number'),

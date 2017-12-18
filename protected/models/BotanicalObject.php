@@ -327,8 +327,8 @@ class BotanicalObject extends ActiveRecord {
         return array(
             array('acquisition_event_id, scientific_name_id, recording_date', 'required'),
             array('acquisition_event_id, phenology_id, scientific_name_id, determined_by_id, organisation_id, accessible, redetermine, ident_status_id, separated', 'numerical', 'integerOnly' => true),
-            array('habitat, habitus', 'length', 'max' => 45),
-            array('determination_date, annotation', 'safe'),
+            array('habitus', 'length', 'max' => 45),
+            array('determination_date, annotation, habitat', 'safe'),
             array('determination_date', 'default', 'setOnEmpty' => true, 'value' => NULL),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
