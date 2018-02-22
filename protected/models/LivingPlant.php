@@ -276,14 +276,9 @@ class LivingPlant extends ActiveRecord {
 
         // prepare searching for (alternative) accession numbers
         if (!empty($this->accessionNumber_search)) {
-            $accessionNumberCriteria = new CDbCriteria();
-            $accessionNumberCriteria->with = array('alternativeAccessionNumbers');
-            $accessionNumberCriteria->compare('accession_number', $this->accessionNumber_search, true, 'OR');
-            $accessionNumberCriteria->compare('alternativeAccessionNumbers.number', $this->accessionNumber_search, true, 'OR');
-
-            // add accession number searching to main criteria
-            $criteria->with[] = 'alternativeAccessionNumbers';
-            $criteria->mergeWith($accessionNumberCriteria, 'AND');
+            $criteria->addCondition("id IN (SELECT living_plant_id FROM tbl_alternative_accession_number WHERE number LIKE '%" . $this->accessionNumber_search . "%')");
+            // search for accession number
+            $criteria->compare('accession_number', $this->accessionNumber_search, true, 'OR');
         }
 
         // search for separated entries
